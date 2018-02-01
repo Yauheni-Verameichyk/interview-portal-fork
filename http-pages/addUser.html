@@ -69,33 +69,38 @@
                         <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
                     </div>
                 </div>
-                <div class="form-group col-md-2">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Coordinator</label>
+                <div class="form-row form-roles">
+                    <div>Roles:</div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1"> Coordinator</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck2" onclick="toggle()">
+                        <label class="custom-control-label" for="customCheck2">Discipline Head</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck3">
+                        <label class="custom-control-label" for="customCheck3">Interviewer</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck4">
+                        <label class="custom-control-label" for="customCheck4">Human Resource</label>
+                    </div>
                 </div>
-                <div class="form-group col-md-2">
-                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                    <label class="custom-control-label" for="customCheck2">Discipline Head</label>
+                <div id="roles" class="form-row display">
+                    <div class="form-group col-md-6">
+                        <label for="inputState">Disciplines</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>Java</option>
+                            <option>C++</option>
+                            <option>C</option>
+                            <option>JavaScript</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="form-group col-md-2">
-                    <input type="checkbox" class="custom-control-input" id="customCheck3">
-                    <label class="custom-control-label" for="customCheck3">Interviewer</label>
-                </div>
-                <div class="form-group col-md-2">
-                    <input type="checkbox" class="custom-control-input" id="customCheck4">
-                    <label class="custom-control-label" for="customCheck4">Human Resource</label>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputState">Disciplines</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>Java</option>
-                        <option>C++</option>
-                        <option>C</option>
-                        <option>JavaScript</option>
-                    </select>
-                </div>
         </div>
         </div>
         </div>

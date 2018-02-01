@@ -62,4 +62,10 @@ main {
 tbody tr td button {
     width: 100%;
 }
+.form-roles div{
+    margin-right: 1.5rem;
+}
 
+.display {
+    display: none;
+}
