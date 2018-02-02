@@ -73,3 +73,7 @@ tbody tr td button {
 .display {
     display: none;
 }
+
+.button-column{
+    width: 120px;
+ }
