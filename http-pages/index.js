@@ -6,8 +6,5 @@ function toggle() {
     } else {
         document.getElementById('roles').style.display = 'block';
     }
-    //fdgdf
-    //dffdg
-    //dfgdfgdf
 }
 
