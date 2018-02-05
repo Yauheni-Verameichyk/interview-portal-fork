@@ -1,3 +1,4 @@
+ 
 <!doctype html>
 <html lang="en">
 
@@ -54,15 +55,14 @@
     </header>
     <br>
     <br>
-    <main class="shadowForm">
+    <main class="shadowForm editInterview">
         <form>
-            <h3>Add new interview</h3>
+            <h3>Edit interview</h3>
             <br>
             <span>Discipline:</span>
-            <select id="inputState" class="form-control">
-                <option selected>Choose...</option>
-                <option>.Net</option>
+            <select id="inputState" class="form-control" required>
                 <option>Java</option>
+                <option>.Net</option>
                 <option>C++</option>
                 <option>C</option>
                 <option>JavaScript</option>
@@ -77,7 +77,6 @@
             </form>
             <span>Candidate:</span>
             <select id="inputState" class="form-control">
-                <option selected>Choose...</option>
                 <option>Petro Petrov</option>
                 <option>Tito Burt</option>
                 <option>Europa Arsenius</option>
@@ -86,27 +85,37 @@
             </select>
             <br>
             <span>Interviewers:</span>
+            <ul class="list-group">
+                    <li class="list-group-item btn">
+                        <a href="#">Jacob Thornton</a>
+                        <div class="btn btn-light pull-right">
+                            <svg href="#" class="svg-inline--fa fa-trash-alt fa-w-14 align-middle" aria-hidden="true" data-prefix="far" data-icon="trash-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M192 188v216c0 6.627-5.373 12-12 12h-24c-6.627 0-12-5.373-12-12V188c0-6.627 5.373-12 12-12h24c6.627 0 12 5.373 12 12zm100-12h-24c-6.627 0-12 5.373-12 12v216c0 6.627 5.373 12 12 12h24c6.627 0 12-5.373 12-12V188c0-6.627-5.373-12-12-12zm132-96c13.255 0 24 10.745 24 24v12c0 6.627-5.373 12-12 12h-20v336c0 26.51-21.49 48-48 48H80c-26.51 0-48-21.49-48-48V128H12c-6.627 0-12-5.373-12-12v-12c0-13.255 10.745-24 24-24h74.411l34.018-56.696A48 48 0 0 1 173.589 0h100.823a48 48 0 0 1 41.16 23.304L349.589 80H424zm-269.611 0h139.223L276.16 50.913A6 6 0 0 0 271.015 48h-94.028a6 6 0 0 0-5.145 2.913L154.389 80zM368 128H80v330a6 6 0 0 0 6 6h276a6 6 0 0 0 6-6V128z"></path></svg><!-- <img href="#" class="far fa-trash-alt align-middle"> -->
+                        </div>
+                    </li>
+                    <li class="list-group-item btn">
+                        <a href="#">Mark Otto</a>
+                        <div class="btn btn-light pull-right">
+                            <svg href="#" class="svg-inline--fa fa-trash-alt fa-w-14 align-middle" aria-hidden="true" data-prefix="far" data-icon="trash-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M192 188v216c0 6.627-5.373 12-12 12h-24c-6.627 0-12-5.373-12-12V188c0-6.627 5.373-12 12-12h24c6.627 0 12 5.373 12 12zm100-12h-24c-6.627 0-12 5.373-12 12v216c0 6.627 5.373 12 12 12h24c6.627 0 12-5.373 12-12V188c0-6.627-5.373-12-12-12zm132-96c13.255 0 24 10.745 24 24v12c0 6.627-5.373 12-12 12h-20v336c0 26.51-21.49 48-48 48H80c-26.51 0-48-21.49-48-48V128H12c-6.627 0-12-5.373-12-12v-12c0-13.255 10.745-24 24-24h74.411l34.018-56.696A48 48 0 0 1 173.589 0h100.823a48 48 0 0 1 41.16 23.304L349.589 80H424zm-269.611 0h139.223L276.16 50.913A6 6 0 0 0 271.015 48h-94.028a6 6 0 0 0-5.145 2.913L154.389 80zM368 128H80v330a6 6 0 0 0 6 6h276a6 6 0 0 0 6-6V128z"></path></svg><!-- <img href="#" class="far fa-trash-alt align-middle"> -->
+                        </div>
+                    </li>
+                </ul>
             <div class="row">
-                <div class="form-group col-11" id="elementToAdd">
-                    <select id="inputState" class="form-control">
-                        <option selected="">Choose...</option>
-                        <option>Mark Otto</option>
-                        <option>Jacob Thornton</option>
-                        <option>Larry the Bird</option>
-                        <option>Mark Otto</option>
-                    </select>
+                    <div class="form-group col-11" id="elementToAdd">
+                        <select id="inputState" class="form-control">
+                            <option>Choose...</option>
+                            <option>Esmond Clarence</option>
+                            <option>Richard Edward</option>
+                            <option>Jacob Nicholas</option>
+                            <option>Kelley Bruce</option>
+                        </select>
+                    </div>
+                    <div class="form-group btn btn-light col-0">
+                        <svg class="svg-inline--fa fa-plus fa-w-14 align-middle" aria-hidden="true" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M448 294.2v-76.4c0-13.3-10.7-24-24-24H286.2V56c0-13.3-10.7-24-24-24h-76.4c-13.3 0-24 10.7-24 24v137.8H24c-13.3 0-24 10.7-24 24v76.4c0 13.3 10.7 24 24 24h137.8V456c0 13.3 10.7 24 24 24h76.4c13.3 0 24-10.7 24-24V318.2H424c13.3 0 24-10.7 24-24z"></path></svg><!-- <a class="fas fa-plus align-middle"></a> -->
+                    </div>
                 </div>
-                <div class="form-group btn btn-light col-0">
-                    <svg class="svg-inline--fa fa-plus fa-w-14 align-middle" aria-hidden="true" data-prefix="fas" data-icon="plus" role="img"
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
-                        <path fill="currentColor" d="M448 294.2v-76.4c0-13.3-10.7-24-24-24H286.2V56c0-13.3-10.7-24-24-24h-76.4c-13.3 0-24 10.7-24 24v137.8H24c-13.3 0-24 10.7-24 24v76.4c0 13.3 10.7 24 24 24h137.8V456c0 13.3 10.7 24 24 24h76.4c13.3 0 24-10.7 24-24V318.2H424c13.3 0 24-10.7 24-24z"></path>
-                    </svg>
-                    <!-- <a class="fas fa-plus align-middle"></a> -->
-                </div>
-            </div>
             <br>
             <div class="add-interview-btn">
-                <a class="btn btn-primary" href="interviews.html">Create</a>
+                <a class="btn btn-primary" href="interviews.html">Save</a>
             </div>
             <a class="btn btn-secondary" href="interviews.html">Close</a>
         </form>
@@ -123,4 +132,4 @@
     <script src="index.js"></script>
 </body>
 
-</html> 
+</html>

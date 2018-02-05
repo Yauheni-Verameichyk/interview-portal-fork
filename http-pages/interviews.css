@@ -9,3 +9,23 @@
 .add-interview-btn a:hover{
     background: green;
 }
+.shadowForm {
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    padding: 50px;
+    border-radius: 30px;
+    max-width: 600px;
+    position: relative;
+    top: 270px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.shadowForm:hover {
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+
+.editInterview {
+    top: 320px;
+} 
