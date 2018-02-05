@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="addInterview.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <header>
+        <div class='logo'>
+            <h1>Interview Portal</h1>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="disciplines.html">Discipline</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="interviews.html">Interviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Calendar</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <br>
+    <br>
+    <main class="shadowForm">
+        <form>
+            <h3>Add new interview</h3>
+            <br>
+            <span>Discipline:</span>
+            <select id="inputState" class="form-control">
+                <option selected>Choose...</option>
+                <option>.Net</option>
+                <option>Java</option>
+                <option>C++</option>
+                <option>C</option>
+                <option>JavaScript</option>
+            </select>
+
+            <br>
+            <form>
+                <div class="form-group">
+                    <label for="inputDate">Date:</label>
+                    <input type="datetime-local" class="form-control" value="2018-02-07T15:00">
+                </div>
+            </form>
+            <span>Candidate:</span>
+            <select id="inputState" class="form-control">
+                <option selected>Choose...</option>
+                <option>Petro Petrov</option>
+                <option>Tito Burt</option>
+                <option>Europa Arsenius</option>
+                <option>Dima Pupkin</option>
+                <option>Leon Lapata</option>
+            </select>
+            <br>
+            <span>Interviewers:</span>
+            <div class="row">
+                    <div class="form-group col-11" id="elementToAdd">
+                        <select id="inputState" class="form-control">
+                            <option selected="">Choose...</option>
+                            <option>Mark Otto</option>
+                            <option>Jacob Thornton</option>
+                            <option>Larry the Bird</option>
+                            <option>Mark Otto</option>
+                        </select>
+                    </div>
+                    <div class="form-group btn btn-light col-0">
+                        <svg class="svg-inline--fa fa-plus fa-w-14 align-middle" aria-hidden="true" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M448 294.2v-76.4c0-13.3-10.7-24-24-24H286.2V56c0-13.3-10.7-24-24-24h-76.4c-13.3 0-24 10.7-24 24v137.8H24c-13.3 0-24 10.7-24 24v76.4c0 13.3 10.7 24 24 24h137.8V456c0 13.3 10.7 24 24 24h76.4c13.3 0 24-10.7 24-24V318.2H424c13.3 0 24-10.7 24-24z"></path></svg><!-- <a class="fas fa-plus align-middle"></a> -->
+                    </div>
+                </div>
+            <br>
+            <div class="add-interview-btn">
+                <a class="btn btn-primary" href="interviews.html">Create</a>
+            </div>
+        </form>
+        </div>
+    </main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
