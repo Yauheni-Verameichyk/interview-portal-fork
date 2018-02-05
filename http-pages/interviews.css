@@ -1,6 +1,7 @@
  
  .add-interview-btn {
     display: inline-block;
+    padding-left: 10px; 
 }
 .add-interview-btn a{
     width: 100%;
@@ -12,7 +13,6 @@
 .shadowForm {
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
     padding: 50px;
-    border-radius: 30px;
     max-width: 600px;
     position: relative;
     top: 270px;
@@ -29,3 +29,28 @@
 .editInterview {
     top: 320px;
 } 
+
+.viewInterview {
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    padding: 20px;
+    max-width: 600px;
+    position: relative;
+    top: 380px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.viewInterview:hover {
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+
+.markInput {
+    width: 20px;
+    padding: 2px;
+}
+
+.titleArea {
+    float:left;
+}
+

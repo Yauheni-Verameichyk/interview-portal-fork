@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="interviews.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <header>
+        <div class='logo'>
+            <h1>Interview Portal</h1>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="disciplines.html">Discipline</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="interviews.html">Interviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Calendar</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <br>
+    <br>
+    <main class="viewInterview">
+        <form>
+            <h3 align="center"> View interview(passed)</h3>
+            <span>
+                <b>Interview id:</b>
+            </span>
+            <span>1;</span>
+            <br>
+            <span>
+                <b>status:</b>
+            </span>
+            <span>passed;</span>
+            <br>
+            <span>
+                <b>Candidate:</b>
+            </span>
+            <span>
+                <u>Petro Petrov;</u>
+            </span>
+            <br>
+            <span>
+                <b>Interviewers:</b>
+            </span>
+            <span>
+                <u>Ruby Kozlov; Igor Blinov;</u>
+            </span>
+            <br>
+            <span>
+                <b>Time:</b>
+            </span>
+            <span>01.01.2018/14:00</span>
+            <br>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">
+                    <b>Feedback:</b>
+                </label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">very good!</textarea>
+            </div>
+            <span class="titleArea">
+                <b>Discipline's mark: &nbsp</b>
+            </span>
+            <input type="text" class="form-control markInput" value="7" readonly>
+
+            <ul class="nav flex-column list-discipline">
+                <li>
+                    <span class="titleArea">
+                        <b>Java: &nbsp</b>
+                    </span>
+                    <input type="text" class="form-control markInput" value="7" readonly>
+                </li>
+                <li>
+                    <ul>
+                        <li class="list-area">
+                            <span class="titleArea">JavaCore: &nbsp</span>
+                            <input type="text" class="form-control markInput" value="7" readonly>
+                        </li>
+                        <ul>
+                            <li class="list-sub">
+                                <span class="titleArea">Collection: &nbsp</span>
+                                <input type="text" class="form-control markInput" value="8" readonly>
+                            </li>
+                            <li class="list-sub">
+                                <span class="titleArea">Concurrent: &nbsp</span>
+                                <input type="text" class="form-control markInput" value="7" readonly>
+                            </li>
+                        </ul>
+                        <li class="list-area">
+                            <span class="titleArea">
+                                Spring: &nbsp
+                            </span>
+                            <input type="text" class="form-control markInput" value="7" readonly>
+                            <ul>
+                                <li class="list-sub">
+                                    <span class="titleArea">Boot: &nbsp</span>
+                                    <input type="text" class="form-control markInput" value="7" readonly>
+                                </li>
+                                <li class="list-sub">
+                                    <span class="titleArea">MVC: &nbsp</span>
+                                    <input type="text" class="form-control markInput" value="7" readonly>
+                                </li>
+                                <li class="list-sub">
+                                    <span class="titleArea">Security: &nbsp</span>
+                                    <input type="text" class="form-control markInput" value="7" readonly>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+            <br>
+            <div align="center">
+                <a class="btn btn-secondary" href="interviews.html">Close</a>
+            </div>
+
+        </form>
+        </div>
+    </main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
