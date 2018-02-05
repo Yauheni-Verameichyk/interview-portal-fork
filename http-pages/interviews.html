@@ -1,3 +1,4 @@
+ 
 <!doctype html>
 <html lang="en">
 
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="interviews.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
@@ -37,10 +39,10 @@
                         <a class="nav-link " href="users.html">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="disciplines.html">Discipline</a>
+                        <a class="nav-link" href="disciplines.html">Discipline</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="interviews.html">Interviews</a>
+                        <a class="nav-link active" href="#">Interviews</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Candidates</a>
@@ -65,8 +67,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="add-user-btn">
-                    <a href='addUser.html' class="btn btn-primary">Add Users</a>
+                <span>Status: </span>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked>
+                    <label class="form-check-label" for="inlineCheckbox1">passed</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" checked>
+                    <label class="form-check-label" for="inlineCheckbox2">wait</label>
                 </div>
                 </tr>
             </div>
@@ -75,18 +83,30 @@
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">№</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
-                        <th scope="col">Role</th>
-                        <th scope="col"></th>
+                        <th scope="col">Candidate</th>
+                        <th scope="col">Interviewer</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Mark</th>
+                        <th scope="col">
+                            <div class="add-interview-btn">
+                                <a class="btn btn-primary">Add Interview</a>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Head Discipline</td>
+                        <td>
+                            <u>Petro Petrov</u>
+                        </td>
+                        <td>
+                            <u>Ruby Kozlov</u>
+                        </td>
+                        <td>01.01.2018/14:00</td>
+                        <td>passed</td>
+                        <td>8</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -98,9 +118,15 @@
                     </tr>
                     <tr>
                         <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>Interviewer</td>
+                        <td>
+                            <u>Igor Blinov</u>
+                        </td>
+                        <td>
+                            <u>Dima Pupkin</u>
+                        </td>
+                        <td>10.02.2018/15:00</td>
+                        <td>wait</td>
+                        <td> - </td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -109,13 +135,18 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
                     </tr>
                     <tr>
                         <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>Human Resource</td>
+                        <td>
+                            <u>Gregory Gorin</u>
+                        </td>
+                        <td>
+                            <u>Leon Lapata</u>
+                        </td>
+                        <td>03.02.2018/14:30</td>
+                        <td>passed</td>
+                        <td>8</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -124,13 +155,18 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
                     </tr>
                     <tr>
                         <th scope="row">4</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Head Discipline</td>
+                        <td>
+                            <u>Leon Lapata</u>
+                        </td>
+                        <td>
+                            <u>Igor Blinov </u>
+                        </td>
+                        <td>15.02.2018/13:00</td>
+                        <td>wait</td>
+                        <td>-</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -139,13 +175,18 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
                     </tr>
                     <tr>
                         <th scope="row">5</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>Interviewer</td>
+                        <td>
+                            <u>Dima Pupkin</u>
+                        </td>
+                        <td>
+                            <u>Igor Blinov</u>
+                        </td>
+                        <td>02.02.2018/15:30</td>
+                        <td>passed</td>
+                        <td>7</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -154,13 +195,18 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
                     </tr>
                     <tr>
                         <th scope="row">6</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>Human Resource</td>
+                        <td>
+                            <u>Ruby Kozlov</u>
+                        </td>
+                        <td>
+                            <u>Igor Blinov</u>
+                        </td>
+                        <td>21.02.2018/14:00</td>
+                        <td>passed</td>
+                        <td>9</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -169,13 +215,18 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
                     </tr>
                     <tr>
                         <th scope="row">7</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Head Discipline</td>
+                        <td>
+                            <u>Cintia Laurentina</u>
+                        </td>
+                        <td>
+                            <u>Maristela Payton</u>
+                        </td>
+                        <td>21.01.2018/14:00</td>
+                        <td>passed</td>
+                        <td>8</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -184,13 +235,18 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
                     </tr>
                     <tr>
                         <th scope="row">8</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>Interviewer</td>
+                        <td>
+                            <u>Finnagán Rafael</u>
+                        </td>
+                        <td>
+                            <u>Dionýz Daniel</u>
+                        </td>
+                        <td>21.02.2018/14:00</td>
+                        <td>wait</td>
+                        <td>-</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -199,13 +255,18 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
                     </tr>
                     <tr>
                         <th scope="row">9</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>Human Resource</td>
+                        <td>
+                            <u>Europa Arsenius</u>
+                        </td>
+                        <td>
+                            <u>Sylvanus Áslaug</u>
+                        </td>
+                        <td>19.02.2018/15:00</td>
+                        <td>wait</td>
+                        <td>-</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -214,13 +275,18 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
                     </tr>
                     <tr>
                         <th scope="row">10</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Head Discipline</td>
+                        <td>
+                            <u>Tito Burt</u>
+                        </td>
+                        <td>
+                            <u>Akpofure Herman</u>
+                        </td>
+                        <td>17.02.2018/12:00</td>
+                        <td>wait</td>
+                        <td>-</td>
                         <td class="button-column">
                             <div class="btn btn-light pull-left">
                                 <img href="#" class="far fa-trash-alt align-middle"></img>
@@ -229,39 +295,6 @@
                                 <img class="fas fa-pencil-alt align-middle"></img>
                             </div>
                         </td>
-                    </tr>
-                    </tr>
-                    <tr>
-                        <th scope="row">11</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>Interviewer</td>
-                        <td class="button-column">
-                            <div class="btn btn-light pull-left">
-                                <img href="#" class="far fa-trash-alt align-middle"></img>
-                            </div>
-                            <div class="btn btn-light pull-left" onclick="location.href='editUser.html'">
-                                <img class="fas fa-pencil-alt align-middle"></img>
-                            </div>
-                        </td>
-                    </tr>
-                    </tr>
-                    <tr>
-                        <a href="#">
-                            <th scope="row">12</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>Human Resource</td>
-                            <td class="button-column">
-                                <div class="btn btn-light pull-left">
-                                    <img href="#" class="far fa-trash-alt align-middle"></img>
-                                </div>
-                                <div class="btn btn-light pull-left" onclick="location.href='editUser.html'">
-                                    <img class="fas fa-pencil-alt align-middle"></img>
-                                </div>
-                            </td>
-                    </tr>
-                    </a>
                     </tr>
                 </tbody>
             </table>
