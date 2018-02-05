@@ -54,43 +54,27 @@
     <main>
         <div>
             <form>
-                <h3>Edit existing User</h3>
+                <h3>User info</h3>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Email</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email" value="vasya_pupkin@pupkins.com">
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email" readonly value="vasya_pupkin@pupkins.com">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="Name">Name</label>
-                        <input type="text" class="form-control" id="Name" placeholder="Name" value="Vasya">
+                        <input type="text" class="form-control" id="Name" placeholder="Name" readonly value="Vasya">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="SurName">SurName</label>
-                        <input type="text" class="form-control" id="SurName" placeholder="Email" value="Pupkin">
+                        <input type="text" class="form-control" id="SurName" placeholder="Email" readonly value="Pupkin">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="PhoneNumber">Phone number</label>
-                        <input type="text" class="form-control" id="PhoneNumber" placeholder="Phone number" value="+375447715028">
+                        <input type="text" class="form-control" id="PhoneNumber" placeholder="Phone number" readonly value="+375447715028">
                     </div>
                 </div>
-                <div class="form-row form-roles">
-                    <div>Roles:</div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1"> Coordinator</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck2" onclick="toggle()">
-                        <label class="custom-control-label" for="customCheck2">Discipline Head</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck3" checked onclick="toggle()">
-                        <label class="custom-control-label" for="customCheck3">Interviewer</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck4">
-                        <label class="custom-control-label" for="customCheck4">Human Resource</label>
-                    </div>
+                <div class="form-group">
+                    <div>Roles: Interviewer</div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
@@ -120,42 +104,17 @@
                 </header>
                 <main>
                     <div>
-                        <label for="inputState">Disciplines</label>
+                        <label for="inputState">Disciplines:</label>
                         <ul class="list-group">
                             <li class="list-group-item btn">
                                 <a href="#">Java</a>
-                                <div class="btn btn-light pull-right">
-                                    <img href="#" class="far fa-trash-alt align-middle"></img>
-                                </div>
                             </li>
                             <li class="list-group-item btn">
                                 <a href="#">JavaScript</a>
-                                <div class="btn btn-light pull-right">
-                                    <img href="#" class="far fa-trash-alt align-middle"></img>
-                                </div>
                             </li>
                         </ul>
                     </div>
-                    <div id="roles">
-                        <div class="row">
-                            <div class="form-group col-11" id="elementToAdd">
-                                <select id="inputState" class="form-control">
-                                    <option selected>Choose...</option>
-                                    <option>Java</option>
-                                    <option>C++</option>
-                                    <option>C</option>
-                                    <option>JavaScript</option>
-                                </select>
-                            </div>
-                            <div class="form-group btn btn-light col-0">
-                                <a class="fas fa-plus align-middle"></a>
-                            </div>
-                        </div>
-                    </div>
         </div>
-        </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Create</button>
         </form>
         </div>
         </main>
