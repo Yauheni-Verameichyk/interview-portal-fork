@@ -43,7 +43,7 @@
                         <a class="nav-link" href="interviews.html">Interviews</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Candidates</a>
+                        <a class="nav-link active" href="candidates.html">Candidates</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Calendar</a>
@@ -53,37 +53,17 @@
         </nav>
     </header>
     <main>
-            <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input type="text" class="form-control" placeholder="Enter address">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Search</button>
-              </span>
-            </div>
-        Вавы -->
-        <div class="col-lg-6">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search for...">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                  </span>
-                </div><!-- /input-group -->
-              </div><!-- /.col-lg-6 -->
-            </div><!-- /.row -->
-        <!-- dsfds -->
-        <div>
             <div>
                 <div class="search-user">
-                    <form class="search-user-form">
-                        <input type="text" class="form-control octicon-search">
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div class="add-user-btn">
-                    <a href='addUser.html' class="btn btn-primary">Add Users</a>
-                </div>
-                </tr>
             </div>
             <br>
             <table class="user-table table table-hover table-bordered">
@@ -93,7 +73,11 @@
                         <th scope="col">Name</th>
                         <th scope="col">Surname</th>
                         <th scope="col">Disciplines</th>
-                        <th scope="col">Edit</th>
+                        <th scope="col">
+                                <div class="add-interview-btn">
+                                    <a class="btn btn-primary" href="addCandidate.html">Add candidate</a>
+                                </div>
+                            </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -281,15 +265,15 @@
                 </tbody>
             </table>
         </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="index.js"></script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+        <script src="index.js"></script>
 </body>
 
 </html>
