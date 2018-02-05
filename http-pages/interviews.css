@@ -1,0 +1,11 @@
+ 
+ .add-interview-btn {
+    display: inline-block;
+}
+.add-interview-btn a{
+    width: 100%;
+    background: rgb(120, 187, 120);
+}
+.add-interview-btn a:hover{
+    background: green;
+}
