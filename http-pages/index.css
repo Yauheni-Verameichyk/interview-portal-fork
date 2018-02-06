@@ -114,3 +114,18 @@ caption {
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
     padding: 10px 10px;
 }
+
+.subArea{
+    margin-left: 50px;
+    margin-top: 0px;
+    height: auto;
+    /* display: flex; */
+}
+
+.firstListElement{
+    padding: 0px
+}
+
+.subAreaElement{
+    height: 60px;
+}
