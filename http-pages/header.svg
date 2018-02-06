@@ -1,0 +1,53 @@
+<svg width="1524" height="100" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <defs>
+  <filter id="svg_4_blur">
+   <feGaussianBlur stdDeviation="0.8"/>
+  </filter>
+  <filter id="svg_3_blur">
+   <feGaussianBlur stdDeviation="0.4"/>
+  </filter>
+  <filter id="svg_2_blur">
+   <feGaussianBlur stdDeviation="0"/>
+  </filter>
+  <filter id="svg_8_blur" x="-50%" y="-50%" width="200%" height="200%">
+   <feGaussianBlur stdDeviation="1.1"/>
+  </filter>
+  <filter id="svg_6_blur">
+   <feGaussianBlur stdDeviation="0.7"/>
+  </filter>
+  <filter id="svg_7_blur">
+   <feGaussianBlur stdDeviation="0.8"/>
+  </filter>
+  <filter id="svg_9_blur">
+   <feGaussianBlur stdDeviation="0.1"/>
+  </filter>
+  <filter id="svg_11_blur">
+   <feGaussianBlur stdDeviation="0.4"/>
+  </filter>
+  <filter id="svg_13_blur">
+   <feGaussianBlur stdDeviation="0.9"/>
+  </filter>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="2543.212473" height="168.746225" id="canvas_background" fill="#ffffff"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text fill="#ff7214" stroke-width="0" x="558.523439" y="86.833333" id="svg_1" font-size="81" font-family="'Courier New', Courier, monospace" text-anchor="start" xml:space="preserve" stroke="#7f390a" font-style="normal" font-weight="bold">Interview</text>
+  <text fill="#e84007" stroke="#000" stroke-width="0" x="735.500001" y="34.833333" id="svg_2" font-size="45" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-style="normal" font-weight="bold" filter="url(#svg_2_blur)">portal</text>
+  <text fill="#ffaa07" stroke="#000" stroke-width="0" x="1318.5" y="85.5" id="svg_3" font-size="21" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" filter="url(#svg_3_blur)">discipline</text>
+  <text fill="#7f390a" stroke="#000" stroke-width="0" x="448.166667" y="37.5" id="svg_4" font-size="23" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" filter="url(#svg_4_blur)">candidate</text>
+  <text fill="#ffa060" stroke-width="0" x="915.084952" y="34.459615" id="svg_5" font-size="21" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-weight="bold" transform="matrix(1.351527690887451,0,0,1.351527690887451,-227.91112446784973,-12.479233026504517) " stroke="#000">area</text>
+  <text fill="#3724cc" stroke="#7f390a" stroke-width="0" x="1173.166667" y="83.833333" id="svg_6" font-size="22" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" filter="url(#svg_6_blur)">sub-area</text>
+  <text fill="#b24c07" stroke="#7f390a" stroke-width="0" x="1080.166667" y="55.166667" id="svg_7" font-size="21" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-weight="bold" filter="url(#svg_7_blur)">competency</text>
+  <text fill="#00a9b2" stroke="#7f390a" stroke-width="0" x="191.5" y="83.5" id="svg_8" font-size="39" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-weight="bold" filter="url(#svg_8_blur)">HR</text>
+  <text fill="#24cc77" stroke="#7f390a" stroke-width="0" x="1388.5" y="45.5" id="svg_9" font-size="22" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" filter="url(#svg_9_blur)" font-weight="bold">Interviewer</text>
+  <text fill="#997e49" stroke="#7f390a" stroke-width="0" x="70.5" y="33.5" id="svg_10" font-size="22" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">Coordinator</text>
+  <text fill="#401c05" stroke="#7f390a" stroke-width="0" x="246.5" y="35.5" id="svg_11" font-size="22" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-weight="bold" filter="url(#svg_11_blur)">Resume</text>
+  <text fill="#7f390a" stroke="#7f390a" stroke-width="0" x="15.5" y="71.5" id="svg_12" font-size="22" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">hard skills</text>
+  <text fill="#1805b2" stroke="#7f390a" stroke-width="0" x="347.5" y="75.5" id="svg_13" font-size="25" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-weight="bold" filter="url(#svg_13_blur)">soft skills</text>
+  <text fill="#ff812d" stroke="#7f390a" stroke-width="0" x="1204.5" y="33.5" id="svg_14" font-size="25" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">Management</text>
+ </g>
+</svg>
