@@ -1,5 +1,5 @@
 header {
-    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 body{
     margin: 0 10%;
@@ -28,9 +28,24 @@ main {
     margin: 0 auto;
     width: 500px;
     text-align: center;
-}
-.list-group{
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    padding: 25px;
+}
+.signIn_form:hover {
+    box-shadow: 0 0 7px rgba(0,0,0,0.5);
+}
+
+.user_form {
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    padding: 25px;
+}
+
+.user_form:hover {
+    box-shadow: 0 0 7px rgba(0,0,0,0.5);
+}
+
+.list-group{
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
 }
 
 .list-g{

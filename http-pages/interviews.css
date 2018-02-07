@@ -11,7 +11,7 @@
     background: green;
 }
 .shadowForm {
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
     padding: 50px;
     max-width: 600px;
     position: relative;
@@ -23,7 +23,7 @@
 }
 
 .shadowForm:hover {
-    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    box-shadow: 0 0 5px rgba(0,0,0,0.7);
 }
 
 .editInterview {
@@ -31,7 +31,7 @@
 } 
 
 .viewInterview {
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
     padding: 20px;
     max-width: 600px;
     position: relative;
@@ -42,7 +42,7 @@
 }
 
 .viewInterview:hover {
-    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    box-shadow: 0 0 5px rgba(0,0,0,0.7);
 }
 
 .markInput {
