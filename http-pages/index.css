@@ -1,6 +1,17 @@
 header {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    min-width: 469px;
 }
+
+.menu {
+    z-index: 100;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+ }
 body{
     margin: 0 10%;
 }
@@ -26,7 +37,7 @@ main {
 }
 .signIn_form{
     margin: 0 auto;
-    width: 500px;
+    max-width: 500px;
     text-align: center;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
     padding: 25px;
