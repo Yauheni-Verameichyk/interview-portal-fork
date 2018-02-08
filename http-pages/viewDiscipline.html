@@ -17,7 +17,7 @@
 
 <body>
     <header>
-            <img src="header.svg">
+        <img src="header.svg">
         <!-- <div class='logo'>
             <h1>Interview Portal</h1>
         </div> -->
@@ -54,42 +54,56 @@
     </header>
     <main>
         <div>
-            <form class='signIn_form'>
-                <h1>Add new Discipline</h1>
+            <div class='signIn_form'>
+                <h1>View Discipline</h1>
                 <form class='form-group'>
                     <div class="form-group">
                         <label for="disciplineName">Discipline name</label>
-                        <input type="text" class="form-control" id="disciplineName" placeholder="Enter discipline name" required>
+                        <input type="text" class="form-control" id="disciplineName" value="Java" placeholder="Enter discipline name" readonly>
                     </div>
                     <div class="form-group">
                         <label for="disciplineDescription">Discipline description</label>
-                        <textarea class="form-control" id="disciplineDescription" placeholder="Enter discipline description"></textarea>
+                        <textarea class="form-control" id="disciplineDescription" placeholder="Enter discipline description" readonly>It is a general-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically designed to have as few implementation dependencies as possible.</textarea>
                     </div>
+                    <label for="disciplineHeads">Discipline heads</label>
+                </form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
 
-                    <label for="inputState">Assign discipline head</label>
-                    <div class="row">
-                        <div class="form-group col-11" id="elementToAdd">
-                            <select id="inputState" class="form-control">
-                                <option selected>Choose...</option>
-                                <option>Mark Otto</option>
-                                <option>Jacob Thornton</option>
-                                <option>Larry the Bird</option>
-                                <option>Mark Otto</option>
-                            </select>
-                        </div>
-                        <div class="form-group btn btn-light col-0">
-                            <a class="fas fa-plus align-middle"></a>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href='disciplines.html' class="btn btn-primary">Create</a>
-                        <a class="btn btn-secondary" href="disciplines.html">Cancel</a>
-                    </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <a href='disciplines.html' class="btn btn-primary">Apply changes</a>
+                    <a class="btn btn-secondary" href="disciplines.html">Cancel</a>
+                </div>
+            </div>
+
         </div>
-       
-        </form>
         </div>
         </div>
+
     </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

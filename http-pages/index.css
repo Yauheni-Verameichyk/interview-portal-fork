@@ -87,15 +87,10 @@ main {
 
 
 .add-user-btn {
-    width: 25%;
     display: inline-block;
 }
 .add-user-btn a{
     width: 100%;
-    background: rgb(120, 187, 120);
-}
-.add-user-btn a:hover{
-    background: green;
 }
 .search-user{
     display: inline-block;
@@ -162,4 +157,12 @@ caption {
 
 .navbar {
     height: 40px;
+}
+
+.description {
+    width: 100%;
+}
+
+.addDiscButton {
+    padding-left: 20px;
 }

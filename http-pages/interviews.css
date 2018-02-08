@@ -5,10 +5,6 @@
 }
 .add-interview-btn a{
     width: 100%;
-    background: rgb(120, 187, 120);
-}
-.add-interview-btn a:hover{
-    background: green;
 }
 .shadowForm {
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
