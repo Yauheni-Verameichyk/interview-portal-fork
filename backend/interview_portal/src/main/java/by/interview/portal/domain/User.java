@@ -47,8 +47,8 @@ public class User {
 	@Column(name = "phone_number", nullable = false, length = 50)
 	private String phoneNumber;
 
-	@Column(name = "email", unique = true, nullable = false, length = 50)
-	private String email;
+	@Column(name = "login", unique = true, nullable = false, length = 50)
+	private String login;
 
 	@ManyToMany
 	@JoinTable(name = "users_rdp", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {

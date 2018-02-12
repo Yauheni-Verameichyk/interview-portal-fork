@@ -31,7 +31,7 @@ public class UserDTO {
 
 	private String phoneNumber;
 
-	private String email;
+	private String login;
 
 	private Map<Role, List<Discipline>> roleDisciplines;
 
