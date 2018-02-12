@@ -1,1 +1,5 @@
 http-pages/.history/
+*.project
+*.classpath
+backend/interview_portal/.settings/
+backend/interview_portal/target/
