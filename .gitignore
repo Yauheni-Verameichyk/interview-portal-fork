@@ -3,3 +3,5 @@ http-pages/.history/
 *.classpath
 backend/interview_portal/.settings/
 backend/interview_portal/target/
+*.iml
+backend/interview_portal/.idea/
