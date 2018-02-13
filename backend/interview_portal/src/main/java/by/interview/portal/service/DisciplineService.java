@@ -20,78 +20,73 @@ import by.interview.portal.repository.RoleDisciplinePermissionRepository;
 @Transactional
 public class DisciplineService {
 
-	@Autowired
-	private DisciplineRepository disciplineRepository;
+    @Autowired
+    private DisciplineRepository disciplineRepository;
 
-	@Autowired
-	private PermissionRepository permissionRepository;
+    @Autowired
+    private PermissionRepository permissionRepository;
 
-	@Autowired
-	private RoleDisciplinePermissionRepository roleDisciplinePermissionRepository;
+    @Autowired
+    private RoleDisciplinePermissionRepository roleDisciplinePermissionRepository;
 
-	public Discipline findById(Long id) {
-		Optional<Discipline> discipline = disciplineRepository.findById(id);
-		return discipline.isPresent() ? discipline.get() : null;
+    public Discipline findById(Long id) {
+        Optional<Discipline> discipline = disciplineRepository.findById(id);
+        return discipline.isPresent() ? discipline.get() : null;
 
-	}
+    }
 
-	// public List<Discipline> findAll() {
-	// return disciplineRepository.findAll();
-	// }
+    // public List<Discipline> findAll() {
+    // return disciplineRepository.findAll();
+    // }
 
-	public List<Discipline> findByParentId(Long id) {
-		return disciplineRepository.findAllByParentId(id);
-	}
+    public List<Discipline> findByParentId(Long id) {
+        return disciplineRepository.findAllByParentId(id);
+    }
 
-	// add exception cast in the future if discipline with this name already exists
-	public void save(Discipline discipline) {
-		if (disciplineRepository.findByName(discipline.getName()) == null) {
-			discipline = disciplineRepository.save(discipline);
-			roleDisciplinePermissionRepository.saveAll(generateRoleDisciplinePermissionList(discipline));
-		}
-	}
+    // add exception cast in the future if discipline with this name already exists
+    public void save(Discipline discipline) {
+        if (disciplineRepository.findByName(discipline.getName()) == null) {
+            discipline = disciplineRepository.save(discipline);
+            roleDisciplinePermissionRepository
+                    .saveAll(generateRoleDisciplinePermissionList(discipline));
+        }
+    }
 
-	private List<RoleDisciplinePermission> generateRoleDisciplinePermissionList(Discipline discipline) {
-		String permissionNamePart = discipline.getName().trim().replaceAll(" ", "_").toUpperCase();
-		List<RoleDisciplinePermission> roleDisciplinePermissionList = new LinkedList<>();
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.COORDINATOR, null,
-				createPermission("EDIT_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.COORDINATOR, null,
-				createPermission("DELETE_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD, discipline,
-				createPermission("ADD_SUB_ITEM_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD, discipline,
-				createPermission("EDIT_SUB_ITEM_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD, discipline,
-				createPermission("DELETE_SUB_ITEM_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD, discipline,
-				createPermission("ADD_INTERVIEWER_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD, discipline,
-				createPermission("EDIT_INTERVIEWER_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD, discipline,
-				createPermission("DELETE_INTERVIEWER_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.COORDINATOR, null,
-				createPermission("ADD_INTERVIEWER_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.COORDINATOR, null,
-				createPermission("EDIT_INTERVIEWER_DISCIPLINE_" + permissionNamePart)));
-		roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.COORDINATOR, null,
-				createPermission("DELETE_INTERVIEWER_DISCIPLINE_" + permissionNamePart)));
-		return roleDisciplinePermissionList;
-	}
+    private List<RoleDisciplinePermission> generateRoleDisciplinePermissionList(
+            Discipline discipline) {
+        String permissionNamePart = discipline.getName().trim().replaceAll(" ", "_").toUpperCase();
+        List<RoleDisciplinePermission> roleDisciplinePermissionList = new LinkedList<>();
 
-	private RoleDisciplinePermission createRoleDisciplinePermission(Role role, Discipline discipline,
-			Permission permission) {
-		RoleDisciplinePermission roleDisciplinePermission = new RoleDisciplinePermission(null, role, discipline,
-				permission);
-		return roleDisciplinePermission;
-	}
+        roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD,
+                discipline, createPermission("CRUD_SUB_ITEM_DISCIPLINE_" + permissionNamePart)));
 
-	private Permission createPermission(String permissionName) {
-		Permission permission = permissionRepository.findByName(permissionName);
-		if (permission == null) {
-			permission = new Permission(null, permissionName);
-			permissionRepository.save(permission);
-		}
-		return permission;
-	}
+        roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD,
+                discipline, createPermission("VIEW_SUB_ITEM_DISCIPLINE_" + permissionNamePart)));
+
+        roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.INTERVIEWER,
+                discipline, createPermission("VIEW_SUB_ITEM_DISCIPLINE_" + permissionNamePart)));
+
+        roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.DISCIPLINE_HEAD,
+                discipline, createPermission("CRUD_INTERVIEWER_DISCIPLINE_" + permissionNamePart)));
+
+        roleDisciplinePermissionList.add(createRoleDisciplinePermission(Role.COORDINATOR, null,
+                createPermission("CRUD_INTERVIEWER_DISCIPLINE_" + permissionNamePart)));
+        return roleDisciplinePermissionList;
+    }
+
+    private RoleDisciplinePermission createRoleDisciplinePermission(Role role,
+            Discipline discipline, Permission permission) {
+        RoleDisciplinePermission roleDisciplinePermission =
+                new RoleDisciplinePermission(null, role, discipline, permission);
+        return roleDisciplinePermission;
+    }
+
+    private Permission createPermission(String permissionName) {
+        Permission permission = permissionRepository.findByName(permissionName);
+        if (permission == null) {
+            permission = new Permission(null, permissionName);
+            permissionRepository.save(permission);
+        }
+        return permission;
+    }
 }
