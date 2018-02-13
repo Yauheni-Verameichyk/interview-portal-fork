@@ -29,8 +29,8 @@ public class UserController {
 
 	@ResponseStatus(value = HttpStatus.OK)
 	@GetMapping(value = "/{id}")
-	public Optional<UserDTO> findById(@PathVariable Long id) {
-		return userFacade.findById(id);
+	public UserDTO findById(@PathVariable Long id) {
+		return userFacade.findById(id).get();
 	}
 
 	@ResponseStatus(value = HttpStatus.OK)
