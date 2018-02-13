@@ -36,6 +36,6 @@ public class Discipline {
 	@Column(name = "subscription", nullable = true, length = 200)
 	private String subscription;
 
-	@Column(name = "parent_id", nullable = true, columnDefinition = "bigserial")
+	@Column(name = "parent_id", nullable = true)
 	private Long parentId;
 }

@@ -38,8 +38,8 @@ public class RoleDisciplinePermission {
 	@Column(name = "role_id", nullable = false)
 	private Role role;
 
-	@ManyToOne
-	@JoinColumn(name = "discipline_id", nullable = true)
+	@ManyToOne(optional = true)
+	@JoinColumn(columnDefinition = "integer", name = "discipline_id")
 	private Discipline discipline;
 
 	@ManyToOne
