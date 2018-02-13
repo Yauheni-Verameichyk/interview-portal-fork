@@ -6,16 +6,9 @@ import java.util.Set;
 
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.Role;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Data
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
