@@ -1,7 +1,9 @@
 package by.interview.portal.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import by.interview.portal.facade.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,22 +24,25 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private UserFacade userFacade;
+
 	@ResponseStatus(value = HttpStatus.OK)
 	@GetMapping(value = "/{id}")
-	public UserDTO findById(@PathVariable Long id) {
-		return userService.findById(id);
+	public Optional<UserDTO> findById(@PathVariable Long id) {
+		return userFacade.findById(id);
 	}
 
 	@ResponseStatus(value = HttpStatus.OK)
 	@GetMapping
 	public List<UserDTO> findAll() {
-		return userService.findAll();
+		return userFacade.findAll();
 	}
 
 	@ResponseStatus(value = HttpStatus.OK)
 	@PutMapping
 	public void save(@RequestBody UserDTO userDTO) {
-		userService.save(userDTO);
+		userFacade.save(userDTO);
 	}
 
 	// private UserDTO geUserDTO() {
