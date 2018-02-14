@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/header/header.component';
 import { MenuComponent } from './component/menu/menu.component';
 import { LoginComponent } from './component/login/login.component';
+import { UserPageComponent } from './component/user-page/user-page.component';
+import { DisciplinePageComponent } from './component/discipline-page/discipline-page.component';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { LoginComponent } from './component/login/login.component';
     AppComponent,
     HeaderComponent,
     MenuComponent,
-    LoginComponent
+    LoginComponent,
+    UserPageComponent,
+    DisciplinePageComponent
   ],
   imports: [
     BrowserModule
