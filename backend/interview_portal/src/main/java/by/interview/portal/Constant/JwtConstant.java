@@ -1,4 +1,4 @@
-package by.interview.portal.Constant;
+package by.interview.portal.constant;
 
 public class JwtConstant {
     public static final String HEADER_STRING = "Authorization";

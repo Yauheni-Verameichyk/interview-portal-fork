@@ -9,7 +9,7 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import by.interview.portal.Constant.JwtConstant;
+import by.interview.portal.constant.JwtConstant;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -49,17 +49,33 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	private Date calculateExpirationDate(Date createdDate) {
-		return new Date(createdDate.getTime() + 10000 * 1000);
+		return new Date(createdDate.getTime() + 1000 * 1000);
 	}
 
 	private String doGenerateToken(Map<String, Object> claims, String username) {
 		final Date createdDate = new Date();
 		final Date expirationDate = calculateExpirationDate(createdDate);
 
-		System.out.println("doGenerateToken " + createdDate);
+		System.err.println("doGenerateToken " + createdDate);
 
 		return Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(createdDate)
-				.setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, JwtConstant.SIGNING_KEY).compact();
+				.setExpiration(expirationDate)
+				.setIssuedAt(createdDate)
+				.signWith(SignatureAlgorithm.HS512, JwtConstant.SIGNING_KEY)
+				.compact();
+	}
+	public String refreshToken(String token) {
+		final Date createdDate = new Date();
+		final Date expirationDate = calculateExpirationDate(createdDate);
+
+		final Claims claims = getAllClaimsFromToken(token);
+		claims.setIssuedAt(createdDate);
+		claims.setExpiration(expirationDate);
+
+		return Jwts.builder()
+				.setClaims(claims)
+				.signWith(SignatureAlgorithm.HS512, JwtConstant.SIGNING_KEY)
+				.compact();
 	}
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
