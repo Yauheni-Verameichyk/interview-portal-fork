@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.Discipline;
@@ -18,7 +18,7 @@ import by.interview.portal.domain.User;
 import by.interview.portal.dto.UserDTO;
 import by.interview.portal.repository.CustomRoleDisciplinePermissionRepository;
 
-@Service
+@Component("userConverter")
 public class UserConverter implements Converter<User, UserDTO> {
 
 	@Autowired
