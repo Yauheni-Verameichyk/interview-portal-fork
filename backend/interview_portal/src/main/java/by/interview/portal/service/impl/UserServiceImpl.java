@@ -16,27 +16,27 @@ import lombok.NonNull;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Override
-	public List<User> findAll() {
-		return userRepository.findAll();
-	}
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
-	@Override
-	public void save(User user) {
-		userRepository.save(user);
-	}
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
+    }
 
-	@Override
-	public Optional<User> findById(@NonNull long id) {
-		return Optional.ofNullable(userRepository.getOne(id));
-	}
+    @Override
+    public Optional<User> findById(long id) {
+        return Optional.ofNullable(userRepository.getOne(id));
+    }
 
-	@Override
-	@NonNull
-	public Optional<User> findUserByLogin(String login) {
-		return Optional.ofNullable(userRepository.findFirstByLogin(login));
-	}
+    @Override
+    @NonNull
+    public Optional<User> findUserByLogin(String login) {
+        return Optional.ofNullable(userRepository.findFirstByLogin(login));
+    }
 }
