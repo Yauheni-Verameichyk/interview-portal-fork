@@ -1,1 +1,168 @@
-/* You can add global styles to this file, and also import other style files */
+header {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    min-width: 469px;
+}
+
+.menu {
+    z-index: 100;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+ }
+body{
+    margin: 0 10%;
+}
+.logo {
+    height: 100px;
+    padding-top: 25px;
+    background-color: rgb(211, 236, 236);
+}
+.logo h1 {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+.card {
+    padding: 10px;
+}
+main {
+    padding-top: 10px;
+    padding-bottom: 50px;
+}
+.signIn{
+    padding-top: 5%;
+}
+.signIn_form{
+    margin: 0 auto;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    padding: 25px;
+}
+.signIn_form:hover {
+    box-shadow: 0 0 7px rgba(0,0,0,0.5);
+}
+
+.user_form {
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    padding: 25px;
+    text-align: center;
+}
+
+.user_form:hover {
+    box-shadow: 0 0 7px rgba(0,0,0,0.5);
+}
+
+.list-group{
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
+.list-g{
+    margin-top: 20px;
+    text-align: center;
+}
+.list-g ul {
+    background-color: rgb(255, 255, 255);
+}
+.list-discipline, .list-area, .list-sub{
+    padding: 10px;
+    border-radius: 2px;
+    background: rgb(228, 228, 228);
+}
+.list-area{
+    background: rgb(190, 190, 190);
+}
+
+.list-sub {
+    background-color: rgb(134, 134, 134);
+}
+
+.list-g li:hover:not(:first-child) {
+    background-color: rgb(174, 224, 236);
+}
+
+
+
+.add-user-btn {
+    display: inline-block;
+}
+.add-user-btn a{
+    width: 100%;
+}
+.search-user{
+    display: inline-block;
+    width: 70%;
+}
+.search-user-form{
+    display: inline-block;
+    width: 100%;
+}
+.search-user-form input{
+    display: inline-block;
+    width: 65%;
+}
+.search-user-form button {
+    width: 18%;
+}
+tbody tr td button {
+    width: 100%;
+}
+.form-roles div{
+    margin-right: 1.5rem;
+}
+
+.display {
+    display: none;
+}
+
+.button-column{
+    width: 120px;
+ }
+
+ .user-table {
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+ }
+
+caption {
+    caption-side: top;
+}
+.addNews{
+    text-align: center;
+}
+.add-candidates{
+    margin-top: 20px;
+}
+.border{
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    padding: 10px 10px;
+}
+
+.subArea{
+    margin-left: 50px;
+    margin-top: 0px;
+    height: auto;
+    /* display: flex; */
+}
+
+.firstListElement{
+    padding: 0px
+}
+
+.subAreaElement{
+    height: 60px;
+}
+
+.navbar {
+    height: 40px;
+}
+
+.description {
+    width: 100%;
+}
+
+.addDiscButton {
+    padding-left: 20px;
+}
