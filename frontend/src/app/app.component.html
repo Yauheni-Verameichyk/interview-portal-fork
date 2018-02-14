@@ -1,6 +1,7 @@
 <header align="center">
   <img src="/assets/img/header.svg">
-  <app-menu></app-menu>
+  <app-menu *ngIf="loginCheck"></app-menu>
 </header>
+<app-login *ngIf="!loginCheck" (onChanged)="onChanged()"></app-login>
 
 
