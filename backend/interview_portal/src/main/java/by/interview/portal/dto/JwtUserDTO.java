@@ -15,7 +15,10 @@ public class JwtUserDTO implements UserDetails {
     private  Collection<? extends GrantedAuthority> authorities;
     private  boolean enabled;
 
-    public JwtUserDTO( String password, String login, Collection<? extends GrantedAuthority> authorities, boolean enabled) {
+    public JwtUserDTO() {
+    }
+
+    public JwtUserDTO(String password, String login, Collection<? extends GrantedAuthority> authorities, boolean enabled) {
         this.password = password;
         this.login = login;
         this.authorities = authorities;
