@@ -3,5 +3,5 @@
   <app-menu *ngIf="loginCheck"></app-menu>
 </header>
 <app-login *ngIf="!loginCheck" (onChanged)="onChanged()"></app-login>
-
+<router-outlet *ngIf="loginCheck"></router-outlet>
 

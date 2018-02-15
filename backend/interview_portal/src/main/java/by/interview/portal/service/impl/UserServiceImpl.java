@@ -16,7 +16,6 @@ import lombok.NonNull;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-
 	@Autowired
 	private UserRepository userRepository;
 
@@ -40,4 +39,5 @@ public class UserServiceImpl implements UserService {
 	public Optional<User> findUserByLogin(String login) {
 		return Optional.ofNullable(userRepository.findFirstByLogin(login));
 	}
+
 }
