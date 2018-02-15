@@ -10,6 +10,7 @@ import { MenuComponent } from './component/menu/menu.component';
 import { LoginComponent } from './component/login/login.component';
 import { UserPageComponent } from './component/user-page/user-page.component';
 import { DisciplinePageComponent } from './component/discipline-page/discipline-page.component';
+import { ApiModule } from './api/api.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DisciplinePageComponent } from './component/discipline-page/discipline-
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ApiModule
   ],
   providers: [],
   bootstrap: [AppComponent]
