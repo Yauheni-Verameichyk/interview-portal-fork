@@ -12,17 +12,17 @@ import org.springframework.stereotype.Repository;
 
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.Role;
-import by.interview.portal.domain.RoleDisciplinePermission;
+import by.interview.portal.domain.UserRoleDiscipline;
 
 @Repository
-public class CustomRoleDisciplinePermissionRepositoryImplementation
-        implements CustomRoleDisciplinePermissionRepository {
+public class CustomUserDisciplineRepositoryImplementation
+        implements CustomUserRoleDisciplineRepository {
 
     @Autowired
     private EntityManager entityManager;
 
     @Override
-    public List<RoleDisciplinePermission> findRoleDisciplinePermissions(
+    public List<UserRoleDiscipline> findUserRoleDisciplines(
             Map<Role, List<Discipline>> roleDisciplinesMap) {
         Integer iterationsCount = 0;
         if (roleDisciplinesMap == null) {
@@ -30,10 +30,10 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
         }
         Query query = entityManager.createNativeQuery(
                 generateSQLQueryString(roleDisciplinesMap, iterationsCount),
-                RoleDisciplinePermission.class);
+                UserRoleDiscipline.class);
         setQueryParameters(roleDisciplinesMap, iterationsCount, query);
         @SuppressWarnings("unchecked")
-        List<RoleDisciplinePermission> results = query.getResultList();
+        List<UserRoleDiscipline> results = query.getResultList();
         return results;
     }
 
@@ -42,18 +42,18 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
         String sql = "";
         for (Map.Entry<Role, List<Discipline>> entry : roleDisciplinesMap.entrySet()) {
             Role role = entry.getKey();
-            sql = "SELECT * FROM roles_disciplines_permissions rdps WHERE ";
+            sql = "SELECT * FROM users_disciplines_permissions urds WHERE ";
             List<Discipline> lDisciplines = entry.getValue();
             if (lDisciplines == null || lDisciplines.isEmpty()) {
                 String op = iterationsCount == 0 ? "" : " OR ";
-                sql += op + "((rdps.role_id = :" + role + ")";
-                sql += " AND " + "(rdps.discipline_id is null)) ";
+                sql += op + "((urds.role_id = :" + role + ")";
+                sql += " AND " + "(urds.discipline_id is null)) ";
                 iterationsCount++;
             } else {
                 for (int i = 0; i < lDisciplines.size(); i++) {
                     String op = iterationsCount == 0 ? "" : " OR ";
-                    sql += op + "(rdps.role_id = :" + role;
-                    sql += " AND " + "rdps.discipline_id = :"
+                    sql += op + "(urds.role_id = :" + role;
+                    sql += " AND " + "urds.discipline_id = :"
                             + lDisciplines.get(i).getName().replaceAll("\\s+", "") + ")";
                     iterationsCount++;
                 }

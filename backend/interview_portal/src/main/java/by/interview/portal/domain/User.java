@@ -8,9 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -51,8 +49,6 @@ public class User {
     @Column(name = "login", unique = true, nullable = false, length = 50)
     private String login;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_rdp", joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "rdp_id")})
-    private List<RoleDisciplinePermission> rdps;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<UserRoleDiscipline> userRoleDisciplines;
 }
