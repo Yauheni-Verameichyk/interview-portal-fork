@@ -14,12 +14,8 @@
       <td>{{user.name}}</td>
       <td>{{user.surname}}</td>
       <td>
-          <span *ngFor="let role of userList.roleDisciplines">
-              {{role}}
-          </span>
+        {{getRoles(user)}}
       </td>
     </tr>
   </tbody>
 </table>
-
-

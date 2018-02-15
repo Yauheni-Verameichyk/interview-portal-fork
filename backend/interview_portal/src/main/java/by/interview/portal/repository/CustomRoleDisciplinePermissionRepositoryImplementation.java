@@ -39,19 +39,22 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
 
     private String generateSQLQueryString(Map<Role, List<Discipline>> roleDisciplinesMap,
             Integer iterationsCount) {
-        String sql = "";
+        String sql = "SELECT * FROM roles_disciplines_permissions rdps WHERE ";
+        String op = "";
         for (Map.Entry<Role, List<Discipline>> entry : roleDisciplinesMap.entrySet()) {
             Role role = entry.getKey();
-            sql = "SELECT * FROM roles_disciplines_permissions rdps WHERE ";
             List<Discipline> lDisciplines = entry.getValue();
+            System.err.println(role);
+            System.err.println(lDisciplines);
             if (lDisciplines == null || lDisciplines.isEmpty()) {
-                String op = iterationsCount == 0 ? "" : " OR ";
+                op = iterationsCount == 0 ? "" : " OR ";
                 sql += op + "((rdps.role_id = :" + role + ")";
                 sql += " AND " + "(rdps.discipline_id is null)) ";
                 iterationsCount++;
             } else {
+                System.err.println("here");
                 for (int i = 0; i < lDisciplines.size(); i++) {
-                    String op = iterationsCount == 0 ? "" : " OR ";
+                    op = iterationsCount == 0 ? "" : " OR ";
                     sql += op + "(rdps.role_id = :" + role;
                     sql += " AND " + "rdps.discipline_id = :"
                             + lDisciplines.get(i).getName().replaceAll("\\s+", "") + ")";
@@ -59,11 +62,13 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
                 }
             }
         }
+        System.err.println(sql);
         return sql;
     }
 
     private void setQueryParameters(Map<Role, List<Discipline>> roleDisciplinesMap,
             Integer iterationsCount, Query query) {
+        System.err.println(roleDisciplinesMap);
         for (Map.Entry<Role, List<Discipline>> entry : roleDisciplinesMap.entrySet()) {
             Role role = entry.getKey();
             List<Discipline> lDisciplines = entry.getValue();

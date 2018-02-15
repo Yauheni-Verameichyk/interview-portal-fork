@@ -13,19 +13,29 @@ export class UserPageComponent implements OnInit {
   userList: UserDTO[];
 
   constructor(private userService: UserControllerService,
-              private router: Router
-            ) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.userService
       .findAllUsingGET_1()
       .subscribe((userList: UserDTO[]) => {
-        console.log(userList)
-          this.userList = userList}, 
-                  (error: any) =>{
-                    console.log(error)
-                    this.router.navigate(['/']);
-                  });
+        this.userList = userList
+      },
+        (error: any) => {
+          this.router.navigate(['/']);
+        });
+  }
+
+  getRoles(user: UserDTO): Array<string> {
+    let roles[] = Object.keys(user.roleDisciplines);
+    for (let i in roles) {
+      let role = roles[i].toLowerCase();
+      role = role.charAt(0).toUpperCase() + role.slice(1);
+      role = " " + role.replace(/_/g, " ");
+      roles[i] = role;
+    }
+    return roles;
   }
 
 }

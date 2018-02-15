@@ -39,10 +39,9 @@ public class CustomUserDisciplineRepositoryImplementation
 
     private String generateSQLQueryString(Map<Role, List<Discipline>> roleDisciplinesMap,
             Integer iterationsCount) {
-        String sql = "";
+        String sql = "SELECT * FROM users_disciplines_permissions urds WHERE ";
         for (Map.Entry<Role, List<Discipline>> entry : roleDisciplinesMap.entrySet()) {
             Role role = entry.getKey();
-            sql = "SELECT * FROM users_disciplines_permissions urds WHERE ";
             List<Discipline> lDisciplines = entry.getValue();
             if (lDisciplines == null || lDisciplines.isEmpty()) {
                 String op = iterationsCount == 0 ? "" : " OR ";
