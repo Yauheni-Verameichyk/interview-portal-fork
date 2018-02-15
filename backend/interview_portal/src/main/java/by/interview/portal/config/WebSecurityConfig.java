@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
 
@@ -84,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/**/*.css",
 						"/**/*.js"
 				).permitAll()
-				.antMatchers("/v2/api-docs/**").permitAll()
+//				.antMatchers("/v2/api-docs/**").permitAll()
 
 				// Un-secure H2 Database
 				.antMatchers("/h2-console/**/**").permitAll()
@@ -102,4 +103,79 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
 				.cacheControl();
 	}
+
+    @Autowired
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+
+    @Resource(name = "userDetails")
+    private UserDetailsService userDetailsService;
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Autowired
+    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder());
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        super.configure(auth);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+        return new JwtAuthenticationTokenFilter();
+    }
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+            // we don't need CSRF because our token is invulnerable
+            .csrf().disable()
+
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+
+            // don't create session
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
+            .authorizeRequests()
+            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//            .antMatchers(HttpMethod.PUT, "/**").permitAll()
+
+            // allow anonymous resource requests
+            .antMatchers(
+                HttpMethod.GET,
+                "/",
+                "/*.html",
+                "/favicon.ico",
+                "/**/*.html",
+                "/**/*.css",
+                "/**/*.js"
+            ).permitAll()
+            // Un-secure H2 Database
+            .antMatchers("/h2-console/**/**").permitAll()
+
+            .antMatchers("/auth/**").permitAll()
+            .anyRequest().authenticated();
+
+        // Custom JWT based security filter
+        httpSecurity
+            .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
+        // disable page caching
+        httpSecurity
+            .headers()
+            .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+            .cacheControl();
+    }
 }
