@@ -1,8 +1,9 @@
 /* tslint:disable */
 
-export interface AuthenticationDTO {
+export class AuthenticationDTO {
 
   login?: string;
 
   password?: string;
+
 }

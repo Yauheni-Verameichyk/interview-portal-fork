@@ -62,6 +62,7 @@ export class AuthenticationControllerService extends BaseService {
       map(_r => _r.body)
     );
   }
+
 }
 
 export module AuthenticationControllerService {

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationControllerService } from '../../api/services';
 import { AuthenticationDTO } from '../../api/models';
+import { HttpResponse } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +12,32 @@ import { AuthenticationDTO } from '../../api/models';
 export class LoginComponent {
 
   @Output() onChanged = new EventEmitter();
+  login: string = "";
+  password: string = "";
+  errorMessage: string = "";
   
-  constructor(private router: Router) {}
-              private authenticationService: AuthenticationControllerService
+  constructor(private router: Router,
+              private authenticationService: AuthenticationControllerService) {}
 
   change(){
-    this.onChanged.emit();
-    const user : AuthenticationDTO = {
-      login: "www",
-      password: "www"
+    
+    let user: AuthenticationDTO = {
+      login: this.login,
+      password: this.password
     }
+    console.log(user);
     this.authenticationService
       .authorizationUsingPOST(user)
-      .subscribe((body: any) => console.log(body) );
-    this.router.navigate(['user']);
+      .subscribe((body: string) => {
+        console.log(body);
+        localStorage.setItem("token", body);
+        this.onChanged.emit();
+        this.router.navigate(['user']);
+        }, (error: any) => {
+          localStorage.removeItem("token");
+          this.errorMessage = "login or password wrong"
+          console.log("error");
+        } );
   }
 
 }

@@ -20,9 +20,9 @@ import { BaseService } from './base-service';
   declarations: [],
   providers: [
     ApiConfiguration,
-   AuthenticationControllerService,
-   DisciplineControllerService,
-   UserControllerService
+    AuthenticationControllerService,
+    DisciplineControllerService,
+    UserControllerService
   ],
 })
 export class ApiModule { }
