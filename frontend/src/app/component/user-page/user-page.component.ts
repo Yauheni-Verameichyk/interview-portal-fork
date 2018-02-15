@@ -28,7 +28,7 @@ export class UserPageComponent implements OnInit {
   }
 
   getRoles(user: UserDTO): Array<string> {
-    let roles[] = Object.keys(user.roleDisciplines);
+    let roles = Object.keys(user.roleDisciplines);
     for (let i in roles) {
       let role = roles[i].toLowerCase();
       role = role.charAt(0).toUpperCase() + role.slice(1);
