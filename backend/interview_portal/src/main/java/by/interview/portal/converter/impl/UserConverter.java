@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import by.interview.portal.converter.Converter;
@@ -22,6 +23,8 @@ import by.interview.portal.repository.CustomRoleDisciplinePermissionRepository;
 public class UserConverter implements Converter<User, UserDTO> {
 
 	@Autowired
+	PasswordEncoder passwordEncoder;
+	@Autowired
 	private CustomRoleDisciplinePermissionRepository customRDPRepository;
 
 	@Override
@@ -30,7 +33,7 @@ public class UserConverter implements Converter<User, UserDTO> {
 		user.setId(userDTO.getId());
 		user.setLogin(userDTO.getLogin());
 		user.setName(userDTO.getName());
-		user.setPassword(userDTO.getPassword());
+		user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 		user.setPhoneNumber(userDTO.getPhoneNumber());
 		user.setSurname(userDTO.getSurname());
 		user.setRdps(customRDPRepository.findRoleDisciplinePermissions(userDTO.getRoleDisciplines()));
