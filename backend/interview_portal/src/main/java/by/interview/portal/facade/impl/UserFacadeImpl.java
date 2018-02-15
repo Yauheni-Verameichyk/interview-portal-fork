@@ -18,27 +18,26 @@ import by.interview.portal.service.UserService;
 @Service
 public class UserFacadeImpl implements UserFacade {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	@Qualifier("userConverter")
-	private Converter<User, UserDTO> userConverter;
+    @Autowired
+    @Qualifier("userConverter")
+    private Converter<User, UserDTO> userConverter;
 
-	@Override
-	public List<UserDTO> findAll() {
-		return userService.findAll().stream().filter(Objects::nonNull).map(userConverter::convertToDTO)
-				.collect(Collectors.toList());
-	}
+    @Override
+    public List<UserDTO> findAll() {
+        return userService.findAll().stream().filter(Objects::nonNull)
+                .map(userConverter::convertToDTO).collect(Collectors.toList());
+    }
 
-	@Override
-	public void save(UserDTO userDTO) {
-		User user = userConverter.convertToEntity(userDTO);
-		userService.save(user);
-	}
+    @Override
+    public void save(UserDTO userDTO) {
+        userService.save(userConverter.convertToEntity(userDTO));
+    }
 
-	@Override
-	public Optional<UserDTO> findById(long userId) {
-		return userService.findById(userId).map(userConverter::convertToDTO);
-	}
+    @Override
+    public Optional<UserDTO> findById(long userId) {
+        return userService.findById(userId).map(userConverter::convertToDTO);
+    }
 }
