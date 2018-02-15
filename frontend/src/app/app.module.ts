@@ -11,7 +11,7 @@ import { LoginComponent } from './component/login/login.component';
 import { UserPageComponent } from './component/user-page/user-page.component';
 import { DisciplinePageComponent } from './component/discipline-page/discipline-page.component';
 import { ApiModule } from './api/api.module';
-import { AuthenticationControllerService } from './api/services';
+import { AuthenticationControllerService, UserControllerService } from './api/services';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import { AuthenticationControllerService } from './api/services';
     AppRoutingModule,
     ApiModule
   ],
-  providers: [AuthenticationControllerService],
+  providers: [AuthenticationControllerService,
+              UserControllerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

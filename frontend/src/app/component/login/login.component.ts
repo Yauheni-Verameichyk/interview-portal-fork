@@ -12,31 +12,25 @@ import { HttpResponse } from 'selenium-webdriver/http';
 export class LoginComponent {
 
   @Output() onChanged = new EventEmitter();
-  login: string = "";
-  password: string = "";
+  user: AuthenticationDTO = {
+    login: "",
+    password: ""
+  }
   errorMessage: string = "";
   
   constructor(private router: Router,
               private authenticationService: AuthenticationControllerService) {}
 
   change(){
-    
-    let user: AuthenticationDTO = {
-      login: this.login,
-      password: this.password
-    }
-    console.log(user);
     this.authenticationService
-      .authorizationUsingPOST(user)
+      .authorizationUsingPOST(this.user)
       .subscribe((body: string) => {
-        console.log(body);
         localStorage.setItem("token", body);
         this.onChanged.emit();
         this.router.navigate(['user']);
         }, (error: any) => {
           localStorage.removeItem("token");
           this.errorMessage = "login or password wrong"
-          console.log("error");
         } );
   }
 

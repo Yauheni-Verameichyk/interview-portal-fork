@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators/map';
 import { filter } from 'rxjs/operators/filter';
 
 import { UserDTO } from '../models/user-dto';
+import { AuthenticationControllerService } from './authentication-controller.service';
 
 /**
  * User Controller
@@ -18,7 +19,8 @@ import { UserDTO } from '../models/user-dto';
 export class UserControllerService extends BaseService {
   constructor(
     config: ApiConfiguration,
-    http: HttpClient
+    http: HttpClient,
+    authenticationService: AuthenticationControllerService
   ) {
     super(config, http);
   }

@@ -63,6 +63,10 @@ export class AuthenticationControllerService extends BaseService {
     );
   }
 
+  getToken(): string {
+    return localStorage.getItem("token");
+  }
+
 }
 
 export module AuthenticationControllerService {
