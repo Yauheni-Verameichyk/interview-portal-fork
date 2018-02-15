@@ -44,15 +44,12 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
         for (Map.Entry<Role, List<Discipline>> entry : roleDisciplinesMap.entrySet()) {
             Role role = entry.getKey();
             List<Discipline> lDisciplines = entry.getValue();
-            System.err.println(role);
-            System.err.println(lDisciplines);
             if (lDisciplines == null || lDisciplines.isEmpty()) {
                 op = iterationsCount == 0 ? "" : " OR ";
                 sql += op + "((rdps.role_id = :" + role + ")";
                 sql += " AND " + "(rdps.discipline_id is null)) ";
                 iterationsCount++;
             } else {
-                System.err.println("here");
                 for (int i = 0; i < lDisciplines.size(); i++) {
                     op = iterationsCount == 0 ? "" : " OR ";
                     sql += op + "(rdps.role_id = :" + role;
@@ -62,13 +59,11 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
                 }
             }
         }
-        System.err.println(sql);
         return sql;
     }
 
     private void setQueryParameters(Map<Role, List<Discipline>> roleDisciplinesMap,
             Integer iterationsCount, Query query) {
-        System.err.println(roleDisciplinesMap);
         for (Map.Entry<Role, List<Discipline>> entry : roleDisciplinesMap.entrySet()) {
             Role role = entry.getKey();
             List<Discipline> lDisciplines = entry.getValue();
