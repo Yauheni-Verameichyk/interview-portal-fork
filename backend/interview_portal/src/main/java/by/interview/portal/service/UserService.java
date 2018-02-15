@@ -13,7 +13,7 @@ public interface UserService {
 
     void save(User user);
 
-    Optional<User> findById(long userId);
+    Optional<User> findById(Long userId);
 
     @NonNull
     Optional<User> findUserByLogin(@NonNull String login);
