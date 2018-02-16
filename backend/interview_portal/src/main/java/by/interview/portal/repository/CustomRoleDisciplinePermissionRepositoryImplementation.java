@@ -24,10 +24,10 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
     @Override
     public List<RoleDisciplinePermission> findRoleDisciplinePermissions(
             Map<Role, List<Discipline>> roleDisciplinesMap) {
-        Integer iterationsCount = 0;
-        if (roleDisciplinesMap == null) {
+        if (roleDisciplinesMap.isEmpty()) {
             return Collections.emptyList();
         }
+        Integer iterationsCount = 0;
         Query query = entityManager.createNativeQuery(
                 generateSQLQueryString(roleDisciplinesMap, iterationsCount),
                 RoleDisciplinePermission.class);
@@ -41,6 +41,7 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
             Integer iterationsCount) {
         String sql = "SELECT * FROM roles_disciplines_permissions rdps WHERE ";
         String op = "";
+        System.err.println(roleDisciplinesMap);
         for (Map.Entry<Role, List<Discipline>> entry : roleDisciplinesMap.entrySet()) {
             Role role = entry.getKey();
             List<Discipline> lDisciplines = entry.getValue();
@@ -59,6 +60,7 @@ public class CustomRoleDisciplinePermissionRepositoryImplementation
                 }
             }
         }
+        System.err.println(sql);
         return sql;
     }
 
