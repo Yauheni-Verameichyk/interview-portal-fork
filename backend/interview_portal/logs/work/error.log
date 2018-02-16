@@ -1,0 +1,4 @@
+[WARN ] 2018-02-16 20:47:21.299 autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration openEntityManagerInViewInterceptor      (232  ) - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[WARN ] 2018-02-16 20:47:49.506 interview.portal.filter.JwtAuthenticationTokenFilter                   doFilterInternal                        (49   ) - couldn't find bearer string, will ignore the header
+[WORKLEVEL] 2018-02-16 20:47:50.269 interview.portal.controller.AuthenticationController                   authorization                           (60   ) - Authentication; user: FNHTGHKH
+[WARN ] 2018-02-16 20:47:50.351 interview.portal.filter.JwtAuthenticationTokenFilter                   doFilterInternal                        (49   ) - couldn't find bearer string, will ignore the header

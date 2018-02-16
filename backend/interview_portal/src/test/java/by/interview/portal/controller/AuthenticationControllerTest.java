@@ -7,6 +7,9 @@ import by.interview.portal.dto.JwtUserDTO;
 import by.interview.portal.facade.UserFacade;
 import by.interview.portal.security.JwtTokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,51 +47,56 @@ public class AuthenticationControllerTest {
 
     private MockMvc mockMvc;
 
+    private static final Logger LOG = LogManager.getLogger(AuthenticationController.class);
 
-   @Autowired
-   private WebApplicationContext webApplicationContext;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
-   @Autowired
-   private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-   @Autowired
-   private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
-  @Autowired
-   private UserDetailsService userDetailsService;
-  @Autowired
-  private AuthenticationController authenticationController;
-   @Before
-   public void setup(){
-       mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
-   }
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private AuthenticationController authenticationController;
+
+    @Before
+    public void setup() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
+    }
 
     /**
      * BadRequest
+     *
      * @throws Exception
      */
     @Test
     @WithAnonymousUser
-    public void authorizationBadRequest()  throws Exception  {
+    public void authorizationBadRequest() throws Exception {
         this.mockMvc.perform(post("/auth")
-                                 .contentType(MediaType.APPLICATION_JSON)
-                                 .content(new ObjectMapper().writeValueAsString(null)))
-                                    .andExpect(status().isBadRequest());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(null)))
+                .andExpect(status().isBadRequest());
     }
+
     @Test
     @WithAnonymousUser
-    public void authorization()  throws Exception  {
+    public void authorization() throws Exception {
         AuthenticationDTO authenticationDTO = new AuthenticationDTO();
         authenticationDTO.setLogin("awilliamson1@narod.ru");
         authenticationDTO.setPassword("awilliamson1@narod.ru");
         this.mockMvc.perform(post("/auth")
-                                 .contentType(MediaType.APPLICATION_JSON)
-                                 .content(new ObjectMapper().writeValueAsString(authenticationDTO)))
-            .andExpect(status().is2xxSuccessful());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(authenticationDTO)))
+                .andExpect(status().is2xxSuccessful());
     }
+
     @Test
     @WithAnonymousUser
-    public void authorizationToken()  throws Exception  {
+    public void authorizationToken() throws Exception {
         AuthenticationDTO authenticationDTO = new AuthenticationDTO();
         authenticationDTO.setLogin("awilliamson1@narod.ru");
         authenticationDTO.setPassword("awilliamson1@narod.ru");
@@ -97,6 +105,8 @@ public class AuthenticationControllerTest {
         userDTO.setLogin("awilliamson1@narod.ru");
         userDTO.setPassword("awilliamson1@narod.ru");
         assertThat(jwtTokenUtil.validateToken(token, userDTO));
+        LOG.log(Level.getLevel("TESTLEVEL"),"AuthenticationTokenTest; user: "+userDTO.getLogin());
+
     }
 
 }

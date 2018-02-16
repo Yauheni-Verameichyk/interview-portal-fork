@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <CustomLevels>
+        <CustomLevel name="WORKLEVEL" intLevel="10" />
+    </CustomLevels>
+    <Appenders>
+
+        <RollingFile name='fileError' fileName='logs/work/error.log'
+                     filePattern="logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %-70C{4} %-40M(%-5L) - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size='1 MB'/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingFile name='fileInfo' fileName='logs/work/info.log'
+                     filePattern="logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="WORKLEVEL" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %-70C{4} %-40M(%-5L) - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size='1 MB'/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <Console name='console' target='SYSTEM_OUT'>
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %-70C{4} %-40M(%-5L) - %msg%n</pattern>
+            </PatternLayout>
+        </Console>
+
+    </Appenders>
+    <Loggers>
+        <!--<Logger name="com.example.log4j2demo" level="debug" additivity="false">-->
+        <!--<AppenderRef ref="ConsoleAppender"/>-->
+        <!--</Logger>-->
+
+        <Root level="info">
+            <AppenderRef ref="fileError"/>
+            <AppenderRef ref="fileInfo"/>
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
