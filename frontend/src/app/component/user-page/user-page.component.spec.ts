@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserPageComponent } from './user-page.component';
+import { UserControllerService } from '../../api/services';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+
 
 describe('UserPageComponent', () => {
   let component: UserPageComponent;
@@ -8,7 +13,11 @@ describe('UserPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserPageComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ UserPageComponent ],
+      providers: [
+        { provide: UserControllerService, useClass: UserControllerServiceStub }
+      ]
     })
     .compileComponents();
   }));
@@ -18,8 +27,14 @@ describe('UserPageComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
+
+class UserControllerServiceStub {
+  findAllUsingGET_1(): Observable<any> {
+    return Observable.of([]);
+  }
+}
+

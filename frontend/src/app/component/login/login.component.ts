@@ -38,17 +38,19 @@ export class LoginComponent implements OnInit {
   }
 
   authorize(): void {
-    this.initializeUser(this.userForm.get('login').value, this.userForm.get('password').value);
-    this.authenticationService
-      .authorizationUsingPOST(this.user)
-      .subscribe((body: string) => {
-        localStorage.setItem('token', body);
-        this.onChanged.emit();
-        this.router.navigate(['user']);
-      }, (error: any) => {
-        localStorage.removeItem('token');
-        this.errorMessage = 'wrong login or password';
-      });
+    if (this.userForm.valid) {
+      this.initializeUser(this.userForm.get('login').value, this.userForm.get('password').value);
+      this.authenticationService
+        .authorizationUsingPOST(this.user)
+        .subscribe((body: string) => {
+          localStorage.setItem('token', body);
+          this.onChanged.emit();
+          this.router.navigate(['user']);
+        }, (error: any) => {
+          localStorage.removeItem('token');
+          this.errorMessage = 'wrong login or password';
+        });
+    }
   }
 
   initializeUser(login: string, password: string): void {

@@ -17,10 +17,11 @@ export class UserPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('w')
     this.userService
       .findAllUsingGET_1()
       .subscribe((userList: UserDTO[]) => {
-        this.userList = userList
+        this.userList = userList;
       },
         (error: any) => {
           this.router.navigate(['/']);
