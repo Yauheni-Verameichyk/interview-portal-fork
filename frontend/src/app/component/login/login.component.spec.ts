@@ -6,6 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationControllerService } from '../../api/services';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -15,7 +17,9 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule, RouterTestingModule],
       declarations: [ LoginComponent ],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        {provide: Router, useClass: RouterStub},
         { provide: AuthenticationControllerService, useClass: AuthenticationControllerServiceStub }
       ]
     })
@@ -49,18 +53,18 @@ describe('LoginComponent', () => {
     expect(login.valid).toBeTruthy();
   });
   it('password field validity if field is too short', () => {
-    const login = component.userForm.controls['login'];
-    login.setValue('q');
-    expect(login.valid).toBeFalsy();
+    const password = component.userForm.controls['password'];
+    password.setValue('q');
+    expect(password.valid).toBeFalsy();
   });
   it('password field validity when field is empty', () => {
-    const login = component.userForm.controls['login'];
-    expect(login.valid).toBeFalsy();
+    const password = component.userForm.controls['password'];
+    expect(password.valid).toBeFalsy();
   });
   it('password field validity when field is valid', () => {
-    const login = component.userForm.controls['login'];
-    login.setValue('qsasasw');
-    expect(login.valid).toBeTruthy();
+    const password = component.userForm.controls['password'];
+    password.setValue('qsasasw');
+    expect(password.valid).toBeTruthy();
   });
   it('should change user if form is valid', () => {
     expect(component.userForm.valid).toBeFalsy();
@@ -85,5 +89,10 @@ describe('LoginComponent', () => {
 class AuthenticationControllerServiceStub {
   authorizationUsingPOST({login, password}) {
     return Observable.of('token');
+  }
+}
+
+class RouterStub {
+  navigate(any): void {
   }
 }
