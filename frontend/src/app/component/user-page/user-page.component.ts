@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserDTO } from '../../api/models';
 import { AuthenticationControllerService, UserControllerService } from '../../api/services';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
+import "rxjs/add/operator/takeUntil";
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css']
 })
-export class UserPageComponent implements OnInit {
+export class UserPageComponent implements OnInit, OnDestroy {
 
   userList: UserDTO[];
+  private readonly unsubscribe: Subject<void> = new Subject();
 
   constructor(private userService: UserControllerService,
     private router: Router
@@ -19,6 +22,7 @@ export class UserPageComponent implements OnInit {
   ngOnInit() {
     this.userService
       .findAllUsingGET_1()
+      .takeUntil(this.unsubscribe)
       .subscribe((userList: UserDTO[]) => {
         this.userList = userList;
       },
@@ -36,6 +40,11 @@ export class UserPageComponent implements OnInit {
       roles[i] = role;
     }
     return roles;
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }

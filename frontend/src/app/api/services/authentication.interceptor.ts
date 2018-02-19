@@ -14,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthenticationControllerService } from './authentication-controller.service';
 
 @Injectable()
-export class HttpHeaderService implements HttpInterceptor {
+export class AuthenticationInterceptor implements HttpInterceptor {
 
   constructor() { }
 

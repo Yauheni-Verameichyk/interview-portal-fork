@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './component/header/header.component';
 import { MenuComponent } from './component/menu/menu.component';
 import { LoginComponent } from './component/login/login.component';
 import { UserPageComponent } from './component/user-page/user-page.component';
@@ -17,7 +16,6 @@ import { AuthenticationControllerService, UserControllerService } from './api/se
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     MenuComponent,
     LoginComponent,
     UserPageComponent,
