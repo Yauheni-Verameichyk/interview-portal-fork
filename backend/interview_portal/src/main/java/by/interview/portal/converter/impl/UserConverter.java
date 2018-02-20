@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 
 import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.Discipline;
+import by.interview.portal.domain.PermissionTemplate;
 import by.interview.portal.domain.Role;
-import by.interview.portal.domain.RoleDisciplinePermission;
 import by.interview.portal.domain.User;
 import by.interview.portal.domain.UserRoleDiscipline;
 import by.interview.portal.dto.UserDTO;
-import by.interview.portal.repository.CustomRoleDisciplinePermissionRepository;
+import by.interview.portal.repository.PermissionRepository;
+
 
 @Component("userConverter")
 public class UserConverter implements Converter<User, UserDTO> {
@@ -27,7 +28,7 @@ public class UserConverter implements Converter<User, UserDTO> {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    private CustomRoleDisciplinePermissionRepository customRDPRepository;
+    private PermissionRepository permissionRepository;
 
     @Override
     public User convertToEntity(UserDTO userDTO) {
@@ -52,24 +53,26 @@ public class UserConverter implements Converter<User, UserDTO> {
         userDTO.setPhoneNumber(entity.getPhoneNumber());
         userDTO.setSurname(entity.getSurname());
         userDTO.setRoleDisciplines(getRolesDisciplinesMap(entity.getUserRoleDisciplines()));
+
         userDTO.setPermissions(getPermissionsSet(
-                customRDPRepository.findRoleDisciplinePermissions(userDTO.getRoleDisciplines())));
+                permissionRepository.findAllByRolesIn(userDTO.getRoleDisciplines().keySet()),
+                userDTO.getRoleDisciplines()));
         return userDTO;
     }
 
     private List<UserRoleDiscipline> getUserRoleDisciplines(
             Map<Role, List<Discipline>> roleDisciplinesMap, User user) {
         List<UserRoleDiscipline> userRoleDisciplines = new LinkedList<>();
-        for (Map.Entry<Role, List<Discipline>> entry : roleDisciplinesMap.entrySet()) {
-            Role role = entry.getKey();
-            if (entry.getValue() == null) {
+        for (Map.Entry<Role, List<Discipline>> roleDiscipline : roleDisciplinesMap.entrySet()) {
+            Role role = roleDiscipline.getKey();
+            if (roleDiscipline.getValue() == null) {
                 UserRoleDiscipline userRoleDiscipline = new UserRoleDiscipline();
                 userRoleDiscipline.setDiscipline(null);
                 userRoleDiscipline.setRole(role);
                 userRoleDiscipline.setUser(user);
                 userRoleDisciplines.add(userRoleDiscipline);
             } else {
-                for (Discipline discipline : entry.getValue()) {
+                for (Discipline discipline : roleDiscipline.getValue()) {
                     UserRoleDiscipline userRoleDiscipline = new UserRoleDiscipline();
                     userRoleDiscipline.setDiscipline(discipline);
                     userRoleDiscipline.setRole(role);
@@ -91,19 +94,46 @@ public class UserConverter implements Converter<User, UserDTO> {
     }
 
 
-    private Set<String> getPermissionsSet(List<RoleDisciplinePermission> rdpList) {
+
+    private Set<String> getPermissionsSet(List<PermissionTemplate> permissionsTemplatesListList,
+            Map<Role, List<Discipline>> roleDisciplinesMap) {
         Set<String> permissionsSet = new HashSet<>();
-        Map<Role, List<Discipline>> roleDisciplines = new HashMap<>();
-        for (RoleDisciplinePermission roleDisciplinePermission : rdpList) {
-            addPermissionToSet(permissionsSet, roleDisciplinePermission);
-            addRoleDisciplinesToMap(roleDisciplines, roleDisciplinePermission);
+        for (PermissionTemplate permissionTemplate : permissionsTemplatesListList) {
+            generatePermissionsByTemplate(permissionTemplate, roleDisciplinesMap, permissionsSet);
         }
         return permissionsSet;
     }
 
-    private void addPermissionToSet(Set<String> permissionsSet,
-            RoleDisciplinePermission roleDisciplinePermission) {
-        permissionsSet.add(roleDisciplinePermission.getPermission().getName());
+    private void generatePermissionsByTemplate(PermissionTemplate permissionTemplate,
+            Map<Role, List<Discipline>> roleDisciplinesMap, Set<String> permissionsSet) {
+        for (Map.Entry<Role, List<Discipline>> roleDisciplines : roleDisciplinesMap.entrySet()) {
+            generatePermissionsByRoleAndDisciplines(permissionTemplate, roleDisciplines,
+                    permissionsSet);
+        }
+    }
+
+    private void generatePermissionsByRoleAndDisciplines(PermissionTemplate permissionTemplate,
+            Map.Entry<Role, List<Discipline>> roleDisciplines, Set<String> permissionsSet) {
+        Role role = roleDisciplines.getKey();
+        if (permissionTemplate.getRoles().contains(role)) {
+            if (roleDisciplines.getValue() == null || roleDisciplines.getValue().isEmpty()) {
+                permissionsSet.add(generatePermission(permissionTemplate));
+            } else {
+                for (Discipline discipline : roleDisciplines.getValue()) {
+                    permissionsSet.add(generatePermission(permissionTemplate, discipline));
+                }
+            }
+        }
+    }
+
+    private String generatePermission(PermissionTemplate permissionTemplate) {
+        return permissionTemplate.getName() + "_" + permissionTemplate.getOperation().toString();
+    }
+
+    private String generatePermission(PermissionTemplate permissionTemplate,
+            Discipline discipline) {
+        return permissionTemplate.getName() + "_" + permissionTemplate.getOperation().toString()
+                + "_" + discipline.getName().toUpperCase().trim().replace(" ", "_");
     }
 
     private void addRoleDisciplinesToMap(Map<Role, List<Discipline>> roleDisciplines,
@@ -120,21 +150,6 @@ public class UserConverter implements Converter<User, UserDTO> {
                 disciplines.add(userRoleDiscipline.getDiscipline());
             }
             roleDisciplines.put(userRoleDiscipline.getRole(), disciplines);
-        }
-    }
-
-    private void addRoleDisciplinesToMap(Map<Role, List<Discipline>> roleDisciplines,
-            RoleDisciplinePermission roleDisciplinePermission) {
-        List<Discipline> disciplines;
-        if (roleDisciplines.containsKey(roleDisciplinePermission.getRole())) {
-            disciplines = roleDisciplines.get(roleDisciplinePermission.getRole());
-            if (!disciplines.contains(roleDisciplinePermission.getDiscipline())) {
-                disciplines.add(roleDisciplinePermission.getDiscipline());
-            }
-        } else {
-            disciplines = new LinkedList<>();
-            disciplines.add(roleDisciplinePermission.getDiscipline());
-            roleDisciplines.put(roleDisciplinePermission.getRole(), disciplines);
         }
     }
 }

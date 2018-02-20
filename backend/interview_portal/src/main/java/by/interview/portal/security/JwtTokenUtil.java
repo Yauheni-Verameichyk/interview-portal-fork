@@ -59,7 +59,7 @@ public class JwtTokenUtil {
 
         return Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(createdDate)
                 .setExpiration(expirationDate).setIssuedAt(createdDate)
-                .signWith(SignatureAlgorithm.HS512, JwtConstant.SIGNING_KEY).compact();
+                .signWith(SignatureAlgorithm.HS256, JwtConstant.SIGNING_KEY).compact();
     }
 
     public String refreshToken(String token) {
@@ -71,7 +71,7 @@ public class JwtTokenUtil {
         claims.setExpiration(expirationDate);
 
         return Jwts.builder().setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, JwtConstant.SIGNING_KEY).compact();
+                .signWith(SignatureAlgorithm.HS256, JwtConstant.SIGNING_KEY).compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

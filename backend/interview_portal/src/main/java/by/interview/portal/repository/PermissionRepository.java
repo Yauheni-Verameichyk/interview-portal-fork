@@ -1,12 +1,18 @@
 package by.interview.portal.repository;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import by.interview.portal.domain.Permission;
+import by.interview.portal.domain.PermissionTemplate;
+import by.interview.portal.domain.Role;
 
 @Repository
-public interface PermissionRepository extends JpaRepository<Permission, Long> {
+public interface PermissionRepository extends JpaRepository<PermissionTemplate, Long> {
 
-	Permission findByName(String name);
+    PermissionTemplate findByName(String name);
+
+    List<PermissionTemplate> findAllByRolesIn(Set<Role> role);
 }

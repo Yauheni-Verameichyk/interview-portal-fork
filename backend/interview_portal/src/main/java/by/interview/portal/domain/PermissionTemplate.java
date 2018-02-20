@@ -1,6 +1,10 @@
 package by.interview.portal.domain;
 
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -8,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -20,14 +23,14 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(exclude = "user")
+@ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
-@Table(name = "users_roles_disciplines")
-public class UserRoleDiscipline {
+@Table(name = "permission_templates")
+public class PermissionTemplate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -35,14 +38,15 @@ public class UserRoleDiscipline {
     private Long id;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "role_id", nullable = false)
-    private Role role;
+    @Column(name = "name_id", nullable = false)
+    private PermissionName name;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(columnDefinition = "integer", name = "discipline_id")
-    private Discipline discipline;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "operation_id")
+    private Operation operation;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ElementCollection(targetClass = Role.class)
+    @CollectionTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "permission_id"))
+    @Column(name = "role_id")
+    private Set<Role> roles;
 }
