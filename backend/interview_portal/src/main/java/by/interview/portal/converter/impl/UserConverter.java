@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -30,30 +31,20 @@ public class UserConverter implements Converter<User, UserDTO> {
     @Autowired
     private PermissionRepository permissionRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public User convertToEntity(UserDTO userDTO) {
-        User user = new User();
-        user.setId(userDTO.getId());
-        user.setLogin(userDTO.getLogin());
-        user.setName(userDTO.getName());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setSurname(userDTO.getSurname());
+        User user = modelMapper.map(userDTO, User.class);
         user.setUserRoleDisciplines(getUserRoleDisciplines(userDTO.getRoleDisciplines(), user));
         return user;
     }
 
     @Override
     public UserDTO convertToDTO(User entity) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(entity.getId());
-        userDTO.setLogin(entity.getLogin());
-        userDTO.setName(entity.getName());
-        userDTO.setPassword(entity.getPassword());
-        userDTO.setPhoneNumber(entity.getPhoneNumber());
-        userDTO.setSurname(entity.getSurname());
+        UserDTO userDTO = modelMapper.map(entity, UserDTO.class);
         userDTO.setRoleDisciplines(getRolesDisciplinesMap(entity.getUserRoleDisciplines()));
-
         userDTO.setPermissions(getPermissionsSet(
                 permissionRepository.findAllByRolesIn(userDTO.getRoleDisciplines().keySet()),
                 userDTO.getRoleDisciplines()));
@@ -66,18 +57,10 @@ public class UserConverter implements Converter<User, UserDTO> {
         for (Map.Entry<Role, List<Discipline>> roleDiscipline : roleDisciplinesMap.entrySet()) {
             Role role = roleDiscipline.getKey();
             if (roleDiscipline.getValue() == null) {
-                UserRoleDiscipline userRoleDiscipline = new UserRoleDiscipline();
-                userRoleDiscipline.setDiscipline(null);
-                userRoleDiscipline.setRole(role);
-                userRoleDiscipline.setUser(user);
-                userRoleDisciplines.add(userRoleDiscipline);
+                userRoleDisciplines.add(new UserRoleDiscipline(null, role, null, user));
             } else {
                 for (Discipline discipline : roleDiscipline.getValue()) {
-                    UserRoleDiscipline userRoleDiscipline = new UserRoleDiscipline();
-                    userRoleDiscipline.setDiscipline(discipline);
-                    userRoleDiscipline.setRole(role);
-                    userRoleDiscipline.setUser(user);
-                    userRoleDisciplines.add(userRoleDiscipline);
+                    userRoleDisciplines.add(new UserRoleDiscipline(null, role, discipline, user));
                 }
             }
         }
