@@ -5,12 +5,10 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Data
@@ -19,28 +17,16 @@ import lombok.*;
 
 @Entity
 @Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false, columnDefinition = "bigserial")
-    private Long id;
-
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
-
-    @Column(name = "surname", nullable = false, length = 50)
-    private String surname;
-
-    @Column(name = "password", nullable = false, length = 100)
-    private String password;
-
-    @Column(name = "phone_number", nullable = false, length = 50)
-    private String phoneNumber;
+public class User extends  Person{
 
     @Column(name = "login", unique = true, nullable = false, length = 50)
     private String login;
 
+    @JsonIgnore
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserRoleDiscipline> userRoleDisciplines;
+
 }

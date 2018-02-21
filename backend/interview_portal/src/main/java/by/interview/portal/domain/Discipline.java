@@ -1,13 +1,10 @@
 package by.interview.portal.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,4 +27,9 @@ public class Discipline {
 
 	@Column(name = "parent_id", nullable = true)
 	private Long parentId;
+
+	@ManyToMany
+	@JoinTable(name = "candidate_discipline", joinColumns = @JoinColumn(name = "discipline_id"),
+		inverseJoinColumns = @JoinColumn(name = "candidate_id"))
+	private List<Candidate> candidateList;
 }
