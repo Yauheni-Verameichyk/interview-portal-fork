@@ -11,6 +11,8 @@ import { UserPageComponent } from './component/user-page/user-page.component';
 import { DisciplinePageComponent } from './component/discipline-page/discipline-page.component';
 import { ApiModule } from './api/api.module';
 import { AuthenticationControllerService, UserControllerService } from './api/services';
+import { DisciplinesListComponent } from './disciplines-list/disciplines-list.component';
+import { DisciplineComponent } from './discipline/discipline.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { AuthenticationControllerService, UserControllerService } from './api/se
     MenuComponent,
     LoginComponent,
     UserPageComponent,
-    DisciplinePageComponent
+    DisciplinePageComponent,
+    DisciplinesListComponent,
+    DisciplineComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,43 @@
+<br>
+<table class="user-table table table-hover table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col" class="description">Description</th>
+    </tr>
+  </thead>
+</table>
+<table class="user-table table table-hover table-bordered" *ngFor="let discipline of disciplinesList">
+  <tbody>
+    <!-- <tr app-discipline *ngFor="let discipline of disciplinesList" [discipline] = "discipline"></tr> -->
+    <app-discipline  [discipline] = "discipline"></app-discipline>
+  </tbody>
+</table>
+<!-- 
+<table fixed>
+    <tr>
+      <td>
+        Click to toggle content 1
+        <button (click)="collapsed1=!collapsed1">Toggle me</button>
+      </td>
+    </tr>
+    <tr *ngIf="collapsed1">
+        <td>
+          <p>Showing content 1</p>
+          <p>Grass is green</p>
+        </td>
+    </tr>
+    <tr>
+      <td>
+        Click to toggle content 2
+        <button (click)="collapsed2=!collapsed2">Toggle me</button>
+      </td>
+    </tr>
+    <tr *ngIf="collapsed2">
+        <td>
+          <p>Showing content 2</p>
+          <p>The sky is blue</p>
+        </td>
+    </tr>
+    
+  </table> -->
