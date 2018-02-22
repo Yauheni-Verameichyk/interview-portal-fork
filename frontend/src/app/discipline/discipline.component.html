@@ -1,20 +1,31 @@
-<!-- <tr> -->
-  <td scope="col">{{discipline.name}}</td>
-  <td scope="col" class="description">{{discipline.subscription}}</td>
-  <!-- <tr>
-      <tr>
-          <td>Java</td>
-          <td>
-            It is a general-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically
-            designed to have as few implementation dependencies as possible.
-          </td>
-  </tr> -->
-  <!-- <br>
-      <tr>
-        <td>Java</td>
-        <td>
-          It is a general-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically
-          designed to have as few implementation dependencies as possible.
-        </td>
-      </tr> -->
-<!-- </tr> -->
+<!-- <div class="list-group-item list-group-item-action align-items-start" (click)="showSubItems();" [ngStyle]="{'background-color': 'rgb('+ backgroundColor + ', '+ backgroundColor + ', ' + backgroundColor +')'}">
+  <div class="row">
+    <div class="col-md-3 "> {{discipline.name}}</div>
+    <div class="col-md-6">{{discipline.subscription}}</div>
+  </div>
+</div>
+<div class="subItem">
+  <app-discipline *ngFor="let discipline of subDisciplinesList" [discipline]="discipline" [childLevel]="childLevel + 1"></app-discipline>
+</div> -->
+
+<table class="user-table table table-hover disciplinesList" (click)="showSubItems();" [ngStyle]="{'background-color': 'rgb('+ backgroundColor + ', '+ backgroundColor + ', ' + backgroundColor +')'}">
+  <tbody>
+    <tr>
+      <td scope="col" class="disciplineName"> {{discipline.name}}</td>
+      <td scope="col">{{discipline.subscription}}</td>
+      <td scope="col" class="pull-right">
+        <div class="pull-right twoEditButtons">
+          <div *requiredAuthority="SUB_ITEM_CREATE_JAVA" class="btn btn-light pull-right">
+            <img class="far fa-trash-alt align-middle" />
+          </div>
+          <div *requiredAuthority="SUB_ITEM_CREATE_asd" class="btn btn-light pull-right">
+            <img class="fas fa-pencil-alt align-middle" />
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="subItem">
+  <app-discipline *ngFor="let discipline of subDisciplinesList" [discipline]="discipline" [childLevel]="childLevel + 1"></app-discipline>
+</div>

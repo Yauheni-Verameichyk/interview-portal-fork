@@ -13,6 +13,9 @@ import { ApiModule } from './api/api.module';
 import { AuthenticationControllerService, UserControllerService } from './api/services';
 import { DisciplinesListComponent } from './disciplines-list/disciplines-list.component';
 import { DisciplineComponent } from './discipline/discipline.component';
+import { DisciplineService } from './discipline.service';
+import { ShowAuthedDirective } from './show-authed.directive';
+
 
 
 @NgModule({
@@ -23,7 +26,8 @@ import { DisciplineComponent } from './discipline/discipline.component';
     UserPageComponent,
     DisciplinePageComponent,
     DisciplinesListComponent,
-    DisciplineComponent
+    DisciplineComponent,
+    ShowAuthedDirective
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,7 @@ import { DisciplineComponent } from './discipline/discipline.component';
     ApiModule
   ],
   providers: [AuthenticationControllerService,
-    UserControllerService],
+    UserControllerService, DisciplineService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

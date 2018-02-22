@@ -21,24 +21,24 @@ import by.interview.portal.service.DisciplineService;
 @RequestMapping(value = "/discipline")
 public class DisciplineController {
 
-	@Autowired
-	private DisciplineService disciplineService;
+    @Autowired
+    private DisciplineService disciplineService;
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping(value = "/{id}")
-	public Discipline findById(@PathVariable Long id) {
-		return disciplineService.findById(id);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping
+    public List<Discipline> findAll() {
+        return disciplineService.findByParentId(null);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping
-	public List<Discipline> findAll() {
-		return disciplineService.findByParentId(null);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/{id}")
+    public List<Discipline> findSubItems(@PathVariable Long id) {
+        return disciplineService.findByParentId(id);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@PutMapping
-	public void save(@RequestBody Discipline discipline) {
-		disciplineService.save(discipline);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @PutMapping
+    public void save(@RequestBody Discipline discipline) {
+        disciplineService.save(discipline);
+    }
 }
