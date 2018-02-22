@@ -156,7 +156,8 @@ caption {
 }
 
 .navbar {
-    height: 40px;
+    background: #b3e2f9;
+    height: 50px;
 }
 
 .addDiscButton {
