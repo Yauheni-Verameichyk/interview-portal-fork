@@ -69,7 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// don't create session
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().antMatchers("/**").permitAll()
+				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				// .antMatchers("/**").permitAll()
 				// allow anonymous resource requests
 				.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js")
 				.permitAll().antMatchers("/v2/api-docs/**").permitAll()
