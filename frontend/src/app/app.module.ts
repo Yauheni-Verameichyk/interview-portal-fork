@@ -1,35 +1,42 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import {  HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { MenuComponent } from './component/menu/menu.component';
-import { LoginComponent } from './component/login/login.component';
-import { UserPageComponent } from './component/user-page/user-page.component';
-import { DisciplinePageComponent } from './component/discipline-page/discipline-page.component';
-import { ApiModule } from './api/api.module';
-import { AuthenticationControllerService, UserControllerService } from './api/services';
+import { AppRoutingModule, appRouterComponents } from './app.routing.module';
+import { AuthenticationControllerService } from './api/rest/service/authentication-controller.service';
+import { AuthenticationService } from './service/authentication/authentication.service';
+import { AuthGuard } from './guard/auth.guard';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsersModule } from './users/users.module';
+import { AuthenticationInterceptor } from './interceptor/authentication-interceptor';
+import { NavbarManager } from './service/navbar/navbar-manager';
+import { NavbarComponent } from './component/navbar/navbar.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
-    LoginComponent,
-    UserPageComponent,
-    DisciplinePageComponent
+    appRouterComponents,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
-    ApiModule
+    UsersModule,
+    AppRoutingModule
   ],
-  providers: [AuthenticationControllerService,
-    UserControllerService],
+  providers: [
+    AuthenticationControllerService,
+    AuthenticationService,
+    AuthGuard,
+    NavbarManager,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

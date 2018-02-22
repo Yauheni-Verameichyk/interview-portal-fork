@@ -1,0 +1,15 @@
+<table class="user-table table table-hover table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Surname</th>
+      <th scope="col">Role</th>
+    </tr>
+  </thead>
+  <tbody>
+        <tr app-user
+        *ngFor="let user of users" 
+        [user]="user">
+      </tr>
+  </tbody>
+</table>
