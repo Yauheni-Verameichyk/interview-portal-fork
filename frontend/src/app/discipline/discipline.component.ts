@@ -13,20 +13,20 @@ import { DisciplineService } from '../discipline.service';
 })
 export class DisciplineComponent implements OnInit, OnDestroy {
 
-  subItemsShown = false;
-  backgroundColor: number;
+  public subItemsShown = false;
+  public backgroundColor: number;
   @Input() public childLevel: number;
-
+  @Input() public parentDisciplineName: string;
   @Input() public discipline: Discipline;
   public subDisciplinesList: Array<Discipline> = [];
-
   private readonly destroy: Subject<void> = new Subject();
-
+  
   constructor(private disciplinesControllerService: DisciplineControllerService,
     private disciplineService: DisciplineService) { }
 
   ngOnInit(): void {
     this.backgroundColor = this.disciplineService.countBackgroundColor(this.childLevel);
+    this.parentDisciplineName = this.disciplineService.convertDisciplineName(this.parentDisciplineName);
   }
 
   findSubItems(): void {
@@ -40,13 +40,8 @@ export class DisciplineComponent implements OnInit, OnDestroy {
   }
 
   showSubItems(): void {
-    if (!this.subItemsShown) {
-      this.findSubItems();
-      this.subItemsShown = true;
-    } else {
-      this.subDisciplinesList = [];
-      this.subItemsShown = false;
-    }
+    (!this.subItemsShown)?this.findSubItems():this.subDisciplinesList = [];
+    this.subItemsShown = !this.subItemsShown;
   }
 
   ngOnDestroy(): void {

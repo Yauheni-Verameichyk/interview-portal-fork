@@ -11,42 +11,39 @@ import {
 })
 export class ShowAuthedDirective implements OnInit {
 
-  // @Input()
-  permission: string;
+  constructor(private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef) { }
 
-  constructor(  private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef) {  }
+  @Input('requiredAuthority') requiredAuthority: string;
 
-    @Input() set requiredAuthority(requiredAuthority: string) {
-      console.log(requiredAuthority);
-      this.permission = requiredAuthority;
+  ngOnInit() {
+    if ((this.getAuthorities().indexOf(this.requiredAuthority) > -1)) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
     }
-
-    ngOnInit() {
-      console.log(this.permission);
-      console.log(this.getAuthorities().indexOf(this.permission));
-          if (this.getAuthorities().indexOf(this.permission) > -1) {
-            this.viewContainer.createEmbeddedView(this.templateRef);
-          } else {
-            this.viewContainer.clear();
-          }
-    }
+  }
 
 
-    private getAuthorities(): Array<String> {
-      return [
-        "SUB_ITEM_DELETE_JAVA",
-        "SUB_ITEM_CREATE_JAVA",
-        "SUB_ITEM_CREATE_C",
-        "SUB_ITEM_READ_JAVA",
-        "CANDIDATE_READ",
-        "SUB_ITEM_DELETE_C",
-        "CANDIDATE_EDIT",
-        "CANDIDATE_DELETE",
-        "SUB_ITEM_READ_C",
-        "CANDIDATE_CREATE",
-        "SUB_ITEM_EDIT_JAVA",
-        "SUB_ITEM_EDIT_C"
+  private getAuthorities(): Array<String> {
+    // return [
+    //   "SUB_ITEM_DELETE_JAVA",
+    //   "SUB_ITEM_CREATE_JAVA",
+    //   "SUB_ITEM_CREATE_C",
+    //   "SUB_ITEM_READ_JAVA",
+    //   "CANDIDATE_READ",
+    //   "SUB_ITEM_DELETE_C",
+    //   "CANDIDATE_EDIT",
+    //   "CANDIDATE_DELETE",
+    //   "SUB_ITEM_READ_C",
+    //   "CANDIDATE_CREATE",
+    //   "SUB_ITEM_EDIT_JAVA",
+    //   "SUB_ITEM_EDIT_C",
+    // ];
+    return [
+      "DISCIPLINE_EDIT",
+      "DISCIPLINE_DELETE",
+      "DISCIPLINE_CREATE"
     ];
-    }
+  }
 }
