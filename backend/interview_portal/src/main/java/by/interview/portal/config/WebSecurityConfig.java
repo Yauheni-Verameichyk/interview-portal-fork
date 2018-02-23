@@ -1,5 +1,7 @@
 package by.interview.portal.config;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,17 +18,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 import by.interview.portal.filter.JwtAuthenticationTokenFilter;
 import by.interview.portal.security.JwtAuthenticationEntryPoint;
-
-import javax.annotation.Resource;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
 
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -42,8 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService)
-				.passwordEncoder(passwordEncoder());
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
@@ -72,10 +69,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// don't create session
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-				.authorizeRequests()
-				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
+				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				// .antMatchers("/**").permitAll()
 				// allow anonymous resource requests
+<<<<<<< HEAD
 				.antMatchers(
 						HttpMethod.GET,
 						"/",
@@ -87,23 +84,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				).permitAll()
 				.antMatchers("/v2/api-docs/**").permitAll()
 				.antMatchers("/candidate/**").permitAll()
+=======
+				.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js")
+				.permitAll().antMatchers("/v2/api-docs/**").permitAll()
+>>>>>>> 76473a7a5ac84594d2fc1375ec80cc5693c8ab7e
 
 				// Un-secure H2 Database
 				.antMatchers("/h2-console/**/**").permitAll()
 
-				.antMatchers("/auth/**").permitAll()
-				.anyRequest().authenticated();
+				.antMatchers("/auth/**").permitAll().anyRequest().authenticated();
 
 		// Custom JWT based security filter
-		httpSecurity
-				.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
 		// disable page caching
-		httpSecurity
-				.headers()
-				.frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+		httpSecurity.headers().frameOptions().sameOrigin() // required to set for H2 else H2 Console will be blank.
 				.cacheControl();
 	}
-
 
 }

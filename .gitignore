@@ -7,3 +7,4 @@ backend/interview_portal/target/
 backend/interview_portal/.idea/
 frontend/.history/src/app/app.component_20180214143225.html
 frontend/.history/
+*.log
