@@ -47,19 +47,12 @@ public class AuthenticationController {
     @PostMapping
     public HttpEntity<CredentialsDTO> authorization(@RequestBody AuthenticationDTO request) {
 
-        System.err.println("Controller");
-        System.err.println("request.getLogin()" + request.getLogin());
-        System.err.println("request.getPassword()" + request.getPassword());
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
-        System.err.println("authentication");
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // Reload password post-security so we can generate token
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getLogin());
-        System.err.println(userDetails);
         final String token = jwtTokenUtil.generateToken(userDetails);
-        System.err.println("token >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + token);
         // Return the token
 
         if (jwtTokenUtil.validateToken(token, userDetails)) {
