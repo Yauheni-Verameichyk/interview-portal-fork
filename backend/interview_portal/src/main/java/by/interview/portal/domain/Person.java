@@ -15,16 +15,15 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, columnDefinition = "bigserial")
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", length = 50)
     private String name;
 
-    @Column(name = "surname", nullable = false, length = 50)
+    @Column(name = "surname", length = 50)
     private String surname;
 
-    @Column(name = "phone_number", nullable = false, length = 50)
+    @Column(name = "phone_number", length = 50)
     private String phoneNumber;
 
 }

@@ -28,8 +28,4 @@ public class Discipline {
 	@Column(name = "parent_id", nullable = true)
 	private Long parentId;
 
-	@ManyToMany
-	@JoinTable(name = "candidate_discipline", joinColumns = @JoinColumn(name = "discipline_id"),
-		inverseJoinColumns = @JoinColumn(name = "candidate_id"))
-	private List<Candidate> candidateList;
 }

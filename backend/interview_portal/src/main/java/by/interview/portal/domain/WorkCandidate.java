@@ -1,15 +1,17 @@
 package by.interview.portal.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 
 @Entity
 @Table(name = "work_candidate")
@@ -22,8 +24,11 @@ public class WorkCandidate extends DateInterval{
     private String nameCompany;
     private String position;
 
-    @ManyToOne
-    @JoinColumn(name = "candidate_id")
-    private Candidate candidate;
+    public WorkCandidate(Long id, String nameCompany, String position, Date dateStart, Date dateEnd) {
+        this(id, nameCompany, position);
+        this.setDateEnd(dateEnd);
+        this.setDateStart(dateStart);
+    }
+
 
 }
