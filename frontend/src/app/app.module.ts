@@ -10,7 +10,7 @@ import { LoginComponent } from './component/login/login.component';
 import { UserPageComponent } from './component/user-page/user-page.component';
 import { DisciplinePageComponent } from './component/discipline-page/discipline-page.component';
 import { ApiModule } from './api/api.module';
-import { AuthenticationControllerService, UserControllerService } from './api/services';
+import { UserControllerService } from './api/services';
 import { DisciplinesListComponent } from './disciplines-list/disciplines-list.component';
 import { DisciplineComponent } from './discipline/discipline.component';
 import { DisciplineService } from './discipline.service';
@@ -24,6 +24,7 @@ import { UsersModule } from './users/users.module';
 import { AuthenticationInterceptor } from './interceptor/authentication-interceptor';
 import { NavbarManager } from './service/navbar/navbar-manager';
 import { NavbarComponent } from './component/navbar/navbar.component';
+import { AuthenticationControllerService } from './api/rest/service/authentication-controller.service';
 
 
 
