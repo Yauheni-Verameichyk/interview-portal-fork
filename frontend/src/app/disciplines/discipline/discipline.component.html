@@ -1,13 +1,3 @@
-<!-- <div class="list-group-item list-group-item-action align-items-start" (click)="showSubItems();" [ngStyle]="{'background-color': 'rgb('+ backgroundColor + ', '+ backgroundColor + ', ' + backgroundColor +')'}">
-  <div class="row">
-    <div class="col-md-3 "> {{discipline.name}}</div>
-    <div class="col-md-6">{{discipline.subscription}}</div>
-  </div>
-</div>
-<div class="subItem">
-  <app-discipline *ngFor="let discipline of subDisciplinesList" [discipline]="discipline" [childLevel]="childLevel + 1"></app-discipline>
-</div> -->
-
 <table class="user-table table table-hover disciplinesList" (click)="showSubItems();" [ngStyle]="{'background-color': 'rgb('+ backgroundColor + ', '+ backgroundColor + ', ' + backgroundColor +')'}">
   <tbody>
     <tr>
@@ -30,5 +20,5 @@
   </tbody>
 </table>
 <div class="subItem" *requiredAuthority="'SUB_ITEM_READ_' + parentDisciplineName">
-  <app-discipline *ngFor="let discipline of subDisciplinesList" [discipline]="discipline" childLevel]="childLevel + 1" [parentDisciplineName]="parentDisciplineName"></app-discipline>
+  <app-discipline *ngFor="let discipline of subDisciplinesList" [discipline]="discipline" [childLevel]="childLevel + 1" [parentDisciplineName]="parentDisciplineName"></app-discipline>
 </div>

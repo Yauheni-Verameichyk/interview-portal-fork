@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Discipline } from '../api/models/discipline';
-import { DisciplineControllerService } from '../api/services';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
-import { DisciplineService } from '../discipline.service';
+import { Discipline } from '../../api/models';
+import { DisciplineService } from '../service/discipline.service';
+import { DisciplineControllerService } from '../../api/services';
+
 
 @Component({
   selector: 'app-discipline',
@@ -20,7 +21,7 @@ export class DisciplineComponent implements OnInit, OnDestroy {
   @Input() public discipline: Discipline;
   public subDisciplinesList: Array<Discipline> = [];
   private readonly destroy: Subject<void> = new Subject();
-  
+
   constructor(private disciplinesControllerService: DisciplineControllerService,
     private disciplineService: DisciplineService) { }
 
@@ -40,7 +41,7 @@ export class DisciplineComponent implements OnInit, OnDestroy {
   }
 
   showSubItems(): void {
-    (!this.subItemsShown)?this.findSubItems():this.subDisciplinesList = [];
+    (!this.subItemsShown) ? this.findSubItems() : this.subDisciplinesList = [];
     this.subItemsShown = !this.subItemsShown;
   }
 

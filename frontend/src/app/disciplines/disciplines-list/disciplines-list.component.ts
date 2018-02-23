@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Discipline } from '../api/models/discipline';
-import { DisciplineControllerService } from '../api/services';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
+import { Discipline } from '../../api/models';
+import { DisciplineControllerService } from '../../api/services';
 
 @Component({
   selector: 'app-disciplines-list',

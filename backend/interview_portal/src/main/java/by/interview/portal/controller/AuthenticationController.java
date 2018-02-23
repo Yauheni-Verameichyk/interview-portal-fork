@@ -1,5 +1,7 @@
 package by.interview.portal.controller;
 
+import java.util.HashSet;
+
 import javax.annotation.Resource;
 
 import org.apache.logging.log4j.Level;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import by.interview.portal.dto.AuthenticationDTO;
+import by.interview.portal.dto.CredentialsDTO;
 import by.interview.portal.security.JwtTokenUtil;
 
 @CrossOrigin
@@ -30,40 +33,43 @@ import by.interview.portal.security.JwtTokenUtil;
 @RequestMapping(value = "/auth")
 public class AuthenticationController {
 
-	private static final Logger LOG = LogManager.getLogger(AuthenticationController.class);
-	@Autowired
-	private AuthenticationManager authenticationManager;
+    private static final Logger LOG = LogManager.getLogger(AuthenticationController.class);
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-	@Resource(name = "userDetails")
-	private UserDetailsService userDetailsService;
+    @Resource(name = "userDetails")
+    private UserDetailsService userDetailsService;
 
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@PostMapping
-	public HttpEntity<String> authorization(@RequestBody AuthenticationDTO request) {
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping
+    public HttpEntity<CredentialsDTO> authorization(@RequestBody AuthenticationDTO request) {
 
-		System.err.println("Controller");
-		System.err.println("request.getLogin()" + request.getLogin());
-		System.err.println("request.getPassword()" + request.getPassword());
+        System.err.println("Controller");
+        System.err.println("request.getLogin()" + request.getLogin());
+        System.err.println("request.getPassword()" + request.getPassword());
 
-		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
-		System.err.println("authentication");
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		// Reload password post-security so we can generate token
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getLogin());
-		System.err.println(userDetails);
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		System.err.println("token >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + token);
-		// Return the token
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
+        System.err.println("authentication");
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        // Reload password post-security so we can generate token
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getLogin());
+        System.err.println(userDetails);
+        final String token = jwtTokenUtil.generateToken(userDetails);
+        System.err.println("token >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + token);
+        // Return the token
 
-		if (jwtTokenUtil.validateToken(token, userDetails)) {
-			LOG.log(Level.getLevel("WORKLEVEL"), "Authentication; user: " + request.getLogin());
-		}
+        if (jwtTokenUtil.validateToken(token, userDetails)) {
+            LOG.log(Level.getLevel("WORKLEVEL"), "Authentication; user: " + request.getLogin());
+        }
+        CredentialsDTO credentialsDTO = new CredentialsDTO();
+        credentialsDTO.setAccessToken(token);
+        credentialsDTO.setCredentials(new HashSet<String>());
+        credentialsDTO.setRefreshToken("RefreshToken");
+        return ResponseEntity.ok(credentialsDTO);
 
-		return ResponseEntity.ok(token);
-
-	}
+    }
 }
