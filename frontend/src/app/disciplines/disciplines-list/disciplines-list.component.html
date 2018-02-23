@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="col-sm-7 align-middle">
+    <div class="btn-group align-middle myAllFilter pull-right">
+      <button type="button" class="btn btn-primary" [ngClass]="{'customActive': clicked, 'customActive': !clicked}" (click)="clicked = !clicked">My</button>
+      <button type="button" class="btn btn-primary" [ngClass]="{'customActive': !clicked, 'customActive': clicked}" (click)="clicked = !clicked">All</button>
+    </div>
+  </div>
+</div>
 
 <table class="user-table table table-hover disciplineTableHead">
   <thead class="thead-light">
@@ -10,6 +18,6 @@
         </div>
       </th>
     </tr>
-  </thead>  
+  </thead>
 </table>
 <app-discipline *ngFor="let discipline of disciplinesList" [discipline]="discipline" [childLevel]="0" [parentDisciplineName]="discipline.name"></app-discipline>

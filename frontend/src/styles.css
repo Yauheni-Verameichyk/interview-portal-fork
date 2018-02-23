@@ -198,3 +198,17 @@ caption {
     margin-top: 20px;
     margin-bottom: 0px;
 }
+
+.myAllFilter{
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:visited {
+    background-color: rgb(173, 173, 173) !important;
+}
+
+.customActive {
+    background-color: rgb(66, 65, 64) !important;
+}
+
