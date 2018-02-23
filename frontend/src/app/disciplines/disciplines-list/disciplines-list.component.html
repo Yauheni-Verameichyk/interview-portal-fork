@@ -1,0 +1,15 @@
+
+<table class="user-table table table-hover disciplineTableHead">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col" class="disciplineNameHead">Name</th>
+      <th scope="col">Description</th>
+      <th>
+        <div *requiredAuthority="'DISCIPLINE_CREATE'" class="btn btn-light pull-right">
+          <img class="fas fa-plus-circle align-middle" />
+        </div>
+      </th>
+    </tr>
+  </thead>  
+</table>
+<app-discipline *ngFor="let discipline of disciplinesList" [discipline]="discipline" [childLevel]="0" [parentDisciplineName]="discipline.name"></app-discipline>
