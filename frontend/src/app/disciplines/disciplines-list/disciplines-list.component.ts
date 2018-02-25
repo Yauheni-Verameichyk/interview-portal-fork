@@ -4,6 +4,8 @@ import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
 import { Discipline } from '../../api/models';
 import { DisciplineControllerService } from '../../api/services';
+import { Observable } from 'rxjs/Observable';
+import { DisciplineService } from '../service/discipline.service';
 
 @Component({
   selector: 'app-disciplines-list',
@@ -14,15 +16,20 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
 
   disciplinesList: Array<Discipline> = [];
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private disciplinesService: DisciplineControllerService) { }
+  constructor(private disciplineService: DisciplineService) { }
 
   ngOnInit(): void {
-    this.disciplinesService.findAllUsingGET()
+    this.findDisciplines('MY');
+  }
+
+  findDisciplines(searchOption: string): void {
+    this.disciplineService.chooseRequest(searchOption)
       .takeUntil(this.destroy)
       .subscribe((disciplines) => {
         this.disciplinesList = disciplines;
       }, (error) => {
         console.log('Send to error page when it appears');
+        console.log(error);
       });
   }
 

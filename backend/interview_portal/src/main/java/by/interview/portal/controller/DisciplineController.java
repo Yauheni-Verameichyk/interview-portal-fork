@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,24 +23,33 @@ import by.interview.portal.service.DisciplineService;
 @RequestMapping(value = "/discipline")
 public class DisciplineController {
 
-    @Autowired
-    private DisciplineService disciplineService;
+	@Autowired
+	private DisciplineService disciplineService;
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping
-    public List<Discipline> findAll() {
-        return disciplineService.findByParentId(null);
-    }
+	@ResponseStatus(value = HttpStatus.OK)
+	@GetMapping
+	public List<Discipline> findAll() {
+		return disciplineService.findByParentId(null);
+	}
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "/{id}")
-    public List<Discipline> findSubItems(@PathVariable Long id) {
-        return disciplineService.findByParentId(id);
-    }
+	@ResponseStatus(value = HttpStatus.OK)
+	@GetMapping(value = "/{id}")
+	public List<Discipline> findSubItems(@PathVariable Long id) {
+		return disciplineService.findByParentId(id);
+	}
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @PutMapping
-    public void save(@RequestBody Discipline discipline) {
-        disciplineService.save(discipline);
-    }
+	@ResponseStatus(value = HttpStatus.OK)
+	@PutMapping
+	public void save(@RequestBody Discipline discipline) {
+		disciplineService.save(discipline);
+	}
+
+	@ResponseStatus(value = HttpStatus.OK)
+	@GetMapping(value = "/user")
+	public List<Discipline> findDisciplinesForUser() {
+		System.err.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		return disciplineService.findDisciplinesByUser(
+				((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+	}
+
 }

@@ -7,6 +7,8 @@ import { DisciplineService } from './service/discipline.service';
 import { DisciplineControllerService } from '../api/services';
 import { ApiModule } from '../api/api.module';
 import { SharedModule } from '../shared/shared.module';
+import { CreateDisciplineComponent } from './create-discipline/create-discipline.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,12 +16,15 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     DisciplineRoutingModule,
     ApiModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     disciplineRouterComponents,
     DisciplineComponent,
-    DisciplinesListComponent
+    DisciplinesListComponent,
+    CreateDisciplineComponent
   ],
   providers: [
     DisciplineService,

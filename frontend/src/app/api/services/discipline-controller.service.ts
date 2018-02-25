@@ -60,9 +60,7 @@ export class DisciplineControllerService extends BaseService {
     );
   }
 
-    /**
-   * @return OK
-   */
+
   findSubItemsGETResponse(id: number): Observable<HttpResponse<Discipline[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -88,11 +86,39 @@ export class DisciplineControllerService extends BaseService {
     );
   }
 
-  /**
-   * @return OK
-   */
    findSubItemsUsingGET(id: number): Observable<Discipline[]> {
     return this.findSubItemsGETResponse(id).pipe(
+      map(_r => _r.body)
+    );
+  }
+
+  findDisciplinesForUserGETResponse(): Observable<HttpResponse<Discipline[]>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      "GET",
+      this.rootUrl + `/discipline/user`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: Discipline[] = null;
+        _body = _resp.body as Discipline[]
+        return _resp.clone({body: _body}) as HttpResponse<Discipline[]>;
+      })
+    );
+  }
+
+  findDisciplinesForUserUsingGET(): Observable<Discipline[]> {
+    return this.findDisciplinesForUserGETResponse().pipe(
       map(_r => _r.body)
     );
   }
