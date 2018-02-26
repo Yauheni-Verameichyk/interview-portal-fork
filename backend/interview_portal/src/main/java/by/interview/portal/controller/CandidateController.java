@@ -40,4 +40,10 @@ public class CandidateController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity add(@RequestBody Candidate candidate) {
+        candidateService.add(candidate);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }

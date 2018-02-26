@@ -1,0 +1,20 @@
+<br>
+<table class="candidate-table table table-hover table-bordered">
+  <thead class="thead-light">
+    <th scope="col">Name</th>
+    <th scope="col">Surname</th>
+    <th scope="col">Disciplines</th>
+    <th scope="col" class="th-btn">
+      <div class="add-interview-btn">
+        <a class="btn btn-primary" href="">Add candidate</a>
+      </div>
+    </th>
+  </thead>
+  <tbody>
+    <tr app-candidate 
+      *ngFor="let candidate of content" 
+      [candidate]="candidate"
+    >
+  </tr>
+  </tbody>
+</table>

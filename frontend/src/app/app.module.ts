@@ -19,6 +19,8 @@ import { NavbarComponent } from './component/navbar/navbar.component';
 import { AuthenticationControllerService } from './api/rest/service/authentication-controller.service';
 import { DisciplinesModule } from './disciplines/disciplines.module';
 import { SharedModule } from './shared/shared.module';
+import { CandidatesModule } from './candidates/candidates.module';
+import { CandidateControllerService } from './api/services/candidate-controller.service';
 
 
 
@@ -37,6 +39,7 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     UsersModule,
     DisciplinesModule,
+    CandidatesModule,
     AppRoutingModule,
     SharedModule
   ],
@@ -46,6 +49,7 @@ import { SharedModule } from './shared/shared.module';
     AuthGuard,
     NavbarManager,
     UserControllerService,
+    CandidateControllerService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

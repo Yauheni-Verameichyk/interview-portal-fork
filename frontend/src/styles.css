@@ -5,6 +5,7 @@ header {
 
 .menu {
     z-index: 100;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 img {
@@ -156,7 +157,7 @@ caption {
 }
 
 .navbar {
-    background: #b3e2f9;
+    background: #999999;
     height: 50px;
 }
 

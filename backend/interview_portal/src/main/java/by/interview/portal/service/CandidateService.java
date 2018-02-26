@@ -10,4 +10,6 @@ public interface CandidateService {
 
     Page<Candidate> findPage(Integer page);
 
+    void add(Candidate candidate);
+
 }
