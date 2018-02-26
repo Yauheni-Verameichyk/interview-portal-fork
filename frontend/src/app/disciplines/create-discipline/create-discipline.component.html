@@ -1,33 +1,46 @@
 <div>
-    <h1>Add new Discipline</h1>
-    <form class='form-group signIn_form' [formGroup]="disciplineForm">
-      <div class="form-group">
-        <label for="disciplineName">Discipline name</label>
-        <input type="text" class="form-control" id="disciplineName" formControlName="disciplineName" [(ngModel)]="discipline.name" placeholder="Enter discipline name" required>
-      </div>
-      <div class="form-group">
-        <label for="disciplineDescription">Discipline description</label>
-        <textarea class="form-control" id="disciplineDescription" formControlName="disciplineSubscription" [(ngModel)]="discipline.subscription" placeholder="Enter discipline description"></textarea>
-      </div>
+  <h1>Add new Discipline</h1>
+  <form class='form-group signIn_form' [formGroup]="disciplineForm">
+    <div class="form-group">
+      <label for="disciplineName">Discipline name</label>
+      <input name="disciplineName" class="form-control" 
+      id="disciplineName" aria-describedby="emailHelp" placeholder="Enter discipline name" formControlName="disciplineName" [(ngModel)]="discipline.name"
+        required>
+    </div>
 
-      <label for="inputState">Assign discipline head</label>
-      <div class="row">
-        <div class="form-group col-11" id="elementToAdd">
-          <select id="inputState" class="form-control">
-            <option selected>Choose...</option>
-            <option>Mark Otto</option>
-            <option>Jacob Thornton</option>
-            <option>Larry the Bird</option>
-            <option>Mark Otto</option>
-          </select>
-        </div>
-        <div class="form-group btn btn-light col-0">
-          <a class="fas fa-plus align-middle"></a>
-        </div>
+    <div *ngIf="disciplineForm.controls.disciplineName.invalid && (disciplineForm.controls.disciplineName.dirty || disciplineForm.controls.disciplineName.touched)" class="alert alert-danger">
+      <div *ngIf="disciplineForm.controls.disciplineName.errors.required">
+        Discipline name is required.
       </div>
-      <div class="text-center">
-        <a (click) = "sendDiscipline()" class="btn btn-primary">Create</a>
-        <a class="btn btn-secondary" href="disciplines.html">Cancel</a>
+      <div *ngIf="disciplineForm.controls.disciplineName.errors.minlength">
+        Discipline name must be at least 4 characters long.
       </div>
-    </form>
+    </div>
+
+    <div class="form-group">
+      <label for="disciplineDescription">Discipline description</label>
+      <textarea class="form-control" id="disciplineDescription" formControlName="disciplineSubscription" [(ngModel)]="discipline.subscription"
+        placeholder="Enter discipline description"></textarea>
+    </div>
+
+    <label for="inputState">Assign discipline head</label>
+    <div class="row">
+      <div class="form-group col-11" id="elementToAdd">
+        <select id="inputState" class="form-control">
+          <option selected>Choose...</option>
+          <option>Mark Otto</option>
+          <option>Jacob Thornton</option>
+          <option>Larry the Bird</option>
+          <option>Mark Otto</option>
+        </select>
+      </div>
+      <div class="form-group btn btn-light col-0">
+        <a class="fas fa-plus align-middle"></a>
+      </div>
+    </div>
+    <div class="text-center">
+      <a (click)="sendDiscipline()" class="btn btn-primary">Create</a>
+      <a class="btn btn-secondary" href="disciplines.html">Cancel</a>
+    </div>
+  </form>
 </div>
