@@ -1,14 +1,15 @@
 <div>
-  <h1>Add new Discipline</h1>
+
   <form class='form-group signIn_form' [formGroup]="disciplineForm">
+    <h3>Add new Discipline</h3>
     <div class="form-group">
-      <label for="disciplineName">Discipline name</label>
-      <input name="disciplineName" class="form-control" 
-      id="disciplineName" aria-describedby="emailHelp" placeholder="Enter discipline name" formControlName="disciplineName" [(ngModel)]="discipline.name"
-        required>
+      <label for="disciplineName">Discipline name*</label>
+      <input name="disciplineName" class="form-control" id="disciplineName" aria-describedby="emailHelp" placeholder="Enter discipline name"
+        formControlName="disciplineName" [(ngModel)]="discipline.name" required>
     </div>
 
-    <div *ngIf="disciplineForm.controls.disciplineName.invalid && (disciplineForm.controls.disciplineName.dirty || disciplineForm.controls.disciplineName.touched)" class="alert alert-danger">
+    <div *ngIf="disciplineForm.controls.disciplineName.invalid && (disciplineForm.controls.disciplineName.dirty || disciplineForm.controls.disciplineName.touched)"
+      class="alert alert-danger">
       <div *ngIf="disciplineForm.controls.disciplineName.errors.required">
         Discipline name is required.
       </div>
@@ -38,9 +39,14 @@
         <a class="fas fa-plus align-middle"></a>
       </div>
     </div>
+
+    * Required field
+    <br>
     <div class="text-center">
       <a (click)="sendDiscipline()" class="btn btn-primary">Create</a>
       <a class="btn btn-secondary" href="disciplines.html">Cancel</a>
     </div>
+
   </form>
+
 </div>

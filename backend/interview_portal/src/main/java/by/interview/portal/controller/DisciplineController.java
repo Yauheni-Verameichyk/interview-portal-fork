@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import by.interview.portal.domain.Discipline;
+import by.interview.portal.domain.Role;
+import by.interview.portal.facade.UserFacade;
 import by.interview.portal.service.DisciplineService;
 
 @CrossOrigin
@@ -23,34 +25,37 @@ import by.interview.portal.service.DisciplineService;
 @RequestMapping(value = "/discipline")
 public class DisciplineController {
 
-    @Autowired
-    private DisciplineService disciplineService;
+	@Autowired
+	private DisciplineService disciplineService;
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping
-    public List<Discipline> findAll() {
-        return disciplineService.findByParentId(null);
-    }
+	@Autowired
+	private UserFacade userFacade;
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "/{id}")
-    public List<Discipline> findSubItems(@PathVariable Long id) {
-        return disciplineService.findByParentId(id);
-    }
+	@ResponseStatus(value = HttpStatus.OK)
+	@GetMapping
+	public List<Discipline> findAll() {
+		return disciplineService.findByParentId(null);
+	}
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @PutMapping
-    public void save(@RequestBody Discipline discipline) {
-        System.err.println(discipline);
-        // disciplineService.save(discipline);
-    }
+	@ResponseStatus(value = HttpStatus.OK)
+	@GetMapping(value = "/{id}")
+	public List<Discipline> findSubItems(@PathVariable Long id) {
+		return disciplineService.findByParentId(id);
+	}
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "/user")
-    public List<Discipline> findDisciplinesForUser() {
-        System.err.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return disciplineService.findDisciplinesByUser(((UserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal()).getUsername());
-    }
+	@ResponseStatus(value = HttpStatus.OK)
+	@PutMapping
+	public void save(@RequestBody Discipline discipline) {
+		System.err.println(discipline);
+		System.err.println(userFacade.findAllByRole(Role.DISCIPLINE_HEAD));
+		// disciplineService.save(discipline);
+	}
+
+	@ResponseStatus(value = HttpStatus.OK)
+	@GetMapping(value = "/user")
+	public List<Discipline> findDisciplinesForUser() {
+		return disciplineService.findDisciplinesByUser(
+				((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+	}
 
 }

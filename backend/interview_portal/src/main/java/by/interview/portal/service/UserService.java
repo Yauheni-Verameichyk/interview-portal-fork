@@ -5,16 +5,19 @@ import java.util.Optional;
 
 import org.springframework.lang.NonNull;
 
+import by.interview.portal.domain.Role;
 import by.interview.portal.domain.User;
 
 public interface UserService {
 
-    List<User> findAll();
+	List<User> findAll();
 
-    void save(User user);
+	void save(User user);
 
-    Optional<User> findById(Long userId);
+	Optional<User> findById(Long userId);
 
-    @NonNull
-    Optional<User> findUserByLogin(@NonNull String login);
+	@NonNull
+	Optional<User> findUserByLogin(@NonNull String login);
+
+	List<User> findAllByRole(Role role);
 }
