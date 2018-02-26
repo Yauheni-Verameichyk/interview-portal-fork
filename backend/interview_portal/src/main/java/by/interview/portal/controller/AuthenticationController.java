@@ -45,14 +45,7 @@ public class AuthenticationController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping
-<<<<<<< HEAD
-    public HttpEntity<String> authorization(@RequestBody AuthenticationDTO request) {
-        System.err.println("Controller");
-        System.err.println("request.getLogin()" + request.getLogin());
-        System.err.println("request.getPassword()" + request.getPassword());
-=======
     public HttpEntity<CredentialsDTO> authorization(@RequestBody AuthenticationDTO request) {
->>>>>>> 76473a7a5ac84594d2fc1375ec80cc5693c8ab7e
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));

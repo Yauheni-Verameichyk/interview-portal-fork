@@ -26,30 +26,18 @@ public class DisciplineController {
     private DisciplineService disciplineService;
 
     @ResponseStatus(value = HttpStatus.OK)
-<<<<<<< HEAD
-    @GetMapping(value = "/{id}")
-    public Discipline findById(@PathVariable Long id) {
-        return disciplineService.findById(id);
-    }
-
-    @ResponseStatus(value = HttpStatus.OK)
-=======
->>>>>>> 76473a7a5ac84594d2fc1375ec80cc5693c8ab7e
     @GetMapping
     public List<Discipline> findAll() {
         return disciplineService.findByParentId(null);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
-<<<<<<< HEAD
-=======
     @GetMapping(value = "/{id}")
     public List<Discipline> findSubItems(@PathVariable Long id) {
         return disciplineService.findByParentId(id);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
->>>>>>> 76473a7a5ac84594d2fc1375ec80cc5693c8ab7e
     @PutMapping
     public void save(@RequestBody Discipline discipline) {
         disciplineService.save(discipline);

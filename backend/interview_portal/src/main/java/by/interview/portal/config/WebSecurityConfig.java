@@ -72,7 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				// .antMatchers("/**").permitAll()
 				// allow anonymous resource requests
-<<<<<<< HEAD
 				.antMatchers(
 						HttpMethod.GET,
 						"/",
@@ -84,10 +83,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				).permitAll()
 				.antMatchers("/v2/api-docs/**").permitAll()
 				.antMatchers("/candidate/**").permitAll()
-=======
+
 				.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js")
 				.permitAll().antMatchers("/v2/api-docs/**").permitAll()
->>>>>>> 76473a7a5ac84594d2fc1375ec80cc5693c8ab7e
+
 
 				// Un-secure H2 Database
 				.antMatchers("/h2-console/**/**").permitAll()
