@@ -1,10 +1,16 @@
 package by.interview.portal.security;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+
+import by.interview.portal.facade.impl.AuthenticationFacadeImpl;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +19,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-@Component
-public class JwtTokenUtil {
 
+@Component
+public class JwtTokenUtil implements Serializable{
+    private static final Logger LOG = LogManager.getLogger(JwtTokenUtil.class);
     public String getloginFomToken(String token) {
+        LOG.log(Level.getLevel("WORKLEVEL"), "Method started to work 'getloginFomToken' ");
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -29,12 +37,18 @@ public class JwtTokenUtil {
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+        LOG.log(Level.getLevel("WORKLEVEL"), "Method started to work 'getClaimFromToken' ");
         final Claims claims = getAllClaimsFromToken(token);
+        LOG.log(Level.getLevel("WORKLEVEL"), "Claims were got successfully' claims: "  + claims.getSubject());
         return claimsResolver.apply(claims);
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(JwtConstant.SIGNING_KEY).parseClaimsJws(token).getBody();
+        System.err.println("getAllClaimsFromToken =>>>" + token );
+        return Jwts.parser()
+            .setSigningKey(JwtConstant.SIGNING_KEY)
+            .parseClaimsJws(token)
+            .getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -48,34 +62,37 @@ public class JwtTokenUtil {
     }
 
     private Date calculateExpirationDate(Date createdDate) {
-        return new Date(createdDate.getTime() + 1000 * 1000);
+        return new Date(createdDate.getTime() + 1000 * 10);
     }
 
     private String doGenerateToken(Map<String, Object> claims, String username) {
         final Date createdDate = new Date();
         final Date expirationDate = calculateExpirationDate(createdDate);
-
-        System.err.println("doGenerateToken " + createdDate);
-
-        return Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(createdDate)
-                .setExpiration(expirationDate).setIssuedAt(createdDate)
-                .signWith(SignatureAlgorithm.HS256, JwtConstant.SIGNING_KEY).compact();
+        return Jwts.builder()
+            .setClaims(claims)
+            .setSubject(username)
+            .setExpiration(expirationDate)
+            .signWith(SignatureAlgorithm.HS256, JwtConstant.SIGNING_KEY)
+            .compact();
     }
 
     public String refreshToken(String token) {
-        final Date createdDate = new Date();
-        final Date expirationDate = calculateExpirationDate(createdDate);
-
+        Date createdDate = new Date();
+        final Date expirationDate = calculateExpirationDateForRefreshToken(createdDate);
         final Claims claims = getAllClaimsFromToken(token);
-        claims.setIssuedAt(createdDate);
         claims.setExpiration(expirationDate);
 
-        return Jwts.builder().setClaims(claims)
-                .signWith(SignatureAlgorithm.HS256, JwtConstant.SIGNING_KEY).compact();
+        return Jwts.builder()
+            .setSubject(getloginFomToken(token))
+            .setExpiration(expirationDate)
+            .signWith(SignatureAlgorithm.HS256, JwtConstant.SIGNING_KEY).compact();
+    }
+
+    private Date calculateExpirationDateForRefreshToken(Date createdDate) {
+        return new Date(createdDate.getTime() + 1000 * 1000);
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-
         final String login = getloginFomToken(token);
         final Date created = getIssuedAtDateFromToken(token);
         return login.equals(userDetails.getUsername()) && !isTokenExpired(token);
