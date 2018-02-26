@@ -19,11 +19,19 @@ export class AuthenticationControllerService {
     };
     console.log('AuthenticationControllerService body + >>>>>>>>>>' + body);
     return this.http.post(this.baseUrl, body, options).pipe(map(this.handlerData), catchError(this.handlerError));
-  }
+  };
+  getNewAccessAndRefrehToken( refreshToken: String): Observable<UserCredentials> {
+    const body = refreshToken, 
+     options = {
+       headers: new HttpHeaders({'Content-Type': 'application/json'})
+     },
+     url = this.baseUrl+"/refresh";
+     return this.http.post(url, body, options).pipe(map(this.handlerData), catchError(this.handlerError));
+   }
   handlerData(response: HttpResponse<UserCredentials>) {
     let body = response;
     return body || {}
-  }
+  };
   handlerError(err: HttpErrorResponse) {
     let errorMessage : string;
     if(err.error instanceof Error){
@@ -33,11 +41,5 @@ export class AuthenticationControllerService {
     }
     console.log(errorMessage);
     return Observable.throw(errorMessage);
-  }
-  authorizationTokenPOST(arg0: any): any {
-    throw new Error("Method not implemented.");
-  }
-  getNewRefrehAndAccessToken(): Observable<any>{
-    throw new Error("Method not implemented.");
-  }
+  };
 }
