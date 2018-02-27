@@ -9,8 +9,6 @@ import { UserInfo } from '../../domain/UserInfo';
 })
 export class UserComponent implements OnInit {
   @Input() user: UserInfo;
-  
-  
   constructor() { }
 
   ngOnInit() {
@@ -21,5 +19,4 @@ export class UserComponent implements OnInit {
     return role.charAt(0).toUpperCase() + role.slice(1) ;
     
   }
-
 }

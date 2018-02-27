@@ -8,7 +8,6 @@ import { UserCredentials } from '../../domain/UserCredentials';
 @Injectable()
 export class AuthenticationService {
 
-
   constructor() { }
 
   public setCredentialsUser(credentialsUser: UserCredentials) {

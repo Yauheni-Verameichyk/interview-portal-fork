@@ -6,6 +6,6 @@ export interface UserInfo {
 
   surname?: string;
 
-  role?:Array<String>
-
+  roles?:Array<String>
+  
 }

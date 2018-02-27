@@ -8,5 +8,3 @@ backend/interview_portal/.idea/
 frontend/.history/src/app/app.component_20180214143225.html
 frontend/.history/
 *.log
-backend/interview_portal/logs/work/error.log
-backend/interview_portal/logs/work/info.log
