@@ -35,8 +35,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationFacade.getUserPermission(request));
     }
 
-}
-
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/refresh")
     public HttpEntity<CredentialsDTO> refreshCredentials(@RequestBody String refreshToken) {
