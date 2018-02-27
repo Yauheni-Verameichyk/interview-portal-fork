@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Authentication } from '../../../domain/Authentication';
 
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { UserCredentials } from '../../../domain/UserCredentials';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthenticationControllerService {

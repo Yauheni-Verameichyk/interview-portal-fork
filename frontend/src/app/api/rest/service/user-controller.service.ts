@@ -7,16 +7,16 @@ import { UserInfo } from '../../../domain/UserInfo';
 
 @Injectable()
 export class UserControllerService {
-  private baseUrl:string = 'http://localhost:8080/interview-portal/user';
+  private baseUrl: string = 'http://localhost:8080/interview-portal/user';
 
   constructor(private http: HttpClient) { }
 
-  public getUsers():Observable<UserInfo[]>{
+  public getUsers(): Observable<UserInfo[]> {
     return this.http.get(this.baseUrl)
-    .pipe
-    (map(this.handlerData),
-    catchError(this.handlerError)
-  );
+      .pipe
+      (map(this.handlerData),
+      catchError(this.handlerError)
+      );
   }
 
   handlerData(response: HttpResponse<UserInfo>) {
@@ -24,10 +24,10 @@ export class UserControllerService {
     return body || {}
   }
   handlerError(err: HttpErrorResponse) {
-    let errorMessage : string;
-    if(err.error instanceof Error){
-      errorMessage  = `An error occurred: ${err.error.message}`;
-    }else{
+    let errorMessage: string;
+    if (err.error instanceof Error) {
+      errorMessage = `An error occurred: ${err.error.message}`;
+    } else {
       errorMessage = `Backend return code: ${err.status}, body was : ${err.error}`
     }
     console.log(errorMessage);
