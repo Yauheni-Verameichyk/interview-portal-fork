@@ -5,6 +5,7 @@ import {
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
+import { AuthenticationService } from '../../service/authentication/authentication.service';
 
 @Directive({
   selector: '[requiredAuthority]'
@@ -12,19 +13,15 @@ import {
 export class ShowAuthedDirective implements OnInit {
 
   constructor(private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef) { }
+    private viewContainer: ViewContainerRef, private authenticationService: AuthenticationService) { }
 
   @Input('requiredAuthority') requiredAuthority: string;
 
   ngOnInit() {
-    if ((this.getAuthorities().indexOf(this.requiredAuthority) > -1)) {
+    if (this.authenticationService.isPermissionPresent(this.requiredAuthority)) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainer.clear();
     }
-  }
-
-  private getAuthorities(): Array<String> {
-    return (localStorage.getItem('permissions') == null) ? [] : JSON.parse(localStorage.getItem('permissions'));
   }
 }

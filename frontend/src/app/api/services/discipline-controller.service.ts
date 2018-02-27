@@ -128,13 +128,13 @@ export class DisciplineControllerService extends BaseService {
   /**
    * @param discipline discipline
    */
-   saveUsingPUTResponse(discipline: Discipline): Observable<HttpResponse<void>> {
+   saveUsingPOSTResponse(discipline: Discipline): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = discipline;
     let req = new HttpRequest<any>(
-      "PUT",
+      "POST",
       this.rootUrl + `/discipline`,
       __body,
       {
@@ -157,8 +157,8 @@ export class DisciplineControllerService extends BaseService {
   /**
    * @param discipline discipline
    */
-   saveUsingPUT(discipline: Discipline): Observable<void> {
-    return this.saveUsingPUTResponse(discipline).pipe(
+   saveUsingPOST(discipline: Discipline): Observable<void> {
+    return this.saveUsingPOSTResponse(discipline).pipe(
       map(_r => _r.body)
     );
   }

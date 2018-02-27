@@ -36,7 +36,7 @@ export class CreateDisciplineComponent implements OnInit {
   sendDiscipline() {
     if (this.disciplineForm.valid) {
       console.log(this.discipline);
-      this.disciplineControllerService.saveUsingPUT(this.discipline)
+      this.disciplineControllerService.saveUsingPOST(this.discipline)
         .takeUntil(this.destroy)
         .subscribe((success) => {
           console.log('Discipline was saved');

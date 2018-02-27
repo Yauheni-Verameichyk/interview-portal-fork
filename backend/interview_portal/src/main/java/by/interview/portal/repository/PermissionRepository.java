@@ -12,7 +12,5 @@ import by.interview.portal.domain.Role;
 @Repository
 public interface PermissionRepository extends JpaRepository<PermissionTemplate, Long> {
 
-    PermissionTemplate findByName(String name);
-
-    List<PermissionTemplate> findAllByRolesIn(Set<Role> role);
+	List<PermissionTemplate> findAllByRolesIn(Set<Role> role);
 }

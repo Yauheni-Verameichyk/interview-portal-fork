@@ -70,4 +70,12 @@ export class AuthenticationService {
     this.removeCredentialsUser();
   };
 
+  public isPermissionPresent(permissionName: string): boolean {
+   return (this.getPermissions().indexOf(permissionName) > -1)
+     
+  }
+
+  public getPermissions(): Array<String> {
+    return (localStorage.getItem('permissions') == null) ? [] : JSON.parse(localStorage.getItem('permissions'));
+  }
 }

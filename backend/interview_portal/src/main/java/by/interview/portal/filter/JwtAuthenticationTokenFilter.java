@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.interview.portal.controller.AuthenticationController;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +28,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	UserDetailsService userDetailsService;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			FilterChain filterChain) throws ServletException, IOException {
@@ -38,11 +38,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 		String login = null;
 		String authToken = null;
 		if (header != null && header.startsWith(JwtConstant.TOKEN_PREFIX)) {
-			LOG.log(Level.getLevel("WORKLEVEL"), "Header is not empty and Start with token prefix: " + JwtConstant.TOKEN_PREFIX);
+			LOG.log(Level.getLevel("WORKLEVEL"),
+					"Header is not empty and Start with token prefix: " + JwtConstant.TOKEN_PREFIX);
 			authToken = header.replace(JwtConstant.TOKEN_PREFIX, "");
 			try {
 				login = jwtTokenUtil.getloginFomToken(authToken);
-				LOG.log(Level.getLevel("WORKLEVEL"), "Login to obtain from token success. login : " + login );
+				LOG.log(Level.getLevel("WORKLEVEL"), "Login to obtain from token success. login : " + login);
 			} catch (IllegalArgumentException e) {
 				LOG.error("an error occured during getting username from token", e);
 			} catch (ExpiredJwtException e) {

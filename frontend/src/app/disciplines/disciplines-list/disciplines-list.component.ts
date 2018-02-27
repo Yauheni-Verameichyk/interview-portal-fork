@@ -6,6 +6,7 @@ import { Discipline } from '../../api/models';
 import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
 import { DisciplineService } from '../service/discipline.service';
+import { AuthenticationService } from '../../service/authentication/authentication.service';
 
 @Component({
   selector: 'app-disciplines-list',
@@ -16,10 +17,10 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
 
   disciplinesList: Array<Discipline> = [];
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private disciplineService: DisciplineService) { }
+  constructor(private disciplineService: DisciplineService, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.findDisciplines('MY');
+    (this.authenticationService.isPermissionPresent("DISCIPLINES_FILTER_READ")) ? this.findDisciplines('MY') : this.findDisciplines('ALL');
   }
 
   findDisciplines(searchOption: string): void {

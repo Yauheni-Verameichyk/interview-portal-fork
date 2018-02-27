@@ -1,11 +1,11 @@
-<div class="row">
+<div class="row" *requiredAuthority="'DISCIPLINES_FILTER_READ'">
   <div class="col-sm-7 align-middle">
     <div class="btn-group align-middle myAllFilter pull-right">
       <button type="button" class="btn btn-primary" [ngClass]="{'customActive': clicked, 'customActive': !clicked}" (click)="clicked = !clicked; findDisciplines('MY')">My</button>
       <button type="button" class="btn btn-primary" [ngClass]="{'customActive': !clicked, 'customActive': clicked}" (click)="clicked = !clicked; findDisciplines('ALL')">All</button>
     </div>
   </div>
-</div>
+</div> 
 
 <table class="user-table table table-hover disciplineTableHead">
   <thead class="thead-light">

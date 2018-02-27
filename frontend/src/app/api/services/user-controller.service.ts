@@ -67,13 +67,13 @@ export class UserControllerService extends BaseService {
   /**
    * @param userDTO userDTO
    */
-  saveUsingPUT_1Response(userDTO: UserDTO): Observable<HttpResponse<void>> {
+  saveUsingPOST_1Response(userDTO: UserDTO): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = userDTO;
     let req = new HttpRequest<any>(
-      "PUT",
+      "POST",
       this.rootUrl + `/user`,
       __body,
       {
@@ -96,8 +96,8 @@ export class UserControllerService extends BaseService {
   /**
    * @param userDTO userDTO
    */
-  saveUsingPUT_1(userDTO: UserDTO): Observable<void> {
-    return this.saveUsingPUT_1Response(userDTO).pipe(
+  saveUsingPOST_1(userDTO: UserDTO): Observable<void> {
+    return this.saveUsingPOST_1Response(userDTO).pipe(
       map(_r => _r.body)
     );
   }
