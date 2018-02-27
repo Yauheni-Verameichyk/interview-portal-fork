@@ -1,5 +1,6 @@
 package by.interview.portal.facade;
 
+import by.interview.portal.dto.UserBaseInfoDTO;
 import by.interview.portal.dto.UserDTO;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface UserFacade {
     void save(UserDTO user);
 
     Optional<UserDTO> findById(long userId);
+
+    List<UserBaseInfoDTO> findAllUserBaseInfo();
 }

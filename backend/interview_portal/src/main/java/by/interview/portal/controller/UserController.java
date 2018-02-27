@@ -3,6 +3,7 @@ package by.interview.portal.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import by.interview.portal.dto.UserBaseInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -41,9 +42,8 @@ public class UserController {
 //    }
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping
-    public List<UserDTO> findAll() {
-        return userFacade.findAll();
-
+    public List<UserBaseInfoDTO> findAll() {
+        return userFacade.findAllUserBaseInfo();
     }
 
     @ResponseStatus(value = HttpStatus.OK)

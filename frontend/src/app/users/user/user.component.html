@@ -2,5 +2,5 @@
     {{user.name}}</td>
 <td>{{user.surname}}</td>
 <td >
-    <span *ngFor="let role of user.permissions">{{role}}</span>
+    <span *ngFor="let role of user.roles">{{transformStyle(role)}}<br></span>
 </td>

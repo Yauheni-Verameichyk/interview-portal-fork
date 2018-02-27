@@ -42,3 +42,4 @@ export class AuthenticationControllerService {
     return Observable.throw(errorMessage);
   };
 }
+

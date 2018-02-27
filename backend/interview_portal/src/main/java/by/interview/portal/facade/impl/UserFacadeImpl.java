@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import by.interview.portal.dto.UserBaseInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,22 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public Optional<UserDTO> findById(long userId) {
         return userService.findById(userId).map(userConverter::convertToDTO);
+    }
+
+    @Override
+    public List<UserBaseInfoDTO> findAllUserBaseInfo() {
+        return userService.findAll().stream().filter(Objects::nonNull)
+            .map(userConverter::convertToDTO)
+            .map(userDTO ->  getUserBaseInfo(userDTO))
+            .collect(Collectors.toList());
+    }
+
+    private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {
+        UserBaseInfoDTO userBaseInfo = new UserBaseInfoDTO();
+        userBaseInfo.setId(userDTO.getId());
+        userBaseInfo.setName(userDTO.getName());
+        userBaseInfo.setSurname(userDTO.getSurname());
+        userBaseInfo.setRoles(userDTO.getRoleDisciplines().keySet());
+        return userBaseInfo;
     }
 }
