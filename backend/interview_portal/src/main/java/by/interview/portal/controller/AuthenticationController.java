@@ -41,7 +41,6 @@ public class AuthenticationController {
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/refresh")
     public HttpEntity<CredentialsDTO> refreshCredentials(@RequestBody String refreshToken) {
-        LOG.log(Level.getLevel("WORKLEVEL"), "User refreshToken ");
         return ResponseEntity.ok(authenticationFacade.refreshCredentials(refreshToken));
     }
 
