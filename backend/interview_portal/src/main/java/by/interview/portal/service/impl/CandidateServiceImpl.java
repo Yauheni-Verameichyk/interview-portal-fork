@@ -24,11 +24,12 @@ public class CandidateServiceImpl implements CandidateService {
     @Autowired
     private DisciplineRepository disciplineRepository;
 
-    public static final int  COUNT_ELEMENTS_IN_PAGE = 10;
+    private static final Integer  QUANTITY_ELEMENTS_IN_PAGE = 10;
 
     @Override
-    public Page<Candidate> findPage(Integer page) {
-       return candidateRepository.findAll(PageRequest.of(page-1, COUNT_ELEMENTS_IN_PAGE));
+    public List<Candidate> findAll(Integer quantity) {
+        Integer page = (int) Math.ceil(quantity.doubleValue()/QUANTITY_ELEMENTS_IN_PAGE.doubleValue());
+        return candidateRepository.findAll(PageRequest.of(page, QUANTITY_ELEMENTS_IN_PAGE)).getContent();
     }
 
     @Override

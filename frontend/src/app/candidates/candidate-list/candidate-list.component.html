@@ -11,10 +11,16 @@
     </th>
   </thead>
   <tbody>
-    <tr app-candidate 
-      *ngFor="let candidate of content" 
-      [candidate]="candidate"
-    >
-  </tr>
+    <tr app-candidate *ngFor="let candidate of candidateList" [candidate]="candidate">
+    </tr>
   </tbody>
 </table>
+<div class="load-button">
+  <button 
+    *ngIf="showButtonLoad"
+    (click)="windowScrollListener()"
+    class="btn btn-outline-success"
+  >
+    Load more
+  </button>
+</div>

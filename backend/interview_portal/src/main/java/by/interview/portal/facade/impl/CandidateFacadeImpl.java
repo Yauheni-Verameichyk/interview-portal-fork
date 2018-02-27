@@ -3,7 +3,6 @@ package by.interview.portal.facade.impl;
 import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.Candidate;
 import by.interview.portal.dto.CandidateDTO;
-import by.interview.portal.dto.ListBean;
 import by.interview.portal.facade.CandidateFacade;
 import by.interview.portal.service.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +24,11 @@ public class CandidateFacadeImpl implements CandidateFacade {
     @Qualifier("candidateConverter")
     private Converter<Candidate, CandidateDTO> candidateConverter;
 
-    @Autowired
-    @Qualifier("listBeanConverter")
-    private Converter<Page, ListBean> listBeanConverter;
-
     @Override
-    public ListBean<CandidateDTO> findPage(Integer page) {
-        Page<Candidate> candidatePage = candidateService.findPage(page);
-        ListBean listBean = listBeanConverter.convertToDTO(candidatePage);
-        List<Candidate> candidateList = listBean.getContent();
-        List<CandidateDTO> candidateListDTO = candidateList.stream()
+    public List<CandidateDTO> findAll(Integer quantity) {
+        return candidateService.findAll(quantity).stream()
                 .filter(Objects::nonNull)
                 .map(candidateConverter::convertToDTO)
                 .collect(Collectors.toList());
-        listBean.setContent(candidateListDTO);
-        listBean.setPage(page);
-        return listBean;
     }
 }

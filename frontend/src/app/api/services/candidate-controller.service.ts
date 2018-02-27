@@ -9,7 +9,6 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { filter } from 'rxjs/operators/filter';
 
-import { ListBean } from '../models/list-bean';
 import { CandidateDTO } from '../models/candidate-dto';
 
 /**
@@ -28,14 +27,14 @@ export class CandidateControllerService extends BaseService {
    * @param page page
    * @return OK
    */
-   findPageUsingGETResponse(page?: number): Observable<HttpResponse<ListBean<CandidateDTO>>> {
+   findAllUsingGETResponse(page?: number): Observable<HttpResponse<CandidateDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (page != null) __params = __params.set("page", page.toString());
+    if (page != null) __params = __params.set("quantity", page.toString());
     let req = new HttpRequest<any>(
       "GET",
-      this.rootUrl + `/candidate`,
+      this.rootUrl + `/candidates`,
       __body,
       {
         headers: __headers,
@@ -47,9 +46,9 @@ export class CandidateControllerService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: ListBean<CandidateDTO> = null;
-        _body = _resp.body as ListBean<CandidateDTO>
-        return _resp.clone({body: _body}) as HttpResponse<ListBean<CandidateDTO>>;
+        let _body: CandidateDTO[] = null;
+        _body = _resp.body as CandidateDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<CandidateDTO[]>;
       })
     );
   }
@@ -58,11 +57,12 @@ export class CandidateControllerService extends BaseService {
    * @param page page
    * @return OK
    */
-   findCandidatePage(page?: number): Observable<ListBean<CandidateDTO>> {
-    return this.findPageUsingGETResponse(page).pipe(
+   findAll(page?: number): Observable<CandidateDTO[]> {
+    return this.findAllUsingGETResponse(page).pipe(
       map(_r => _r.body)
     );
   }
+
 }
 
 export module CandidateControllerService {
