@@ -7,8 +7,7 @@ import { Observable } from 'rxjs/observable';
 import { UserCredentials } from '../../domain/UserCredentials';
 @Injectable()
 export class AuthenticationService {
-
-
+  
   constructor() { }
 
   public setCredentialsUser(credentialsUser: UserCredentials) {
@@ -70,5 +69,4 @@ export class AuthenticationService {
   public setNewTokens(refreshToken: string) {
     this.removeCredentialsUser();
   };
-
 }

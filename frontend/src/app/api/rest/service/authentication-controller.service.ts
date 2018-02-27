@@ -17,7 +17,6 @@ export class AuthenticationControllerService {
     options = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
-    console.log('AuthenticationControllerService body + >>>>>>>>>>' + body);
     return this.http.post(this.baseUrl, body, options).pipe(map(this.handlerData), catchError(this.handlerError));
   };
   getNewAccessAndRefrehToken( refreshToken: String): Observable<UserCredentials> {

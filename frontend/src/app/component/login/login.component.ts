@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         .authorizationUserPOST(this.user)
         .takeUntil(this.destroy)
         .subscribe(data =>{
-          console.log("authorize" )
           this.authenticationService.setCredentialsUser(data);
           this.navbarManager.showNavbar(true);
           this.router.navigate(['user']);

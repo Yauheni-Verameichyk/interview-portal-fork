@@ -40,15 +40,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       }
       else{
         this.redirectToSignIn("don't have Token");
-      }
-     
+      } 
     }
   };
 
+  }
   private redirectToSignIn(error) {
     console.log(error);
     this.router.navigate(['/login']);
     return Observable.throw(error); //** Нужно пофиксить обработку */
   };
-  
 }

@@ -160,10 +160,41 @@ caption {
     height: 50px;
 }
 
-.description {
-    width: 100%;
-}
-
 .addDiscButton {
     padding-left: 20px;
+}
+
+
+.disciplinesList {
+    margin-bottom: 0px;
+}
+
+.disciplineName {
+    width: 176px;
+}
+
+.disciplineNameHead {
+    border-top: 20px;
+    width: 200px;
+}
+
+.discipline {
+    height: 70px;
+}
+
+.subItem {
+    padding-left: 20px;
+}
+
+.editButtons{
+    width: 130px;
+}
+
+.twoEditButtons{
+    width: 95px;
+}
+
+.disciplineTableHead{
+    margin-top: 20px;
+    margin-bottom: 0px;
 }

@@ -1,0 +1,24 @@
+<table class="user-table table table-hover disciplinesList" (click)="showSubItems();" [ngStyle]="{'background-color': 'rgb('+ backgroundColor + ', '+ backgroundColor + ', ' + backgroundColor +')'}">
+  <tbody>
+    <tr>
+      <td scope="col" class="disciplineName"> {{discipline.name}}</td>
+      <td scope="col">{{discipline.subscription}}</td>
+      <td scope="col" class="pull-right">
+        <div class="pull-right editButtons">
+          <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(parentDisciplineName, childLevel)" class="btn btn-light pull-right">
+            <img class="far fa-trash-alt align-middle" />
+          </div>
+          <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(parentDisciplineName, childLevel)" class="btn btn-light pull-right">
+            <img class="fas fa-pencil-alt align-middle" />
+          </div>
+          <div *requiredAuthority="'SUB_ITEM_CREATE_' + parentDisciplineName" class="btn btn-light pull-right">
+            <img class="fas fa-plus-circle align-middle" />
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="subItem" *requiredAuthority="'SUB_ITEM_READ_' + parentDisciplineName">
+  <app-discipline *ngFor="let discipline of subDisciplinesList" [discipline]="discipline" [childLevel]="childLevel + 1" [parentDisciplineName]="parentDisciplineName"></app-discipline>
+</div>
