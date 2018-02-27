@@ -33,7 +33,7 @@ export class AuthenticationService {
   };
 
   private setPermissionsInLocalStorage(permissions) {
-    localStorage.setItem('permissions', permissions);
+    localStorage.setItem('permissions', JSON.stringify(permissions));
   };
 
   private setTokenInLocalStorage(token: string): void {
