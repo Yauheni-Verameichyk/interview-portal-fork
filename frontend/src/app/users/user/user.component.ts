@@ -16,5 +16,10 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     
   }
+  transformStyle(role: string): string{
+    role = role.replace(/_/g, " ").toLowerCase();
+    return role.charAt(0).toUpperCase() + role.slice(1) ;
+    
+  }
 
 }

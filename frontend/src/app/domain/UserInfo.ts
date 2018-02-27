@@ -4,7 +4,8 @@ export interface UserInfo {
 
   name?: string;
 
+  surname?: string;
+
   role?:Array<String>
 
-  surname?: string;
 }

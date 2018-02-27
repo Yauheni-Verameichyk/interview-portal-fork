@@ -10,7 +10,7 @@ import { UserControllerService } from '../../api/rest/service/user-controller.se
 })
 export class UserListComponent implements OnInit {
   users: Array<UserInfo>;
-
+  
   constructor(private userController: UserControllerService) { }
 
   ngOnInit() {
