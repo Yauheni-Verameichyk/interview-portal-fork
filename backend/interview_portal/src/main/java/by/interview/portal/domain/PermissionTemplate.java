@@ -8,6 +8,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class PermissionTemplate {
     @Column(name = "operation_id")
     private Operation operation;
 
-    @ElementCollection(targetClass = Role.class)
+    @ElementCollection(fetch = FetchType.LAZY, targetClass = Role.class)
     @CollectionTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "permission_id"))
     @Column(name = "role_id")
     private Set<Role> roles;

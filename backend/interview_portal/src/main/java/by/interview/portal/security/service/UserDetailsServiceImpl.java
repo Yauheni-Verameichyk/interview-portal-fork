@@ -13,7 +13,9 @@ import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.User;
 import by.interview.portal.dto.JwtUserDTO;
 import by.interview.portal.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service("userDetails")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
