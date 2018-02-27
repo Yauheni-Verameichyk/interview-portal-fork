@@ -19,7 +19,6 @@ import { AuthenticationInterceptor } from './interceptor/authentication-intercep
 import { NavbarManager } from './service/navbar/navbar-manager';
 import { NavbarComponent } from './component/navbar/navbar.component';
 
-import { AuthenticationControllerService } from './api/rest/service/authentication-controller.service';
 import { DisciplinesModule } from './disciplines/disciplines.module';
 import { SharedModule } from './shared/shared.module';
 import { CandidatesModule } from './candidates/candidates.module';
