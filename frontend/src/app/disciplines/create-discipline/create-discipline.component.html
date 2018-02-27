@@ -23,30 +23,20 @@
       <textarea class="form-control" id="disciplineDescription" formControlName="disciplineSubscription" [(ngModel)]="discipline.subscription"
         placeholder="Enter discipline description"></textarea>
     </div>
-
     <label for="inputState">Assign discipline head</label>
+
     <div class="row">
-      <div class="form-group col-11" id="elementToAdd">
-        <select id="inputState" class="form-control">
-          <option selected>Choose...</option>
-          <option>Mark Atto</option>
-          <option>Jacob Thornton</option>
-          <option>Larry the Bird</option>
-          <option>Mark Otto</option>
-        </select>
-      </div>
+      <app-select-user *ngFor="let DH_form of disciplineHeadsList"></app-select-user>
       <div class="form-group btn btn-light col-0">
         <a class="fas fa-plus align-middle"></a>
       </div>
     </div>
 
-    * Required field
-    <br>
-    <div class="text-center">
-      <a (click)="sendDiscipline()" class="btn btn-primary">Create</a>
-      <a class="btn btn-secondary" href="disciplines.html">Cancel</a>
-    </div>
-
-  </form>
-
+* Required field
+<br>
+<div class="text-center">
+  <a (click)="sendDiscipline()" class="btn btn-primary">Create</a>
+  <a class="btn btn-secondary" href="disciplines.html">Cancel</a>
+</div>
+</form>
 </div>

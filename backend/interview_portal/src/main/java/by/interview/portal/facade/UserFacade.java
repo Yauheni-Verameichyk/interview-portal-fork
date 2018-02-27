@@ -4,15 +4,18 @@ import java.util.List;
 import java.util.Optional;
 
 import by.interview.portal.domain.Role;
+import by.interview.portal.dto.UserBaseInfoDTO;
 import by.interview.portal.dto.UserDTO;
 
 public interface UserFacade {
 
-	List<UserDTO> findAll();
+    List<UserDTO> findAll();
 
-	void save(UserDTO user);
+    void save(UserDTO user);
 
-	Optional<UserDTO> findById(long userId);
+    Optional<UserDTO> findById(long userId);
 
-	List<UserDTO> findAllByRole(Role role);
+    List<UserBaseInfoDTO> findAllByRole(Role role);
+
+    List<UserBaseInfoDTO> findAllUserBaseInfo();
 }

@@ -17,7 +17,7 @@ import { NavbarManager } from '../../service/navbar/navbar-manager';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  
+
   public user: Authentication = {
     login: '',
     password: ''
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
 
   constructor(private router: Router,
-    private authenticationService: AuthenticationService, 
+    private authenticationService: AuthenticationService,
     private authController: AuthenticationControllerService,
     private navbarManager: NavbarManager) { }
 

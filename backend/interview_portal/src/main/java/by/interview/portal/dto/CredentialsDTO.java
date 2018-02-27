@@ -8,5 +8,6 @@ import lombok.Data;
 public class CredentialsDTO {
     private String accessToken;
     private String refreshToken;
-    private Set<String> credentials;
+    private Set<String> permissions;
 }
+

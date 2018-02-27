@@ -60,7 +60,6 @@ export class DisciplineControllerService extends BaseService {
     );
   }
 
-
   findSubItemsGETResponse(id: number): Observable<HttpResponse<Discipline[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -86,6 +85,9 @@ export class DisciplineControllerService extends BaseService {
     );
   }
 
+  /**
+   * @return OK
+   */
    findSubItemsUsingGET(id: number): Observable<Discipline[]> {
     return this.findSubItemsGETResponse(id).pipe(
       map(_r => _r.body)

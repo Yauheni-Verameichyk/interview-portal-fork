@@ -7,6 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import by.interview.portal.controller.AuthenticationController;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,35 +24,34 @@ import by.interview.portal.security.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-
+	private static final Logger LOG = LogManager.getLogger(JwtAuthenticationTokenFilter.class);
 	@Autowired
 	UserDetailsService userDetailsService;
-
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			FilterChain filterChain) throws ServletException, IOException {
-
+		LOG.log(Level.getLevel("WORKLEVEL"), "JwtAuthenticationTokenFilter start works");
 		String header = httpServletRequest.getHeader(JwtConstant.HEADER_STRING);
-		System.err.println(header);
+		LOG.log(Level.getLevel("WORKLEVEL"), "JwtAuthenticationTokenFilter got header with content : " + header);
 		String login = null;
 		String authToken = null;
 		if (header != null && header.startsWith(JwtConstant.TOKEN_PREFIX)) {
+			LOG.log(Level.getLevel("WORKLEVEL"), "Header is not empty and Start with token prefix: " + JwtConstant.TOKEN_PREFIX);
 			authToken = header.replace(JwtConstant.TOKEN_PREFIX, "");
 			try {
 				login = jwtTokenUtil.getloginFomToken(authToken);
+				LOG.log(Level.getLevel("WORKLEVEL"), "Login to obtain from token success. login : " + login );
 			} catch (IllegalArgumentException e) {
-				logger.error("an error occured during getting username from token", e);
+				LOG.error("an error occured during getting username from token", e);
 			} catch (ExpiredJwtException e) {
-				logger.warn("the token is expired and not valid anymore", e);
+				LOG.error("the token is expired and not valid anymore", e);
 			}
 		} else {
-			logger.warn("couldn't find bearer string, will ignore the header");
+			LOG.error("couldn't find bearer string, will ignore the header");
 		}
-		logger.info("checking authentication for user " + login);
+		LOG.log(Level.getLevel("WORKLEVEL"), "checking authentication for user " + login);
 		if (login != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			// It is not compelling necessary to load the use details from the database. You
@@ -64,11 +67,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-				logger.info("authenticated user " + login + ", setting security context");
+				LOG.log(Level.getLevel("WORKLEVEL"), "authenticated user " + login + ", setting security context");
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
-
+		LOG.log(Level.getLevel("WORKLEVEL"), "move to next filter");
 		filterChain.doFilter(httpServletRequest, httpServletResponse);
 	}
 }

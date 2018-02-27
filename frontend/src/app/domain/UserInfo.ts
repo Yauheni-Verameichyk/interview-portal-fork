@@ -1,10 +1,11 @@
-export interface UserInfo {
+export class UserInfo {
 
   id?: number;
 
   name?: string;
 
-  role?:Array<String>
-
   surname?: string;
+
+  roles?:Array<String>
+  
 }

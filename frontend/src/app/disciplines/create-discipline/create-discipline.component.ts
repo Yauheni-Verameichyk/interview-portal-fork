@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Discipline } from '../../api/models/discipline';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { DisciplineControllerService } from '../../api/services';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
+import { UserInfo } from '../../domain/UserInfo';
 
 @Component({
   selector: 'app-create-discipline',
@@ -15,6 +16,7 @@ export class CreateDisciplineComponent implements OnInit {
 
   public discipline: Discipline = new Discipline();
   disciplineForm: FormGroup;
+  disciplineHeadsList: Array<UserInfo> = [new UserInfo()];
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineControllerService: DisciplineControllerService) {
   }
@@ -25,10 +27,10 @@ export class CreateDisciplineComponent implements OnInit {
         Validators.required,
         Validators.minLength(4),
       ]),
-      'disciplineSubscription': new FormControl()
+      'disciplineSubscription': new FormControl(),
+      formArray: new FormArray([])
     });
     this.discipline.parentId = null;
-    console.log(this.disciplineForm);
   }
 
   sendDiscipline() {

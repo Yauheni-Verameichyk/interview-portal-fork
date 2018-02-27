@@ -1,6 +1,6 @@
 package by.interview.portal.repository;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,15 +13,14 @@ import by.interview.portal.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	/**
-	 * Finding user by login
-	 *
-	 * @param login
-	 *            Login of the user
-	 * @return found user or <code>null</code>
-	 */
-	User findFirstByLogin(String login);
+    /**
+     * Finding user by login
+     *
+     * @param login Login of the user
+     * @return found user or <code>null</code>
+     */
+    User findFirstByLogin(String login);
 
-	@Query("SELECT urd.user FROM UserRoleDiscipline urd where urd.role = :role")
-	List<User> findAllByRole(@Param("role") Role role);
+    @Query("SELECT urd.user FROM UserRoleDiscipline urd where urd.role = :role")
+    Set<User> findAllByRole(@Param("role") Role role);
 }

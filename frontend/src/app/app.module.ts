@@ -21,8 +21,6 @@ import { DisciplinesModule } from './disciplines/disciplines.module';
 import { SharedModule } from './shared/shared.module';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

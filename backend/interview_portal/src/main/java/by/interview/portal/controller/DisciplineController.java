@@ -25,37 +25,37 @@ import by.interview.portal.service.DisciplineService;
 @RequestMapping(value = "/discipline")
 public class DisciplineController {
 
-	@Autowired
-	private DisciplineService disciplineService;
+    @Autowired
+    private DisciplineService disciplineService;
 
-	@Autowired
-	private UserFacade userFacade;
+    @Autowired
+    private UserFacade userFacade;
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping
-	public List<Discipline> findAll() {
-		return disciplineService.findByParentId(null);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping
+    public List<Discipline> findAll() {
+        return disciplineService.findByParentId(null);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping(value = "/{id}")
-	public List<Discipline> findSubItems(@PathVariable Long id) {
-		return disciplineService.findByParentId(id);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/{id}")
+    public List<Discipline> findSubItems(@PathVariable Long id) {
+        return disciplineService.findByParentId(id);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@PutMapping
-	public void save(@RequestBody Discipline discipline) {
-		System.err.println(discipline);
-		System.err.println(userFacade.findAllByRole(Role.DISCIPLINE_HEAD));
-		// disciplineService.save(discipline);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @PutMapping
+    public void save(@RequestBody Discipline discipline) {
+        System.err.println(discipline);
+        System.err.println(userFacade.findAllByRole(Role.DISCIPLINE_HEAD));
+        // disciplineService.save(discipline);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping(value = "/user")
-	public List<Discipline> findDisciplinesForUser() {
-		return disciplineService.findDisciplinesByUser(
-				((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/user")
+    public List<Discipline> findDisciplinesForUser() {
+        return disciplineService.findDisciplinesByUser(((UserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal()).getUsername());
+    }
 
 }

@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Data
 @NoArgsConstructor
@@ -41,6 +43,6 @@ public class User {
     @Column(name = "login", unique = true, nullable = false, length = 50)
     private String login;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany( fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserRoleDiscipline> userRoleDisciplines;
 }

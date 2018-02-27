@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<hibernate.version>5.2.10.Final</hibernate.version>
-		<jjwt.version>0.9.0</jjwt.version>
+		<jjwt.version>0.8.0</jjwt.version>
 		<springfox-swagger.version>2.6.1</springfox-swagger.version>
 	</properties>
 
