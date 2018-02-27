@@ -1,10 +1,21 @@
 package by.interview.portal.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Data
@@ -17,7 +28,7 @@ import java.util.List;
 @Table(name = "candidates")
 public class Candidate extends Person{
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade= CascadeType.ALL)
     @JoinTable(name = "candidate_discipline", joinColumns = @JoinColumn(name = "candidate_id"),
             inverseJoinColumns = @JoinColumn(name = "discipline_id"))
     @LazyCollection(LazyCollectionOption.TRUE)

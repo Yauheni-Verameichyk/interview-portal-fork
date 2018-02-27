@@ -42,24 +42,4 @@ public class UserController {
         userFacade.save(userDTO);
     }
 
-    // private UserDTO geUserDTO() {
-    // UserDTO userDTO = new UserDTO();
-    // userDTO.setId(1);
-    // userDTO.setName("Eugene");
-    // userDTO.setEmail("sgfg");
-    // userDTO.setPassword("gdf");
-    // userDTO.setPhoneNumber("dfgsg");
-    // userDTO.setSurname("dghgh");
-    //
-    // Map<Role, List<Discipline>> rd = new HashMap<>();
-    // Discipline discipline = new Discipline();
-    // discipline.setId(1);
-    // discipline.setName("Java");
-    // List<Discipline> lDisciplines = new ArrayList<>();
-    // lDisciplines.add(discipline);
-    // rd.put(Role.DISCIPLINE_HEAD, lDisciplines);
-    // rd.put(Role.COORDINATOR, null);
-    // userDTO.setRoleDisciplines(rd);
-    // return userDTO;
-    // }
 }

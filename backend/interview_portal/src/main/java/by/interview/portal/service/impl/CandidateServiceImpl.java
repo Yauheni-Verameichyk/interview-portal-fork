@@ -6,7 +6,6 @@ import by.interview.portal.repository.CandidateRepository;
 import by.interview.portal.repository.DisciplineRepository;
 import by.interview.portal.service.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

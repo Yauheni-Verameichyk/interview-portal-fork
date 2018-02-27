@@ -8,8 +8,10 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
 @NoArgsConstructor
@@ -22,7 +24,6 @@ public class User extends  Person{
     @Column(name = "login", unique = true, nullable = false, length = 50)
     private String login;
 
-    @JsonIgnore
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
