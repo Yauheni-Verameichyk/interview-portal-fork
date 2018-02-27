@@ -5,48 +5,48 @@ import { AuthenticationService } from '../service/authentication/authentication.
 import 'rxjs/add/operator/catch';
 import { error } from 'protractor';
 import { Router } from '@angular/router';
+import { AuthenticationControllerService } from '../api/rest/service/authentication-controller.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-  constructor(private auth: AuthenticationService, private router: Router) { }
+  constructor(private auth: AuthenticationService, private authController: AuthenticationControllerService, private router: Router) { }
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-    const token = this.auth.getTokenFromLocalStorage();
-    console.log('intercept works');
-    console.log('Token >>>>>>>>' + token)
-    if (token) {
-      if (this.auth.isExpiredToken) {
-        const authReq = this.auth.addToken(req, token);
+    const accessToken = this.auth.getTokenFromLocalStorage();
+    if (accessToken) {
+      if (!this.auth.isExpiredToken(accessToken)) {
+        const authReq = this.auth.addToken(req, accessToken);
         return next.handle(authReq).catch(error => this.redirectToSignIn(error));
       } else {
         const refreshToken = this.auth.getRefreshTokenFromLocalStorage();
-        if (refreshToken) {
-          let token = this.auth.getNewTokens(refreshToken);
-          return next.handle(this.auth.addToken(req, token)).catch(error => this.redirectToSignIn(error));
+        if (refreshToken && !this.auth.isExpiredToken(refreshToken)) {
+          this.auth.removeCredentialsUser();
+          this.authController.getNewAccessAndRefrehToken(refreshToken).subscribe(credentials=>{
+            this.auth.setCredentialsUser(credentials);
+            return next.handle(this.auth.addToken(req, credentials.accessToken)).catch(error => this.redirectToSignIn(error));
+          });
         }else{
+          this.auth.removeCredentialsUser();
           this.redirectToSignIn("don't have refreshToken");
         }
       }
     }else{
-      console.log('Token Not exists send query to ' + req.url);
       if(req.url === 'http://localhost:8080/interview-portal/auth'){
         return next.handle(req);
-      }else{
+      }else if(req.url === 'http://localhost:8080/interview-portal/auth/refresh'){
+        return next.handle(req);
+      }
+      else{
         this.redirectToSignIn("don't have Token");
       }
      
     }
-  }
-  /**
-   * @param error 
-   * Логика такая если нам не удалось успешно рефрешнуть токен то преренаправляем на страницу авторизации Мужик завтра у тебя все получиться =)
-   * 
-   */
+  };
   private redirectToSignIn(error) {
-    console.log(error);
     this.router.navigate(['/login']);
     return Observable.throw(error); //** Нужно пофиксить обработку */
-  }
+  };
+  
 }

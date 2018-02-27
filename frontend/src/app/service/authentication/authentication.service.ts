@@ -8,44 +8,66 @@ import { UserCredentials } from '../../domain/UserCredentials';
 @Injectable()
 export class AuthenticationService {
 
-  
-  constructor(private authController: AuthenticationControllerService) { }
+  constructor() { }
 
-  public setCredentialsUser(credentialsUser: UserCredentials){
-      this.setTokenInLocalStorage(credentialsUser.accessToken);
-      this.setRefreshTokenInLocalStorage(credentialsUser.refreshToken);
-      this.setCredentialsInLocalStorage(credentialsUser.credentials) ;
-  }
+  public setCredentialsUser(credentialsUser: UserCredentials) {
+    this.setTokenInLocalStorage(credentialsUser.accessToken);
+    this.setRefreshTokenInLocalStorage(credentialsUser.refreshToken);
+    this.setPermissionsInLocalStorage(credentialsUser.permissions);
+  };
+
+  public removeCredentialsUser() {
+    localStorage.clear();
+  };
+
   public getTokenFromLocalStorage(): string {
     return localStorage.getItem('token');
-  }
+  };
+
   public getRefreshTokenFromLocalStorage(): string {
     return localStorage.getItem('refreshToken');
-  }
-  private setCredentialsInLocalStorage(credentials){
-    localStorage.setItem('credentials', credentials);
-  }
-  private setTokenInLocalStorage(token:string): void {
+  };
+
+  public getPermissionsFromLocalStorage(): string {
+    return localStorage.getItem('permissions');
+  };
+
+  private setPermissionsInLocalStorage(permissions) {
+    localStorage.setItem('permissions', permissions);
+  };
+
+  private setTokenInLocalStorage(token: string): void {
     localStorage.setItem('token', token);
-  }
-  private setRefreshTokenInLocalStorage(refreshToken:string): void {
-    localStorage.setItem('refreshToken', refreshToken );
-  }
+  };
+
+  private setRefreshTokenInLocalStorage(refreshToken: string): void {
+    localStorage.setItem('refreshToken', refreshToken);
+  };
+
+  public removeTokenInLocalStorage() {
+    localStorage.removeItem('token');
+  };
+
+  public removeRefreshTokenInLocalStorage() {
+    localStorage.removeItem('refreshToken');
+  };
+
   public isExpiredToken(token: string): boolean {
-    return this.parseJwt(token).exp <  (Date.now() / 1000);
-  }
-  private parseJwt(token:string)  {
+    return this.parseJwt(token).exp < (Date.now() / 1000);
+  };
+
+  private parseJwt(token: string) {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));
   };
+
   public addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-      return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })
-    }
-  public getNewTokens(refreshToken: string): string{
-     return "a";
-  }
- 
-  
-  
+    return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })
+  };
+
+  public setNewTokens(refreshToken: string) {
+    this.removeCredentialsUser();
+  };
+
 }
