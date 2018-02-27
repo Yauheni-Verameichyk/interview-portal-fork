@@ -69,8 +69,4 @@ export class AuthenticationService {
   public setNewTokens(refreshToken: string) {
     this.removeCredentialsUser();
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> origin
 }

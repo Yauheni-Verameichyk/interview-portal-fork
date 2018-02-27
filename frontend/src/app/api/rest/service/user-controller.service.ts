@@ -12,6 +12,7 @@ export class UserControllerService {
   constructor(private http: HttpClient) { }
 
   public getUsers():Observable<UserInfo[]>{
+    console.log("getUsers")
     return this.http.get(this.baseUrl)
     .pipe
     (map(this.handlerData),
