@@ -49,6 +49,7 @@ public class AuthenticationController {
         LOG.log(Level.getLevel("WORKLEVEL"),"User authentication through authenticationManager: user login -" + request.getLogin());
         return ResponseEntity.ok(authenticationFacade.getUserPermission(request));
     }
+
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/refresh")
     public HttpEntity<CredentialsDTO> refreshCredentials(@RequestBody String refreshToken) {
@@ -57,3 +58,4 @@ public class AuthenticationController {
     }
 
 }
+

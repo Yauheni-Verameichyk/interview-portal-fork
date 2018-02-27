@@ -5,13 +5,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -21,18 +21,10 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends  Person{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false, columnDefinition = "bigserial")
-    private Long id;
-
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
-
-    @Column(name = "surname", nullable = false, length = 50)
-    private String surname;
+    @Column(name = "login", unique = true, nullable = false, length = 50)
+    private String login;
 
     @Column(name = "password", nullable = false, length = 100)
     private String password;
@@ -40,9 +32,7 @@ public class User {
     @Column(name = "phone_number", nullable = false, length = 50)
     private String phoneNumber;
 
-    @Column(name = "login", unique = true, nullable = false, length = 50)
-    private String login;
-
     @OneToMany( fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserRoleDiscipline> userRoleDisciplines;
+
 }

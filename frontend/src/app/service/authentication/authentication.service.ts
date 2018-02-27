@@ -3,7 +3,7 @@ import { HttpRequest } from '@angular/common/http';
 import { Token } from '@angular/compiler';
 import { AuthenticationControllerService } from '../../api/rest/service/authentication-controller.service';
 import { error } from 'protractor';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs';
 import { UserCredentials } from '../../domain/UserCredentials';
 @Injectable()
 export class AuthenticationService {
