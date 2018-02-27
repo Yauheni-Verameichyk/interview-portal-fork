@@ -9,6 +9,7 @@ import { UserInfo } from '../../domain/UserInfo';
 })
 export class UserComponent implements OnInit {
   @Input() user: UserInfo;
+  
   constructor() { }
 
   ngOnInit() {

@@ -40,8 +40,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       }
       else{
         this.redirectToSignIn("don't have Token");
-      }
-     
+      } 
     }
   };
   private redirectToSignIn(error) {
