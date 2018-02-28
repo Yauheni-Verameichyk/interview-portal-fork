@@ -5,13 +5,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import by.interview.portal.dto.UserBaseInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import by.interview.portal.converter.Converter;
+import by.interview.portal.domain.Role;
 import by.interview.portal.domain.User;
+import by.interview.portal.dto.UserBaseInfoDTO;
 import by.interview.portal.dto.UserDTO;
 import by.interview.portal.facade.UserFacade;
 import by.interview.portal.service.UserService;
@@ -43,11 +44,17 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
+    public List<UserBaseInfoDTO> findAllByRole(Role role) {
+        return userService.findAllByRole(role).stream().filter(Objects::nonNull)
+                .map(userConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<UserBaseInfoDTO> findAllUserBaseInfo() {
         return userService.findAll().stream().filter(Objects::nonNull)
-            .map(userConverter::convertToDTO)
-            .map(userDTO ->  getUserBaseInfo(userDTO))
-            .collect(Collectors.toList());
+                .map(userConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
+                .collect(Collectors.toList());
     }
 
     private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {

@@ -1,12 +1,5 @@
 package by.interview.portal.controller;
 
-import java.util.HashSet;
-
-import javax.annotation.Resource;
-
-import by.interview.portal.dto.CredentialsDTO;
-import by.interview.portal.dto.JwtUserDTO;
-import by.interview.portal.facade.AuthenticationFacade;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,12 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import by.interview.portal.dto.AuthenticationDTO;
 import by.interview.portal.dto.CredentialsDTO;
-import by.interview.portal.security.JwtTokenUtil;
+import by.interview.portal.facade.AuthenticationFacade;
 
 @CrossOrigin
 @RestController
@@ -44,15 +31,18 @@ public class AuthenticationController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping
-    public HttpEntity<CredentialsDTO> authorization (@RequestBody AuthenticationDTO request) {
-        LOG.log(Level.getLevel("WORKLEVEL"),"User authentication through authenticationManager: user login -" + request.getLogin());
+    public HttpEntity<CredentialsDTO> authorization(@RequestBody AuthenticationDTO request) {
+        LOG.log(Level.getLevel("WORKLEVEL"),
+                "User authentication through authenticationManager: user login -"
+                        + request.getLogin());
         return ResponseEntity.ok(authenticationFacade.getUserPermission(request));
     }
+
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/refresh")
     public HttpEntity<CredentialsDTO> refreshCredentials(@RequestBody String refreshToken) {
-        LOG.log(Level.getLevel("WORKLEVEL"),"User refreshToken ");
         return ResponseEntity.ok(authenticationFacade.refreshCredentials(refreshToken));
     }
 
 }
+

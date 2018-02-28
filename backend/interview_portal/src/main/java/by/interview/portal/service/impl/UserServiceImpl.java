@@ -2,11 +2,13 @@ package by.interview.portal.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import by.interview.portal.domain.Role;
 import by.interview.portal.domain.User;
 import by.interview.portal.repository.UserRepository;
 import by.interview.portal.repository.UserRoleDisciplineRepository;
@@ -45,4 +47,8 @@ public class UserServiceImpl implements UserService {
         return Optional.ofNullable(userRepository.findFirstByLogin(login));
     }
 
+    @Override
+    public Set<User> findAllByRole(Role role) {
+        return userRepository.findAllByRole(role);
+    }
 }

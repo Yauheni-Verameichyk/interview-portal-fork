@@ -3,7 +3,7 @@ import { HttpRequest } from '@angular/common/http';
 import { Token } from '@angular/compiler';
 import { AuthenticationControllerService } from '../../api/rest/service/authentication-controller.service';
 import { error } from 'protractor';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs';
 import { UserCredentials } from '../../domain/UserCredentials';
 @Injectable()
 export class AuthenticationService {
@@ -33,7 +33,7 @@ export class AuthenticationService {
   };
 
   private setPermissionsInLocalStorage(permissions) {
-    localStorage.setItem('permissions', permissions);
+    localStorage.setItem('permissions', JSON.stringify(permissions));
   };
 
   private setTokenInLocalStorage(token: string): void {
@@ -63,10 +63,19 @@ export class AuthenticationService {
   };
 
   public addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-    return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })
-  };
+    return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } });
+  }
 
   public setNewTokens(refreshToken: string) {
     this.removeCredentialsUser();
   };
+
+  public isPermissionPresent(permissionName: string): boolean {
+   return (this.getPermissions().indexOf(permissionName) > -1)
+     
+  }
+
+  public getPermissions(): Array<String> {
+    return (localStorage.getItem('permissions') == null) ? [] : JSON.parse(localStorage.getItem('permissions'));
+  }
 }

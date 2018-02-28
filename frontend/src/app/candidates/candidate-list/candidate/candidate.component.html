@@ -1,0 +1,17 @@
+<td>{{candidate.name}}</td>
+<td>{{candidate.surname}}</td>
+<td>
+    <span *ngFor="let discipline of candidate.disciplineList">
+        {{discipline.name}};
+    </span>
+</td>
+<td>
+    <div class="pull-right editButtons">
+        <div class="btn btn-light pull-right">
+            <img class="far fa-trash-alt align-middle" />
+        </div>
+        <div class="btn btn-light pull-right">
+            <img class="fas fa-pencil-alt align-middle" />
+        </div>
+    </div>
+</td>

@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { DisciplineControllerService } from '../../api/services';
+import { Observable } from 'rxjs/Observable';
+import { Discipline } from '../../api/models';
 
 @Injectable()
 export class DisciplineService {
 
-  constructor() { }
+  private searchOptions = {
+    MY: "MY",
+    ALL: "ALL"
+  };
+  constructor(private disciplinesControlerService: DisciplineControllerService) { }
 
   countBackgroundColor(childLevel: number): number {
     return 240 - childLevel * 30;
@@ -19,5 +26,16 @@ export class DisciplineService {
 
   generateDeletePermissionForDiscipline(disciplineName: string, childLevel: number): string {
     return (childLevel == 0) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${disciplineName}`;
+  }
+
+  chooseRequest(searchOption: string): Observable<Discipline[]> {
+    switch (searchOption) {
+      case this.searchOptions.MY:
+        return this.disciplinesControlerService.findDisciplinesForUserUsingGET();
+      case this.searchOptions.ALL:
+        return this.disciplinesControlerService.findAllUsingGET();
+      default:
+        Observable.throw("Perhaps you don't know what you want");
+    }
   }
 }

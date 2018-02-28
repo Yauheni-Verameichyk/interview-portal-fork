@@ -1,3 +1,11 @@
+<div class="row" *requiredAuthority="'DISCIPLINES_FILTER_READ'">
+  <div class="col-sm-7 align-middle">
+    <div class="btn-group align-middle myAllFilter pull-right">
+      <button type="button" class="btn btn-primary" [ngClass]="{'customActive': clicked, 'customActive': !clicked}" (click)="clicked = !clicked; findDisciplines('MY')">My</button>
+      <button type="button" class="btn btn-primary" [ngClass]="{'customActive': !clicked, 'customActive': clicked}" (click)="clicked = !clicked; findDisciplines('ALL')">All</button>
+    </div>
+  </div>
+</div> 
 
 <table class="user-table table table-hover disciplineTableHead">
   <thead class="thead-light">
@@ -5,11 +13,11 @@
       <th scope="col" class="disciplineNameHead">Name</th>
       <th scope="col">Description</th>
       <th>
-        <div *requiredAuthority="'DISCIPLINE_CREATE'" class="btn btn-light pull-right">
+        <div *requiredAuthority="'DISCIPLINE_CREATE'" class="btn btn-light pull-right" [routerLink]="['create']" skipLocationChange routerLinkActive="active">
           <img class="fas fa-plus-circle align-middle" />
-        </div>
+        </div>       
       </th>
     </tr>
-  </thead>  
+  </thead>
 </table>
 <app-discipline *ngFor="let discipline of disciplinesList" [discipline]="discipline" [childLevel]="0" [parentDisciplineName]="discipline.name"></app-discipline>

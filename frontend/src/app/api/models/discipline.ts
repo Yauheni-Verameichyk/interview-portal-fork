@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-export interface Discipline {
+export class Discipline {
 
   id?: number;
 

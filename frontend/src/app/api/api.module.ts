@@ -3,7 +3,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiConfiguration } from './api-configuration';
 
 import { DisciplineControllerService } from './services/discipline-controller.service';
+import { UserControllerService } from './services/user-controller.service';
+import { CandidateControllerService } from './services/candidate-controller.service';
 import { BaseService } from './base-service';
+
 
 
 /**
@@ -19,7 +22,9 @@ import { BaseService } from './base-service';
   declarations: [],
   providers: [
     ApiConfiguration,
-    DisciplineControllerService
+    DisciplineControllerService,
+    UserControllerService,
+    CandidateControllerService
   ],
 })
 export class ApiModule { }
