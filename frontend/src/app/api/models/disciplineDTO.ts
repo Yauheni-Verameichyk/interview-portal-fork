@@ -10,6 +10,8 @@ export class DisciplineDTO {
 
   parentId?: number;
 
+  parentName?: string;
+
   subscription?: string;
 
   disciplineHeadsList?: UserInfo[];

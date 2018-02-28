@@ -24,9 +24,9 @@ import by.interview.portal.domain.UserRoleDiscipline;
 import by.interview.portal.dto.UserDTO;
 import by.interview.portal.repository.PermissionRepository;
 
-@Component("userConverter")
-public class UserConverter implements Converter<User, UserDTO> {
-	private static final Logger LOG = LogManager.getLogger(UserConverter.class);
+@Component("userDTOConverter")
+public class UserDTOConverter implements Converter<User, UserDTO> {
+	private static final Logger LOG = LogManager.getLogger(UserDTOConverter.class);
 
 	@Autowired
 	PasswordEncoder passwordEncoder;

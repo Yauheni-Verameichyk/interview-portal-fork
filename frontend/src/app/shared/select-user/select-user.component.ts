@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { UserInfo } from '../../domain/UserInfo';
 import { UserControllerService } from '../../api/services';
 import { userInfo } from 'os';
@@ -11,32 +11,22 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: './select-user.component.html',
   styleUrls: ['./select-user.component.css']
 })
-export class SelectUserComponent implements OnInit, OnDestroy {
+export class SelectUserComponent implements OnDestroy {
 
-  selectedUsersList: Array<UserInfo> = [null];
-  usersList: Array<UserInfo> = [];
-
-  @Output() addUsers = new EventEmitter<UserInfo[]>();
+  @Input() public selectedUsersList: Array<UserInfo> = [null];
+  @Input() public usersList: Array<UserInfo> = [];
+  @Output() private addUsers = new EventEmitter<UserInfo[]>();
 
   private readonly destroy: Subject<void> = new Subject();
   constructor(private userControllerService: UserControllerService) { }
-
-  ngOnInit() {
-    this.userControllerService.getUsersByRole('DISCIPLINE_HEAD')
-      .takeUntil(this.destroy)
-      .subscribe(
-        (usersList) => {
-          this.usersList = usersList;
-        }, error => {
-          console.error('Error happened');
-        });
-  }
 
   userChanged(): void {
     this.addUsers.emit(this.selectedUsersList);
   }
 
   addDHForm(): void {
+    console.log(this.selectedUsersList);
+    console.log(this.usersList);
     this.selectedUsersList.push(null);
   }
 

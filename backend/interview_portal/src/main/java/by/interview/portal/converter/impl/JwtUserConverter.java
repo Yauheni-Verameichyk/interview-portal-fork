@@ -18,7 +18,7 @@ import by.interview.portal.dto.UserDTO;
 public final class JwtUserConverter implements Converter<User, JwtUserDTO> {
 
 	@Autowired
-	@Qualifier("userConverter")
+	@Qualifier("userDTOConverter")
 	Converter<User, UserDTO> converter;
 
 	private List<GrantedAuthority> mapToGrantedAuthorities(User user) {

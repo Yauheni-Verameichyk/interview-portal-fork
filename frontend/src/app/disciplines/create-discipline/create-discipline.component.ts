@@ -6,6 +6,9 @@ import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 import { UserInfo } from '../../domain/UserInfo';
 import { DisciplineDTO } from '../../api/models/disciplineDTO';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
+import { DisciplineService } from '../service/discipline.service';
 
 @Component({
   selector: 'app-create-discipline',
@@ -15,14 +18,28 @@ import { DisciplineDTO } from '../../api/models/disciplineDTO';
 export class CreateDisciplineComponent implements OnInit, OnDestroy {
 
   public discipline: DisciplineDTO = new DisciplineDTO();
-  disciplineForm: FormGroup;
+  public disciplineForm: FormGroup;
+  public usersListObservable: Observable<UserInfo[]>;
 
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private disciplineControllerService: DisciplineControllerService, private fb: FormBuilder,
-    private userControllerService: UserControllerService) {
+  constructor(private disciplineControllerService: DisciplineControllerService, private userControllerService: UserControllerService,
+    private disciplineService: DisciplineService,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    if (+this.route.snapshot.paramMap.get('editDisciplineID')) {
+      this.readDiscipline(+this.route.snapshot.paramMap.get('editDisciplineID'));
+    }
+    else {
+      if (+this.route.snapshot.paramMap.get('parentDisciplineID')) {
+        this.readParentDiscipline(+this.route.snapshot.paramMap.get('parentDisciplineID'));
+      } else {
+        this.discipline.parentId = null;
+        this.discipline.parentName = null;
+      }
+    }
+    console.log(this.discipline);
     this.disciplineForm = new FormGroup({
       'disciplineName': new FormControl(this.discipline.name, [
         Validators.required,
@@ -30,7 +47,31 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
       ]),
       'disciplineSubscription': new FormControl()
     });
-    this.discipline.parentId = null;
+  }
+
+  readDiscipline(disciplineId: number): void {
+    this.disciplineControllerService.findByIdUsingGET(disciplineId)
+      .takeUntil(this.destroy)
+      .subscribe(
+        (discipline) => {
+          this.discipline = discipline;
+        }, error => {
+          console.error('Error happened');
+        }
+      )
+  }
+
+  readParentDiscipline(parentDisciplineId: number): void {
+    this.disciplineControllerService.findByIdUsingGET(parentDisciplineId)
+      .takeUntil(this.destroy)
+      .subscribe(
+        (discipline) => {
+          this.discipline.parentId = discipline.id;
+          this.discipline.parentName = discipline.name;
+        }, error => {
+          console.error('Error happened');
+        }
+      )
   }
 
   addUsers(users: UserInfo[]) {
@@ -52,6 +93,7 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.disciplineService.cleanDisciplineService();
     this.destroy.next();
     this.destroy.complete();
   }

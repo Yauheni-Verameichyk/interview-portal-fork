@@ -5,7 +5,7 @@
       <button type="button" class="btn btn-primary" [ngClass]="{'customActive': !clicked, 'customActive': clicked}" (click)="clicked = !clicked; findDisciplines('ALL')">All</button>
     </div>
   </div>
-</div> 
+</div>
 
 <table class="user-table table table-hover disciplineTableHead">
   <thead class="thead-light">
@@ -13,9 +13,9 @@
       <th scope="col" class="disciplineNameHead">Name</th>
       <th scope="col">Description</th>
       <th>
-        <div *requiredAuthority="'DISCIPLINE_CREATE'" class="btn btn-light pull-right" [routerLink]="['create']" skipLocationChange routerLinkActive="active">
+        <div *requiredAuthority="'DISCIPLINE_CREATE'" class="btn btn-light pull-right" [routerLink]="['create']" routerLinkActive="active">
           <img class="fas fa-plus-circle align-middle" />
-        </div>       
+        </div>
       </th>
     </tr>
   </thead>

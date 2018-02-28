@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
 import { Discipline } from '../../api/models';
+import { DisciplineDTO } from '../../api/models/disciplineDTO';
 
 @Injectable()
 export class DisciplineService {
@@ -10,6 +11,9 @@ export class DisciplineService {
     MY: "MY",
     ALL: "ALL"
   };
+
+  public disciplineToChange: DisciplineDTO;
+  public parentDiscipline: DisciplineDTO;
   constructor(private disciplinesControlerService: DisciplineControllerService) { }
 
   countBackgroundColor(childLevel: number): number {
@@ -37,5 +41,10 @@ export class DisciplineService {
       default:
         Observable.throw("Perhaps you don't know what you want");
     }
+  }
+
+  cleanDisciplineService(): void {
+    this.parentDiscipline = null;
+    this.disciplineToChange = null;
   }
 }

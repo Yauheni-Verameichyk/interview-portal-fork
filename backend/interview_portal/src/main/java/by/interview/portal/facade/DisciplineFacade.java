@@ -7,11 +7,11 @@ import by.interview.portal.dto.DisciplineDTO;
 
 public interface DisciplineFacade {
 
-    Discipline findById(Long id);
+	DisciplineDTO findById(Long id);
 
-    List<Discipline> findByParentId(Long id);
+	List<Discipline> findByParentId(Long id);
 
-    void save(DisciplineDTO discipline);
+	void save(DisciplineDTO discipline);
 
-    List<Discipline> findDisciplinesByUser(String login);
+	List<Discipline> findDisciplinesByUser(String login);
 }

@@ -8,10 +8,12 @@
           <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(parentDisciplineName, childLevel)" class="btn btn-light pull-right">
             <img class="far fa-trash-alt align-middle" />
           </div>
-          <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(parentDisciplineName, childLevel)" class="btn btn-light pull-right">
+          <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(parentDisciplineName, childLevel)" [routerLink]="['edit', discipline.id]"
+            routerLinkActive="active" class="btn btn-light pull-right">
             <img class="fas fa-pencil-alt align-middle" />
           </div>
-          <div *requiredAuthority="'SUB_ITEM_CREATE_' + parentDisciplineName" class="btn btn-light pull-right">
+          <div *requiredAuthority="'SUB_ITEM_CREATE_' + parentDisciplineName" class="btn btn-light pull-right" [routerLink]="['create', discipline.id]"
+            routerLinkActive="active">
             <img class="fas fa-plus-circle align-middle" />
           </div>
         </div>
