@@ -3,14 +3,15 @@ package by.interview.portal.facade;
 import java.util.List;
 
 import by.interview.portal.domain.Discipline;
+import by.interview.portal.dto.DisciplineDTO;
 
 public interface DisciplineFacade {
 
-	Discipline findById(Long id);
+    Discipline findById(Long id);
 
-	List<Discipline> findByParentId(Long id);
+    List<Discipline> findByParentId(Long id);
 
-	void save(Discipline discipline);
+    void save(DisciplineDTO discipline);
 
-	List<Discipline> findDisciplinesByUser(String login);
+    List<Discipline> findDisciplinesByUser(String login);
 }

@@ -1,10 +1,13 @@
-<div class="form-group col-12" id="elementToAdd">
-  <select id="inputState" class="form-control">
-      <option *ngFor="let user of usersList">{{user.name}} {{user.surname}}</option>
-    <!-- <option selected>Choose...</option>
-    <option>Mark Atto</option>
-    <option>Jacob Thornton</option>
-    <option>Larry the Bird</option>
-    <option>Mark Otto</option> -->
-  </select>
+<div class="row" *ngFor="let userForm of selectedUsersList; let i = index">
+  <div class="form-group col-9" id="elementToAdd">
+    <select id="inputState" class="form-control" [(ngModel)]="selectedUsersList[i]" (change)="userChanged()">
+      <option *ngFor="let user of usersList" [ngValue]="user">{{user.name}} {{user.surname}}</option>
+    </select>
+  </div>
+  <div class="form-group btn btn-light col-0" (click)="addDHForm()">
+    <a class="fas fa-plus align-middle"></a>
+  </div>
+  <div class="form-group btn btn-light pull-right col-0" (click)="deleteDHForm(i)">
+    <img class="fas fa-pencil-alt align-middle" />
+  </div>
 </div>
