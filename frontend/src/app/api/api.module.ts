@@ -7,7 +7,7 @@ import { DisciplineControllerService } from './services/discipline-controller.se
 import { UserControllerService } from './services/user-controller.service';
 import { CandidateControllerService } from './services/candidate-controller.service';
 import { BaseService } from './base-service';
-import { AuthenticationInterceptor } from './services/authentication.interceptor'
+
 
 
 /**
@@ -26,8 +26,7 @@ import { AuthenticationInterceptor } from './services/authentication.interceptor
     AuthenticationControllerService,
     DisciplineControllerService,
     UserControllerService,
-    CandidateControllerService, 
-    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
+    CandidateControllerService
   ],
 })
 export class ApiModule { }

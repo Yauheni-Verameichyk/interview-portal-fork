@@ -60,9 +60,6 @@ export class DisciplineControllerService extends BaseService {
     );
   }
 
-    /**
-   * @return OK
-   */
   findSubItemsGETResponse(id: number): Observable<HttpResponse<Discipline[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -97,16 +94,47 @@ export class DisciplineControllerService extends BaseService {
     );
   }
 
+  findDisciplinesForUserGETResponse(): Observable<HttpResponse<Discipline[]>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      "GET",
+      this.rootUrl + `/discipline/user`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: Discipline[] = null;
+        _body = _resp.body as Discipline[]
+        return _resp.clone({body: _body}) as HttpResponse<Discipline[]>;
+      })
+    );
+  }
+
+  findDisciplinesForUserUsingGET(): Observable<Discipline[]> {
+    return this.findDisciplinesForUserGETResponse().pipe(
+      map(_r => _r.body)
+    );
+  }
+
   /**
    * @param discipline discipline
    */
-   saveUsingPUTResponse(discipline: Discipline): Observable<HttpResponse<void>> {
+   saveUsingPOSTResponse(discipline: Discipline): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = discipline;
     let req = new HttpRequest<any>(
-      "PUT",
+      "POST",
       this.rootUrl + `/discipline`,
       __body,
       {
@@ -129,8 +157,8 @@ export class DisciplineControllerService extends BaseService {
   /**
    * @param discipline discipline
    */
-   saveUsingPUT(discipline: Discipline): Observable<void> {
-    return this.saveUsingPUTResponse(discipline).pipe(
+   saveUsingPOST(discipline: Discipline): Observable<void> {
+    return this.saveUsingPOSTResponse(discipline).pipe(
       map(_r => _r.body)
     );
   }

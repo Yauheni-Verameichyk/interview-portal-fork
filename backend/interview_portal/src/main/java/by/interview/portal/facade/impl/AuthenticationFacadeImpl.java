@@ -1,10 +1,7 @@
 package by.interview.portal.facade.impl;
 
-import by.interview.portal.dto.AuthenticationDTO;
-import by.interview.portal.dto.CredentialsDTO;
-import by.interview.portal.dto.JwtUserDTO;
-import by.interview.portal.facade.AuthenticationFacade;
-import by.interview.portal.security.JwtTokenUtil;
+import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
+import by.interview.portal.dto.AuthenticationDTO;
+import by.interview.portal.dto.CredentialsDTO;
+import by.interview.portal.dto.JwtUserDTO;
+import by.interview.portal.facade.AuthenticationFacade;
+import by.interview.portal.security.JwtTokenUtil;
 
 @Service
 public class AuthenticationFacadeImpl implements AuthenticationFacade {
@@ -35,12 +36,14 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
     public CredentialsDTO getUserPermission(AuthenticationDTO request) {
         LOG.log(Level.getLevel("WORKLEVEL"), "Method started to work 'getUserPermission' ");
         Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
+                new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = jwtTokenUtil.generateToken((JwtUserDTO)authentication.getPrincipal());
-        LOG.log(Level.getLevel("WORKLEVEL"),"User " + authentication.getName()+ " got access token: " + token);
+        final String token = jwtTokenUtil.generateToken((JwtUserDTO) authentication.getPrincipal());
+        LOG.log(Level.getLevel("WORKLEVEL"),
+                "User " + authentication.getName() + " got access token: " + token);
         final String refreshToken = jwtTokenUtil.refreshToken(token);
-        LOG.log(Level.getLevel("WORKLEVEL"),"User " + authentication.getName()+ " got refresh token: " + refreshToken);
+        LOG.log(Level.getLevel("WORKLEVEL"),
+                "User " + authentication.getName() + " got refresh token: " + refreshToken);
         return gatherPermissions(token, refreshToken, authentication);
     }
 
@@ -50,38 +53,36 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
         String login = jwtTokenUtil.getloginFomToken(oldRefreshToken);
         LOG.log(Level.getLevel("WORKLEVEL"), "Login extracted : " + login);
         JwtUserDTO jwtUserDTO = (JwtUserDTO) userDetailsService.loadUserByUsername(login);
-        LOG.log(Level.getLevel("WORKLEVEL"), "We got userDetails" );
+        LOG.log(Level.getLevel("WORKLEVEL"), "We got userDetails");
         final String token = jwtTokenUtil.generateToken(jwtUserDTO);
-        LOG.log(Level.getLevel("WORKLEVEL"),"User  got access token: " + token);
+        LOG.log(Level.getLevel("WORKLEVEL"), "User  got access token: " + token);
         final String refreshToken = jwtTokenUtil.refreshToken(token);
-        LOG.log(Level.getLevel("WORKLEVEL"),"User got refresh token: " + refreshToken);
+        LOG.log(Level.getLevel("WORKLEVEL"), "User got refresh token: " + refreshToken);
         return gatherNewPermissions(token, refreshToken, jwtUserDTO);
     }
 
-    private CredentialsDTO gatherNewPermissions(String token, String refreshToken, JwtUserDTO jwtUserDTO) {
+    private CredentialsDTO gatherNewPermissions(String token, String refreshToken,
+            JwtUserDTO jwtUserDTO) {
         LOG.log(Level.getLevel("WORKLEVEL"), "Method started to work  'gatherNewPermissions' ");
         CredentialsDTO credentialsDTO = new CredentialsDTO();
         credentialsDTO.setAccessToken(token);
-        credentialsDTO.setPermissions(jwtUserDTO.getAuthorities().stream().map(permissions -> permissions.getAuthority())
-                                      .collect(Collectors.toSet()));
+        credentialsDTO.setPermissions(jwtUserDTO.getAuthorities().stream()
+                .map(permissions -> permissions.getAuthority()).collect(Collectors.toSet()));
         credentialsDTO.setRefreshToken(refreshToken);
         LOG.log(Level.getLevel("WORKLEVEL"), "return permissions in CredentialsDTO");
-        return  credentialsDTO;
+        return credentialsDTO;
     }
 
     private CredentialsDTO gatherPermissions(String token, String refreshToken,
-                                            Authentication authentication) {
+            Authentication authentication) {
         LOG.log(Level.getLevel("WORKLEVEL"), "Method started to work 'gatherPermissions' ");
         CredentialsDTO credentialsDTO = new CredentialsDTO();
         credentialsDTO.setAccessToken(token);
-        credentialsDTO.setPermissions(
-            authentication.getAuthorities()
-                .stream()
-                .map(permission -> permission.getAuthority())
-                .collect(Collectors.toSet()));
+        credentialsDTO.setPermissions(authentication.getAuthorities().stream()
+                .map(permission -> permission.getAuthority()).collect(Collectors.toSet()));
         credentialsDTO.setRefreshToken(refreshToken);
         LOG.log(Level.getLevel("WORKLEVEL"), "return permissions in CredentialsDTO");
-        return  credentialsDTO;
+        return credentialsDTO;
     }
 
 

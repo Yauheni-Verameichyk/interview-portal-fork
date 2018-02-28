@@ -1,23 +1,22 @@
 package by.interview.portal.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -32,13 +31,17 @@ public class PermissionTemplate {
     @Column(name = "id", nullable = false, columnDefinition = "bigserial")
     private Long id;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "name_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "name_id")
     private PermissionName name;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "operation_id")
+    @ManyToOne
+    @JoinColumn(name = "operation_id")
     private Operation operation;
+
+    @Column(name = "is_discipline_name_required")
+    private boolean isDisciplineNameRequired;
+
 
     @ElementCollection(fetch = FetchType.LAZY, targetClass = Role.class)
     @CollectionTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "permission_id"))

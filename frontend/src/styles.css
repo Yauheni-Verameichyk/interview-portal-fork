@@ -38,6 +38,7 @@ main {
 }
 .signIn_form{
     margin: 0 auto;
+    margin-top: 20px;
     max-width: 500px;
     text-align: center;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
@@ -199,3 +200,17 @@ caption {
     margin-top: 20px;
     margin-bottom: 0px;
 }
+
+.myAllFilter{
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:visited {
+    background-color: rgb(173, 173, 173) !important;
+}
+
+.customActive {
+    background-color: rgb(66, 65, 64) !important;
+}
+

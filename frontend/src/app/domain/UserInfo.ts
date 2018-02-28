@@ -1,4 +1,4 @@
-export interface UserInfo {
+export class UserInfo {
 
   id?: number;
 

@@ -1,10 +1,10 @@
-package by.interview.portal.service;
+package by.interview.portal.facade;
 
 import java.util.List;
 
 import by.interview.portal.domain.Discipline;
 
-public interface DisciplineService {
+public interface DisciplineFacade {
 
 	Discipline findById(Long id);
 

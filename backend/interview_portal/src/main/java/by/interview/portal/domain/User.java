@@ -10,18 +10,19 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 
 @Entity
 @Table(name = "users")
-public class User extends  Person{
+public class User extends Person {
 
     @Column(name = "login", unique = true, nullable = false, length = 50)
     private String login;
@@ -32,7 +33,7 @@ public class User extends  Person{
     @Column(name = "phone_number", nullable = false, length = 50)
     private String phoneNumber;
 
-    @OneToMany( fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserRoleDiscipline> userRoleDisciplines;
 
 }

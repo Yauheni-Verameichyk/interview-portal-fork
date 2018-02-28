@@ -1,21 +1,23 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import {
-  HttpClient, HttpRequest, HttpResponse, 
-  HttpHeaders, HttpParams } from '@angular/common/http';
+  HttpClient, HttpRequest, HttpResponse,
+  HttpHeaders, HttpParams, HttpErrorResponse
+} from '@angular/common/http';
 import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators/map';
+import { map, catchError } from 'rxjs/operators';
 import { filter } from 'rxjs/operators/filter';
 
 import { UserDTO } from '../models/user-dto';
 import { AuthenticationControllerService } from './authentication-controller.service';
+import { UserInfo } from '../../domain/UserInfo';
 
 /**
  * User Controller
  */
- @Injectable()
+@Injectable()
 export class UserControllerService extends BaseService {
   constructor(
     config: ApiConfiguration,
@@ -28,7 +30,7 @@ export class UserControllerService extends BaseService {
   /**
    * @return OK
    */
-   findAllUsingGET_1Response(): Observable<HttpResponse<UserDTO[]>> {
+  findAllUsingGET_1Response(): Observable<HttpResponse<UserDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -48,7 +50,7 @@ export class UserControllerService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: UserDTO[] = null;
         _body = _resp.body as UserDTO[]
-        return _resp.clone({body: _body}) as HttpResponse<UserDTO[]>;
+        return _resp.clone({ body: _body }) as HttpResponse<UserDTO[]>;
       })
     );
   }
@@ -56,7 +58,7 @@ export class UserControllerService extends BaseService {
   /**
    * @return OK
    */
-   findAllUsingGET_1(): Observable<UserDTO[]> {
+  findAllUsingGET_1(): Observable<UserDTO[]> {
     return this.findAllUsingGET_1Response().pipe(
       map(_r => _r.body)
     );
@@ -65,13 +67,13 @@ export class UserControllerService extends BaseService {
   /**
    * @param userDTO userDTO
    */
-   saveUsingPUT_1Response(userDTO: UserDTO): Observable<HttpResponse<void>> {
+  saveUsingPOST_1Response(userDTO: UserDTO): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = userDTO;
     let req = new HttpRequest<any>(
-      "PUT",
+      "POST",
       this.rootUrl + `/user`,
       __body,
       {
@@ -85,8 +87,8 @@ export class UserControllerService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
-        return _resp.clone({body: _body}) as HttpResponse<void>;
+
+        return _resp.clone({ body: _body }) as HttpResponse<void>;
       })
     );
   }
@@ -94,8 +96,8 @@ export class UserControllerService extends BaseService {
   /**
    * @param userDTO userDTO
    */
-   saveUsingPUT_1(userDTO: UserDTO): Observable<void> {
-    return this.saveUsingPUT_1Response(userDTO).pipe(
+  saveUsingPOST_1(userDTO: UserDTO): Observable<void> {
+    return this.saveUsingPOST_1Response(userDTO).pipe(
       map(_r => _r.body)
     );
   }
@@ -104,7 +106,7 @@ export class UserControllerService extends BaseService {
    * @param id id
    * @return OK
    */
-   findByIdUsingGET_1Response(id: number): Observable<HttpResponse<UserDTO>> {
+  findByIdUsingGET_1Response(id: number): Observable<HttpResponse<UserDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -125,7 +127,7 @@ export class UserControllerService extends BaseService {
         let _resp = _r as HttpResponse<any>;
         let _body: UserDTO = null;
         _body = _resp.body as UserDTO
-        return _resp.clone({body: _body}) as HttpResponse<UserDTO>;
+        return _resp.clone({ body: _body }) as HttpResponse<UserDTO>;
       })
     );
   }
@@ -134,12 +136,35 @@ export class UserControllerService extends BaseService {
    * @param id id
    * @return OK
    */
-   findByIdUsingGET_1(id: number): Observable<UserDTO> {
+  findByIdUsingGET_1(id: number): Observable<UserDTO> {
     return this.findByIdUsingGET_1Response(id).pipe(
       map(_r => _r.body)
     );
   }
-}
+  
+  public getUsersByRole(role: string):Observable<UserInfo[]>{
+    return this.http.get(this.rootUrl + `/user/role/${role}`,)
+    .pipe
+    (map(this.handlerData),
+    catchError(this.handlerError)
+  );
+  }
+
+  handlerData(response: HttpResponse<UserInfo>) {
+    let body = response;
+    return body || {}
+  }
+  handlerError(err: HttpErrorResponse) {
+    let errorMessage : string;
+    if(err.error instanceof Error){
+      errorMessage  = `An error occurred: ${err.error.message}`;
+    }else{
+      errorMessage = `Backend return code: ${err.status}, body was : ${err.error}`
+    }
+    console.log(errorMessage);
+    return Observable.throw(errorMessage);
+  }
+} 
 
 export module UserControllerService {
 }

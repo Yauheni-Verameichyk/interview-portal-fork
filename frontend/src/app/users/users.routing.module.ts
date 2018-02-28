@@ -9,7 +9,7 @@ const routes: Routes = [
     component: UserListComponent
   }
 ];
-export let usersRouterComponents = [ UserListComponent, UserComponent ]
+export let usersRouterComponents = [ UserListComponent, UserComponent ];
 @NgModule({
   imports: [
     CommonModule,
