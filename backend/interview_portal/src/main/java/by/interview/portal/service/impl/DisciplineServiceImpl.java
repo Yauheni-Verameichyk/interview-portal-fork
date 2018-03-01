@@ -79,8 +79,25 @@ public class DisciplineServiceImpl implements DisciplineService {
         saveDisciplineHeads(disciplineDTO, discipline);
     }
 
-    private void saveDisciplineHeads(DisciplineDTO disciplineDTO, Discipline discipline) {
+    @Override
+    public List<Discipline> findDisciplinesByUser(String login) {
+        return disciplineRepository.findDisciplinesByUser(login);
+    };
 
+    @Override
+    public void deleteDiscipline(Long id) {
+        Discipline discipline = disciplineRepository.findById(id).get();
+    }
+
+    private void deleteChilds(Discipline discipline) {
+        List<Discipline> childsList =
+                disciplineRepository.findAllByParentId(discipline.getParentId());
+        for (Discipline childDiscipline : childsList) {
+
+        }
+    }
+
+    private void saveDisciplineHeads(DisciplineDTO disciplineDTO, Discipline discipline) {
         List<UserRoleDiscipline> currentUsersList = userRoleDisciplineRepository
                 .findAllByRoleAndDiscipline(Role.DISCIPLINE_HEAD, discipline);
         Set<User> newUsersList = getDisciplinesHeadsList(disciplineDTO);
@@ -110,15 +127,9 @@ public class DisciplineServiceImpl implements DisciplineService {
     }
 
     Set<User> getDisciplinesHeadsList(DisciplineDTO disciplineDTO) {
-
         return disciplineDTO.getDisciplineHeadsList() != null
                 ? disciplineDTO.getDisciplineHeadsList().stream().filter(Objects::nonNull)
                         .map(userBaseInfoDTOConverter::convertToEntity).collect(Collectors.toSet())
                 : Collections.emptySet();
     }
-
-    @Override
-    public List<Discipline> findDisciplinesByUser(String login) {
-        return disciplineRepository.findDisciplinesByUser(login);
-    };
 }
