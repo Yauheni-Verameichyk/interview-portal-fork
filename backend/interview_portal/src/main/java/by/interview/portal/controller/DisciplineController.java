@@ -24,38 +24,39 @@ import by.interview.portal.facade.DisciplineFacade;
 @RequestMapping(value = "/discipline")
 public class DisciplineController {
 
-	@Autowired
-	private DisciplineFacade disciplineFacade;
+    @Autowired
+    private DisciplineFacade disciplineFacade;
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping(value = "/{id}")
-	public DisciplineDTO findById(@PathVariable Long id) {
-		return disciplineFacade.findById(id);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/{id}")
+    public DisciplineDTO findById(@PathVariable Long id) {
+        return disciplineFacade.findById(id);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping
-	public List<Discipline> findAll() {
-		return disciplineFacade.findByParentId(null);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping
+    public List<Discipline> findAll() {
+        return disciplineFacade.findByParentId(null);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping(value = "/parents/{id}")
-	public List<Discipline> findSubItems(@PathVariable Long id) {
-		return disciplineFacade.findByParentId(id);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/parents/{id}")
+    public List<Discipline> findSubItems(@PathVariable Long id) {
+        return disciplineFacade.findByParentId(id);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@PostMapping
-	public void save(@RequestBody DisciplineDTO disciplineDTO) {
-		disciplineFacade.save(disciplineDTO);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping
+    public void save(@RequestBody DisciplineDTO disciplineDTO) {
+        disciplineFacade.save(disciplineDTO);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping(value = "/user")
-	public List<Discipline> findDisciplinesForUser() {
-		return disciplineFacade.findDisciplinesByUser(
-				((JwtUserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/user")
+    public List<Discipline> findDisciplinesForUser() {
+        return disciplineFacade.findDisciplinesByUser(
+                ((JwtUserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                        .getUsername());
+    }
 
 }
