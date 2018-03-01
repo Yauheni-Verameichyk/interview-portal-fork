@@ -25,10 +25,6 @@ public final class JwtUserConverter implements Converter<User, JwtUserDTO> {
 
 		return converter.convertToDTO(user).getPermissions().stream()
 				.map(authority -> new SimpleGrantedAuthority(authority)).collect(Collectors.toList());
-		/*
-		 * return authorities.stream() .map(authority -> new
-		 * SimpleGrantedAuthority("User")) .collect(Collectors.toList());
-		 */
 	}
 
 	@Override

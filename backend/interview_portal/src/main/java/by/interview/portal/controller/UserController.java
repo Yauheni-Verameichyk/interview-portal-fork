@@ -32,12 +32,6 @@ public class UserController {
         return userFacade.findById(id).get();
     }
 
-    // @ResponseStatus(value = HttpStatus.OK)
-    // @GetMapping
-    // public HttpEntity<UserInfoDTO> findAll(){
-    //
-    // return ResponseEntity.ok(userFacade.);
-    // }
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping
     public List<UserBaseInfoDTO> findAll() {
