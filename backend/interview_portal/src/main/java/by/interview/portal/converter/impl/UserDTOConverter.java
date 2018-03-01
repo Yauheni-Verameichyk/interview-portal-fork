@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +23,6 @@ import by.interview.portal.repository.PermissionRepository;
 
 @Component("userDTOConverter")
 public class UserDTOConverter implements Converter<User, UserDTO> {
-	private static final Logger LOG = LogManager.getLogger(UserDTOConverter.class);
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -47,10 +43,8 @@ public class UserDTOConverter implements Converter<User, UserDTO> {
 
 	@Override
 	public UserDTO convertToDTO(User entity) {
-		LOG.log(Level.getLevel("WORKLEVEL"), "Convertation User " + entity.getLogin() + " to UserDTO ");
 		UserDTO userDTO = modelMapper.map(entity, UserDTO.class);
 		userDTO.setRoleDisciplines(getRolesDisciplinesMap(entity.getUserRoleDisciplines()));
-		LOG.log(Level.getLevel("WORKLEVEL"), "Permissions generation for user " + entity.getLogin());
 		userDTO.setPermissions(
 				getPermissionsSet(permissionRepository.findAllByRolesIn(userDTO.getRoleDisciplines().keySet()),
 						userDTO.getRoleDisciplines()));
