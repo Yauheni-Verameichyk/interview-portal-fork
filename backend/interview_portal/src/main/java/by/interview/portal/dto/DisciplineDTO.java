@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DisciplineDTO {
 
-	private long id;
+    private long id;
 
-	private String name;
+    private String name;
 
-	private String subscription;
+    private String subscription;
 
-	private Long parentId;
+    private Long parentId;
 
-	private String parentName;
+    private String parentName;
 
-	private Set<UserBaseInfoDTO> disciplineHeadsList;
+    private Set<UserBaseInfoDTO> disciplineHeadsList;
 }

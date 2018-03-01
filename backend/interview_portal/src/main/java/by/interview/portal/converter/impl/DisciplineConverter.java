@@ -11,7 +11,6 @@ import by.interview.portal.dto.DisciplineDTO;
 @Component("disciplineConverter")
 public class DisciplineConverter implements Converter<Discipline, DisciplineDTO> {
 
-
     @Autowired
     private ModelMapper modelMapper;
 
