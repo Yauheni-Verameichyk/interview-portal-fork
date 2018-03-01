@@ -1,14 +1,14 @@
 <div>
   <form class='form-group signIn_form' [formGroup]="disciplineForm">
-    <h3>Add new
-      <span *ngIf="!discipline.parentName">discipline</span>
-      <span *ngIf="discipline.parentName">sub-item</span>
+    <h3>
+      <span *ngIf="!discipline.parentName">Discipline</span>
+      <span *ngIf="discipline.parentName">Sub-item</span>
     </h3>
     <div class="form-group">
       <label for="disciplineName">
         <span *ngIf="!discipline.parentName">Discipline</span>
         <span *ngIf="discipline.parentName">Sub-item</span> name*</label>
-      <input name="disciplineName" class="form-control" id="disciplineName" placeholder="Enter discipline name" formControlName="disciplineName"
+      <input name="disciplineName" class="form-control" id="disciplineName" placeholder="Enter name" formControlName="disciplineName"
         [(ngModel)]="discipline.name" required>
     </div>
 
@@ -24,12 +24,12 @@
 
     <div class="form-group">
       <label for="disciplineDescription">Description</label>
-      <textarea class="form-control" formControlName="disciplineSubscription" id="disciplineSubscription" placeholder="Enter discipline description"
+      <textarea class="form-control" formControlName="disciplineSubscription" id="disciplineSubscription" placeholder="Enter description"
         [(ngModel)]="discipline.subscription"></textarea>
     </div>
     <div *ngIf="!discipline.parentName">
       <label for="inputState">Assign discipline head</label>
-      <div *ngIf="!discipline.disciplineHeadsList;else heads_present">
+      <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
         <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
       </div>
       <ng-template #heads_present>

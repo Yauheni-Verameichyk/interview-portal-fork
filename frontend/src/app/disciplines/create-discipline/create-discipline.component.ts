@@ -23,55 +23,59 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
 
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineControllerService: DisciplineControllerService, private userControllerService: UserControllerService,
-    private disciplineService: DisciplineService,
-    private route: ActivatedRoute) {
+    private disciplineService: DisciplineService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.usersListObservable = this.userControllerService.getUsersByRole('DISCIPLINE_HEAD');
     if (+this.route.snapshot.paramMap.get('editDisciplineID')) {
-      this.readDiscipline(+this.route.snapshot.paramMap.get('editDisciplineID'));
+      this.readDiscipline(+this.route.snapshot.paramMap.get('editDisciplineID'), this.disciplineService.createEditOptions.EDIT);
     }
-    else {
-      if (+this.route.snapshot.paramMap.get('parentDisciplineID')) {
-        this.readParentDiscipline(+this.route.snapshot.paramMap.get('parentDisciplineID'));
-      } else {
-        this.discipline.parentId = null;
-        this.discipline.parentName = null;
-      }
+    if (+this.route.snapshot.paramMap.get('parentDisciplineID')) {
+      this.readDiscipline(+this.route.snapshot.paramMap.get('parentDisciplineID'),
+        this.disciplineService.createEditOptions.CREATE_SUB_ITEM);
     }
-    console.log(this.discipline);
+    if (!this.route.snapshot.paramMap.get('parentDisciplineID') && this.route.snapshot.paramMap.get('editDisciplineID')) {
+      this.discipline.parentId = null;
+      this.discipline.parentName = null;
+    }
+    this.createDisciplineForm();
+  }
+
+  createDisciplineForm() {
     this.disciplineForm = new FormGroup({
-      'disciplineName': new FormControl(this.discipline.name, [
+      'disciplineName': new FormControl([this.discipline.name], [
         Validators.required,
-        Validators.minLength(1),
+        Validators.minLength(2),
       ]),
-      'disciplineSubscription': new FormControl()
+      'disciplineSubscription': new FormControl([this.discipline.subscription])
     });
   }
 
-  readDiscipline(disciplineId: number): void {
+  readDiscipline(disciplineId: number, option: string): void {
     this.disciplineControllerService.findByIdUsingGET(disciplineId)
       .takeUntil(this.destroy)
       .subscribe(
         (discipline) => {
-          this.discipline = discipline;
+          this.initializeDiscipline(option, discipline);
         }, error => {
           console.error('Error happened');
         }
-      )
+      );
   }
 
-  readParentDiscipline(parentDisciplineId: number): void {
-    this.disciplineControllerService.findByIdUsingGET(parentDisciplineId)
-      .takeUntil(this.destroy)
-      .subscribe(
-        (discipline) => {
-          this.discipline.parentId = discipline.id;
-          this.discipline.parentName = discipline.name;
-        }, error => {
-          console.error('Error happened');
-        }
-      )
+  initializeDiscipline(option: string, discipline: DisciplineDTO): void {
+    switch (option) {
+      case this.disciplineService.createEditOptions.EDIT:
+        this.discipline = discipline;
+        break;
+      case this.disciplineService.createEditOptions.CREATE_SUB_ITEM:
+        this.discipline.parentId = discipline.id;
+        this.discipline.parentName = discipline.name;
+        break;
+      default:
+        Observable.throw('Perhaps you do not know what you want');
+    }
   }
 
   addUsers(users: UserInfo[]) {
@@ -93,7 +97,6 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.disciplineService.cleanDisciplineService();
     this.destroy.next();
     this.destroy.complete();
   }

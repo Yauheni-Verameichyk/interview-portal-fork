@@ -35,8 +35,6 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
     @Override
     public CredentialsDTO getUserPermission(AuthenticationDTO request) {
         LOG.log(Level.getLevel("WORKLEVEL"), "Method started to work 'getUserPermission' ");
-        System.err.println(request.getLogin());
-        System.err.println(request.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
