@@ -11,7 +11,6 @@ import { map, catchError } from 'rxjs/operators';
 import { filter } from 'rxjs/operators/filter';
 
 import { UserDTO } from '../models/user-dto';
-import { AuthenticationControllerService } from './authentication-controller.service';
 import { UserInfo } from '../../domain/UserInfo';
 
 /**
@@ -21,8 +20,7 @@ import { UserInfo } from '../../domain/UserInfo';
 export class UserControllerService extends BaseService {
   constructor(
     config: ApiConfiguration,
-    http: HttpClient,
-    authenticationService: AuthenticationControllerService
+    http: HttpClient
   ) {
     super(config, http);
   }

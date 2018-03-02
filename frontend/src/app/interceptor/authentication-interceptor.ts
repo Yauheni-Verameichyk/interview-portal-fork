@@ -18,6 +18,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse
   | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
+    console.log("Interceptor work"); 
     const accessToken = this.auth.getTokenFromLocalStorage();
     if (accessToken) {
       if (!this.auth.isExpiredToken(accessToken)) {
@@ -47,9 +48,9 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       }
     }
   };
-
   private redirectToSignIn(error) {
     console.log(error);
+    this.auth.removeCredentialsUser();
     this.router.navigate(['/login']);
     return Observable.throw(error); //* Нужно пофиксить обработку /
   };

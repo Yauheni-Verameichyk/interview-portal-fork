@@ -5,11 +5,18 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserComponent } from './user/user.component';
 import { UserService } from './service/user.service';
 import { UserControllerService } from '../api/rest/service/user-controller.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UserResolvedGuard } from '../guard/user-resolved.guard';
+import { SharedModule } from '../shared/shared.module';
+import { UserFormMangerService } from '../shared/select-role/service/user-form-manger.service';
 
 @NgModule({
   imports: [
     CommonModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SharedModule
   ],
   declarations: [
     usersRouterComponents,
@@ -17,7 +24,10 @@ import { UserControllerService } from '../api/rest/service/user-controller.servi
   ],
   providers: [
     UserService,
-    UserControllerService
+    UserControllerService,
+    UserResolvedGuard
   ]
 })
-export class UsersModule { }
+export class UsersModule {
+  
+}

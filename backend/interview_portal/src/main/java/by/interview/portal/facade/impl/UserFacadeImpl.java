@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import by.interview.portal.dto.FullUserInfoDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,16 @@ public class UserFacadeImpl implements UserFacade {
     private UserService userService;
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     @Qualifier("userConverter")
     private Converter<User, UserDTO> userConverter;
 
     @Override
     public List<UserDTO> findAll() {
         return userService.findAll().stream().filter(Objects::nonNull)
-                .map(userConverter::convertToDTO).collect(Collectors.toList());
+            .map(userConverter::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -39,30 +44,34 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public Optional<UserDTO> findById(long userId) {
-        return userService.findById(userId).map(userConverter::convertToDTO);
+    public Optional<FullUserInfoDTO> findById(long userId) {
+        return userService.findById(userId).map(userConverter::convertToDTO)
+            .map(userDTO -> getFullUserInfoDTO(userDTO));
+    }
+
+    private FullUserInfoDTO getFullUserInfoDTO(UserDTO userDTO) {
+        FullUserInfoDTO fullUserInfoDTO = modelMapper.map(userDTO, FullUserInfoDTO.class);
+        fullUserInfoDTO.setRoles(userDTO.getRoleDisciplines().keySet());
+        return fullUserInfoDTO;
     }
 
     @Override
     public List<UserBaseInfoDTO> findAllByRole(Role role) {
         return userService.findAllByRole(role).stream().filter(Objects::nonNull)
-                .map(userConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
-                .collect(Collectors.toList());
+            .map(userConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
+            .collect(Collectors.toList());
     }
 
     @Override
     public List<UserBaseInfoDTO> findAllUserBaseInfo() {
         return userService.findAll().stream().filter(Objects::nonNull)
-                .map(userConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
-                .collect(Collectors.toList());
+            .map(userConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
+            .collect(Collectors.toList());
     }
 
     private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {
-        UserBaseInfoDTO userBaseInfo = new UserBaseInfoDTO();
-        userBaseInfo.setId(userDTO.getId());
-        userBaseInfo.setName(userDTO.getName());
-        userBaseInfo.setSurname(userDTO.getSurname());
-        userBaseInfo.setRoles(userDTO.getRoleDisciplines().keySet());
-        return userBaseInfo;
+        UserBaseInfoDTO userBaseInfoDTO = modelMapper.map(userDTO, UserBaseInfoDTO.class);
+        userBaseInfoDTO.setRoles(userDTO.getRoleDisciplines().keySet());
+        return userBaseInfoDTO;
     }
 }

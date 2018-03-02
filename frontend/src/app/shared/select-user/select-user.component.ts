@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserInfo } from '../../domain/UserInfo';
-import { UserControllerService } from '../../api/services';
 import { userInfo } from 'os';
+import { UserControllerService } from '../../api/services/user-controller.service';
 
 @Component({
   selector: 'app-select-user',

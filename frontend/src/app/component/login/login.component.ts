@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         .subscribe(data =>{
           this.authenticationService.setCredentialsUser(data);
           this.navbarManager.showNavbar(true);
-          this.router.navigate(['user']);
+          this.router.navigate(['users']);
         }, error=>{
           this.errorMessage = 'wrong login or password';
         });

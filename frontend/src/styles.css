@@ -49,6 +49,7 @@ main {
 }
 
 .user_form {
+    margin-top: 20px;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
     padding: 25px;
     text-align: center;
@@ -125,6 +126,7 @@ tbody tr td button {
  }
 
  .user-table {
+     margin-top: 20px;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
  }
 
@@ -213,4 +215,6 @@ caption {
 .customActive {
     background-color: rgb(66, 65, 64) !important;
 }
-
+.button_close{
+    text-align: right;
+}
