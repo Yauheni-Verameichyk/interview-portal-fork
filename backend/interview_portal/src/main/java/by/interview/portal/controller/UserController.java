@@ -43,9 +43,7 @@ public class UserController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping("/role/{role}")
-    public List<UserBaseInfoDTO> findByRole(
-        @PathVariable
-            Role role) {
+    public List<UserBaseInfoDTO> findByRole(@PathVariable Role role) {
         return userFacade.findAllByRole(role);
     }
 

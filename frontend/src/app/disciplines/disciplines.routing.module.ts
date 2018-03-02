@@ -9,7 +9,9 @@ const routes: Routes = [
     path: 'discipline',
     children: [
       { path: '', component: DisciplinesListComponent },
-      { path: 'create', component: CreateDisciplineComponent }
+      { path: 'create', component: CreateDisciplineComponent },
+      { path: 'edit/:editDisciplineID', component: CreateDisciplineComponent },
+      { path: 'create/:parentDisciplineID', component: CreateDisciplineComponent }
     ]
   }
 ];

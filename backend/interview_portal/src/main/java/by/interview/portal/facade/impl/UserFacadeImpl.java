@@ -26,26 +26,23 @@ public class UserFacadeImpl implements UserFacade {
     private UserService userService;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    @Qualifier("userConverter")
-    private Converter<User, UserDTO> userConverter;
+    @Qualifier("userDTOConverter")
+    private Converter<User, UserDTO> userDTOConverter;
 
     @Override
     public List<UserDTO> findAll() {
         return userService.findAll().stream().filter(Objects::nonNull)
-            .map(userConverter::convertToDTO).collect(Collectors.toList());
+                .map(userDTOConverter::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public void save(UserDTO userDTO) {
-        userService.save(userConverter.convertToEntity(userDTO));
+        userService.save(userDTOConverter.convertToEntity(userDTO));
     }
 
     @Override
     public Optional<FullUserInfoDTO> findById(long userId) {
-        return userService.findById(userId).map(userConverter::convertToDTO)
+        return userService.findById(userId).map(userDTOConverter::convertToDTO)
             .map(userDTO -> getFullUserInfoDTO(userDTO));
     }
 
@@ -58,15 +55,15 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public List<UserBaseInfoDTO> findAllByRole(Role role) {
         return userService.findAllByRole(role).stream().filter(Objects::nonNull)
-            .map(userConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
-            .collect(Collectors.toList());
+                .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<UserBaseInfoDTO> findAllUserBaseInfo() {
         return userService.findAll().stream().filter(Objects::nonNull)
-            .map(userConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
-            .collect(Collectors.toList());
+                .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
+                .collect(Collectors.toList());
     }
 
     private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {

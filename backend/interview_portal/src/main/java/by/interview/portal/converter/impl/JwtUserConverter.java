@@ -18,17 +18,13 @@ import by.interview.portal.dto.UserDTO;
 public final class JwtUserConverter implements Converter<User, JwtUserDTO> {
 
 	@Autowired
-	@Qualifier("userConverter")
+	@Qualifier("userDTOConverter")
 	Converter<User, UserDTO> converter;
 
 	private List<GrantedAuthority> mapToGrantedAuthorities(User user) {
 
 		return converter.convertToDTO(user).getPermissions().stream()
 				.map(authority -> new SimpleGrantedAuthority(authority)).collect(Collectors.toList());
-		/*
-		 * return authorities.stream() .map(authority -> new
-		 * SimpleGrantedAuthority("User")) .collect(Collectors.toList());
-		 */
 	}
 
 	@Override

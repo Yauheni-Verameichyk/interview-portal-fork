@@ -15,9 +15,9 @@ import java.util.Date;
 public class DateInterval {
 
     @Column(name = "date_start")
-    private Date dateStart;
+    private Date startDate;
 
     @Column(name = "date_End")
-    private Date dateEnd;
+    private Date endDate;
 
 }

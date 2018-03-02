@@ -13,7 +13,7 @@ import { UserFormMangerService } from './select-role/service/user-form-manger.se
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule
   ],
   declarations: [ ShowAuthedDirective, SelectUserComponent, ValidatorMessageComponent, SelectRoleComponent ],
   providers: [ UserFormMangerService ],

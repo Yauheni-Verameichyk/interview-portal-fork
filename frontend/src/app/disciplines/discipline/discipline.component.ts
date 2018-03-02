@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { Discipline } from '../../api/models';
 import { DisciplineService } from '../service/discipline.service';
 import { DisciplineControllerService } from '../../api/services';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class DisciplineComponent implements OnInit, OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
 
   constructor(private disciplinesControllerService: DisciplineControllerService,
-    private disciplineService: DisciplineService) { }
+    private disciplineService: DisciplineService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.backgroundColor = this.disciplineService.countBackgroundColor(this.childLevel);

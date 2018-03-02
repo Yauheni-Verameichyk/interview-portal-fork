@@ -15,7 +15,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   constructor(private auth: AuthenticationService, private authController: AuthenticationControllerService, private router: Router) { }
 
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse
   | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
     console.log("Interceptor work"); 
@@ -52,7 +51,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     console.log(error);
     this.auth.removeCredentialsUser();
     this.router.navigate(['/login']);
-    return Observable.throw(error); //* Нужно пофиксить обработку /
+    return Observable.throw(error);
   };
 
 }
+
