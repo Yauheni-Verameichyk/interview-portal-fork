@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators/map';
 import { filter } from 'rxjs/operators/filter';
 
 import { Discipline } from '../models/discipline';
+import { DisciplineDTO } from '../models/disciplineDTO';
 
 /**
  * Discipline Controller
@@ -66,7 +67,7 @@ export class DisciplineControllerService extends BaseService {
     let __body: any = null;
     let req = new HttpRequest<any>(
       "GET",
-      this.rootUrl + `/discipline/${id}`,
+      this.rootUrl + `/discipline/parents/${id}`,
       __body,
       {
         headers: __headers,
@@ -167,7 +168,7 @@ export class DisciplineControllerService extends BaseService {
    * @param id id
    * @return OK
    */
-   findByIdUsingGETResponse(id: number): Observable<HttpResponse<Discipline>> {
+   findByIdUsingGETResponse(id: number): Observable<HttpResponse<DisciplineDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -186,9 +187,9 @@ export class DisciplineControllerService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Discipline = null;
-        _body = _resp.body as Discipline
-        return _resp.clone({body: _body}) as HttpResponse<Discipline>;
+        let _body: DisciplineDTO = null;
+        _body = _resp.body as DisciplineDTO
+        return _resp.clone({body: _body}) as HttpResponse<DisciplineDTO>;
       })
     );
   }
@@ -197,7 +198,7 @@ export class DisciplineControllerService extends BaseService {
    * @param id id
    * @return OK
    */
-   findByIdUsingGET(id: number): Observable<Discipline> {
+   findByIdUsingGET(id: number): Observable<DisciplineDTO> {
     return this.findByIdUsingGETResponse(id).pipe(
       map(_r => _r.body)
     );

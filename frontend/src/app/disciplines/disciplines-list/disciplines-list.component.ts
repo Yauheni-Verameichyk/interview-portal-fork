@@ -20,7 +20,8 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
   constructor(private disciplineService: DisciplineService, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    (this.authenticationService.isPermissionPresent("DISCIPLINES_FILTER_READ")) ? this.findDisciplines('MY') : this.findDisciplines('ALL');
+    (this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ'))
+      ? this.findDisciplines('MY') : this.findDisciplines('ALL');
   }
 
   findDisciplines(searchOption: string): void {

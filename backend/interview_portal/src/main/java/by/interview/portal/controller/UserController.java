@@ -23,37 +23,31 @@ import by.interview.portal.facade.UserFacade;
 @RequestMapping(value = "/user")
 public class UserController {
 
-	@Autowired
-	private UserFacade userFacade;
+    @Autowired
+    private UserFacade userFacade;
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping(value = "/{id}")
-	public UserDTO findById(@PathVariable Long id) {
-		return userFacade.findById(id).get();
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/{id}")
+    public UserDTO findById(@PathVariable Long id) {
+        return userFacade.findById(id).get();
+    }
 
-	// @ResponseStatus(value = HttpStatus.OK)
-	// @GetMapping
-	// public HttpEntity<UserInfoDTO> findAll(){
-	//
-	// return ResponseEntity.ok(userFacade.);
-	// }
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping
-	public List<UserBaseInfoDTO> findAll() {
-		return userFacade.findAllUserBaseInfo();
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping
+    public List<UserBaseInfoDTO> findAll() {
+        return userFacade.findAllUserBaseInfo();
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping("/role/{role}")
-	public List<UserBaseInfoDTO> findByRole(@PathVariable Role role) {
-		return userFacade.findAllByRole(role);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping("/role/{role}")
+    public List<UserBaseInfoDTO> findByRole(@PathVariable Role role) {
+        return userFacade.findAllByRole(role);
+    }
 
-	@ResponseStatus(value = HttpStatus.OK)
-	@PostMapping
-	public void save(@RequestBody UserDTO userDTO) {
-		userFacade.save(userDTO);
-	}
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping
+    public void save(@RequestBody UserDTO userDTO) {
+        userFacade.save(userDTO);
+    }
 
 }
