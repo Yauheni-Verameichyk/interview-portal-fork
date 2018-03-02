@@ -9,3 +9,8 @@
 .load-button {
     text-align: center;
 }
+
+.disable-table {
+    pointer-events: none;
+    opacity: 0.4;
+}

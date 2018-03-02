@@ -1,0 +1,13 @@
+.viewInterviewWait {
+    z-index: 900;
+    top: 55px;
+    background-color: white;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    box-shadow: 0 0 20px rgba(0, 47, 201, 0.7);
+    padding: 35px;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 20px;
+}

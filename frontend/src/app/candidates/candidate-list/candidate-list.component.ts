@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CandidateDTO } from '../../api/models/candidate-dto';
 import { CandidateControllerService } from '../../api/services/candidate-controller.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-candidate-list',
@@ -13,6 +13,7 @@ export class CandidateListComponent implements OnInit, OnDestroy {
   private readonly unsubscribe: Subject<void> = new Subject();
   candidateList: Array<CandidateDTO> = new Array<CandidateDTO>();
   showButtonLoad: boolean = true;
+  showForm: boolean = false;
 
   constructor(private candidateControllerService: CandidateControllerService) { }
 
@@ -43,6 +44,15 @@ export class CandidateListComponent implements OnInit, OnDestroy {
         error => {
           console.log(`Error in candidates list component typy error: ${error}`)
         });
+  }
+
+  displayForm() {
+    this.showForm = !this.showForm;
+    if(this.showForm === false) {
+      this.candidateList =  new Array<CandidateDTO>();
+      this.loadCandidateList(0);
+      this.showButtonLoad = true;
+    }
   }
 
   ngOnDestroy(): void {

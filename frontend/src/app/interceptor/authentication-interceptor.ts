@@ -14,7 +14,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   constructor(private auth: AuthenticationService, private authController: AuthenticationControllerService, private router: Router) { }
 
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse
   | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
     const accessToken = this.auth.getTokenFromLocalStorage();
@@ -48,7 +47,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
   };
   private redirectToSignIn(error) {
     this.router.navigate(['/login']);
-    return Observable.throw(error); //* Нужно пофиксить обработку /
+    return Observable.throw(error);
   };
 
 }
+

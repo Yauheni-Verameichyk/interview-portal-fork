@@ -28,13 +28,13 @@ public class WorkCandidate extends DateInterval{
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name_company")
-    private String nameCompany;
+    private String companyName;
     private String position;
 
     public WorkCandidate(Long id, String nameCompany, String position, Date dateStart, Date dateEnd) {
         this(id, nameCompany, position);
-        this.setDateEnd(dateEnd);
-        this.setDateStart(dateStart);
+        this.setEndDate(dateEnd);
+        this.setStartDate(dateStart);
     }
 
 
