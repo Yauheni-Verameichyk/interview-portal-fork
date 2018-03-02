@@ -12,6 +12,7 @@ import { MessageWindowComponent } from '../message/message-window/message-window
 import { EducationTableComponent } from './candidate-list/candidate-form/education-table/education-table.component';
 import { WorkTableComponent } from './candidate-list/candidate-form/work-table/work-table.component';
 import { DisciplineListComponent } from './candidate-list/candidate-form/discipline-list/discipline-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { DisciplineListComponent } from './candidate-list/candidate-form/discipl
     CandidatesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MessageModule
+    MessageModule,
+    SharedModule
   ],
   declarations: [
     candidatesRouterComponent,

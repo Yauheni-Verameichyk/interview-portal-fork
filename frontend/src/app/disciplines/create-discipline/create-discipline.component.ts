@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
-import { DisciplineControllerService, UserControllerService } from '../../api/services';
+import { DisciplineControllerService } from '../../api/services';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
@@ -9,6 +9,7 @@ import { DisciplineDTO } from '../../api/models/disciplineDTO';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { DisciplineService } from '../service/discipline.service';
+import { UserControllerService } from '../../api/services/user-controller.service';
 
 @Component({
   selector: 'app-create-discipline',

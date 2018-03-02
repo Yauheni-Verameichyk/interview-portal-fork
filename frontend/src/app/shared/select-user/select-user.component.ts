@@ -17,7 +17,7 @@ export class SelectUserComponent implements OnChanges, OnDestroy {
   @Output() private addUsers = new EventEmitter<UserInfo[]>();
 
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private userControllerService: UserControllerService) { }
+  constructor() { }
 
   ngOnChanges(): void {
     if (this.usersList != null && this.usersList.length !== 0) {
