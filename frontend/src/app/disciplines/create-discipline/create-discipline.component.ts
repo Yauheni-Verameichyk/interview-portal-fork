@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { UserInfo } from '../../domain/UserInfo';
 import { DisciplineDTO } from '../../api/models/disciplineDTO';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DisciplineService } from '../service/discipline.service';
 import { UserControllerService } from '../../api/services/user-controller.service';
 
@@ -24,7 +24,7 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
 
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineControllerService: DisciplineControllerService, private userControllerService: UserControllerService,
-    private disciplineService: DisciplineService, private route: ActivatedRoute) {
+    private disciplineService: DisciplineService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -95,6 +95,9 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
     } else {
       console.error('Invalid input');
     }
+  }
+  cancel(){
+    this.router.navigate(['discipline'])
   }
 
   ngOnDestroy(): void {

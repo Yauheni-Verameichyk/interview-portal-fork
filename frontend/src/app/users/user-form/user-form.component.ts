@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder, ValidatorFn, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../domain/User';
@@ -6,16 +6,20 @@ import { UserControllerService } from '../../api/rest/service/user-controller.se
 import { Subject } from 'rxjs';
 import { Discipline } from '../../api/models';
 import { UserFormMangerService } from '../../shared/select-role/service/user-form-manger.service';
-
+import 'rxjs/add/operator/takeUntil';
+import { FormValidatorService } from '../../shared/validator/validator-form/form-validator.service';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
   isEdit: boolean = false;
+  role: Array<string>;
+  private originalUser: User;
+  userForm: FormGroup;
   user: User = {
     id: null,
     login: '',
@@ -25,16 +29,14 @@ export class UserFormComponent implements OnInit {
     roleDisciplines: null,
     roles: new Array<string>()
   }
-  role: Array<string>;
-  private  originalUser: User;
-  userForm: FormGroup;
 
   constructor(
     private userController: UserControllerService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private formManager: UserFormMangerService,
-    private router: Router
+    private router: Router,
+    private formValidator: FormValidatorService,
   ) { }
 
   ngOnInit(): void {
@@ -42,14 +44,18 @@ export class UserFormComponent implements OnInit {
     this.createFormGroup();
     this.userForm.disable();
   };
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
+  }
 
   private createFormGroup(): void {
     this.userForm = this.fb.group({
-      name: [this.user.name, [Validators.required, this.userNameValidator()]],
-      login: [this.user.login, [Validators.required, this.userNameValidator()]],
-      surname: [this.user.surname, [Validators.required, this.userNameValidator()]],
+      name: [this.user.name, [Validators.required, this.formValidator.userNameValidator()]],
+      login: [this.user.login, [Validators.required, this.formValidator.userNameValidator()]],
+      surname: [this.user.surname, [Validators.required, this.formValidator.userNameValidator()]],
       email: [this.user.login, [Validators.required, Validators.email]],
-      phoneNumber: [this.user.phoneNumber, [Validators.required, this.phoneValidator()]],
+      phoneNumber: [this.user.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
       roles: this.fb.array(this.user.roles)
     });
   }
@@ -62,44 +68,23 @@ export class UserFormComponent implements OnInit {
     this.isEdit = false;
     this.formManager.showButton(false);
     this.userForm.disable();
-    if(!this.userForm.valid){
-      alert("Use");
-      this.userController.saveUser(this.user).subscribe(()=>{
-        alert("User was successfully save");
-      },
-    () =>{
-      alert("User was not successfully save");
-    });
+    if (!this.userForm.valid) {
+      this.userController.saveUser(this.user)
+        .takeUntil(this.destroy)
+        .subscribe(() => {
+          alert("User was successfully save");
+          this.router.navigate(['users']);
+        },
+          () => {
+            alert("User was not successfully save");
+            this.router.navigate(['users']);
+          });
     }
   }
-  private userNameValidator(): ValidatorFn {
-    const pattern: RegExp = /^[\w\.\$@\*\!]{5,30}$/;
-    return (control: AbstractControl): { [key: string]: any } => {
-      if (!(control.dirty || control.touched)) {
-        return null;
-      } else {
-        return pattern.test(control.value) ? null : { custom: `Min length:5, can't contain whitespaces & special symbols.` };
-      }
-    };
-  }
-  private langthValidator(): ValidatorFn[] {
-    return [Validators.required, Validators.minLength(6), Validators.maxLength(20)]
-  }
-
-  private phoneValidator(): ValidatorFn {
-    const pattern: RegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-    return (control: AbstractControl): { [key: string]: any } => {
-      if (!(control.dirty || control.touched)) {
-        return null;
-      } else {
-        return pattern.test(control.value) ? null : { custom: `Invalid phone number` };
-      }
-    };
-  }
-  getRoles(roles: Array<string>):void{
+  getRoles(roles: Array<string>): void {
     this.user.roles = roles;
   }
-  close(){
+  close() {
     this.router.navigate(['users']);
   }
 }
