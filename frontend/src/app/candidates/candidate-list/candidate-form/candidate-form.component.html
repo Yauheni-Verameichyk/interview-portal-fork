@@ -1,0 +1,65 @@
+<div class='border candidate-form' *ngIf="!displayMessage">
+    <form [formGroup]="candidateForm">
+        <div>
+            <h1>Add Candidate</h1>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="Name">Name </label>
+                    <input name="name" type="text" class="form-control" id="Name" placeholder="Name" formControlName="name" required>
+                    <div *ngIf="name.invalid && name.touched" class="error-message">
+                        <div *ngIf="name.errors.required">
+                            Name is required.
+                        </div>
+                        <div *ngIf="name.errors.minlength">
+                            Name must be at least 4 characters long.
+                        </div>
+                        <div *ngIf="name.errors.maxlength">
+                            Name must be at most 200 characters long.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="SurName">SurName
+                    </label>
+                    <input type="text" class="form-control" id="SurName" placeholder="SurName" formControlName="surname">
+                    <div *ngIf="surname.invalid && surname.touched" class="error-message">
+                        <div *ngIf="surname.errors.required">
+                            SurName is required.
+                        </div>
+                        <div *ngIf="surname.errors.minlength">
+                            SurName must be at least 4 characters long.
+                        </div>
+                        <div *ngIf="surname.errors.maxlength">
+                            SurName must be at most 200 characters long.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Phone">Phone </label>
+                    <input type="text" class="form-control" id="Phone" placeholder="Phone" formControlName="phoneNumber">
+                    <div *ngIf="phone.invalid && phone.touched" class="error-message">
+                        <div *ngIf="phone.errors.required">
+                            Phone number is required.
+                        </div>
+                        <div *ngIf="phone.errors.pattern">
+                            Phone number must compose only number(at least 7 characters long).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-education-table [candidateForm]="candidateForm"></app-education-table>
+        <app-work-table [candidateForm]="candidateForm"></app-work-table>
+        <app-discipline-list [candidateForm]="candidateForm"></app-discipline-list>
+        
+        <div class="text-center add-candidates">
+            <a class="btn btn-primary" (click)="createCandidate()">Add Candidate</a>
+            <a class="btn btn-secondary" (click)="change()">Close</a>
+            <br>
+            <br>
+            <span *ngIf="displayErrorMessage" class="error-message">Fill in all the fields</span>
+        </div>
+    </form>
+</div>
+<app-message-window *ngIf="displayMessage" [message]="viewMessage" (displayWindowMessage)="change()"></app-message-window>

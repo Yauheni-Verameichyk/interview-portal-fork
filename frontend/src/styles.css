@@ -4,6 +4,9 @@ header {
 }
 
 .menu {
+    /* position: fixed;
+    left: 10%;
+    right: 10%; */
     z-index: 100;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }

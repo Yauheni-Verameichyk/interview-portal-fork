@@ -1,0 +1,79 @@
+<form [formGroup]="candidateForm">
+  <table class="table user-table" formArrayName="educationCandidateList">
+    <caption>Education</caption>
+    <thead>
+      <tr>
+        <th scope="col">The name of the institution </th>
+        <th scope="col">Profession</th>
+        <th scope="col">Start date</th>
+        <th scope="col">End date</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let education of candidateForm.controls.educationCandidateList.controls; let i = index" [formGroupName]="i">
+        <td>
+          <input class="col-md-12" type="text" formControlName="nameInstitution">
+          <div *ngIf="education.controls.nameInstitution.invalid && education.controls.nameInstitution.touched" class="error-message">
+            <div *ngIf="education.controls.nameInstitution.errors.required">
+              The name of the institution is required.
+            </div>
+            <div *ngIf="education.controls.nameInstitution.errors.minlength">
+              The name of the institution be at least 4 characters long.
+            </div>
+            <div *ngIf="education.controls.nameInstitution.errors.maxlength">
+              The name of the institution be at most 200 characters long.
+            </div>
+          </div>
+        </td>
+        <td>
+          <input class="col-md-12" type="text" formControlName="profession">
+          <div *ngIf="education.controls.profession.invalid && education.controls.profession.touched" class="error-message">
+            <div *ngIf="education.controls.profession.errors.required">
+              The name of the institution is required.
+            </div>
+            <div *ngIf="education.controls.profession.errors.minlength">
+              The name of the institution be at least 4 characters long.
+            </div>
+            <div *ngIf="education.controls.profession.errors.maxlength">
+              The name of the institution be at most 200 characters long.
+            </div>
+          </div>
+        </td>
+        <td>
+          <input class="col-md-12" type="date" formControlName="dateStart" max="{education.controls.dateEnd.value}}">
+          <div *ngIf="education.controls.dateStart.invalid && education.controls.dateStart.touched" class="error-message">
+            <div *ngIf="education.controls.dateStart.errors.required">
+              Start date is required.
+            </div>
+            <div *ngIf="education.controls.dateStart.errors.pattern">
+              Invalid Start date!
+            </div>
+          </div>
+        </td>
+        <td>
+          <input class="col-md-12" type="date" formControlName="dateEnd" min="{{education.controls.dateStart.value}}">
+          <div *ngIf="education.controls.dateEnd.invalid && education.controls.dateEnd.touched" class="error-message">
+            <div *ngIf="education.controls.dateEnd.errors.required">
+              Finish date is required.
+            </div>
+            <div *ngIf="education.controls.dateEnd.errors.pattern">
+              Finish Start date!
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="btn btn-light pull-right" (click)="remove(i, 'educationCandidateList')">
+            <img class="far fa-trash-alt align-middle" />
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+<div class="addNews">
+  <button (click)="additionEducation()">
+      Add Education
+  </button>
+</div>

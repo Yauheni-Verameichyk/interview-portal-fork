@@ -41,6 +41,7 @@ statement of work
 Customers:        
 Yauhen Papko
  Fiodar Rukadzelnikau
+
 Developers:
   Viktar Hrynko
 Yauheni Verameichyk

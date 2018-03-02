@@ -33,8 +33,8 @@ public class EducationCandidate extends DateInterval{
 
     public EducationCandidate(Long id, String nameInstitution, String profession, Date dateStart, Date dateEnd) {
         this(id, nameInstitution, profession);
-        this.setDateEnd(dateEnd);
-        this.setDateStart(dateStart);
+        this.setEndDate(dateEnd);
+        this.setStartDate(dateStart);
     }
 
 }

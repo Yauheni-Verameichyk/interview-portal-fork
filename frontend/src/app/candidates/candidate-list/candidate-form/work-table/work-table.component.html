@@ -1,0 +1,78 @@
+<form [formGroup]="candidateForm">
+  <table class="table user-table" formArrayName="workCandidateList">
+    <caption>Work history</caption>
+    <thead>
+      <tr>
+        <th scope="col">Company name</th>
+        <th scope="col">Position</th>
+        <th scope="col">Start date</th>
+        <th scope="col">End date</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let work of candidateForm.controls.workCandidateList.controls; let i = index" [formGroupName]="i">
+        <td>
+          <input class="col-md-12" type="text" formControlName="nameCompany">
+          <div *ngIf="work.controls.nameCompany.invalid && work.controls.nameCompany.touched" class="error-message">
+            <div *ngIf="work.controls.nameCompany.errors.required">
+              Name company is required.
+            </div>
+            <div *ngIf="work.controls.nameCompany.errors.minlength">
+              Name company be at least 4 characters long.
+            </div>
+            <div *ngIf="work.controls.nameCompany.errors.maxlength">
+              Name company be at most 200 characters long.
+            </div>
+          </div>
+        </td>
+        <td>
+          <input class="col-md-12" type="text" formControlName="position">
+          <div *ngIf="work.controls.position.invalid && work.controls.position.touched" class="error-message">
+            <div *ngIf="work.controls.position.errors.required">
+              Position is required.
+            </div>
+            <div *ngIf="work.controls.position.errors.minlength">
+              Position be at least 4 characters long.
+            </div>
+            <div *ngIf="work.controls.position.errors.maxlength">
+              class=" errorMessage" Position be at most 200 characters long.
+            </div>
+          </div>
+        </td>
+        <td>
+          <input class="col-md-12" type="date" formControlName="dateStart" max="{{work.controls.dateEnd.value}}">
+          <div *ngIf="work.controls.dateStart.invalid && work.controls.dateStart.touched" class="error-message">
+            <div *ngIf="work.controls.dateStart.errors.required">
+              Start date is required.
+            </div>
+            <div *ngIf="work.controls.dateStart.errors.pattern">
+              Invalid Start date!
+            </div>
+          </div>
+        </td>
+        <td>
+          <input class="col-md-12" type="date" formControlName="dateEnd" min="{{work.controls.dateStart.value}}">
+          <div *ngIf="work.controls.dateEnd.invalid && work.controls.dateEnd.touched" class="error-message">
+            <div *ngIf="work.controls.dateEnd.errors.required">
+              Finish date is required.
+            </div>
+            <div *ngIf="work.controls.dateEnd.errors.pattern">
+              Invalid Finish date!
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="btn btn-light pull-right" (click)="remove(i, 'workCandidateList')">
+            <img class="far fa-trash-alt align-middle" />
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="addNews">
+    <button (click)="additionWork()">
+      Add work
+    </button>
+  </div>
+</form>
