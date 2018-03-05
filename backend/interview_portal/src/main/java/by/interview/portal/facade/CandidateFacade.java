@@ -1,8 +1,8 @@
 package by.interview.portal.facade;
 
-import by.interview.portal.dto.CandidateDTO;
-
 import java.util.List;
+
+import by.interview.portal.dto.CandidateDTO;
 
 public interface CandidateFacade {
 

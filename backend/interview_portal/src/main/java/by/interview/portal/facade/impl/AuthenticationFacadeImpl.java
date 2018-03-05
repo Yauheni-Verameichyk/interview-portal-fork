@@ -38,10 +38,10 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = jwtTokenUtil.generateToken((JwtUserDTO) authentication.getPrincipal());
+        String token = jwtTokenUtil.generateToken((JwtUserDTO) authentication.getPrincipal());
         LOG.log(Level.getLevel("WORKLEVEL"),
                 "User " + authentication.getName() + " got access token: " + token);
-        final String refreshToken = jwtTokenUtil.refreshToken(token);
+        String refreshToken = jwtTokenUtil.refreshToken(token);
         LOG.log(Level.getLevel("WORKLEVEL"),
                 "User " + authentication.getName() + " got refresh token: " + refreshToken);
         return gatherPermissions(token, refreshToken, authentication);
@@ -54,9 +54,9 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
         LOG.log(Level.getLevel("WORKLEVEL"), "Login extracted : " + login);
         JwtUserDTO jwtUserDTO = (JwtUserDTO) userDetailsService.loadUserByUsername(login);
         LOG.log(Level.getLevel("WORKLEVEL"), "We got userDetails");
-        final String token = jwtTokenUtil.generateToken(jwtUserDTO);
+        String token = jwtTokenUtil.generateToken(jwtUserDTO);
         LOG.log(Level.getLevel("WORKLEVEL"), "User  got access token: " + token);
-        final String refreshToken = jwtTokenUtil.refreshToken(token);
+        String refreshToken = jwtTokenUtil.refreshToken(token);
         LOG.log(Level.getLevel("WORKLEVEL"), "User got refresh token: " + refreshToken);
         return gatherNewPermissions(token, refreshToken, jwtUserDTO);
     }

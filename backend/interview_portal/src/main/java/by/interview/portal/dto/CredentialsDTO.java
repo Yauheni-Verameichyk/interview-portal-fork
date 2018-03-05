@@ -1,6 +1,7 @@
 package by.interview.portal.dto;
 
 import java.util.Set;
+
 import lombok.Data;
 
 @Data

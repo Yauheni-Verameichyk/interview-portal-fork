@@ -1,7 +1,7 @@
 package by.interview.portal.config;
 
-import javax.annotation.Resource;
-
+import by.interview.portal.filter.JwtAuthenticationTokenFilter;
+import by.interview.portal.security.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import by.interview.portal.filter.JwtAuthenticationTokenFilter;
-import by.interview.portal.security.JwtAuthenticationEntryPoint;
+import javax.annotation.Resource;
+
 
 @Configuration
 @EnableWebSecurity
@@ -61,36 +61,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-            // we don't need CSRF because our token is invulnerable
-            .csrf().disable()
+                // we don't need CSRF because our token is invulnerable
+                .csrf().disable()
 
-            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 
-            // don't create session
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                // don't create session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-            .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-            // allow anonymous resource requests
 
-            .antMatchers("/candidates/**").permitAll()
+                // allow anonymous resource requests
 
-            .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css",
-                         "/**/*.js")
-            .permitAll().antMatchers("/v2/api-docs/**").permitAll()
+                .antMatchers("/candidates/**").permitAll()
 
-            // Un-secure H2 Database
-            .antMatchers("/h2-console/**/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html",
+                        "/**/*.css", "/**/*.js")
+                .permitAll().antMatchers("/v2/api-docs/**").permitAll()
 
-            .antMatchers("/auth/**").permitAll().anyRequest().authenticated();
+                // Un-secure H2 Database
+                .antMatchers("/h2-console/**/**").permitAll()
+
+                .antMatchers("/auth/**").permitAll().anyRequest().authenticated();
 
         // Custom JWT based security filter
-        httpSecurity
-            .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(authenticationTokenFilterBean(),
+                UsernamePasswordAuthenticationFilter.class);
 
         // disable page caching
-        httpSecurity.headers().frameOptions()
-            .sameOrigin() // required to set for H2 else H2 Console will be blank.
-            .cacheControl();
+        httpSecurity.headers().frameOptions().sameOrigin() // required to set for H2 else H2 Console will be blank.
+                .cacheControl();
     }
 }

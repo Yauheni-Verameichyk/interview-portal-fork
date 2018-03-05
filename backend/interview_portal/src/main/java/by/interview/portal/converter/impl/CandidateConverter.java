@@ -1,11 +1,12 @@
 package by.interview.portal.converter.impl;
 
-import by.interview.portal.converter.Converter;
-import by.interview.portal.domain.Candidate;
-import by.interview.portal.dto.CandidateDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import by.interview.portal.converter.Converter;
+import by.interview.portal.domain.Candidate;
+import by.interview.portal.dto.CandidateDTO;
 
 @Component("candidateConverter")
 public class CandidateConverter implements Converter<Candidate, CandidateDTO> {

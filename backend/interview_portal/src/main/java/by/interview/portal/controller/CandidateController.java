@@ -17,6 +17,8 @@ import java.util.List;
 @RequestMapping("candidates")
 public class CandidateController {
 
+
+
     @Autowired
     private CandidateFacade candidateFacade;
     @Autowired
@@ -27,18 +29,13 @@ public class CandidateController {
 
     @GetMapping
     public ResponseEntity<List<CandidateDTO>> findAll(
-        @RequestParam(name = "quantity",
-            defaultValue = "0")
-            Integer quantity
-    ) {
+            @RequestParam(name = "quantity", defaultValue = "0") Integer quantity) {
         List<CandidateDTO> list = candidateFacade.findAll(quantity);
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity add(
-        @RequestBody
-            Candidate candidate) {
+    public ResponseEntity add(@RequestBody Candidate candidate) {
         candidateService.add(candidate);
         return new ResponseEntity(HttpStatus.OK);
     }

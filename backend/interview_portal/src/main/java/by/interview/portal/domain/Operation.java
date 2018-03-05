@@ -19,11 +19,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "operation")
 public class Operation {
 
+
+    @Column(name = "name")
+    String name;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, columnDefinition = "bigserial")
     private Long id;
-
-    @Column(name = "name")
-    String name;
 }
