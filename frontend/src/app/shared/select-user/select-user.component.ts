@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { UserInfo } from '../../domain/UserInfo';
-import { UserControllerService } from '../../api/services';
 import { userInfo } from 'os';
 import { OnDestroy, OnInit, OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
@@ -18,7 +17,7 @@ export class SelectUserComponent implements OnChanges, OnDestroy {
   @Output() private addUsers = new EventEmitter<UserInfo[]>();
 
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private userControllerService: UserControllerService) { }
+  constructor() { }
 
   ngOnChanges(): void {
     if (this.usersList != null && this.usersList.length !== 0) {

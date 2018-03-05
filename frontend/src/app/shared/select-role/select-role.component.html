@@ -1,0 +1,19 @@
+<div id="roles" class="form-group col-md-6">
+  <legend>
+    Roles
+    <button *ngIf="isShowButton"  class="btn btn-primary">
+      <img class="fas fa-plus-circle align-middle" />
+    </button>
+  </legend>
+  <div class="row">
+    <div class="card col-md-6" *ngFor="let role of roles; let i = index">
+      <div class="card-block">
+        <p class="card-title">{{transformStyle(role)}}
+          <button (click)='deleteRole(i)' *ngIf="isShowButton" class="btn btn-primary">
+            <img class="far fa-trash-alt align-middle" />
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

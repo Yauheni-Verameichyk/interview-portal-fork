@@ -120,5 +120,5 @@ public class DisciplineServiceImpl implements DisciplineService {
     @Override
     public List<Discipline> findDisciplinesByUser(String login) {
         return disciplineRepository.findDisciplinesByUser(login);
-    };
+    }
 }

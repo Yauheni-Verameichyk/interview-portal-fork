@@ -10,4 +10,3 @@ public class CredentialsDTO {
     private String refreshToken;
     private Set<String> permissions;
 }
-

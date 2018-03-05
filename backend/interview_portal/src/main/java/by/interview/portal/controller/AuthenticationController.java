@@ -29,6 +29,7 @@ public class AuthenticationController {
     private AuthenticationFacade authenticationFacade;
 
 
+
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping
     public HttpEntity<CredentialsDTO> authorization(@RequestBody AuthenticationDTO request) {
@@ -37,6 +38,7 @@ public class AuthenticationController {
                         + request.getLogin());
         return ResponseEntity.ok(authenticationFacade.getUserPermission(request));
     }
+
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/refresh")

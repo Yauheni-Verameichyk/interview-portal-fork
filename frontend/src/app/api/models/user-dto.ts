@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { Discipline } from './discipline';
 
-export interface UserDTO {
+export class UserDTO {
 
   id?: number;
 
@@ -18,4 +18,5 @@ export interface UserDTO {
   roleDisciplines?: {[key: string]: Discipline[]};
 
   surname?: string;
+  
 }

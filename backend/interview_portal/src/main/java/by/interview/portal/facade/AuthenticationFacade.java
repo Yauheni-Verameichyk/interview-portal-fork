@@ -5,7 +5,6 @@ import by.interview.portal.dto.CredentialsDTO;
 
 public interface AuthenticationFacade {
 
-
     CredentialsDTO getUserPermission(AuthenticationDTO request);
 
     CredentialsDTO refreshCredentials(String refreshToken);

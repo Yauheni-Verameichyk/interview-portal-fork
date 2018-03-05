@@ -17,6 +17,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class CandidateDTO extends Person {
 
-	private List<Discipline> disciplineList;
+    private List<Discipline> disciplineList;
 
 }

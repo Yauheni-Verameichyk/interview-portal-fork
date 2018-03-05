@@ -3,12 +3,11 @@ package by.interview.portal.dto;
 import lombok.Data;
 
 @Data
-public class AuthenticationDTO  {
+public class AuthenticationDTO {
     private String login;
     private String password;
 
-    public AuthenticationDTO() {
-    }
+    public AuthenticationDTO() {}
 
     public AuthenticationDTO(String login, String password) {
         this.login = login;

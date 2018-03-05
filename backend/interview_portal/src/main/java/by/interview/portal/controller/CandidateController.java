@@ -17,6 +17,8 @@ import java.util.List;
 @RequestMapping("candidates")
 public class CandidateController {
 
+
+
     @Autowired
     private CandidateFacade candidateFacade;
     @Autowired
@@ -24,10 +26,10 @@ public class CandidateController {
     @Autowired
     private DisciplineService disciplineService;
 
+
     @GetMapping
     public ResponseEntity<List<CandidateDTO>> findAll(
-            @RequestParam(name = "quantity", defaultValue = "0") Integer quantity
-    ) {
+            @RequestParam(name = "quantity", defaultValue = "0") Integer quantity) {
         List<CandidateDTO> list = candidateFacade.findAll(quantity);
         return new ResponseEntity(list, HttpStatus.OK);
     }
