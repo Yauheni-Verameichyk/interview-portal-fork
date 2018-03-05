@@ -1,8 +1,8 @@
-import { UserInfo } from "../../domain/UserInfo";
+import { UserInfo } from '../../domain/UserInfo';
 
 /* tslint:disable */
 
-export class DisciplineDTO {
+export class DisciplineWithDisciplineHeadsDTO {
 
   id?: number;
 

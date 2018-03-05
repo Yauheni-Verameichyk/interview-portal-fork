@@ -9,8 +9,9 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { filter } from 'rxjs/operators/filter';
 
-import { Discipline } from '../models/discipline';
-import { DisciplineDTO } from '../models/disciplineDTO';
+import { DisciplineDTO } from '../models/discipline';
+import { DisciplineWithDisciplineHeadsDTO } from '../models/disciplineWithDisciplineHeadsDTO';
+
 
 /**
  * Discipline Controller
@@ -27,7 +28,7 @@ export class DisciplineControllerService extends BaseService {
   /**
    * @return OK
    */
-   findAllUsingGETResponse(): Observable<HttpResponse<Discipline[]>> {
+   findAllUsingGETResponse(): Observable<HttpResponse<DisciplineDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -45,9 +46,9 @@ export class DisciplineControllerService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Discipline[] = null;
-        _body = _resp.body as Discipline[]
-        return _resp.clone({body: _body}) as HttpResponse<Discipline[]>;
+        let _body: DisciplineDTO[] = null;
+        _body = _resp.body as DisciplineDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<DisciplineDTO[]>;
       })
     );
   }
@@ -55,13 +56,13 @@ export class DisciplineControllerService extends BaseService {
   /**
    * @return OK
    */
-   findAllUsingGET(): Observable<Discipline[]> {
+   findAllUsingGET(): Observable<DisciplineDTO[]> {
     return this.findAllUsingGETResponse().pipe(
       map(_r => _r.body)
     );
   }
 
-  findSubItemsGETResponse(id: number): Observable<HttpResponse<Discipline[]>> {
+  findSubItemsGETResponse(id: number): Observable<HttpResponse<DisciplineDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -79,9 +80,9 @@ export class DisciplineControllerService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Discipline[] = null;
-        _body = _resp.body as Discipline[]
-        return _resp.clone({body: _body}) as HttpResponse<Discipline[]>;
+        let _body: DisciplineDTO[] = null;
+        _body = _resp.body as DisciplineDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<DisciplineDTO[]>;
       })
     );
   }
@@ -89,13 +90,13 @@ export class DisciplineControllerService extends BaseService {
   /**
    * @return OK
    */
-   findSubItemsUsingGET(id: number): Observable<Discipline[]> {
+   findSubItemsUsingGET(id: number): Observable<DisciplineDTO[]> {
     return this.findSubItemsGETResponse(id).pipe(
       map(_r => _r.body)
     );
   }
 
-  findDisciplinesForUserGETResponse(): Observable<HttpResponse<Discipline[]>> {
+  findDisciplinesForUserGETResponse(): Observable<HttpResponse<DisciplineDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -113,14 +114,14 @@ export class DisciplineControllerService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: Discipline[] = null;
-        _body = _resp.body as Discipline[]
-        return _resp.clone({body: _body}) as HttpResponse<Discipline[]>;
+        let _body: DisciplineDTO[] = null;
+        _body = _resp.body as DisciplineDTO[]
+        return _resp.clone({body: _body}) as HttpResponse<DisciplineDTO[]>;
       })
     );
   }
 
-  findDisciplinesForUserUsingGET(): Observable<Discipline[]> {
+  findDisciplinesForUserUsingGET(): Observable<DisciplineDTO[]> {
     return this.findDisciplinesForUserGETResponse().pipe(
       map(_r => _r.body)
     );
@@ -129,7 +130,7 @@ export class DisciplineControllerService extends BaseService {
   /**
    * @param discipline discipline
    */
-   saveUsingPOSTResponse(discipline: Discipline): Observable<HttpResponse<void>> {
+   saveUsingPOSTResponse(discipline: DisciplineDTO): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -158,7 +159,7 @@ export class DisciplineControllerService extends BaseService {
   /**
    * @param discipline discipline
    */
-   saveUsingPOST(discipline: Discipline): Observable<void> {
+   saveUsingPOST(discipline: DisciplineDTO): Observable<void> {
     return this.saveUsingPOSTResponse(discipline).pipe(
       map(_r => _r.body)
     );
@@ -168,7 +169,7 @@ export class DisciplineControllerService extends BaseService {
    * @param id id
    * @return OK
    */
-   findByIdUsingGETResponse(id: number): Observable<HttpResponse<DisciplineDTO>> {
+   findByIdUsingGETResponse(id: number): Observable<HttpResponse<DisciplineWithDisciplineHeadsDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -187,9 +188,9 @@ export class DisciplineControllerService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: DisciplineDTO = null;
-        _body = _resp.body as DisciplineDTO
-        return _resp.clone({body: _body}) as HttpResponse<DisciplineDTO>;
+        let _body: DisciplineWithDisciplineHeadsDTO = null;
+        _body = _resp.body as DisciplineWithDisciplineHeadsDTO
+        return _resp.clone({body: _body}) as HttpResponse<DisciplineWithDisciplineHeadsDTO>;
       })
     );
   }
@@ -198,7 +199,7 @@ export class DisciplineControllerService extends BaseService {
    * @param id id
    * @return OK
    */
-   findByIdUsingGET(id: number): Observable<DisciplineDTO> {
+   findByIdUsingGET(id: number): Observable<DisciplineWithDisciplineHeadsDTO> {
     return this.findByIdUsingGETResponse(id).pipe(
       map(_r => _r.body)
     );

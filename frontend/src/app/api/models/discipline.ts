@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-export class Discipline {
+export class DisciplineDTO {
 
   id?: number;
 
@@ -9,4 +9,6 @@ export class Discipline {
   parentId?: number;
 
   subscription?: string;
+
+  hasSubItems?: boolean;
 }

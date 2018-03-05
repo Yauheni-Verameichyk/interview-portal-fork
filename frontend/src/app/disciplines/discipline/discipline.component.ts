@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
-import { Discipline } from '../../api/models';
+import { DisciplineDTO } from '../../api/models';
 import { DisciplineService } from '../service/discipline.service';
 import { DisciplineControllerService } from '../../api/services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,8 +19,8 @@ export class DisciplineComponent implements OnInit, OnDestroy {
   public backgroundColor: number;
   @Input() public childLevel: number;
   @Input() public parentDisciplineName: string;
-  @Input() public discipline: Discipline;
-  public subDisciplinesList: Array<Discipline> = [];
+  @Input() public discipline: DisciplineDTO;
+  public subDisciplinesList: Array<DisciplineDTO> = [];
   private readonly destroy: Subject<void> = new Subject();
 
   constructor(private disciplinesControllerService: DisciplineControllerService,

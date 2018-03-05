@@ -3,7 +3,7 @@ import { Candidate } from '../../../api/models/candidate';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray, ValidatorFn } from '@angular/forms';
 import { CandidateControllerService } from '../../../api/services/candidate-controller.service';
 import { CandidateService } from '../../service/candidate.service';
-import { Discipline } from '../../../api/models';
+import { DisciplineDTO } from '../../../api/models';
 import { Subject } from 'rxjs/Subject';
 import { DisciplineControllerService } from '../../../api/services';
 

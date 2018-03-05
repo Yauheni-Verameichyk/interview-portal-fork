@@ -1,5 +1,7 @@
 package by.interview.portal.dto;
 
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DisciplineDTO {
+public class DisciplineWithHeadsDTO {
 
     private long id;
 
@@ -17,5 +19,7 @@ public class DisciplineDTO {
 
     private Long parentId;
 
-    private boolean hasSubItems;
+    private String parentName;
+
+    private Set<UserBaseInfoDTO> disciplineHeadsList;
 }

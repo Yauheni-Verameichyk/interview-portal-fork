@@ -5,11 +5,11 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 import { UserInfo } from '../../domain/UserInfo';
-import { DisciplineDTO } from '../../api/models/disciplineDTO';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DisciplineService } from '../service/discipline.service';
 import { UserControllerService } from '../../api/services/user-controller.service';
+import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
 
 @Component({
   selector: 'app-create-discipline',
@@ -18,7 +18,7 @@ import { UserControllerService } from '../../api/services/user-controller.servic
 })
 export class CreateDisciplineComponent implements OnInit, OnDestroy {
 
-  public discipline: DisciplineDTO = new DisciplineDTO();
+  public discipline: DisciplineWithDisciplineHeadsDTO = new DisciplineWithDisciplineHeadsDTO();
   public disciplineForm: FormGroup;
   public usersListObservable: Observable<UserInfo[]>;
 
@@ -65,7 +65,7 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
       );
   }
 
-  initializeDiscipline(option: string, discipline: DisciplineDTO): void {
+  initializeDiscipline(option: string, discipline: DisciplineWithDisciplineHeadsDTO): void {
     switch (option) {
       case this.disciplineService.createEditOptions.EDIT:
         this.discipline = discipline;

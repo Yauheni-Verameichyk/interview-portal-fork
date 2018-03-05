@@ -1,9 +1,9 @@
 /* tslint:disable */
-import { Discipline } from './discipline';
+import { DisciplineDTO } from './discipline';
 
 export interface CandidateDTO {
 
-  disciplineList?: Discipline[];
+  disciplineList?: DisciplineDTO[];
 
   id?: number;
 

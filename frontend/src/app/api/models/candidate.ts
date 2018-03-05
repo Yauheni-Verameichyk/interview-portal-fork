@@ -1,10 +1,10 @@
-import { Discipline } from './discipline';
+import { DisciplineDTO } from './discipline';
 import { EducationCandidate } from './education-candidate';
 import { WorkCandidate } from './work-candidate';
 
 export class Candidate {
 
-  disciplineList?: Discipline[];
+  disciplineList?: DisciplineDTO[];
 
   educationCandidateList?: EducationCandidate[];
 

@@ -1,6 +1,7 @@
 package by.interview.portal.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,10 +13,10 @@ import by.interview.portal.domain.Discipline;
 @Repository
 public interface DisciplineRepository extends JpaRepository<Discipline, Long> {
 
-	List<Discipline> findAllByParentId(Long id);
+    List<Discipline> findAllByParentId(Long id);
 
-	Discipline findByName(String name);
+    Discipline findByName(String name);
 
-	@Query("SELECT urd.discipline FROM UserRoleDiscipline urd where urd.user.login = :login and urd.discipline.parentId is null")
-	List<Discipline> findDisciplinesByUser(@Param("login") String login);
+    @Query("SELECT urd.discipline FROM UserRoleDiscipline urd where urd.user.login = :login and urd.discipline.parentId is null")
+    Set<Discipline> findDisciplinesByUser(@Param("login") String login);
 }

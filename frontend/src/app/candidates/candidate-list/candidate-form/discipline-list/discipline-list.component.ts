@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { CandidateService } from '../../../service/candidate.service';
-import { Discipline } from '../../../../api/models';
+import { DisciplineDTO } from '../../../../api/models';
 import { Subject } from 'rxjs';
 import { DisciplineControllerService } from '../../../../api/services';
 
@@ -13,7 +13,7 @@ import { DisciplineControllerService } from '../../../../api/services';
 export class DisciplineListComponent implements OnInit, OnDestroy {
 
   @Input() candidateForm: FormGroup;
-  public disciplines: Discipline[];
+  public disciplines: DisciplineDTO[];
   private readonly destroy: Subject<void> = new Subject();
 
   constructor(private formBuilder: FormBuilder,
