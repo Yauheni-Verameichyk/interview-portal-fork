@@ -9,6 +9,8 @@ import { ApiModule } from '../api/api.module';
 import { SharedModule } from '../shared/shared.module';
 import { CreateDisciplineComponent } from './create-discipline/create-discipline.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserControllerService } from '../api/rest/service/user-controller.service';
+
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     DisciplineService,
-    DisciplineControllerService
+    DisciplineControllerService,
+    UserControllerService
   ]
 })
 export class DisciplinesModule { }

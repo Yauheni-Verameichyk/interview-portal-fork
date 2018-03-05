@@ -1,24 +1,26 @@
-<br>
-<table class="candidate-table table table-hover table-bordered " [ngClass]="{'disable-table': showForm}">
-  <thead class="thead-light">
-    <th scope="col">Name</th>
-    <th scope="col">Surname</th>
-    <th scope="col">Disciplines</th>
-    <th scope="col" class="th-btn">
-      <div class="add-interview-btn">
-        <span class="btn btn-primary" (click)="displayForm()">Add candidate</span>
-      </div>
-    </th>
-  </thead>
-  <tbody>
-    <tr app-candidate *ngFor="let candidate of candidateList" [candidate]="candidate">
-    </tr>
-  </tbody>
-</table>
-<div class="load-button">
-  <button *ngIf="showButtonLoad" (click)="windowScrollListener()" class="btn btn-outline-info">
-    Load more
-  </button>
+<div *requiredAuthority="'CANDIDATE_LIST_READ'">
+  <br>
+  <table class="candidate-table table table-hover table-bordered " [ngClass]="{'disable-table': showForm}">
+    <thead class="thead-light">
+      <th scope="col">Name</th>
+      <th scope="col">Surname</th>
+      <th scope="col">Disciplines</th>
+      <th scope="col" class="th-btn">
+        <div class="add-interview-btn" *requiredAuthority="'CANDIDATE_CREATE'">
+          <span class="btn btn-primary" (click)="displayForm()">Add candidate</span>
+        </div>
+      </th>
+    </thead>
+    <tbody>
+      <tr app-candidate *ngFor="let candidate of candidateList" [candidate]="candidate">
+      </tr>
+    </tbody>
+  </table>
+  <div class="load-button">
+    <button *ngIf="showButtonLoad" (click)="windowScrollListener()" class="btn btn-outline-info">
+      Load more
+    </button>
+  </div>
+  <app-candidate-form (displayForm)="displayForm()" *ngIf="showForm">
+  </app-candidate-form>
 </div>
-<app-candidate-form (displayForm)="displayForm()" *ngIf="showForm">
-</app-candidate-form>

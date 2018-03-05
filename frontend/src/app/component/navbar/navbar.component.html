@@ -6,13 +6,12 @@
   <div class="collapse navbar-collapse" >
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" routerLink="user" routerLinkActive="active">Users</a>
+        <a class="nav-link" routerLink="users" routerLinkActive="active">Users</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="discipline" routerLinkActive="active">Discipline</a>
       </li>
-      <li class="nav-item">
-        <!-- <a class="nav-link" routerLink="discipline" routerLinkActive="active">Discipline</a> -->
+      <li class="nav-item" *requiredAuthority="'CANDIDATE_LIST_READ'">
         <a class="nav-link" routerLink="candidate" routerLinkActive="active">Candidates</a>
       </li>
     </ul>

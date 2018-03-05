@@ -141,7 +141,7 @@ export class UserControllerService extends BaseService {
   }
   
   public getUsersByRole(role: string):Observable<UserInfo[]>{
-    return this.http.get(this.rootUrl + `/user/role/${role}`,)
+    return this.http.get(this.rootUrl + `/users/role/${role}`,)
     .pipe
     (map(this.handlerData),
     catchError(this.handlerError)

@@ -35,5 +35,4 @@ public class User extends Person {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserRoleDiscipline> userRoleDisciplines;
-
 }

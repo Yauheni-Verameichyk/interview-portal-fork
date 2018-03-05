@@ -10,8 +10,8 @@ export class NavbarManager {
 
   constructor() {}
 
-  showNavbar(ifShow: boolean) {
-      this.isShowNavBar.next(ifShow);
+  showNavbar(isShow: boolean) {
+      this.isShowNavBar.next(isShow);
   }
 
 

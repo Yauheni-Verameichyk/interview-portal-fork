@@ -8,12 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.User;
 import by.interview.portal.dto.JwtUserDTO;
 import by.interview.portal.service.UserService;
-import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service("userDetails")

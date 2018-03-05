@@ -23,8 +23,8 @@ import { BaseService } from './base-service';
   providers: [
     ApiConfiguration,
     DisciplineControllerService,
-    UserControllerService,
-    CandidateControllerService
+    CandidateControllerService,
+    UserControllerService
   ],
 })
 export class ApiModule { }

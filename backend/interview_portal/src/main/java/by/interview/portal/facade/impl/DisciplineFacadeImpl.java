@@ -35,5 +35,5 @@ public class DisciplineFacadeImpl implements DisciplineFacade {
     @Override
     public List<Discipline> findDisciplinesByUser(String login) {
         return disciplineService.findDisciplinesByUser(login);
-    };
+    }
 }

@@ -1,10 +1,6 @@
 package by.interview.portal.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -22,7 +23,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "education_candidate")
-public class EducationCandidate extends DateInterval{
+public class EducationCandidate extends DateInterval {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +32,10 @@ public class EducationCandidate extends DateInterval{
     private String nameInstitution;
     private String profession;
 
-    public EducationCandidate(Long id, String nameInstitution, String profession, Date dateStart, Date dateEnd) {
+    public EducationCandidate(Long id, String nameInstitution, String profession, Date dateStart,
+            Date dateEnd) {
         this(id, nameInstitution, profession);
-        this.setEndDate(dateEnd);
-        this.setStartDate(dateStart);
+        setEndDate(dateEnd);
+        setStartDate(dateStart);
     }
-
 }

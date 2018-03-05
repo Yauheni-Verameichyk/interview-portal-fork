@@ -6,7 +6,10 @@ import java.util.Set;
 
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode
@@ -14,19 +17,19 @@ import lombok.*;
 @AllArgsConstructor
 public class UserDTO {
 
-	private Long id;
+    private Long id;
 
-	private String name;
+    private String name;
 
-	private String surname;
+    private String surname;
 
-	private String password;
+    private String password;
 
-	private String phoneNumber;
+    private String phoneNumber;
 
-	private String login;
+    private String login;
 
-	private Map<Role, List<Discipline>> roleDisciplines;
+    private Map<Role, List<Discipline>> roleDisciplines;
 
-	private Set<String> permissions;
+    private Set<String> permissions;
 }

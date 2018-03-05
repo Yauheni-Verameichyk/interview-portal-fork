@@ -8,7 +8,7 @@ export class CandidateService {
   readonly messageSuccessfully: string = "Candidate was successfully created !!!";
   readonly messageNotSuccessfully: string = "Could not create candidate! Try later!";
   readonly dateRegExp: RegExp = /[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])/;
-  readonly phoneNumberRegExp: RegExp = /^[0-9\-\+]{7,15}$/;
+  readonly phoneNumberRegExp: RegExp = /^[0-9\-\+]{7,}$/;
   
   readonly titleValidations: ValidatorFn[] = [Validators.required, Validators.minLength(4), Validators.maxLength(200)];
   readonly dateValidations: ValidatorFn[] = [Validators.required, Validators.pattern(this.dateRegExp)];
