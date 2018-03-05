@@ -25,7 +25,6 @@ import lombok.ToString;
 @Table(name = "work_candidate")
 public class WorkCandidate extends DateInterval {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

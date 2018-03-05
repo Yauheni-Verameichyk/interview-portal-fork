@@ -1,7 +1,7 @@
 package by.interview.portal.config;
 
-import javax.annotation.Resource;
-
+import by.interview.portal.filter.JwtAuthenticationTokenFilter;
+import by.interview.portal.security.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import by.interview.portal.filter.JwtAuthenticationTokenFilter;
-import by.interview.portal.security.JwtAuthenticationEntryPoint;
+import javax.annotation.Resource;
 
 @Configuration
 @EnableWebSecurity
