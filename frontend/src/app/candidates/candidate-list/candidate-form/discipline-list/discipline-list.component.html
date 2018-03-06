@@ -17,9 +17,9 @@
         <validator-message [field]="discipline.get('id')" [messageRequired]="candidateService.messageDisciplineNotSelected"></validator-message>
       </div>
     </div>
-    <div class="btn btn-light col-md-12 bg-info" (click)="additionDiscipline()">
-      <a class="fas fa-plus align-middle"></a>
+    <button class="btn btn-light col-md-12 bg-info" (click)="additionDiscipline()">
+      <span class="fas fa-plus align-middle"></span>
       Assign to the additional discipline
-    </div>
+    </button>
   </div>
 </form>
