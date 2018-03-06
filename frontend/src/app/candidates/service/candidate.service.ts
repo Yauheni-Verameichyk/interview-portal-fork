@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Candidate } from '../../api/models/candidate';
 import { FormGroup, FormArray, AbstractControl, ValidatorFn, Validators, FormBuilder } from '@angular/forms';
+import { FormValidatorService } from '../../shared/validator/validator-form/form-validator.service';
+import { LightFieldService } from '../../shared/validator/service/light-field.service';
 
 @Injectable()
 export class CandidateService {
 
   readonly messageSuccessfully: string = "Candidate was successfully created !!!";
   readonly messageNotSuccessfully: string = "Could not create candidate! Try later!";
-  readonly dateRegExp: RegExp = /[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])/;
-  readonly phoneNumberRegExp: RegExp = /^[0-9\-\+]{7,}$/;
+  readonly messageDisciplineNotSelected: string = "Discipline not selected!!!";
   
-  readonly titleValidations: ValidatorFn[] = [Validators.required, Validators.minLength(4), Validators.maxLength(200)];
-  readonly dateValidations: ValidatorFn[] = [Validators.required, Validators.pattern(this.dateRegExp)];
+  readonly titleValidations: ValidatorFn[] = [Validators.required, Validators.maxLength(200)];
+  readonly dateValidations: ValidatorFn[] = [Validators.required, this.formValidator.dateValidator()];
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private formValidator: FormValidatorService,
+              private lightFieldService: LightFieldService) { }
 
   createObject(formGroup: FormGroup): Candidate {
     const candidate: Candidate = new Candidate();
@@ -26,33 +29,18 @@ export class CandidateService {
   }
 
   displayIncorrectField(formGroup: FormGroup): void {
-    this.checkField(formGroup.controls);
-    this.checkArray('educationCandidateList', formGroup);
-    this.checkArray('workCandidateList', formGroup);
-    this.checkArray('disciplineList', formGroup);
+    this.lightFieldService.lightField(formGroup.controls);
+    this.lightFieldService.lightArray('educationCandidateList', formGroup);
+    this.lightFieldService.lightArray('workCandidateList', formGroup);
+    this.lightFieldService.lightArray('disciplineList', formGroup);
 
-  }
-
-  private checkArray(field: string, formGroup: FormGroup) {
-    (<FormArray>formGroup.get(field)).controls.forEach((element: FormArray) => {
-      this.checkField(element.controls);
-    });
-  }
-
-  private checkField(controls: any) {
-    Object.keys(controls)
-      .forEach(controlName => controls[controlName].markAsTouched());
   }
 
   initCandidateForm(candidateForm: FormGroup): FormGroup {
     return candidateForm = this.formBuilder.group({
       name: ['', this.titleValidations],
       surname: ['', this.titleValidations],
-      phoneNumber: ['', [
-        Validators.required,
-        Validators.pattern(this.phoneNumberRegExp),
-        Validators.minLength(3)
-      ]],
+      phoneNumber: ['', [Validators.required, this.formValidator.phoneValidator()]],
       workCandidateList: this.formBuilder.array([this.initWorkForm()]),
       educationCandidateList: this.formBuilder.array([this.initEducationForm()]),
       disciplineList: this.formBuilder.array([this.initDisciplineForm()])

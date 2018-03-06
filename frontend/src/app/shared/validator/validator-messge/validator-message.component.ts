@@ -4,13 +4,14 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'validator-message',
   template: `
-    <div class="alert alert-danger" *ngIf="field.invalid && field.touched && validatorMessages?.length">
+    <div class="error-message" *ngIf="field.invalid && field.touched && validatorMessages?.length">
       <li *ngFor="let errMsg of validatorMessages"> {{errMsg}}</li>
     </div>
   `
 })
 export class ValidatorMessageComponent {
   @Input() field: FormControl;
+  @Input() messageRequired?: string;
 
   public get validatorMessages() {
     const field = this.field;
@@ -24,6 +25,10 @@ export class ValidatorMessageComponent {
       email: 'Field should contain e-mail',
       pattern: 'Field does not match to pattern'
     };
+
+    if (this.messageRequired !== undefined) {
+      config.required = this.messageRequired;
+    }
 
     if (field.errors.hasOwnProperty('custom')) {
       config['custom'] = (typeof field.errors.custom === 'string' && field.errors.custom.length) ?

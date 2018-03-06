@@ -31,4 +31,15 @@ export class FormValidatorService {
     };
   }
 
+  public dateValidator(): ValidatorFn {
+    const pattern: RegExp = /[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/im;
+    return (control: AbstractControl): { [key: string]: any } => {
+      if (!(control.dirty || control.touched)) {
+        return null;
+      } else {
+        return pattern.test(control.value) ? null : { custom: `Invalid date` };
+      }
+    };
+  }
+
 }
