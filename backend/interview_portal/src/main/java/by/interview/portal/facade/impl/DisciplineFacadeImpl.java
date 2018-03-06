@@ -36,4 +36,9 @@ public class DisciplineFacadeImpl implements DisciplineFacade {
     public List<DisciplineDTO> findDisciplinesByUser(String login) {
         return disciplineService.findDisciplinesByUser(login);
     }
+
+    @Override
+    public void deleteDiscipline(Long id) {
+        disciplineService.deleteDiscipline(id);
+    }
 }

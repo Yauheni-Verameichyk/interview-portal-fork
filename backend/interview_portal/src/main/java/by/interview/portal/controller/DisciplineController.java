@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,5 +61,11 @@ public class DisciplineController {
         return disciplineFacade.findDisciplinesByUser(
                 ((JwtUserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                         .getUsername());
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @DeleteMapping
+    public void deleteDiscipline(@RequestBody Long id) {
+        disciplineFacade.deleteDiscipline(id);
     }
 }

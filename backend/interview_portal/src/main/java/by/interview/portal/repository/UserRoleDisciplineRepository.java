@@ -13,4 +13,6 @@ import by.interview.portal.domain.UserRoleDiscipline;
 public interface UserRoleDisciplineRepository extends JpaRepository<UserRoleDiscipline, Long> {
 
     List<UserRoleDiscipline> findAllByRoleAndDiscipline(Role role, Discipline discipline);
+
+    void deleteByDiscipline(Discipline discipline);
 }

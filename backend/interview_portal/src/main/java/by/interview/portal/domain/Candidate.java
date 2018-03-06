@@ -29,13 +29,13 @@ import lombok.ToString;
 @Table(name = "candidates")
 public class Candidate extends Person {
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(name = "candidate_discipline", joinColumns = @JoinColumn(name = "candidate_id"),
             inverseJoinColumns = @JoinColumn(name = "discipline_id"))
     @LazyCollection(LazyCollectionOption.TRUE)
     private List<Discipline> disciplineList;
     @OneToMany(cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.TRUE) 
+    @LazyCollection(LazyCollectionOption.TRUE)
     @JoinColumn(name = "candidate_id")
     private List<WorkCandidate> workCandidateList;
 

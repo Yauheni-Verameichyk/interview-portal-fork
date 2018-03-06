@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.interview.portal.converter.Converter;
+import by.interview.portal.domain.Candidate;
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.Role;
 import by.interview.portal.domain.User;
@@ -20,6 +21,7 @@ import by.interview.portal.dto.DisciplineDTO;
 import by.interview.portal.dto.DisciplineWithHeadsDTO;
 import by.interview.portal.dto.UserBaseInfoDTO;
 import by.interview.portal.dto.UserDTO;
+import by.interview.portal.repository.CandidateRepository;
 import by.interview.portal.repository.DisciplineRepository;
 import by.interview.portal.repository.UserRepository;
 import by.interview.portal.repository.UserRoleDisciplineRepository;
@@ -37,6 +39,9 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CandidateRepository candidateRepository;
 
     @Autowired
     @Qualifier("userDTOConverter")
@@ -102,13 +107,28 @@ public class DisciplineServiceImpl implements DisciplineService {
     @Override
     public void deleteDiscipline(Long id) {
         Discipline discipline = disciplineRepository.findById(id).get();
+        deleteUserAssignments(discipline);
+        deleteCandidateAssignements(discipline);
+        deleteChilds(discipline);
+        disciplineRepository.delete(discipline);
     }
 
     private void deleteChilds(Discipline discipline) {
-        List<Discipline> childsList =
-                disciplineRepository.findAllByParentId(discipline.getParentId());
+        List<Discipline> childsList = disciplineRepository.findAllByParentId(discipline.getId());
         for (Discipline childDiscipline : childsList) {
+            deleteDiscipline(childDiscipline.getId());
+        }
+    }
 
+    private void deleteUserAssignments(Discipline discipline) {
+        userRoleDisciplineRepository.deleteByDiscipline(discipline);
+    }
+
+    private void deleteCandidateAssignements(Discipline discipline) {
+        List<Candidate> candidatesList = candidateRepository.findByDiscipline(discipline);
+        for (Candidate candidate : candidatesList) {
+            candidate.getDisciplineList().remove(discipline);
+            candidateRepository.save(candidate);
         }
     }
 

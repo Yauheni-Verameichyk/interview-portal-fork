@@ -14,4 +14,6 @@ public interface DisciplineFacade {
     void save(DisciplineWithHeadsDTO discipline);
 
     List<DisciplineDTO> findDisciplinesByUser(String login);
+
+    public void deleteDiscipline(Long id);
 }

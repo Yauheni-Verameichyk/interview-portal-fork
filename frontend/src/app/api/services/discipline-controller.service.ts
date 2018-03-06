@@ -204,6 +204,44 @@ export class DisciplineControllerService extends BaseService {
       map(_r => _r.body)
     );
   }
+
+    /**
+   * @param id id
+   */
+  deleteDisciplineUsingDELETEResponse(id: number): Observable<HttpResponse<void>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = id;
+    let req = new HttpRequest<any>(
+      "DELETE",
+      this.rootUrl + `/discipline`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: void = null;
+        
+        return _resp.clone({body: _body}) as HttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * @param id id
+   */
+   deleteDisciplineUsingDELETE(id: number): Observable<void> {
+    return this.deleteDisciplineUsingDELETEResponse(id).pipe(
+      map(_r => _r.body)
+    );
+  }
 }
 
 export module DisciplineControllerService {

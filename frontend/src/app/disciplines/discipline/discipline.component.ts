@@ -46,6 +46,16 @@ export class DisciplineComponent implements OnInit, OnDestroy {
     this.subItemsShown = !this.subItemsShown;
   }
 
+  deleteDiscipline(id: number): void {
+    this.disciplinesControllerService.deleteDisciplineUsingDELETE(id)
+      .takeUntil(this.destroy)
+      .subscribe((success) => {
+        console.log('Discipline was deleted');
+      }, (error) => {
+        console.log('Send to error page when it appears');
+      });
+  }
+
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();

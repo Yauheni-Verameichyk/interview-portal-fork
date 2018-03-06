@@ -177,7 +177,7 @@ caption {
 }
 
 .disciplineName {
-    width: 176px;
+    width: 300px;
 }
 
 .disciplineNameHead {
@@ -224,4 +224,23 @@ caption {
 
 .discipline-table {
    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+}
+
+.unwrap-indicator {
+    border: 0px !important;
+}
+
+.big-icon {
+    font-size: 24px !important;
+    height: 100%;
+    width: 48px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.btn-xl {
+    padding: 0px;
+    font-size: 27px;
 }

@@ -1,20 +1,23 @@
-<table class="discipline-table table table-hover disciplinesList" (click)="showSubItems();" [ngStyle]="{'background-color': 'rgb('+ backgroundColor + ', '+ backgroundColor + ', ' + backgroundColor +')'}">
+<table class="discipline-table table table-hover disciplinesList" [ngStyle]="{'background-color': 'rgb('+ backgroundColor + ', '+ backgroundColor + ', ' + backgroundColor +')'}">
   <tbody>
     <tr>
-      <td scope="col" class="pull-left">
-        <div *ngIf="discipline.hasSubItems && !subItemsShown" class="btn btn-light pull-right">
-            <i class="fas fa-chevron-right"></i>
-        </div>
-        <div *ngIf="discipline.hasSubItems && subItemsShown" class="btn btn-light pull-right">
-            <i class="fas fa-chevron-down"></i>
+      <td scope="col" class="unwrap-indicator big-icon" (click)="showSubItems();">
+        <div *requiredAuthority="'SUB_ITEM_READ_' + parentDisciplineName">
+          <div *ngIf="discipline.hasSubItems && !subItemsShown" class="unwrap-indicator btn btn-xl">
+            <i class="fas fa-caret-right"></i>
           </div>
+          <div *ngIf="discipline.hasSubItems && subItemsShown" class="unwrap-indicator btn btn-xl">
+            <i class="fas fa-caret-down"></i>
+          </div>
+        </div>
       </td>
-      <td scope="col" class="disciplineName">
+      
+      <td scope="col" class="disciplineName unwrap-indicator">
         {{discipline.name}}</td>
-      <td scope="col">{{discipline.subscription}}</td>
-      <td scope="col" class="pull-right">
+      <td scope="col" class="unwrap-indicator">{{discipline.subscription}}</td>
+      <td scope="col" class="pull-right unwrap-indicator">
         <div class="pull-right editButtons">
-          <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(parentDisciplineName, childLevel)" class="btn btn-light pull-right">
+          <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(parentDisciplineName, childLevel)" (click) = "deleteDiscipline(discipline.id)" class="btn btn-light pull-right">
             <img class="far fa-trash-alt align-middle" />
           </div>
           <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(parentDisciplineName, childLevel)" [routerLink]="['edit', discipline.id]"
