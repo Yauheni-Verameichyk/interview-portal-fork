@@ -14,14 +14,10 @@
         </div>
         <br>
         <br>
-        <div *ngIf="discipline.controls.id.invalid && discipline.controls.id.touched" class="error-message">
-          <div *ngIf="discipline.controls.id.errors.required">
-            Discipline not selected!!!
-          </div>
-        </div>
+        <validator-message [field]="discipline.get('id')" [messageRequired]="candidateService.messageDisciplineNotSelected"></validator-message>
       </div>
     </div>
-    <div class="btn btn-light col-md-12" (click)="additionDiscipline()">
+    <div class="btn btn-light col-md-12 bg-info" (click)="additionDiscipline()">
       <a class="fas fa-plus align-middle"></a>
       Assign to the additional discipline
     </div>

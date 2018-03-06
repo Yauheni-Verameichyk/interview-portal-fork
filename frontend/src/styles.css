@@ -90,7 +90,12 @@ main {
     background-color: rgb(174, 224, 236);
 }
 
-
+.error-message {
+    color: brown;
+    padding: 10px;
+    font-size:14px;
+    text-align: left;
+}
 
 .add-user-btn {
     display: inline-block;
@@ -220,4 +225,14 @@ caption {
 }
 .button_close{
     text-align: right;
+}
+
+input.ng-touched.ng-invalid{
+    border-color: rgb(255, 113, 113);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+select.ng-touched.ng-invalid{
+    border-color: rgb(255, 113, 113);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
