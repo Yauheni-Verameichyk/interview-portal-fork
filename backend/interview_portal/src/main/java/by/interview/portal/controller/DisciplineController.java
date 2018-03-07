@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import by.interview.portal.dto.DisciplineDTO;
+import by.interview.portal.dto.DisciplineWithHeadsDTO;
+import by.interview.portal.dto.JwtUserDTO;
+import by.interview.portal.facade.DisciplineFacade;
 
 @CrossOrigin
 @RestController
@@ -28,34 +32,42 @@ public class DisciplineController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/{id}")
-    public DisciplineDTO findById(@PathVariable Long id) {
+    public DisciplineWithHeadsDTO findById(@PathVariable Long id) {
         return disciplineFacade.findById(id);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping
-    public List<Discipline> findAll() {
+    public List<DisciplineDTO> findAll() {
         return disciplineFacade.findByParentId(null);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/parents/{id}")
-    public List<Discipline> findSubItems(@PathVariable Long id) {
+    public List<DisciplineDTO> findSubItems(@PathVariable Long id) {
         return disciplineFacade.findByParentId(id);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping
-    public void save(@RequestBody DisciplineDTO disciplineDTO) {
+    public void save(@RequestBody DisciplineWithHeadsDTO disciplineDTO) {
         disciplineFacade.save(disciplineDTO);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/user")
-    public List<Discipline> findDisciplinesForUser() {
+    public List<DisciplineDTO> findDisciplinesForUser() {
+        System.err.println(disciplineFacade.findDisciplinesByUser(
+                ((JwtUserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                        .getUsername()));
         return disciplineFacade.findDisciplinesByUser(
                 ((JwtUserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                         .getUsername());
     }
 
+    @ResponseStatus(value = HttpStatus.OK)
+    @DeleteMapping
+    public void deleteDiscipline(@RequestBody Long id) {
+        disciplineFacade.deleteDiscipline(id);
+    }
 }

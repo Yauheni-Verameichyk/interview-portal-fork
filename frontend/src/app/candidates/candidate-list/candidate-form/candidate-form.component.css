@@ -1,23 +1,11 @@
 .candidate-form { 
     z-index: 900;
-    top: 55px;
+    top: 10px;
     background-color: white;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
     min-width: 800px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-
-input.ng-touched.ng-invalid{
-    border-color: rgb(255, 113, 113);
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-
-.error-message {
-    color: brown;
-    padding: 10px;
-    font-size:14px;
 }
 

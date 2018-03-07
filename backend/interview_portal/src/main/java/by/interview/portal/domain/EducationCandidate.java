@@ -38,5 +38,4 @@ public class EducationCandidate extends DateInterval {
         setEndDate(dateEnd);
         setStartDate(dateStart);
     }
-
 }

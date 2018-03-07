@@ -54,6 +54,7 @@ main {
 }
 
 .user_form {
+    margin-top: 20px;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
     padding: 25px;
     text-align: center;
@@ -90,7 +91,12 @@ main {
     background-color: rgb(174, 224, 236);
 }
 
-
+.error-message {
+    color: brown;
+    padding: 10px;
+    font-size:14px;
+    text-align: left;
+}
 
 .add-user-btn {
     display: inline-block;
@@ -186,7 +192,7 @@ caption {
 }
 
 .disciplineName {
-    width: 176px;
+    width: 300px;
 }
 
 .disciplineNameHead {
@@ -199,7 +205,7 @@ caption {
 }
 
 .subItem {
-    padding-left: 20px;
+    padding-left: 40px;
 }
 
 .editButtons{
@@ -230,3 +236,39 @@ caption {
 .button_close{
     text-align: right;
 }
+<<<<<<< HEAD
+=======
+
+.discipline-table {
+   box-shadow: 0 0 5px rgba(0,0,0,0.4);
+}
+
+.unwrap-indicator {
+    border: 0px !important;
+}
+
+.big-icon {
+    font-size: 24px !important;
+    height: 100%;
+    width: 48px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.btn-xl {
+    padding: 0px;
+    font-size: 27px;
+}
+
+input.ng-touched.ng-invalid{
+    border-color: rgb(255, 113, 113);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+select.ng-touched.ng-invalid{
+    border-color: rgb(255, 113, 113);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+>>>>>>> c096e65d771623e50fa69c0183b6b910b4abd0af

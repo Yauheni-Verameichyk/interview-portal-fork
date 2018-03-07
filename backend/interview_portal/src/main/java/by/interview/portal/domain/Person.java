@@ -28,5 +28,4 @@ public class Person {
 
     @Column(name = "phone_number", length = 50)
     private String phoneNumber;
-
 }

@@ -8,8 +8,8 @@ import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.dto.DisciplineDTO;
 
-@Component("disciplineConverter")
-public class DisciplineConverter implements Converter<Discipline, DisciplineDTO> {
+@Component("disciplineDTOConverter")
+public class DisciplineDTOConverter implements Converter<Discipline, DisciplineDTO> {
 
     @Autowired
     private ModelMapper modelMapper;

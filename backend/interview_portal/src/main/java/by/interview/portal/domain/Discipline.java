@@ -32,5 +32,4 @@ public class Discipline {
 
     @Column(name = "parent_id", nullable = true)
     private Long parentId;
-
 }

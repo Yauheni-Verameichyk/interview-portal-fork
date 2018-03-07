@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../domain/User';
 import { UserControllerService } from '../../api/rest/service/user-controller.service';
 import { Subject } from 'rxjs';
-import { Discipline } from '../../api/models';
+import { DisciplineDTO } from '../../api/models';
 import { UserFormMangerService } from '../../shared/select-role/service/user-form-manger.service';
 import 'rxjs/add/operator/takeUntil';
 import { FormValidatorService } from '../../shared/validator/validator-form/form-validator.service';

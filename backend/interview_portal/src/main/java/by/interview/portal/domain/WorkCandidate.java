@@ -38,6 +38,4 @@ public class WorkCandidate extends DateInterval {
         setEndDate(dateEnd);
         setStartDate(dateStart);
     }
-
-
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
-import { Discipline } from '../../api/models';
+import { DisciplineDTO } from '../../api/models';
 import { DisciplineService } from '../service/discipline.service';
 import { DisciplineControllerService } from '../../api/services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,8 +19,8 @@ export class DisciplineComponent implements OnInit, OnDestroy {
   public backgroundColor: number;
   @Input() public childLevel: number;
   @Input() public parentDisciplineName: string;
-  @Input() public discipline: Discipline;
-  public subDisciplinesList: Array<Discipline> = [];
+  @Input() public discipline: DisciplineDTO;
+  public subDisciplinesList: Array<DisciplineDTO> = [];
   private readonly destroy: Subject<void> = new Subject();
 
   constructor(private disciplinesControllerService: DisciplineControllerService,
@@ -44,6 +44,16 @@ export class DisciplineComponent implements OnInit, OnDestroy {
   showSubItems(): void {
     (!this.subItemsShown) ? this.findSubItems() : this.subDisciplinesList = [];
     this.subItemsShown = !this.subItemsShown;
+  }
+
+  deleteDiscipline(id: number): void {
+    this.disciplinesControllerService.deleteDisciplineUsingDELETE(id)
+      .takeUntil(this.destroy)
+      .subscribe((success) => {
+        console.log('Discipline was deleted');
+      }, (error) => {
+        console.log('Send to error page when it appears');
+      });
   }
 
   ngOnDestroy(): void {

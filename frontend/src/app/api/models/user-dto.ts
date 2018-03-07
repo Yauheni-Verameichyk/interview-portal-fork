@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { Discipline } from './discipline';
+import { DisciplineDTO } from './discipline';
 
 export class UserDTO {
 
@@ -15,7 +15,7 @@ export class UserDTO {
 
   phoneNumber?: string;
 
-  roleDisciplines?: {[key: string]: Discipline[]};
+  roleDisciplines?: {[key: string]: DisciplineDTO[]};
 
   surname?: string;
   

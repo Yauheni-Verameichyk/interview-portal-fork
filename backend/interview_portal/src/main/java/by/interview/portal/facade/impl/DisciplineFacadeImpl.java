@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import by.interview.portal.domain.Discipline;
 import by.interview.portal.dto.DisciplineDTO;
+import by.interview.portal.dto.DisciplineWithHeadsDTO;
 import by.interview.portal.facade.DisciplineFacade;
 import by.interview.portal.service.DisciplineService;
 
@@ -17,23 +17,28 @@ public class DisciplineFacadeImpl implements DisciplineFacade {
     private DisciplineService disciplineService;
 
     @Override
-    public DisciplineDTO findById(Long id) {
-        DisciplineDTO disciplineDTO = disciplineService.findById(id);
+    public DisciplineWithHeadsDTO findById(Long id) {
+        DisciplineWithHeadsDTO disciplineDTO = disciplineService.findById(id);
         return disciplineDTO;
     }
 
     @Override
-    public List<Discipline> findByParentId(Long id) {
+    public List<DisciplineDTO> findByParentId(Long id) {
         return disciplineService.findByParentId(id);
     }
 
     @Override
-    public void save(DisciplineDTO disciplineDTO) {
+    public void save(DisciplineWithHeadsDTO disciplineDTO) {
         disciplineService.save(disciplineDTO);
     }
 
     @Override
-    public List<Discipline> findDisciplinesByUser(String login) {
+    public List<DisciplineDTO> findDisciplinesByUser(String login) {
         return disciplineService.findDisciplinesByUser(login);
+    }
+
+    @Override
+    public void deleteDiscipline(Long id) {
+        disciplineService.deleteDiscipline(id);
     }
 }
