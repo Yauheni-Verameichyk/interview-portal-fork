@@ -20,5 +20,4 @@ public class DateInterval {
 
     @Column(name = "date_End")
     private Date endDate;
-
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
-import { Discipline } from '../../api/models';
-import { DisciplineDTO } from '../../api/models/disciplineDTO';
+import { DisciplineDTO } from '../../api/models';
+
 
 @Injectable()
 export class DisciplineService {
@@ -34,7 +34,7 @@ export class DisciplineService {
     return (childLevel === 0) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${disciplineName}`;
   }
 
-  chooseRequest(searchOption: string): Observable<Discipline[]> {
+  chooseRequest(searchOption: string): Observable<DisciplineDTO[]> {
     switch (searchOption) {
       case this.searchOptions.MY:
         return this.disciplinesControlerService.findDisciplinesForUserUsingGET();

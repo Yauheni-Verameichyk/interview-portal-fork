@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
-import { Discipline } from '../../api/models';
+import { DisciplineDTO } from '../../api/models';
 import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
 import { DisciplineService } from '../service/discipline.service';
@@ -15,7 +15,7 @@ import { AuthenticationService } from '../../service/authentication/authenticati
 })
 export class DisciplinesListComponent implements OnInit, OnDestroy {
 
-  disciplinesList: Array<Discipline> = [];
+  disciplinesList: Array<DisciplineDTO> = [];
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineService: DisciplineService, private authenticationService: AuthenticationService) { }
 
