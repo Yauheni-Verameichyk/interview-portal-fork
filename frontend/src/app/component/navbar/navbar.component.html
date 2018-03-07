@@ -1,10 +1,12 @@
-<nav *ngIf='isShowNavbar' class="navbar navbar-expand-lg navbar-light menu" id="navbarNav">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-    aria-label="Toggle navigation">
+<nav *ngIf='isShowNavbar' class="navbar fixed-top navbar-expand-lg navbar-light menu col-md-12" style="background-color: #e3f2fd;"
+  id="navbarNav">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" >
-    <ul class="navbar-nav">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a class="navbar-brand" routerLink="users">Interview Portal</a>
+    <ul class="navbar-nav mt-3 mt-lg-0">
       <li class="nav-item">
         <a class="nav-link" routerLink="users" routerLinkActive="active">Users</a>
       </li>
@@ -13,6 +15,11 @@
       </li>
       <li class="nav-item" *requiredAuthority="'CANDIDATE_LIST_READ'">
         <a class="nav-link" routerLink="candidate" routerLinkActive="active">Candidates</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav signOut">
+      <li>
+        <a class="nav-link" routerLink="login">Sign Out</a>
       </li>
     </ul>
   </div>

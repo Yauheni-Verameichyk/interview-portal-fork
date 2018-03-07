@@ -1,14 +1,13 @@
 <br>
 <table class="user-table table table-hover table-bordered">
-  <thead class="thead-light">
+  <thead style="background-color: #e3f2fd;">
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Surname</th>
       <th scope="col">Role</th>
+      <th scope="col">Edit</th>
     </tr>
   </thead>
-  <tbody app-user
-  *ngFor="let user of users" 
-  [user]="user" class='tbody-hover'>   
+  <tbody app-user *ngFor="let user of users" [user]="user" class='tbody-hover'>
   </tbody>
 </table>
