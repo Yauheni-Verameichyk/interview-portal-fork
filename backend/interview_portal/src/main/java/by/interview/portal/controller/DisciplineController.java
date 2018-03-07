@@ -59,8 +59,8 @@ public class DisciplineController {
     }
 
     @ResponseStatus(value = HttpStatus.OK)
-    @DeleteMapping
-    public void deleteDiscipline(@RequestBody Long id) {
+    @DeleteMapping(value = "/{id}")
+    public void deleteDiscipline(@PathVariable Long id) {
         disciplineFacade.deleteDiscipline(id);
     }
 

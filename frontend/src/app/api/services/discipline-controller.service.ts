@@ -205,17 +205,17 @@ export class DisciplineControllerService extends BaseService {
     );
   }
 
-    /**
+  /**
    * @param id id
    */
   deleteDisciplineUsingDELETEResponse(id: number): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = id;
+
     let req = new HttpRequest<any>(
       "DELETE",
-      this.rootUrl + `/discipline`,
+      this.rootUrl + `/discipline/${id}`,
       __body,
       {
         headers: __headers,

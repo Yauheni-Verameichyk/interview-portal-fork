@@ -6,6 +6,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -34,8 +35,7 @@ import by.interview.portal.dto.DisciplineWithHeadsDTO;
 import by.interview.portal.dto.UserBaseInfoDTO;
 import by.interview.portal.facade.DisciplineFacade;
 
-@WithMockUser(username = "user1", password = "user1", authorities = {"ROLE_ADMIN"})
-// @WithSecurityContext
+@WithMockUser(username = "user1", password = "user1")
 @RunWith(SpringRunner.class)
 @WebMvcTest(DisciplineController.class)
 public class DisciplineControllerTest {
@@ -110,5 +110,12 @@ public class DisciplineControllerTest {
         mvc.perform(get("/discipline/user").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(disciplineDTO.getName())));
+    }
+
+    @Test
+    public void shouldDeleteDiscipline() throws Exception {
+        doNothing().when(disciplineFacade).deleteDiscipline((long) 1);
+        mvc.perform(delete("/discipline/1")).andExpect(status().isOk());
+        verify(disciplineFacade, times(1)).deleteDiscipline((long) 1);
     }
 }
