@@ -23,7 +23,7 @@ import by.interview.portal.dto.AuthenticationDTO;
 import by.interview.portal.dto.CredentialsDTO;
 import by.interview.portal.facade.AuthenticationFacade;
 
-@WithMockUser(username = "awilliamson1@narod.ru", password = "awilliamson1@narod.ru")
+@WithMockUser
 @RunWith(SpringRunner.class)
 @WebMvcTest(AuthenticationController.class)
 public class AuthenticationControllerTest {
