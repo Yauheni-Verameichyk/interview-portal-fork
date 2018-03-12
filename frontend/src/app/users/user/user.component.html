@@ -2,9 +2,16 @@
     <td>
         {{user.name}}</td>
     <td>{{user.surname}}</td>
-    <td >
-        <span *ngFor="let role of user.roles">{{transformStyle(role)}}<br></span>
+    <td>
+        
+        <span *ngFor="let role of user.getRoles">{{role}}
+            <br>
+        </span>
+    </td>
+    <td>
+        <div class="btn btn-info">
+            <img class="fas fa-pencil-alt align-middle" />
+        </div>
     </td>
 </tr>
-   
 

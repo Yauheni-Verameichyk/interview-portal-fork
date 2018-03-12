@@ -1,3 +1,6 @@
 .tbody-hover:hover{
     cursor: pointer;
 }
+.header-table{
+    background-color: #e3f2fd !important;
+}

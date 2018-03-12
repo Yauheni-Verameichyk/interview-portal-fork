@@ -42,6 +42,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.minLength(2),
       ])
     });
+    this.authenticationService.removeCredentialsUser();
+    this.navbarManager.showNavbar(false);
   }
   ngOnDestroy(): void {
     this.destroy.next();

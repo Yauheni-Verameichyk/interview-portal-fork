@@ -17,33 +17,33 @@ export class SelectRoleComponent implements OnInit, OnDestroy {
 
   constructor(private buttonManager: UserFormMangerService) {
     buttonManager.showButtonEmitter
-    .takeUntil(this.destroy)
-    .subscribe(isShow=>{
-      this.isShowButton = isShow;
-    })
-   }
- 
+      .takeUntil(this.destroy)
+      .subscribe(isShow => {
+        this.isShowButton = isShow;
+      });
+  }
+
 
   ngOnInit() {
-    
+
   }
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
   }
-  rolesChanges():void{
+  rolesChanges(): void {
     this.editRoles.emit(this.roles);
   }
-  deleteRole(index: number) :void{
+  deleteRole(index: number): void {
     console.log(index);
     this.roles.splice(index, 1);
     console.log(this.roles);
     this.rolesChanges();
   }
 
-  transformStyle(role: string): string{
+  transformStyle(role: string): string {
     role = role.replace(/_/g, " ").toLowerCase();
-    return role.charAt(0).toUpperCase() + role.slice(1) ;
-    
+    return role.charAt(0).toUpperCase() + role.slice(1);
+
   }
 }
