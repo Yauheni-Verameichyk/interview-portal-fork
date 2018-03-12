@@ -1,0 +1,10 @@
+select {
+    float: left;
+    width: 92%;
+}
+
+.disabled-input {
+    pointer-events:none;
+    background-color: #dee2e6;
+}
+

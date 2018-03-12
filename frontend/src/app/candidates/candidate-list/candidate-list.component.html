@@ -1,18 +1,19 @@
 <div *requiredAuthority="'CANDIDATE_LIST_READ'">
   <br>
-  <table class="candidate-table table table-hover table-bordered " [ngClass]="{'disable-table': showForm}">
+  <table class="candidate-table table table-hover table-bordered ">
     <thead class="thead-light">
       <th scope="col">Name</th>
       <th scope="col">Surname</th>
       <th scope="col">Disciplines</th>
       <th scope="col" class="th-btn">
         <div class="add-interview-btn" *requiredAuthority="'CANDIDATE_CREATE'">
-          <span class="btn btn-primary" (click)="displayForm()">Add candidate</span>
+          <span class="btn btn-primary" [routerLink]="['', {outlets: { popup: ['candidate-create'] } }]" >Add candidate</span>
+          
         </div>
       </th>
     </thead>
     <tbody>
-      <tr app-candidate *ngFor="let candidate of candidateList" [candidate]="candidate">
+      <tr app-candidate *ngFor="let candidate of candidateService.candidateList" [candidate]="candidate">
       </tr>
     </tbody>
   </table>
@@ -21,6 +22,4 @@
       Load more
     </button>
   </div>
-  <app-candidate-form (displayForm)="displayForm()" *ngIf="showForm">
-  </app-candidate-form>
 </div>

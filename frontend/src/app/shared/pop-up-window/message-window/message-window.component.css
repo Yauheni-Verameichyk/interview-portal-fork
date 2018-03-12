@@ -5,9 +5,18 @@
     position: fixed;
     left: 50%;
     transform: translate(-50%);
-    box-shadow: 0 0 20px rgba(0, 47, 201, 0.7);
     padding: 35px;
     padding-left: 50px;
     padding-right: 50px;
     font-size: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.mask {
+    background-color:rgba(0,0,0,.3);
+    height:100%;
+    position:fixed;
+    width:100%;
+    top:0;
+    left:0;
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import by.interview.portal.repository.EducationCandidateRepository;
+import by.interview.portal.repository.WorkCandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,10 @@ public class CandidateServiceImpl implements CandidateService {
     private CandidateRepository candidateRepository;
     @Autowired
     private DisciplineRepository disciplineRepository;
+    @Autowired
+    private EducationCandidateRepository educationCandidateRepository;
+    @Autowired
+    private WorkCandidateRepository workCandidateRepository;
 
     @Override
     public List<Candidate> findAll(Integer quantity) {
@@ -35,12 +41,26 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public void add(Candidate candidate) {
-        List<Discipline> disciplineList =
-                candidate.getDisciplineList().stream().filter(Objects::nonNull)
-                        .map(discipline -> disciplineRepository.findById(discipline.getId()).get())
-                        .collect(Collectors.toList());
-        candidate.setDisciplineList(disciplineList);
+        candidate.setDisciplineList(persistDisciplineList(candidate));
         candidateRepository.saveAndFlush(candidate);
     }
 
+    @Override
+    public Candidate findById(Long id) {
+        return candidateRepository.findById(id).get();
+    }
+
+    @Override
+    public void update(Candidate candidate){
+        candidate.setDisciplineList(persistDisciplineList(candidate));
+        candidateRepository.saveAndFlush(candidate);
+        educationCandidateRepository.removeEducation();
+        workCandidateRepository.removeWork();
+    }
+
+    private List<Discipline> persistDisciplineList(Candidate candidate){
+        return candidate.getDisciplineList().stream().filter(Objects::nonNull)
+            .map(discipline -> disciplineRepository.findById(discipline.getId()).get())
+            .collect(Collectors.toList());
+    }
 }

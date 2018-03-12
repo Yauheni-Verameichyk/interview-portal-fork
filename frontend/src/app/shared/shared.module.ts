@@ -9,6 +9,7 @@ import { FormValidatorService } from './validator/validator-form/form-validator.
 import { LightFieldService } from './validator/service/light-field.service';
 import { ValidatorMessageComponent } from './validator/validator-messge/validator-message.component';
 import { MessageWindowComponent } from './pop-up-window/message-window/message-window.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -16,7 +17,8 @@ import { MessageWindowComponent } from './pop-up-window/message-window/message-w
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   declarations: [
     ShowAuthedDirective,

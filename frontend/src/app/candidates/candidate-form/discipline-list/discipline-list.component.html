@@ -1,0 +1,21 @@
+<form [formGroup]="candidateForm">
+  <caption>Choose discipline</caption>
+  <div formArrayName="disciplineList">
+    <div class='selectDisciplines' *ngFor="let discipline of candidateForm.controls.disciplineList.controls; let i = index" [formGroupName]="i">
+      <select id="inputState" class="form-control" formControlName="id">
+        <option value="" hidden disabled selected>Choose...</option>
+        <option *ngFor="let dis of disciplines" value="{{dis.id}}" selected>{{dis.name}}</option>
+      </select>
+      <div class="btn btn-light pull-right" (click)="remove(i,'disciplineList')" *ngIf="candidateForm.controls.disciplineList.controls.length > 1">
+        <img class="far fa-trash-alt align-middle" *ngIf="candidateForm.enabled"/>
+      </div>
+      <br>
+      <br>
+      <validator-message [field]="discipline.get('id')" [messageRequired]="messageDisciplineNotSelected"></validator-message>
+    </div>
+  </div>
+  <button class="btn btn-light col-md-12 bg-gray" (click)="additionDiscipline()" *ngIf="candidateForm.enabled">
+    <span class="fas fa-plus align-middle"></span>
+    Assign to the additional discipline
+  </button>
+</form>
