@@ -15,5 +15,5 @@ public interface DisciplineFacade {
 
     List<DisciplineDTO> findDisciplinesByUser(String login);
 
-    public void deleteDiscipline(Long id);
+    void deleteDiscipline(Long id);
 }
