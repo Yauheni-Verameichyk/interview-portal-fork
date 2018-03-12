@@ -35,8 +35,8 @@ export class UserControllerService {
     return this.http.post(this.baseUrl, body,options).pipe(map(this.handlerData), catchError(this.handlerError));
   }
   handlerData(response: HttpResponse<UserInfo>) {
-    let body = response;
-    return body || {}
+    const body = response;
+    return body || {};
   }
   handlerError(err: HttpErrorResponse) {
     let errorMessage: string;

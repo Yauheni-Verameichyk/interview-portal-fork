@@ -15,10 +15,10 @@ export class UserListComponent implements OnInit {
   ngOnInit() {
     this.userController
       .getUsers().subscribe(userList => {
-        this.users = userList;
+        this.users =  userList as Array<UserInfo>;
       },
-      error =>{
-        console.log(`Error in user list component typy error: ${error}`)
+      error => {
+        console.log(`Error in user list component typy error: ${error}`);
       });
   }
 

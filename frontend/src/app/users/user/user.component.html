@@ -3,7 +3,8 @@
         {{user.name}}</td>
     <td>{{user.surname}}</td>
     <td>
-        <span *ngFor="let role of user.roles">{{transformStyle(role)}}
+        
+        <span *ngFor="let role of user.getRoles">{{role}}
             <br>
         </span>
     </td>
@@ -13,3 +14,4 @@
         </div>
     </td>
 </tr>
+
