@@ -29,7 +29,6 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
       .takeUntil(this.destroy)
       .subscribe((disciplines) => {
         this.disciplinesList = disciplines;
-        console.log(disciplines);
       }, (error) => {
         console.log('Send to error page when it appears');
         console.log(error);
