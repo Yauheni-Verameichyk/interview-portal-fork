@@ -10,7 +10,7 @@ import { LightFieldService } from './validator/service/light-field.service';
 
 import { MessageWindowComponent } from './pop-up-window/message-window/message-window.component';
 import { ValidatorMessageComponent } from './validator/validator-message/validator-message.component';
-
+import { RouterModule } from '@angular/router';
 
 
 
@@ -18,7 +18,8 @@ import { ValidatorMessageComponent } from './validator/validator-message/validat
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   declarations: [
     ShowAuthedDirective,

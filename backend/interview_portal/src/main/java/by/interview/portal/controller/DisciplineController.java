@@ -7,6 +7,7 @@ import by.interview.portal.facade.DisciplineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import by.interview.portal.dto.DisciplineDTO;
+import by.interview.portal.dto.DisciplineWithHeadsDTO;
+import by.interview.portal.facade.DisciplineFacade;
 
 @CrossOrigin
 @RestController
@@ -54,17 +57,17 @@ public class DisciplineController {
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/user")
     public List<DisciplineDTO> findDisciplinesForUser() {
-        System.err.println(disciplineFacade.findDisciplinesByUser(
-                ((JwtUserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                        .getUsername()));
-        return disciplineFacade.findDisciplinesByUser(
-                ((JwtUserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                        .getUsername());
+        return disciplineFacade.findDisciplinesByUser(getCurrentUsersUsername());
     }
 
     @ResponseStatus(value = HttpStatus.OK)
-    @DeleteMapping
-    public void deleteDiscipline(@RequestBody Long id) {
+    @DeleteMapping(value = "/{id}")
+    public void deleteDiscipline(@PathVariable Long id) {
         disciplineFacade.deleteDiscipline(id);
+    }
+
+    public String getCurrentUsersUsername() {
+        return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .getUsername();
     }
 }

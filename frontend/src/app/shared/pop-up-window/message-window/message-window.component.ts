@@ -1,18 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-message-window',
   templateUrl: './message-window.component.html',
   styleUrls: ['./message-window.component.css']
 })
-export class MessageWindowComponent  {
+export class MessageWindowComponent   {
 
-  @Output() displayWindowMessage = new EventEmitter();
-  @Input() message: string;
-
-  close() {
-    this.displayWindowMessage.emit();
+  get message(): string {
+    return localStorage.getItem('message');
   }
-
-
 }

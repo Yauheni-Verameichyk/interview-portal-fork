@@ -14,10 +14,9 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@ResponseStatus(HttpStatus.OK)
 @RequestMapping("candidates")
 public class CandidateController {
-
-
 
     @Autowired
     private CandidateFacade candidateFacade;
@@ -28,16 +27,25 @@ public class CandidateController {
 
 
     @GetMapping
-    public ResponseEntity<List<CandidateDTO>> findAll(
+    public List<CandidateDTO> findAll(
             @RequestParam(name = "quantity", defaultValue = "0") Integer quantity) {
-        List<CandidateDTO> list = candidateFacade.findAll(quantity);
-        return new ResponseEntity(list, HttpStatus.OK);
+        return candidateFacade.findAll(quantity);
+    }
+
+    @GetMapping("{id}")
+    public Candidate findById(@PathVariable Long id){
+        return candidateService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody Candidate candidate) {
+    public void add(@RequestBody Candidate candidate) {
         candidateService.add(candidate);
-        return new ResponseEntity(HttpStatus.OK);
     }
+
+    @PutMapping
+    public void update(@RequestBody Candidate candidate) {
+        candidateService.update(candidate);
+    }
+
 
 }

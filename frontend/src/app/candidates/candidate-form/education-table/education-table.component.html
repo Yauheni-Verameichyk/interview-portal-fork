@@ -7,7 +7,7 @@
         <th scope="col">Profession</th>
         <th scope="col">Start date</th>
         <th scope="col">End date</th>
-        <th scope="col"></th>
+        <th scope="col" *ngIf="candidateForm.enabled" ></th>
       </tr>
     </thead>
     <tbody>
@@ -21,14 +21,14 @@
           <validator-message [field]="education.get('profession')"></validator-message>
         </td>
         <td>
-          <input class="form-control" type="date" formControlName="dateStart" max="{education.controls.dateEnd.value}}">
-          <validator-message [field]="education.get('dateStart')"></validator-message>
+          <input class="form-control" type="date" formControlName="startDate" max="{education.controls.endDate.value}}">
+          <validator-message [field]="education.get('startDate')"></validator-message>
         </td>
         <td>
-          <input class="form-control" type="date" formControlName="dateEnd" min="{{education.controls.dateStart.value}}">
-          <validator-message [field]="education.get('dateEnd')"></validator-message>
+          <input class="form-control" type="date" formControlName="endDate" min="{{education.controls.startDate.value}}">
+          <validator-message [field]="education.get('endDate')"></validator-message>
         </td>
-        <td>
+        <td *ngIf="candidateForm.enabled">
           <div class="btn btn-light pull-right" (click)="remove(i, 'educationCandidateList')">
             <img class="far fa-trash-alt align-middle" />
           </div>
@@ -37,7 +37,7 @@
     </tbody>
   </table>
 </form>
-<button class="btn btn-light bg-info col-md-12" (click)="additionEducation()">
+<button class="btn btn-light bg-gray col-md-12" (click)="additionEducation()" *ngIf="candidateForm.enabled" >
   <span class="fas fa-plus align-middle"></span>
   Add Education
 </button>

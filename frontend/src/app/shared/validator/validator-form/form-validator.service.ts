@@ -16,8 +16,8 @@ export class FormValidatorService {
       }
     };
   }
-  public langthValidator(): ValidatorFn[] {
-    return [Validators.required, Validators.minLength(6), Validators.maxLength(20)]
+   public lengthValidator(): ValidatorFn[] {
+    return [Validators.required, Validators.minLength(1), Validators.maxLength(200)]
   }
 
   public phoneValidator(): ValidatorFn {

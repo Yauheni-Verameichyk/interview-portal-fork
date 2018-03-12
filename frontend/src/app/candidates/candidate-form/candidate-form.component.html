@@ -1,0 +1,39 @@
+<div class="mask">
+    <div class='border candidate-form'>
+        <form [formGroup]="candidateForm">
+            <div>
+                <h1>{{formTitle}}</h1>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="Name">Name </label>
+                        <input name="name" type="text" class="form-control" id="Name" placeholder="Name" formControlName="name">
+                        <validator-message [field]="candidateForm.get('name')"></validator-message>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="SurName">SurName
+                        </label>
+                        <input type="text" class="form-control" id="SurName" placeholder="SurName" formControlName="surname">
+                        <validator-message [field]="candidateForm.get('surname')"></validator-message>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Phone">Phone </label>
+                        <input type="text" class="form-control" id="Phone" placeholder="Phone" formControlName="phoneNumber">
+                        <validator-message [field]="candidateForm.get('phoneNumber')"></validator-message>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <app-education-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.educationCandidateList.length)"></app-education-table>
+                <app-work-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.workCandidateList.length)"></app-work-table>
+                <app-discipline-list [candidateForm]="candidateForm"></app-discipline-list>
+            </div>
+            <div class="text-center add-candidates">
+                <a *ngIf="candidateForm.enabled" class="btn btn-primary" (click)="candidateFormService.saveCandidate()">Save</a>
+                <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Close</a>
+                <br>
+                <br>
+                <span *ngIf="displayErrorMessage" class="error-message">Fill in all the fields</span>
+            </div>
+        </form>
+    </div>
+</div>

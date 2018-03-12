@@ -5,6 +5,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './component/login/login.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { UserListComponent } from './users/user-list/user-list.component';
+import { MessageWindowComponent } from './shared/pop-up-window/message-window/message-window.component';
 
 const routes : Routes = [
   {
@@ -22,6 +23,11 @@ const routes : Routes = [
     // doesn't match any paths for routes defined in our configuration
     path: '**',
     component: PageNotFoundComponent
+  },
+  {
+    path: 'message',
+    component: MessageWindowComponent,
+    outlet: 'popup'
   }
 ];
 
