@@ -140,6 +140,7 @@ tbody tr td button {
 
 caption {
     caption-side: top;
+    width: 200px;
 }
 .addNews{
     text-align: center;
@@ -259,3 +260,8 @@ select.ng-touched.ng-invalid{
     border-color: rgb(255, 113, 113);
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
+
+.bg-gray {
+    background-color: #dee2e6 !important;
+}
+

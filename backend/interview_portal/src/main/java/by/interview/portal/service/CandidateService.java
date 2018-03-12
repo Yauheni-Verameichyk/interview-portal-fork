@@ -10,4 +10,8 @@ public interface CandidateService {
 
     void add(Candidate candidate);
 
+    Candidate findById(Long id);
+
+    void update(Candidate candidate);
+
 }

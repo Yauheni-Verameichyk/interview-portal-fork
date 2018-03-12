@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { CandidateService } from '../../../service/candidate.service';
-import { DisciplineDTO } from '../../../../api/models';
+import { FormGroup, FormArray } from '@angular/forms';
+import { DisciplineDTO } from '../../../api/models/discipline';
 import { Subject } from 'rxjs';
-import { DisciplineControllerService } from '../../../../api/services';
+import { DisciplineControllerService } from '../../../api/services';
+import { CandidateFormService } from '../service/candidate-form.service';
 
 @Component({
   selector: 'app-discipline-list',
@@ -15,16 +15,13 @@ export class DisciplineListComponent implements OnInit, OnDestroy {
   @Input() candidateForm: FormGroup;
   public disciplines: DisciplineDTO[];
   private readonly destroy: Subject<void> = new Subject();
+  readonly messageDisciplineNotSelected: string = "Discipline not selected!!!";
 
-  constructor(private formBuilder: FormBuilder,
-    private candidateService: CandidateService,
-    private disciplinesService: DisciplineControllerService) { }
+  constructor(
+    private disciplinesService: DisciplineControllerService,
+    private candidateFormService: CandidateFormService) { }
 
   ngOnInit(): void {
-    this.fetchDisciplines();
-  }
-
-  fetchDisciplines(): any {
     this.disciplinesService.findAllUsingGET()
       .takeUntil(this.destroy)
       .subscribe((disciplines) => {
@@ -34,12 +31,12 @@ export class DisciplineListComponent implements OnInit, OnDestroy {
   }
 
   remove(index: number, title: string) {
-    this.candidateService.removeRow(index, title, this.candidateForm);
+    this.candidateFormService.removeRow(index, title, this.candidateForm);
   }
 
   additionDiscipline(): void {
     const control = <FormArray>this.candidateForm.controls['disciplineList'];
-    control.push(this.candidateService.initDisciplineForm());
+    control.push(this.candidateFormService.initDisciplineForm());
   }
 
   ngOnDestroy(): void {

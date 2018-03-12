@@ -7,28 +7,28 @@
         <th scope="col">Position</th>
         <th scope="col">Start date</th>
         <th scope="col">End date</th>
-        <th scope="col"></th>
+        <th scope="col" *ngIf="candidateForm.enabled"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let work of candidateForm.controls.workCandidateList.controls; let i = index" [formGroupName]="i">
         <td>
-          <input class="form-control" type="text" formControlName="nameCompany">
-          <validator-message [field]="work.get('nameCompany')"></validator-message>
+          <input class="form-control" type="text" formControlName="companyName">
+          <validator-message [field]="work.get('companyName')"></validator-message>
         </td>
         <td>
           <input class="form-control" type="text" formControlName="position">
           <validator-message [field]="work.get('position')"></validator-message>
         </td>
         <td>
-          <input class="form-control" type="date" formControlName="dateStart" max="{{work.controls.dateEnd.value}}">
-          <validator-message [field]="work.get('dateStart')"></validator-message>
+          <input class="form-control" type="date" formControlName="startDate" max="{{work.controls.endDate.value}}">
+          <validator-message [field]="work.get('startDate')"></validator-message>
         </td>
         <td>
-          <input class="form-control" type="date" formControlName="dateEnd" min="{{work.controls.dateStart.value}}">
-          <validator-message [field]="work.get('dateEnd')"></validator-message>
+          <input class="form-control" type="date" formControlName="endDate" min="{{work.controls.startDate.value}}">
+          <validator-message [field]="work.get('endDate')"></validator-message>
         </td>
-        <td>
+        <td *ngIf="candidateForm.enabled">
           <div class="btn btn-light pull-right" (click)="remove(i, 'workCandidateList')">
             <img class="far fa-trash-alt align-middle" />
           </div>
@@ -36,8 +36,8 @@
       </tr>
     </tbody>
   </table>
-  <button class="btn btn-light bg-info col-md-12" (click)="additionWork()">
+  <button class="btn btn-light bg-gray col-md-12" (click)="additionWork()" *ngIf="candidateForm.enabled" >
     <span class="fas fa-plus align-middle"></span>
-    Add Education
+    Add work
   </button>
 </form>

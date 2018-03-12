@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CandidateDTO } from '../../../api/models/candidate-dto';
-import { CandidateService } from '../../service/candidate.service';
+import { CandidateDTO } from '../../api/models/candidate-dto';
+import { CandidateService } from '../service/candidate.service';
 
 @Component({
   selector: '[app-candidate]',
