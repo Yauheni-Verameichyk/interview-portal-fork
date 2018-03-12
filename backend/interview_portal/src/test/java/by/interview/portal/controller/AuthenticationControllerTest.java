@@ -38,7 +38,7 @@ public class AuthenticationControllerTest {
 
     private CredentialsDTO credentialsDTO;
 
-    private CredentialsDTO newCredentialsDTO;
+    private CredentialsDTO refreshedCredentialsDTO;
 
     @Before
     public void doSetup() {
@@ -50,9 +50,9 @@ public class AuthenticationControllerTest {
         credentialsDTO.setAccessToken("accessToken");
         credentialsDTO.setRefreshToken("refreshToken");
 
-        newCredentialsDTO = new CredentialsDTO();
-        newCredentialsDTO.setAccessToken("newAccessToken");
-        newCredentialsDTO.setRefreshToken("newRefreshToken");
+        refreshedCredentialsDTO = new CredentialsDTO();
+        refreshedCredentialsDTO.setAccessToken("newAccessToken");
+        refreshedCredentialsDTO.setRefreshToken("newRefreshToken");
     }
 
     @Test
@@ -75,10 +75,10 @@ public class AuthenticationControllerTest {
     @Test
     public void userShouldRefreshCredentials() throws Exception {
         given(authenticationFacade.refreshCredentials(credentialsDTO.getRefreshToken()))
-                .willReturn(newCredentialsDTO);
+                .willReturn(refreshedCredentialsDTO);
         mvc.perform(post("/auth/refresh").contentType(MediaType.APPLICATION_JSON)
                 .content(credentialsDTO.getRefreshToken())).andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.accessToken", is(newCredentialsDTO.getAccessToken())))
-                .andExpect(jsonPath("$.refreshToken", is(newCredentialsDTO.getRefreshToken())));
+                .andExpect(jsonPath("$.accessToken", is(refreshedCredentialsDTO.getAccessToken())))
+                .andExpect(jsonPath("$.refreshToken", is(refreshedCredentialsDTO.getRefreshToken())));
     }
 }
