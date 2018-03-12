@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DisciplineService } from '../service/discipline.service';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 
 @Component({
   selector: 'app-create-discipline',
@@ -23,8 +24,13 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
   public usersListObservable: Observable<UserInfo[]>;
 
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private disciplineControllerService: DisciplineControllerService, private userControllerService: UserControllerService,
-    private disciplineService: DisciplineService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private disciplineControllerService: DisciplineControllerService,
+    private userControllerService: UserControllerService,
+    private disciplineService: DisciplineService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private popupService: PopupService) {
   }
 
   ngOnInit() {
@@ -60,7 +66,7 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
         (discipline) => {
           this.initializeDiscipline(option, discipline);
         }, error => {
-          console.error('Error happened');
+          this.popupService.displayMessage('Error during discipline saving', this.router);
         }
       );
   }
@@ -88,16 +94,13 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
       this.disciplineControllerService.saveUsingPOST(this.discipline)
         .takeUntil(this.destroy)
         .subscribe((success) => {
-          console.log('Discipline was saved');   //show popup with message
+          this.popupService.displayMessage('Discipline was saved', this.router);
         }, error => {
-          console.error('Error happened');
+          this.popupService.displayMessage('Error during discipline saving', this.router);
         });
     } else {
       console.error('Invalid input');
     }
-  }
-  cancel(){
-    this.router.navigate(['discipline'])
   }
 
   ngOnDestroy(): void {

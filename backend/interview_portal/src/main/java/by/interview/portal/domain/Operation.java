@@ -18,12 +18,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "operation")
 public class Operation {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, columnDefinition = "bigserial")
     private Long id;
-    
-    @Column(name = "name")
+
+    @Column(name = "name", unique = true)
     String name;
 }

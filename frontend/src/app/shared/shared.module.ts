@@ -11,6 +11,7 @@ import { LightFieldService } from './validator/service/light-field.service';
 import { MessageWindowComponent } from './pop-up-window/message-window/message-window.component';
 import { ValidatorMessageComponent } from './validator/validator-message/validator-message.component';
 import { RouterModule } from '@angular/router';
+import { PopupService } from './pop-up-window/popup-service/popup.service';
 
 
 
@@ -29,14 +30,16 @@ import { RouterModule } from '@angular/router';
     MessageWindowComponent
   ],
   providers: [
-    UserFormMangerService, 
+    UserFormMangerService,
     FormValidatorService,
-    LightFieldService
+    LightFieldService,
+    PopupService
+
   ],
   exports: [
-    ShowAuthedDirective, 
-    SelectUserComponent, 
-    ValidatorMessageComponent, 
+    ShowAuthedDirective,
+    SelectUserComponent,
+    ValidatorMessageComponent,
     SelectRoleComponent,
     MessageWindowComponent
   ]
