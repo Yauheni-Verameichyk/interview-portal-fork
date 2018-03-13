@@ -20,11 +20,11 @@
           <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(parentDisciplineName, childLevel)" (click) = "deleteDiscipline(discipline.id)" class="btn btn-light pull-right">
             <img class="far fa-trash-alt align-middle" />
           </div>
-          <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(parentDisciplineName, childLevel)" [routerLink]="['edit', discipline.id]"
+          <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(parentDisciplineName, childLevel)" [routerLink]="['', {outlets: { popup: ['discipline', 'edit', discipline.id] } }]"
             routerLinkActive="active" class="btn btn-light pull-right">
             <img class="fas fa-pencil-alt align-middle" />
           </div>
-          <div *requiredAuthority="'SUB_ITEM_CREATE_' + parentDisciplineName" class="btn btn-light pull-right" [routerLink]="['create', discipline.id]"
+          <div *requiredAuthority="'SUB_ITEM_CREATE_' + parentDisciplineName" class="btn btn-light pull-right" [routerLink]="['', {outlets: { popup: ['discipline', 'create', discipline.id] } }]"
             routerLinkActive="active">
             <img class="fas fa-plus-circle align-middle" />
           </div>

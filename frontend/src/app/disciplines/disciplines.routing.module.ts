@@ -5,17 +5,12 @@ import { DisciplinesListComponent } from './disciplines-list/disciplines-list.co
 import { DisciplineComponent } from './discipline/discipline.component';
 import { CreateDisciplineComponent } from './create-discipline/create-discipline.component';
 const routes: Routes = [
-  {
-    path: 'discipline',
-    children: [
-      { path: '', component: DisciplinesListComponent },
-      { path: 'create', component: CreateDisciplineComponent },
-      { path: 'edit/:editDisciplineID', component: CreateDisciplineComponent },
-      { path: 'create/:parentDisciplineID', component: CreateDisciplineComponent }
-    ]
-  }
+  { path: 'discipline', component: DisciplinesListComponent },
+  { path: 'discipline/create', component: CreateDisciplineComponent, outlet: 'popup' },
+  { path: 'discipline/edit/:editDisciplineID', component: CreateDisciplineComponent, outlet: 'popup' },
+  { path: 'discipline/create/:parentDisciplineID', component: CreateDisciplineComponent, outlet: 'popup' }
 ];
-export let disciplineRouterComponents = [ DisciplinesListComponent, DisciplineComponent, CreateDisciplineComponent ];
+export let disciplineRouterComponents = [DisciplinesListComponent, DisciplineComponent, CreateDisciplineComponent];
 @NgModule({
   imports: [
     CommonModule,

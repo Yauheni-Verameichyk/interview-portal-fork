@@ -10,6 +10,7 @@ import { LightFieldService } from '../../../shared/validator/service/light-field
 import { CandidateControllerService } from '../../../api/services/candidate-controller.service';
 import { Subject } from 'rxjs';
 import { CandidateService } from '../../service/candidate.service';
+import { PopupService } from '../../../shared/pop-up-window/popup-service/popup.service';
 
 @Injectable()
 export class CandidateFormService {
@@ -53,7 +54,8 @@ export class CandidateFormService {
     private formValidator: FormValidatorService,
     private lightFieldService: LightFieldService,
     private candidateControllerService: CandidateControllerService,
-    private candidateService: CandidateService) { }
+    private candidateService: CandidateService,
+    private popupService: PopupService) { }
 
   get formTitle(): string {
     return this.CANDIDATE_FORM_CONFIG[this.operation].formTitle;
@@ -149,8 +151,7 @@ export class CandidateFormService {
   }
 
   displayMessage(message: string) {
-    localStorage.setItem('message', message);
-    this.router.navigate([{ outlets: { popup: 'message' } }]);
+    this.popupService.displayMessage(message, this.router);
     this.candidateService.updateCandidateList();
   }
 
