@@ -25,7 +25,7 @@ const routes : Routes = [
     component: PageNotFoundComponent
   },
   {
-    path: 'message',
+    path: 'message/:message',
     component: MessageWindowComponent,
     outlet: 'popup'
   }

@@ -7,7 +7,6 @@ export class PopupService {
   constructor() { }
 
   displayMessage(message: string, router: Router) {
-    localStorage.setItem('message', message);
-    router.navigate([{ outlets: { popup: 'message' } }]);
+    router.navigate([{ outlets: { popup: ['message', message]}} ] , { skipLocationChange: true });
   }
 }
