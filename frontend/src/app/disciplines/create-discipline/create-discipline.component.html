@@ -1,47 +1,46 @@
-<!-- <div [ngClass]="mask"> -->
-    <div class="mask" [style.height.%]="height">
-    <form class='form-group discipline-form signIn_form' [formGroup]="disciplineForm">
-      <h3>
+<div class="mask">
+  <form class='form-group popup-form signIn_form' [formGroup]="disciplineForm">
+    <h3>
+      <span *ngIf="!discipline.parentName">Discipline</span>
+      <span *ngIf="discipline.parentName">Sub-item</span>
+    </h3>
+    <div class="form-group">
+      <label for="disciplineName">
         <span *ngIf="!discipline.parentName">Discipline</span>
-        <span *ngIf="discipline.parentName">Sub-item</span>
-      </h3>
-      <div class="form-group">
-        <label for="disciplineName">
-          <span *ngIf="!discipline.parentName">Discipline</span>
-          <span *ngIf="discipline.parentName">Sub-item</span> name*</label>
-        <input name="disciplineName" class="form-control" id="disciplineName" placeholder="Enter name" formControlName="disciplineName"
-          [(ngModel)]="discipline.name" required>
-      </div>
+        <span *ngIf="discipline.parentName">Sub-item</span> name*</label>
+      <input name="disciplineName" class="form-control" id="disciplineName" placeholder="Enter name" formControlName="disciplineName"
+        [(ngModel)]="discipline.name" required>
+    </div>
 
-      <div *ngIf="disciplineForm.controls.disciplineName.invalid && (disciplineForm.controls.disciplineName.dirty || disciplineForm.controls.disciplineName.touched)"
-        class="alert alert-danger">
-        <div *ngIf="disciplineForm.controls.disciplineName.errors.required">
-          Name is required.
-        </div>
-        <div *ngIf="disciplineForm.controls.disciplineName.errors.minlength">
-          Name must be at least 1 characters long.
-        </div>
+    <div *ngIf="disciplineForm.controls.disciplineName.invalid && (disciplineForm.controls.disciplineName.dirty || disciplineForm.controls.disciplineName.touched)"
+      class="alert alert-danger">
+      <div *ngIf="disciplineForm.controls.disciplineName.errors.required">
+        Name is required.
       </div>
+      <div *ngIf="disciplineForm.controls.disciplineName.errors.minlength">
+        Name must be at least 1 characters long.
+      </div>
+    </div>
 
-      <div class="form-group">
-        <label for="disciplineDescription">Description</label>
-        <textarea class="form-control" formControlName="disciplineSubscription" id="disciplineSubscription" placeholder="Enter description"
-          [(ngModel)]="discipline.subscription"></textarea>
+    <div class="form-group">
+      <label for="disciplineDescription">Description</label>
+      <textarea class="form-control" formControlName="disciplineSubscription" id="disciplineSubscription" placeholder="Enter description"
+        [(ngModel)]="discipline.subscription"></textarea>
+    </div>
+    <div *ngIf="!discipline.parentName">
+      <label for="inputState">Assign discipline head</label>
+      <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
+        <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
       </div>
-      <div *ngIf="!discipline.parentName">
-        <label for="inputState">Assign discipline head</label>
-        <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
-          <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
-        </div>
-        <ng-template #heads_present>
-          <app-select-user (addUsers)="addUsers($event)" [selectedUsersList]="discipline.disciplineHeadsList" [usersList]="usersListObservable | async"></app-select-user>
-        </ng-template>
-      </div>
-      * Required field
-      <br>
-      <div class="text-center">
-        <a (click)="sendDiscipline()" class="btn btn-primary">Save</a>
-        <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Cancel</a>
-      </div>
-    </form>
+      <ng-template #heads_present>
+        <app-select-user (addUsers)="addUsers($event)" [selectedUsersList]="discipline.disciplineHeadsList" [usersList]="usersListObservable | async"></app-select-user>
+      </ng-template>
+    </div>
+    * Required field
+    <br>
+    <div class="text-center">
+      <a (click)="sendDiscipline()" class="btn btn-primary">Save</a>
+      <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Cancel</a>
+    </div>
+  </form>
 </div>
