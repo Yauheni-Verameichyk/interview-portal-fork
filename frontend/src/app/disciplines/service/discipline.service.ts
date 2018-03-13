@@ -14,7 +14,8 @@ export class DisciplineService {
 
   readonly createEditOptions = {
     EDIT: 'EDIT',
-    CREATE_SUB_ITEM: 'CREATE_SUB_ITEM'
+    CREATE_SUB_ITEM: 'CREATE_SUB_ITEM',
+    VIEW: 'VIEW'
   };
   constructor(private disciplinesControlerService: DisciplineControllerService) { }
 

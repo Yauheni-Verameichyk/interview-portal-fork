@@ -11,22 +11,24 @@
           </div>
         </div>
       </td>
-      
       <td scope="col" class="disciplineName unwrap-indicator">
         {{discipline.name}}</td>
       <td scope="col" class="unwrap-indicator">{{discipline.subscription}}</td>
       <td scope="col" class="pull-right unwrap-indicator">
-        <div class="pull-right editButtons">
-          <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(parentDisciplineName, childLevel)" (click) = "deleteDiscipline(discipline.id)" class="btn btn-light pull-right">
+        <div class="pull-right edit-buttons">
+          <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(parentDisciplineName, childLevel)" (click)="deleteDiscipline(discipline.id)"
+            class="btn btn-light pull-right">
             <img class="far fa-trash-alt align-middle" />
           </div>
           <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(parentDisciplineName, childLevel)" [routerLink]="['', {outlets: { popup: ['discipline', 'edit', discipline.id] } }]"
-            routerLinkActive="active" class="btn btn-light pull-right">
+            class="btn btn-light pull-right">
             <img class="fas fa-pencil-alt align-middle" />
           </div>
-          <div *requiredAuthority="'SUB_ITEM_CREATE_' + parentDisciplineName" class="btn btn-light pull-right" [routerLink]="['', {outlets: { popup: ['discipline', 'create', discipline.id] } }]"
-            routerLinkActive="active">
+          <div *requiredAuthority="'SUB_ITEM_CREATE_' + parentDisciplineName" class="btn btn-light pull-right" [routerLink]="['', {outlets: { popup: ['discipline', 'create', discipline.id] } }]">
             <img class="fas fa-plus-circle align-middle" />
+          </div>
+          <div class="btn btn-light pull-right" [routerLink]="['', {outlets: { popup: ['discipline', 'view', discipline.id] } }]">
+            <img class="fas fa-eye align-middle">
           </div>
         </div>
       </td>
