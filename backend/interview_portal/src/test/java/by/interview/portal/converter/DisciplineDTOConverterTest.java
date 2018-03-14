@@ -37,12 +37,10 @@ public class DisciplineDTOConverterTest {
     @Test
     public void shouldConvertDisciplineToDisciplineDTO() {
         assertThat(disciplineDTOConverter.convertToDTO(discipline), equalTo(disciplineDTO));
-
     }
 
     @Test
     public void shouldConvertDisciplineDTOToDiscipline() {
         assertThat(disciplineDTOConverter.convertToEntity(disciplineDTO), equalTo(discipline));
-
     }
 }

@@ -50,9 +50,7 @@ public class UserControllerTest {
 
     @Before
     public void doSetup() {
-
         createFullUserInfoDTO();
-
         userBaseInfoDTO = new UserBaseInfoDTO((long) 1, "Vasia", "Pupkin",
                 Stream.of(Role.DISCIPLINE_HEAD).collect(Collectors.toSet()));
     }
