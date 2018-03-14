@@ -18,7 +18,7 @@ img {
  }
 body{
     margin: 0 10%;
-    background: #edfffd;
+    background: #ffffff;
 }
 .logo {
     height: 100px;
@@ -149,9 +149,7 @@ caption {
 .addNews{
     text-align: center;
 }
-.add-candidates{
-   
-}
+
 .border{
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
     padding: 10px 10px;

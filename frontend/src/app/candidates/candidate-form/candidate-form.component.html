@@ -26,7 +26,7 @@
                 <app-education-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.educationCandidateList.length)"></app-education-table>
                 <app-work-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.workCandidateList.length)"></app-work-table>
                 <app-discipline-list [candidateForm]="candidateForm"></app-discipline-list>
-            </div>
+            </div><br>
             <div class="text-center add-candidates">
                 <a *ngIf="candidateForm.enabled" class="btn btn-primary" (click)="candidateFormService.saveCandidate()">Save</a>
                 <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Close</a>
