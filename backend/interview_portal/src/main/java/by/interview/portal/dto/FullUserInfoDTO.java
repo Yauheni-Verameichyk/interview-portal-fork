@@ -1,14 +1,21 @@
 package by.interview.portal.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.Role;
-import lombok.Data;
 
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class FullUserInfoDTO {
 
     private Long id;
