@@ -13,15 +13,16 @@ import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWit
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 
 @Component({
-  selector: 'app-create-discipline',
-  templateUrl: './create-discipline.component.html',
-  styleUrls: ['./create-discipline.component.css']
+  selector: 'app-discipline-form',
+  templateUrl: './discipline-form.component.html',
+  styleUrls: ['./discipline-form.component.css']
 })
-export class CreateDisciplineComponent implements OnInit, OnDestroy {
+export class DisciplineFormComponent implements OnInit, OnDestroy {
 
   public discipline: DisciplineWithDisciplineHeadsDTO = new DisciplineWithDisciplineHeadsDTO();
   public disciplineForm: FormGroup;
   public usersListObservable: Observable<UserInfo[]>;
+  public noEdit: boolean = false;
 
   private readonly destroy: Subject<void> = new Subject();
   constructor(
@@ -35,6 +36,7 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.usersListObservable = this.userControllerService.getUsersByRole('DISCIPLINE_HEAD');
+    this.createDisciplineForm();
     if (+this.route.snapshot.paramMap.get('editDisciplineID')) {
       this.readDiscipline(+this.route.snapshot.paramMap.get('editDisciplineID'), this.disciplineService.createEditOptions.EDIT);
     }
@@ -42,11 +44,9 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
       this.readDiscipline(+this.route.snapshot.paramMap.get('parentDisciplineID'),
         this.disciplineService.createEditOptions.CREATE_SUB_ITEM);
     }
-    if (!this.route.snapshot.paramMap.get('parentDisciplineID') && this.route.snapshot.paramMap.get('editDisciplineID')) {
-      this.discipline.parentId = null;
-      this.discipline.parentName = null;
+    if (+this.route.snapshot.paramMap.get('viewDisciplineID')) {
+      this.readDiscipline(+this.route.snapshot.paramMap.get('viewDisciplineID'), this.disciplineService.createEditOptions.VIEW);
     }
-    this.createDisciplineForm();
   }
 
   createDisciplineForm() {
@@ -79,6 +79,11 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
       case this.disciplineService.createEditOptions.CREATE_SUB_ITEM:
         this.discipline.parentId = discipline.id;
         this.discipline.parentName = discipline.name;
+        break;
+      case this.disciplineService.createEditOptions.VIEW:
+        this.discipline = discipline;
+        this.noEdit = true;
+        this.disciplineForm.disable();
         break;
       default:
         Observable.throw('Perhaps you do not know what you want');

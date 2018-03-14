@@ -1,5 +1,10 @@
 <div class="mask">
   <form class='form-group popup-form signIn_form' [formGroup]="disciplineForm">
+    <div class="button_close">
+      <button [routerLink]="['',{ outlets: { popup: null }}]" type="button" class="btn btn-primary">Close
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
     <h3>
       <span *ngIf="!discipline.parentName">Discipline</span>
       <span *ngIf="discipline.parentName">Sub-item</span>
@@ -7,27 +12,20 @@
     <div class="form-group">
       <label for="disciplineName">
         <span *ngIf="!discipline.parentName">Discipline</span>
-        <span *ngIf="discipline.parentName">Sub-item</span> name*</label>
-      <input name="disciplineName" class="form-control" id="disciplineName" placeholder="Enter name" formControlName="disciplineName"
-        [(ngModel)]="discipline.name" required>
+        <span *ngIf="discipline.parentName">Sub-item</span> name
+        <span *ngIf="!noEdit">*</span>
+      </label>
+      <input name="disciplineName" class="form-control" placeholder="Enter name" formControlName="disciplineName" [(ngModel)]="discipline.name"
+        required>
     </div>
-
-    <div *ngIf="disciplineForm.controls.disciplineName.invalid && (disciplineForm.controls.disciplineName.dirty || disciplineForm.controls.disciplineName.touched)"
-      class="alert alert-danger">
-      <div *ngIf="disciplineForm.controls.disciplineName.errors.required">
-        Name is required.
-      </div>
-      <div *ngIf="disciplineForm.controls.disciplineName.errors.minlength">
-        Name must be at least 1 characters long.
-      </div>
-    </div>
+    <validator-message [field]="disciplineForm.controls.disciplineName"></validator-message>
 
     <div class="form-group">
       <label for="disciplineDescription">Description</label>
-      <textarea class="form-control" formControlName="disciplineSubscription" id="disciplineSubscription" placeholder="Enter description"
+      <textarea class="form-control discipline-description" formControlName="disciplineSubscription" placeholder="Enter description"
         [(ngModel)]="discipline.subscription"></textarea>
     </div>
-    <div *ngIf="!discipline.parentName">
+    <div *ngIf="!discipline.parentName && !noEdit">
       <label for="inputState">Assign discipline head</label>
       <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
         <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
@@ -36,11 +34,16 @@
         <app-select-user (addUsers)="addUsers($event)" [selectedUsersList]="discipline.disciplineHeadsList" [usersList]="usersListObservable | async"></app-select-user>
       </ng-template>
     </div>
-    * Required field
+    <div *ngIf="noEdit && !discipline.parentName">
+      Discipline heads:
+      <div *ngFor="let user of discipline.disciplineHeadsList">
+        <input type="text" class="form-control" value="{{user?.name}} {{user?.surname}}" disabled>
+      </div>
+    </div>
+    <span *ngIf="!noEdit">* Required field</span>
     <br>
-    <div class="text-center">
+    <div class="text-center" *ngIf="!noEdit">
       <a (click)="sendDiscipline()" class="btn btn-primary">Save</a>
-      <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Cancel</a>
     </div>
   </form>
 </div>
