@@ -1,15 +1,15 @@
 package by.interview.portal.dto;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import by.interview.portal.domain.Discipline;
-import by.interview.portal.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Map;
+
+import by.interview.portal.domain.Discipline;
+import by.interview.portal.domain.Role;
 
 @Data
 @EqualsAndHashCode
@@ -30,6 +30,4 @@ public class UserDTO {
     private String login;
 
     private Map<Role, List<Discipline>> roleDisciplines;
-
-    private Set<String> permissions;
 }
