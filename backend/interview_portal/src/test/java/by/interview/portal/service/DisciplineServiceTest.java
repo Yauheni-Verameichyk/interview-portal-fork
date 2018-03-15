@@ -1,4 +1,4 @@
-package service;
+package by.interview.portal.service;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
