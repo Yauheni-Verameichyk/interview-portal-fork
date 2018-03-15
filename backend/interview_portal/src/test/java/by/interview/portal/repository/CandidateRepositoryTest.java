@@ -36,11 +36,11 @@ public class CandidateRepositoryTest {
     @Test
     public void findByDisciplineTest() {
         Discipline discipline = new Discipline(1L, "Java", "Best of the best language!!!", null);
-        List<Discipline> disciplineList = new ArrayList<>();
+        Set<Discipline> disciplineList = new HashSet<>();
         disciplineList.add(entityManager.merge(discipline));
         Candidate candidate = new Candidate(5L, "Viktar", "Hrynko", "+12312312312", disciplineList,
                 new ArrayList<WorkCandidate>(), new ArrayList<EducationCandidate>());
-        List<Candidate> candidateList = new ArrayList<>();
+        Set<Candidate> candidateList = new HashSet<>();
         candidateList.add(candidate);
         List<Candidate> newCandidateList = candidateRepository.findByDiscipline(discipline);
         Assert.assertTrue(newCandidateList.containsAll(candidateList));

@@ -18,8 +18,6 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "education_candidate")
 public class EducationCandidate extends DateInterval {

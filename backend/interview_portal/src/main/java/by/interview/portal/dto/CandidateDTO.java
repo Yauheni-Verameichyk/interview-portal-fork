@@ -1,6 +1,6 @@
 package by.interview.portal.dto;
 
-import java.util.List;
+import java.util.Set;
 
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.Person;
@@ -17,6 +17,11 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class CandidateDTO extends Person {
 
-    private List<Discipline> disciplineList;
+    private Set<Discipline> disciplineList;
 
+    public CandidateDTO(Long id, String name, String surname, String phoneNumber,
+        Set<Discipline> disciplineList) {
+        super(id, name, surname, phoneNumber);
+        this.disciplineList = disciplineList;
+    }
 }
