@@ -1,13 +1,22 @@
 package by.interview.portal.controller;
 
-import by.interview.portal.domain.Candidate;
-import by.interview.portal.domain.Discipline;
-import by.interview.portal.dto.CandidateDTO;
-import by.interview.portal.facade.CandidateFacade;
-import by.interview.portal.service.CandidateService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.util.Sets;
-import org.junit.Before; 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +27,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import by.interview.portal.domain.Candidate;
+import by.interview.portal.domain.Discipline;
+import by.interview.portal.dto.CandidateDTO;
+import by.interview.portal.facade.CandidateFacade;
+import by.interview.portal.service.CandidateService;
 
 @WithMockUser(username = "user1", password = "user1")
 @RunWith(SpringRunner.class)
