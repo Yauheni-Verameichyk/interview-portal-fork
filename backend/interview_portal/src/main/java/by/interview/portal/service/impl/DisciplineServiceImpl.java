@@ -82,7 +82,8 @@ public class DisciplineServiceImpl implements DisciplineService {
         List<DisciplineDTO> disciplineDTOsList = disciplineRepository.findAllByParentId(id).stream()
                 .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toList());
         for (DisciplineDTO discipline : disciplineDTOsList) {
-            discipline.setHasSubItems(findByParentId(discipline.getId()).size() > 0);
+            discipline.setHasSubItems(
+                    disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);
         }
         return disciplineDTOsList;
     }
@@ -99,7 +100,8 @@ public class DisciplineServiceImpl implements DisciplineService {
         List<DisciplineDTO> disciplineDTOsList = disciplineRepository.findDisciplinesByUser(login)
                 .stream().map(disciplineDTOConverter::convertToDTO).collect(Collectors.toList());
         for (DisciplineDTO discipline : disciplineDTOsList) {
-            discipline.setHasSubItems(findByParentId(discipline.getId()).size() > 0);
+            discipline.setHasSubItems(
+                    disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);
         }
         return disciplineDTOsList;
     };
@@ -161,7 +163,7 @@ public class DisciplineServiceImpl implements DisciplineService {
         }
     }
 
-    Set<User> getDisciplinesHeadsList(DisciplineWithHeadsDTO disciplineDTO) {
+    private Set<User> getDisciplinesHeadsList(DisciplineWithHeadsDTO disciplineDTO) {
         return disciplineDTO.getDisciplineHeadsList() != null
                 ? disciplineDTO.getDisciplineHeadsList().stream().filter(Objects::nonNull)
                         .map(userBaseInfoDTOConverter::convertToEntity).collect(Collectors.toSet())
