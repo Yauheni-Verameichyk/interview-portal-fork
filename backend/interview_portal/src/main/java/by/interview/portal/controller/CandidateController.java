@@ -4,10 +4,8 @@ import by.interview.portal.domain.Candidate;
 import by.interview.portal.dto.CandidateDTO;
 import by.interview.portal.facade.CandidateFacade;
 import by.interview.portal.service.CandidateService;
-import by.interview.portal.service.DisciplineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +20,6 @@ public class CandidateController {
     private CandidateFacade candidateFacade;
     @Autowired
     private CandidateService candidateService;
-    @Autowired
-    private DisciplineService disciplineService;
-
 
     @GetMapping
     public List<CandidateDTO> findAll(

@@ -2,6 +2,7 @@ package by.interview.portal.service.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import by.interview.portal.repository.EducationCandidateRepository;
@@ -51,16 +52,16 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public void update(Candidate candidate){
+    public void update(Candidate candidate) {
         candidate.setDisciplineList(persistDisciplineList(candidate));
         candidateRepository.saveAndFlush(candidate);
         educationCandidateRepository.removeEducation();
         workCandidateRepository.removeWork();
     }
 
-    private List<Discipline> persistDisciplineList(Candidate candidate){
+    private Set<Discipline> persistDisciplineList(Candidate candidate) {
         return candidate.getDisciplineList().stream().filter(Objects::nonNull)
-            .map(discipline -> disciplineRepository.findById(discipline.getId()).get())
-            .collect(Collectors.toList());
+                .map(discipline -> disciplineRepository.findById(discipline.getId()).get())
+                .collect(Collectors.toSet());
     }
 }

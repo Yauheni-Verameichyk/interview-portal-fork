@@ -19,8 +19,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "work_candidate")
 public class WorkCandidate extends DateInterval {
