@@ -1,5 +1,5 @@
 <form [formGroup]="candidateForm">
-  <caption>Choose discipline</caption>
+  <caption>Assigned disciplines</caption>
   <div formArrayName="disciplineList">
     <div class='selectDisciplines' *ngFor="let discipline of candidateForm.controls.disciplineList.controls; let i = index" [formGroupName]="i">
       <select id="inputState" class="form-control" formControlName="id">

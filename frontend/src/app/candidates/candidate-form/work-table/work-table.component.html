@@ -1,5 +1,5 @@
 <form [formGroup]="candidateForm">
-  <table class="table table-bordered" formArrayName="workCandidateList">
+  <table class="table table-bordered" formArrayName="candidateWorkList">
     <caption>Work history</caption>
     <thead class="thead-light">
       <tr>
@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let work of candidateForm.controls.workCandidateList.controls; let i = index" [formGroupName]="i">
+      <tr *ngFor="let work of candidateForm.controls.candidateWorkList.controls; let i = index" [formGroupName]="i">
         <td>
           <input class="form-control" type="text" formControlName="companyName">
           <validator-message [field]="work.get('companyName')"></validator-message>
@@ -29,7 +29,7 @@
           <validator-message [field]="work.get('endDate')"></validator-message>
         </td>
         <td *ngIf="candidateForm.enabled">
-          <div class="btn btn-light pull-right" (click)="remove(i, 'workCandidateList')">
+          <div class="btn btn-light pull-right" (click)="remove(i, 'candidateWorkList')">
             <img class="far fa-trash-alt align-middle" />
           </div>
         </td>

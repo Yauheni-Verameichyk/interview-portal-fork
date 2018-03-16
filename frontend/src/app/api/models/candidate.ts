@@ -1,12 +1,13 @@
 import { DisciplineDTO } from './discipline';
-import { EducationCandidate } from './education-candidate';
-import { WorkCandidate } from './work-candidate';
+import { CandidateEducation } from './candidate-education';
+import { CandidateWork } from './candidate-work';
+
 
 export class Candidate {
 
   disciplineList?: DisciplineDTO[];
 
-  educationCandidateList?: EducationCandidate[];
+  candidateEducationList?: CandidateEducation[];
 
   id?: number;
 
@@ -16,5 +17,5 @@ export class Candidate {
 
   surname?: string;
 
-  workCandidateList?: WorkCandidate[];
+  candidateWorkList?: CandidateWork[];
 }
