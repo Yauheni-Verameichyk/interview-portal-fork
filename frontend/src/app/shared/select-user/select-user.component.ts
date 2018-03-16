@@ -20,11 +20,18 @@ export class SelectUserComponent implements OnChanges, OnDestroy {
   constructor() { }
 
   ngOnChanges(): void {
+    this.selectedUsersList = Array.from(new Set(this.selectedUsersList));
     if (this.usersList != null && this.usersList.length !== 0) {
       for (let i = 0; i < this.selectedUsersList.length; i++) {
-        this.selectedUsersList[i] = this.usersList.filter(user => {
-          return (user && this.selectedUsersList[i]) ? user.id === this.selectedUsersList[i].id : false;
-        })[0];
+        if (this.selectedUsersList[i] !== null) {
+          this.selectedUsersList[i] = this.usersList.filter(user => {
+            return (user && this.selectedUsersList[i]) ? user.id === this.selectedUsersList[i].id : false;
+          })[0];
+        } else {
+          if (i !== this.selectedUsersList.length - 1) {
+            this.selectedUsersList.splice(i, 1);
+          }
+        }
       }
     }
   }

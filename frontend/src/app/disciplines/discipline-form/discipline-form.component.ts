@@ -11,6 +11,7 @@ import { DisciplineService } from '../service/discipline.service';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { LightFieldService } from '../../shared/validator/service/light-field.service';
 
 @Component({
   selector: 'app-discipline-form',
@@ -31,7 +32,8 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
     private disciplineService: DisciplineService,
     private route: ActivatedRoute,
     private router: Router,
-    private popupService: PopupService) {
+    private popupService: PopupService,
+    private lightFieldService: LightFieldService) {
   }
 
   ngOnInit() {
@@ -104,7 +106,7 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
           this.popupService.displayMessage('Error during discipline saving', this.router);
         });
     } else {
-      console.error('Invalid input');
+      this.lightFieldService.lightField(this.disciplineForm.controls);
     }
   }
 

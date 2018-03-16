@@ -116,5 +116,4 @@ public class DisciplineControllerTest {
         mvc.perform(delete("/discipline/1")).andExpect(status().isOk());
         verify(disciplineFacade, times(1)).deleteDiscipline((long) 1);
     }
-
 }
