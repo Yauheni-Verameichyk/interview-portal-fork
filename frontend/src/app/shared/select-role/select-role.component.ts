@@ -35,9 +35,7 @@ export class SelectRoleComponent implements OnInit, OnDestroy {
     this.editRoles.emit(this.roles);
   }
   deleteRole(index: number): void {
-    console.log(index);
     this.roles.splice(index, 1);
-    console.log(this.roles);
     this.rolesChanges();
   }
 

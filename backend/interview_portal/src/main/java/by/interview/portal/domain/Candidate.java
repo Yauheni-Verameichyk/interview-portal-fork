@@ -36,19 +36,19 @@ public class Candidate extends Person {
 	@OneToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@JoinColumn(name = "candidate_id")
-	private List<WorkCandidate> workCandidateList;
+	private List<CandidateWork> candidateWorkList;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@JoinColumn(name = "candidate_id")
-	private List<EducationCandidate> educationCandidateList;
+	private List<CandidateEducation> candidateEducationList;
 
 	public Candidate(Long id, String name, String surname, String phoneNumber, Set<Discipline> disciplineList,
-			List<WorkCandidate> workCandidateList, List<EducationCandidate> educationCandidateList) {
+			List<CandidateWork> candidateWorkList, List<CandidateEducation> candidateEducationList) {
 		super(id, name, surname, phoneNumber);
 		this.disciplineList = disciplineList;
-		this.workCandidateList = workCandidateList;
-		this.educationCandidateList = educationCandidateList;
+		this.candidateWorkList = candidateWorkList;
+		this.candidateEducationList = candidateEducationList;
 	}
 
 }

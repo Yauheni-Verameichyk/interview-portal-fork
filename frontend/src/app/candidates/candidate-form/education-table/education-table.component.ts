@@ -14,7 +14,7 @@ export class EducationTableComponent {
   constructor(private candidateFormService: CandidateFormService) {}
 
   additionEducation(): void {
-    const control = <FormArray>this.candidateForm.controls['educationCandidateList'];
+    const control = <FormArray>this.candidateForm.controls['candidateEducationList'];
     control.push(this.candidateFormService.initEducationForm());
   }
 

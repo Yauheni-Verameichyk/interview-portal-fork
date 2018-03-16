@@ -1,13 +1,16 @@
 package by.interview.portal.repository;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 
+import by.interview.portal.domain.CandidateEducation;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import by.interview.portal.config.TestRepositoryConfig;
 import by.interview.portal.domain.Candidate;
 import by.interview.portal.domain.Discipline;
-import by.interview.portal.domain.EducationCandidate;
-import by.interview.portal.domain.WorkCandidate;
+import by.interview.portal.domain.CandidateWork;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {TestRepositoryConfig.class})
@@ -32,18 +34,23 @@ public class CandidateRepositoryTest {
     @Autowired
     private CandidateRepository candidateRepository;
 
-    @Autowired
-    private DisciplineRepository disciplineRepository;
+    private List<Candidate> candidateList;
+
+    private Discipline discipline;
+
+    @Before
+    public void doSetup() {
+        discipline = new Discipline(1L, "Java", "Best of the best language!!!", null);
+        discipline = entityManager.merge(discipline);
+        Candidate candidate = new Candidate(5L, "Viktar", "Hrynko", "+12312312312",
+            Stream.of(discipline).collect(Collectors.toSet()),
+            new ArrayList<CandidateWork>(),
+            new ArrayList<CandidateEducation>());
+        candidateList = Arrays.asList(candidate);
+    }
 
     @Test
-    public void findByDisciplineTest() {
-        Discipline discipline = new Discipline(1L, "Java", "Best of the best language!!!", null);
-        Set<Discipline> disciplineList = new HashSet<>();
-        disciplineList.add(entityManager.merge(discipline));
-        Candidate candidate = new Candidate(5L, "Viktar", "Hrynko", "+12312312312", disciplineList,
-                new ArrayList<WorkCandidate>(), new ArrayList<EducationCandidate>());
-        Set<Candidate> candidateList = new HashSet<>();
-        candidateList.add(candidate);
+    public void shouldReturnCandidateListByDiscipline() {
         List<Candidate> newCandidateList = candidateRepository.findByDiscipline(discipline);
         Assert.assertTrue(newCandidateList.containsAll(candidateList));
         Assert.assertTrue(candidateList.size() == newCandidateList.size());

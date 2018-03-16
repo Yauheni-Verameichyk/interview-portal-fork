@@ -19,7 +19,7 @@ export class WorkTableComponent {
   }
 
   additionWork(): void {
-    const control = <FormArray>this.candidateForm.controls['workCandidateList'];
+    const control = <FormArray>this.candidateForm.controls['candidateWorkList'];
     control.push(this.candidateFormService.initWorkForm());
   }
 

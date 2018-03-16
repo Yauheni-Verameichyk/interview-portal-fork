@@ -14,24 +14,25 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
-@Table(name = "work_candidate")
-public class WorkCandidate extends DateInterval {
+@Table(name = "education_candidate")
+public class CandidateEducation extends DateInterval {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "name_company")
-	private String companyName;
-	private String position;
+	@Column(name = "name_institution")
+	private String nameInstitution;
+	private String profession;
 
-	public WorkCandidate(Long id, String nameCompany, String position, Date dateStart, Date dateEnd) {
-		this(id, nameCompany, position);
+	public CandidateEducation(Long id, String nameInstitution, String profession, Date dateStart, Date dateEnd) {
+		this(id, nameInstitution, profession);
 		setEndDate(dateEnd);
 		setStartDate(dateStart);
 	}

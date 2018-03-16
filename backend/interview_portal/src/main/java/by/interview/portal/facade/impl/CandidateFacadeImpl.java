@@ -21,7 +21,7 @@ public class CandidateFacadeImpl implements CandidateFacade {
     private CandidateService candidateService;
 
     @Autowired
-    @Qualifier("candidateConverter")
+    @Qualifier("candidateDTOConverter")
     private Converter<Candidate, CandidateDTO> candidateConverter;
 
     @Override
