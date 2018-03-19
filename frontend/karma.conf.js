@@ -28,6 +28,11 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
+    coverageReporter: {
+      reporters:[
+          { type: "html", dir: "./test/bin", subdir: "coverage/html" }
+      ]
+  },
     singleRun: false
   });
 };

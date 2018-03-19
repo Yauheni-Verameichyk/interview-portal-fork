@@ -56,8 +56,11 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
       'disciplineName': new FormControl([this.discipline.name], [
         Validators.required,
         Validators.minLength(2),
+        Validators.maxLength(50)
       ]),
-      'disciplineSubscription': new FormControl([this.discipline.subscription])
+      'disciplineSubscription': new FormControl([this.discipline.subscription], [
+        Validators.maxLength(200)
+      ])
     });
   }
 
@@ -68,7 +71,7 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
         (discipline) => {
           this.initializeDiscipline(option, discipline);
         }, error => {
-          this.popupService.displayMessage('Error during discipline saving', this.router);
+          this.popupService.displayMessage('Error during discipline reading', this.router);
         }
       );
   }
@@ -88,7 +91,7 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
         this.disciplineForm.disable();
         break;
       default:
-        Observable.throw('Perhaps you do not know what you want');
+      throw new Error('Perhaps you do not know what you want');
     }
   }
 

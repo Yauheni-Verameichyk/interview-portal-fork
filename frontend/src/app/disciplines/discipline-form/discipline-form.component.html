@@ -21,7 +21,8 @@
       <textarea class="form-control discipline-description" formControlName="disciplineSubscription" placeholder="Enter description"
         [(ngModel)]="discipline.subscription"></textarea>
     </div>
-    <div *ngIf="!discipline.parentName && !noEdit">
+    <validator-message [field]="disciplineForm.controls.disciplineSubscription"></validator-message>
+    <div *ngIf="!discipline?.parentName && !noEdit">
       <label for="inputState">Assign discipline head</label>
       <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
         <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
