@@ -1,0 +1,38 @@
+
+<div class="row">
+  <div id="discipline" class="form-group col-md-6">
+    <legend>
+      Assign disciplines for {{renderRole(typeRole)}}
+      <button *ngIf="isShowButton" class="btn btn-primary" (click)='addNewDiscipline()'>
+        <img class="fas fa-plus-circle align-middle" />
+      </button>
+    </legend>
+    <div class="row">
+      <div class="card col-md-6" *ngFor="let discipline of assignDisciplineForUser; let i = index">
+        <div class="card-block">
+          <p class="card-title">{{discipline.name}}
+            <button (click)='deleteDiscipline(i)' *ngIf="isShowButton" class="btn btn-primary">
+              <img class="far fa-trash-alt align-middle" />
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="discipline" class="form-group col-md-6" *ngIf="isNewAssignDisciplineShown">
+    <legend>
+      New Assign Disciplines {{renderRole(typeRole)}}
+    </legend>
+    <div class="row">
+      <div class="card col-md-6" *ngFor="let newDiscipline of newListDiscipline; let i = index">
+        <div class="card-block">
+          <p class="card-title">{{newDiscipline.name}}
+            <button (click)='assignNewDiscipline(i)' *ngIf="isShowButton" class="btn btn-primary">
+              <img class="fas fa-plus-circle align-middle" />
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

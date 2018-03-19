@@ -16,6 +16,13 @@ const routes: Routes = [
     resolve: {
       user: UserResolvedGuard
     }
+  },
+  {
+    path: 'users/:id/edit',
+    component: UserFormComponent,
+    resolve: {
+      user: UserResolvedGuard
+    }
   }
 
 

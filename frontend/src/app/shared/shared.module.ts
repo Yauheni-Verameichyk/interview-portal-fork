@@ -11,6 +11,7 @@ import { LightFieldService } from './validator/service/light-field.service';
 import { MessageWindowComponent } from './pop-up-window/message-window/message-window.component';
 import { ValidatorMessageComponent } from './validator/validator-message/validator-message.component';
 import { RouterModule } from '@angular/router';
+import { AssignDisciplineComponent } from './assign-discipline/assign-discipline.component';
 
 
 
@@ -26,19 +27,21 @@ import { RouterModule } from '@angular/router';
     SelectUserComponent,
     ValidatorMessageComponent,
     SelectRoleComponent,
-    MessageWindowComponent
+    MessageWindowComponent,
+    AssignDisciplineComponent
   ],
   providers: [
-    UserFormMangerService, 
+    UserFormMangerService,
     FormValidatorService,
     LightFieldService
   ],
   exports: [
-    ShowAuthedDirective, 
-    SelectUserComponent, 
-    ValidatorMessageComponent, 
+    ShowAuthedDirective,
+    SelectUserComponent,
+    ValidatorMessageComponent,
     SelectRoleComponent,
-    MessageWindowComponent
+    MessageWindowComponent,
+    AssignDisciplineComponent
   ]
 })
 export class SharedModule { }

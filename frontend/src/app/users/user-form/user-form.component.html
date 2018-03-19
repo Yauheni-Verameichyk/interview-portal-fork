@@ -1,8 +1,8 @@
 <div class="user_form">
   <div class="button_close">
-      <button (click)="close()"  type="button" class="btn btn-primary">Close
-          <i class="fas fa-times"></i>
-      </button>
+    <button (click)="close()" type="button" class="btn btn-primary">Close
+      <i class="fas fa-times"></i>
+    </button>
   </div>
   <form [formGroup]='userForm'>
     <h2>User: {{user.name}}</h2>
@@ -17,36 +17,41 @@
       <div class="form-group col-md-6">
         <label for="surname">Surname</label>
         <div>
-            <validator-message [field]="userForm.get('surname')"></validator-message>
+          <validator-message [field]="userForm.get('surname')"></validator-message>
         </div>
-        <input type="text" class="form-control" formControlName="surname" id="surname" placeholder="SurName" >
+        <input type="text" class="form-control" formControlName="surname" id="surname" placeholder="SurName">
       </div>
       <div class="form-group col-md-6">
         <label for="login">Login</label>
         <div>
-            <validator-message [field]="userForm.get('login')"></validator-message>
+          <validator-message [field]="userForm.get('login')"></validator-message>
         </div>
         <input type="text" class="form-control" formControlName="login" id="login" placeholder="Login">
       </div>
       <div class="form-group col-md-6">
         <label for="email">Email</label>
         <div>
-            <validator-message [field]="userForm.get('email')"></validator-message>
+          <validator-message [field]="userForm.get('email')"></validator-message>
         </div>
         <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
       </div>
       <div class="form-group col-md-6">
         <label for="phoneNumber">Phone number</label>
         <div>
-            <validator-message [field]="userForm.get('phoneNumber')"></validator-message>
+          <validator-message [field]="userForm.get('phoneNumber')"></validator-message>
         </div>
         <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber" placeholder="Phone number">
       </div>
     </div>
-    <appSelectRole [roles]="user.roles" (editRoles)="getRoles($event)"></appSelectRole>
-    <div *requiredAuthority="'USER_EDIT'">
-        <button *ngIf='!isEdit' type="button" class="btn btn-primary" (click)="editFrom()">Edit</button>
-        <button *ngIf='isEdit' type="button" class="btn btn-primary" (click)="saveForm()">Save</button>
+    <appSelectRole [roles]="user.roleDisciplines" (editRoles)="getAssignRoles($event)"></appSelectRole>
+    <app-assign-discipline *ngIf="isExistRole('DISCIPLINE_HEAD')" [assignDiscipline]="findAssignDiscipline('DISCIPLINE_HEAD')"
+      (editAssignDiscipline)="getAssignDiscipline($event)"></app-assign-discipline>
+    <app-assign-discipline *ngIf="isExistRole('INTERVIEWER')" [assignDiscipline]="findAssignDiscipline('INTERVIEWER')"
+      (editAssignDiscipline)="getAssignDiscipline($event)"></app-assign-discipline>
+    <div *ngIf='isInfo'>
+      <div *requiredAuthority="'USER_EDIT'">
+        <button type="button" class="btn btn-primary" (click)="saveForm()">Save</button>
+      </div>
     </div>
   </form>
 </div>

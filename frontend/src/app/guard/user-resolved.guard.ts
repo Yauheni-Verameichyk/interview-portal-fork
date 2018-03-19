@@ -7,10 +7,10 @@ import { UserControllerService } from '../api/rest/service/user-controller.servi
 @Injectable()
 export class UserResolvedGuard implements Resolve<User> {
 
-  constructor(private userController: UserControllerService, private router: Router){}
+  constructor(private userController: UserControllerService, private router: Router) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): User | Observable<User> | Promise<User> {
     const id: number = +route.paramMap.get('id');
     return this.userController.getUserById(id);
   }
-  
+
 }

@@ -1,12 +1,11 @@
 package by.interview.portal.dto;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.Role;
 import lombok.Data;
+
+import java.util.List;
+import java.util.Map;
 
 @Data
 public class FullUserInfoDTO {
@@ -18,8 +17,6 @@ public class FullUserInfoDTO {
     private String surname;
 
     private String login;
-
-    private Set<Role> roles;
 
     private String phoneNumber;
 

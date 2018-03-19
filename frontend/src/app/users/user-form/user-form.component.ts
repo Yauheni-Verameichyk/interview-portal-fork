@@ -16,8 +16,10 @@ import { FormValidatorService } from '../../shared/validator/validator-form/form
 })
 export class UserFormComponent implements OnInit, OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
-  isEdit: boolean = false;
+  isEdit = false;
+  isInfo = true;
   role: Array<string>;
+  assignDiscipline: Array<string>;
   private originalUser: User;
   userForm: FormGroup;
   user: User = {
@@ -26,9 +28,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
     name: '',
     surname: '',
     phoneNumber: '',
-    roleDisciplines: null,
-    roles: new Array<string>()
-  }
+    roleDisciplines: null
+  };
 
   constructor(
     private userController: UserControllerService,
@@ -41,9 +42,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.route.snapshot.data['user'];
+    console.log(this.user.roleDisciplines);
     this.createFormGroup();
-    this.userForm.disable();
-  };
+    this.formManager.showButton(true);
+    if (this.router.url.includes('info')) {
+      this.isInfo = false;
+      this.userForm.disable();
+      this.formManager.showButton(false);
+    }
+  }
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
@@ -55,36 +62,51 @@ export class UserFormComponent implements OnInit, OnDestroy {
       login: [this.user.login, [Validators.required, this.formValidator.userNameValidator()]],
       surname: [this.user.surname, [Validators.required, this.formValidator.userNameValidator()]],
       email: [this.user.login, [Validators.required, Validators.email]],
-      phoneNumber: [this.user.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
-      roles: this.fb.array(this.user.roles)
+      phoneNumber: [this.user.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]]
     });
   }
   public editFrom() {
     this.isEdit = true;
     this.userForm.enable();
-    this.formManager.showButton(true);
   }
   public saveForm(): void {
-    this.isEdit = false;
-    this.formManager.showButton(false);
-    this.userForm.disable();
-    if (!this.userForm.valid) {
+    if (this.userForm.valid) {
+      this.formManager.showButton(false);
+      this.userForm.disable();
       this.userController.saveUser(this.user)
         .takeUntil(this.destroy)
         .subscribe(() => {
-          alert("User was successfully save");
+          alert('User was successfully save');
           this.router.navigate(['users']);
         },
           () => {
-            alert("User was not successfully save");
+            alert('User was not successfully save');
             this.router.navigate(['users']);
           });
     }
   }
-  getRoles(roles: Array<string>): void {
-    this.user.roles = roles;
+  getAssignRoles(roles : { [key: string]: DisciplineDTO[] }): void {
+    this.user.roleDisciplines = roles;
+  }
+  getAssignDiscipline(assignDiscipline) {
+    let role: string;
+    Object.keys(assignDiscipline).map(typeRole => {
+      role = typeRole;
+    });
+    this.user.roleDisciplines[role] = assignDiscipline[role];
+    console.log(this.user);
   }
   close() {
     this.router.navigate(['users']);
+  }
+  findAssignDiscipline(role: string) {
+    const disciplineForRole = {};
+    disciplineForRole[role] = this.user.roleDisciplines[role];
+    return disciplineForRole;
+  }
+  isExistRole(role: string) {
+    const disciplineForRole = {};
+    disciplineForRole[role] = this.user.roleDisciplines[role];
+    return this.user.roleDisciplines[role];
   }
 }

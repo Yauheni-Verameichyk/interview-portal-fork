@@ -17,10 +17,13 @@ export class UserComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) { }
   ngOnInit() {
     this.user = new UserInfo(this.userObj.id, this.userObj.name, this.userObj.surname, this.userObj.roles);
-    console.log(this.user);
   }
   showUserInfo() {
     const link = ['/users/' + this.user.id + '/info'];
+    this.router.navigate(link, { relativeTo: this.route });
+  }
+  editUserInfo()  {
+    const link = ['/users/' + this.user.id + '/edit'];
     this.router.navigate(link, { relativeTo: this.route });
   }
 

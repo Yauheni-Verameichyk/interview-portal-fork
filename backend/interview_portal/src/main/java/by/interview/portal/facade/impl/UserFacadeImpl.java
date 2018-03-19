@@ -51,7 +51,6 @@ public class UserFacadeImpl implements UserFacade {
 
     private FullUserInfoDTO getFullUserInfoDTO(UserDTO userDTO) {
         FullUserInfoDTO fullUserInfoDTO = modelMapper.map(userDTO, FullUserInfoDTO.class);
-        fullUserInfoDTO.setRoles(userDTO.getRoleDisciplines().keySet());
         return fullUserInfoDTO;
     }
 

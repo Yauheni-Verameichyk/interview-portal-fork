@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserFormMangerService } from './service/user-form-manger.service';
 import { Subject } from 'rxjs';
+import { DisciplineDTO } from '../../api/models';
 
 @Component({
   selector: 'appSelectRole',
@@ -10,22 +11,25 @@ import { Subject } from 'rxjs';
 })
 export class SelectRoleComponent implements OnInit, OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
-  @Output() editRoles = new EventEmitter<Array<string>>();
-  @Input() roles: Array<string>;
+  @Output() editRoles = new EventEmitter<{ [key: string]: DisciplineDTO[] }>();
+  @Input() roles: { [key: string]: DisciplineDTO[] };
+  assignRolesForUser: string[] = [];
+  newRoles: Array<string>;
+  public isNewRolesShown = false;
+  isShowButton;
 
-  isShowButton: boolean = false;
-
-  constructor(private buttonManager: UserFormMangerService) {
-    buttonManager.showButtonEmitter
+  constructor(private userFormManager: UserFormMangerService) {
+    userFormManager.showButtonEmitter
       .takeUntil(this.destroy)
       .subscribe(isShow => {
         this.isShowButton = isShow;
       });
   }
 
-
   ngOnInit() {
-
+    Object.keys(this.roles).map(role => {
+      this.assignRolesForUser.push(role);
+    });
   }
   ngOnDestroy(): void {
     this.destroy.next();
@@ -35,15 +39,29 @@ export class SelectRoleComponent implements OnInit, OnDestroy {
     this.editRoles.emit(this.roles);
   }
   deleteRole(index: number): void {
-    console.log(index);
-    this.roles.splice(index, 1);
-    console.log(this.roles);
+    const role = this.assignRolesForUser[index];
+    this.assignRolesForUser.splice(index, 1);
+    delete this.roles[role];
     this.rolesChanges();
   }
+  addRoles() {
+    this.newRoles = this.userFormManager.getNotExistRoles(this.assignRolesForUser);
+    this.newRoles.length > 0 ? this.isNewRolesShown = true : this.isNewRolesShown = false;
+  }
+  addNewRole(index: number) {
+    const role = this.newRoles[index];
+    if (role === 'DISCIPLINE_HEAD' || role === 'INTERVIEWER') {
+      this.roles[role] = [];
+    } else {
+      this.roles[role] = null;
+    }
 
-  transformStyle(role: string): string {
-    role = role.replace(/_/g, " ").toLowerCase();
-    return role.charAt(0).toUpperCase() + role.slice(1);
-
+    this.assignRolesForUser.push(this.newRoles[index]);
+    this.newRoles.splice(index, 1);
+    this.rolesChanges();
+    this.newRoles.length <= 0 ? this.isNewRolesShown = false : this.isNewRolesShown = true;
+  }
+  renderRoles(role: string): string {
+    return this.userFormManager.formatString(role);
   }
 }
