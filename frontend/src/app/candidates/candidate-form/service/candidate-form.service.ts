@@ -31,7 +31,7 @@ export class CandidateFormService {
       initMethod: () => this.candidateForm.enable(),
       formTitle: 'Add candidate',
       saveMethod: (candidate) => this.candidateControllerService.addUsingPOST(candidate),
-      successfullySaveMessage: "Candidate was successfully created !!!",
+      successfullySaveMessage: "Candidate was successfully created!!!",
       notSuccessfullySaveMessage: "Could not create candidate! Try later!"
     },
     'candidate-view': {
@@ -42,7 +42,7 @@ export class CandidateFormService {
       initMethod: () => this.candidateForm.enable(),
       formTitle: 'Edit candidate',
       saveMethod: (candidate) => this.candidateControllerService.updateUsingPUT(candidate),
-      successfullySaveMessage: "Candidate was successfully updated !!!",
+      successfullySaveMessage: "Candidate was successfully updated!!!",
       notSuccessfullySaveMessage: "Could not update candidate! Try later!"
     }
   };

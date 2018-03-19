@@ -1,10 +1,6 @@
 <div class="mask">
   <form class='form-group popup-form signIn_form' [formGroup]="disciplineForm">
-    <div class="button_close">
-      <button [routerLink]="['',{ outlets: { popup: null }}]" type="button" class="btn btn-primary">Close
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
+      <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
     <h3>
       <span *ngIf="!discipline.parentName">Discipline</span>
       <span *ngIf="discipline.parentName">Sub-item</span>

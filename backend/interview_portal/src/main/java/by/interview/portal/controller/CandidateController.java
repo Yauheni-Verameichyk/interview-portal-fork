@@ -28,7 +28,7 @@ public class CandidateController {
     }
 
     @GetMapping("{id}")
-    public Candidate findById(@PathVariable Long id){
+    public Candidate findById(@PathVariable Long id) {
         return candidateService.findById(id);
     }
 
@@ -42,5 +42,9 @@ public class CandidateController {
         candidateService.update(candidate);
     }
 
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
+        candidateService.delete(id);
+    }
 
 }

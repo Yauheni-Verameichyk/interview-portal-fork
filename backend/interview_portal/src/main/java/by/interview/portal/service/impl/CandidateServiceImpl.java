@@ -59,6 +59,10 @@ public class CandidateServiceImpl implements CandidateService {
         candidateWorkRepository.removeWork();
     }
 
+    @Override public void delete(Long id) {
+        candidateRepository.deleteById(id);
+    }
+
     private Set<Discipline> persistDisciplineList(Candidate candidate) {
         return candidate.getDisciplineList().stream().filter(Objects::nonNull)
                 .map(discipline -> disciplineRepository.findById(discipline.getId()).get())
