@@ -30,6 +30,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -95,6 +96,19 @@ public class CandidateServiceTest {
         when(candidateRepository.saveAndFlush(candidateList.get(0)))
                 .thenThrow(new DataIntegrityViolationException("error"));
         candidateService.add(candidateList.get(0));
+    }
+
+    @Test
+    public void shouldDeleteCandidateById() {
+        doNothing().when(candidateRepository).deleteById(1L);
+        candidateService.delete(1L);
+        verify(candidateRepository, times(1)).deleteById(1L);
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void shouldReturnExceptionDeleteCandidate() {
+        doThrow(new DataIntegrityViolationException(null)).when(candidateRepository).deleteById(1L);
+        candidateService.delete(1L);
     }
 
     @Test

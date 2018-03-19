@@ -14,4 +14,5 @@ public interface CandidateService {
 
     void update(Candidate candidate);
 
+    void delete(Long id);
 }

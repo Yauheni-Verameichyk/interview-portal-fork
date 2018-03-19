@@ -34,6 +34,7 @@
                 <br>
                 <span *ngIf="displayErrorMessage" class="error-message">Fill in all the fields</span>
             </div>
+            <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
         </form>
     </div>
 </div>

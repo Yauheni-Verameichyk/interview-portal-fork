@@ -12,7 +12,7 @@
     <div class="btn btn-light pull-left" [routerLink]="['', {outlets: { popup: ['candidate-update', candidate.id] } }]">
         <img class="fas fa-pencil-alt align-middle">
     </div>
-    <div class="btn btn-light pull-left">
+    <div class="btn btn-light pull-left" (click)="removeCandidate(candidate.id)">
         <img  class="far fa-trash-alt align-middle">
     </div>
 </td>

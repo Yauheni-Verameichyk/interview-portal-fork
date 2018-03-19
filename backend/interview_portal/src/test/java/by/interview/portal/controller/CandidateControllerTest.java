@@ -14,6 +14,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -94,6 +95,14 @@ public class CandidateControllerTest {
                 post("/candidates").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(status().isOk());
         verify(candidateService, times(1)).add(candidate);
+    }
+
+    @Test
+    public void shouldRemoveCandidate() throws Exception{
+        doNothing().when(candidateService).delete(1L);
+        mockMvc.perform(delete("/candidates/1").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+        verify(candidateService, times(1)).delete(1L);
     }
 
 }

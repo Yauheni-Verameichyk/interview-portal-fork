@@ -194,6 +194,44 @@ export class CandidateControllerService extends BaseService {
     );
   }
 
+    /**
+   * @param id id
+   */
+  deleteUsingDELETEResponse(id: number): Observable<HttpResponse<void>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      "DELETE",
+      this.rootUrl + `/candidates/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: void = null;
+        
+        return _resp.clone({body: _body}) as HttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * @param id id
+   */
+   deleteUsingDELETE(id: number): Observable<void> {
+    return this.deleteUsingDELETEResponse(id).pipe(
+      map(_r => _r.body)
+    );
+  }
+
   private bringDateFormat(dateStr: string): string {
     const date = new Date(dateStr);
     const day = date.getDate();

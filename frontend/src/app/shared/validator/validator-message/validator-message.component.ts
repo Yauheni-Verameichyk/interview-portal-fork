@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
   selector: 'validator-message',
   template: `
     <div class="error-message" *ngIf="field.invalid && field.touched && validatorMessages?.length">
-      <li *ngFor="let errMsg of validatorMessages"> {{errMsg}}</li>
+      <span *ngFor="let errMsg of validatorMessages"> &bull;&nbsp;{{errMsg}}</span>
     </div>
   `
 })

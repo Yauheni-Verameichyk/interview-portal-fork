@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
 import by.interview.portal.domain.CandidateEducation;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +21,10 @@ import by.interview.portal.config.TestRepositoryConfig;
 import by.interview.portal.domain.Candidate;
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.CandidateWork;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {TestRepositoryConfig.class})
@@ -52,8 +55,18 @@ public class CandidateRepositoryTest {
     @Test
     public void shouldReturnCandidateListByDiscipline() {
         List<Candidate> newCandidateList = candidateRepository.findByDiscipline(discipline);
-        Assert.assertTrue(newCandidateList.containsAll(candidateList));
-        Assert.assertTrue(candidateList.size() == newCandidateList.size());
+        assertTrue(newCandidateList.containsAll(candidateList));
+        assertTrue(candidateList.size() == newCandidateList.size());
+    }
+
+    @Test
+    public void shouldRemoveCandidateById() {
+        candidateRepository.deleteById(6L);
+        candidateRepository.deleteById(8L);
+        candidateRepository.deleteById(9L);
+        candidateRepository.deleteById(10L);
+        List<Candidate> newCandidateList = candidateRepository.findAll();
+        assertTrue(newCandidateList.containsAll(candidateList));
     }
 
 }
