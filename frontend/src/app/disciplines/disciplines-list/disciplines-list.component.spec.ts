@@ -58,8 +58,10 @@ describe('DisciplinesListComponent', () => {
   });
 
   it('should find all disciplines',
-    inject([DisciplineService],
-      (disciplineService: DisciplineService) => {
+    inject([DisciplineService, AuthenticationService],
+      (disciplineService: DisciplineService, authenticationService: AuthenticationService) => {
+        spyOn(authenticationService, 'isPermissionPresent').and
+        .returnValue(false);
         spyOn(disciplineService, 'chooseRequest').and
           .returnValue(Observable.of([java, javaScript]));
         expect(component.disciplinesList).toEqual([]);
