@@ -52,40 +52,34 @@ describe('SelectUserComponent', () => {
   });
 
   it('should add user form and null to the selectedUsersList', () => {
-    component.selectedUsersList = [
+    const actualUsersList = [
       new UserInfo(22, 'Gary', 'Ortiz', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE']),
       new UserInfo(27, 'Laura', 'Harper', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE'])
     ];
-    component.usersList = [
-      new UserInfo(22, 'Gary', 'Ortiz', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE']),
-      new UserInfo(27, 'Laura', 'Harper', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE'])
-    ];
+    component.selectedUsersList = actualUsersList
+    component.usersList = actualUsersList;
     component.addDHForm();
     expect(component.selectedUsersList).toEqual(usersWithNullInTheEnd);
   });
 
   it('should remove user form and user from the selectedUsersList', () => {
-    component.selectedUsersList = [
+    const actualUsersList = [
       new UserInfo(22, 'Gary', 'Ortiz', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE']),
       new UserInfo(27, 'Laura', 'Harper', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE'])
     ];
-    component.usersList = [
-      new UserInfo(22, 'Gary', 'Ortiz', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE']),
-      new UserInfo(27, 'Laura', 'Harper', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE'])
-    ];
+    component.selectedUsersList = actualUsersList;
+    component.usersList = actualUsersList;
     component.deleteDHForm(0);
     expect(component.selectedUsersList).toEqual([new UserInfo(27, 'Laura', 'Harper', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE',])]);
   });
 
   it('should remove all user forms and users from the selectedUsersList and left single null', () => {
-    component.selectedUsersList = [
+    const actualUsersList = [
       new UserInfo(22, 'Gary', 'Ortiz', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE']),
       new UserInfo(27, 'Laura', 'Harper', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE'])
     ];
-    component.usersList = [
-      new UserInfo(22, 'Gary', 'Ortiz', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE']),
-      new UserInfo(27, 'Laura', 'Harper', ['DISCIPLINE_HEAD', 'HUMAN_RESOURCE'])
-    ];
+    component.selectedUsersList = actualUsersList;
+    component.usersList = actualUsersList;
     component.deleteDHForm(0);
     component.deleteDHForm(0);
     expect(component.selectedUsersList).toEqual([null]);
