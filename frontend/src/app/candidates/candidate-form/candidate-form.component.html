@@ -1,5 +1,5 @@
 <div class="mask">
-    <div class='border candidate-form'>
+    <div class='border popup-form'>
         <form [formGroup]="candidateForm">
             <div>
                 <h1>{{formTitle}}</h1>
@@ -23,10 +23,10 @@
                 </div>
             </div>
             <div>
-                <app-education-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.educationCandidateList.length)"></app-education-table>
-                <app-work-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.workCandidateList.length)"></app-work-table>
+                <app-education-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.candidateEducationList.length)"></app-education-table>
+                <app-work-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.candidateWorkList.length)"></app-work-table>
                 <app-discipline-list [candidateForm]="candidateForm"></app-discipline-list>
-            </div>
+            </div><br>
             <div class="text-center add-candidates">
                 <a *ngIf="candidateForm.enabled" class="btn btn-primary" (click)="candidateFormService.saveCandidate()">Save</a>
                 <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Close</a>
@@ -34,6 +34,7 @@
                 <br>
                 <span *ngIf="displayErrorMessage" class="error-message">Fill in all the fields</span>
             </div>
+            <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
         </form>
     </div>
 </div>

@@ -21,30 +21,28 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "permission_templates")
 public class PermissionTemplate {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false, columnDefinition = "bigserial")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id", nullable = false, columnDefinition = "bigserial")
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "name_id")
-    private PermissionName name;
+	@ManyToOne
+	@JoinColumn(name = "name_id")
+	private PermissionName name;
 
-    @ManyToOne
-    @JoinColumn(name = "operation_id")
-    private Operation operation;
+	@ManyToOne
+	@JoinColumn(name = "operation_id")
+	private Operation operation;
 
-    @Column(name = "is_discipline_name_required")
-    private boolean isDisciplineNameRequired;
+	@Column(name = "is_discipline_name_required")
+	private boolean isDisciplineNameRequired;
 
-
-    @ElementCollection(fetch = FetchType.LAZY, targetClass = Role.class)
-    @CollectionTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "permission_id"))
-    @Column(name = "role_id")
-    private Set<Role> roles;
+	@ElementCollection(fetch = FetchType.LAZY, targetClass = Role.class)
+	@CollectionTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "permission_id"))
+	@Column(name = "role_id")
+	private Set<Role> roles;
 }

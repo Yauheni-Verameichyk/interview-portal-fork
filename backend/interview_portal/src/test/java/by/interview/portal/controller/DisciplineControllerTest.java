@@ -82,7 +82,6 @@ public class DisciplineControllerTest {
                 .andExpect(jsonPath("$.disciplineHeadsList[0].name", is("Vasia")));
     }
 
-
     @Test
     public void shouldReturnSubItemsList() throws Exception {
         given(disciplineFacade.findByParentId((long) 1)).willReturn(Arrays.asList(subItem));
@@ -101,7 +100,6 @@ public class DisciplineControllerTest {
                 .andExpect(status().isOk());
         verify(disciplineFacade, times(1)).save(disciplineWithHeadsDTO);
     }
-
 
     @Test
     public void shouldReturnDisciplinesListForUser() throws Exception {

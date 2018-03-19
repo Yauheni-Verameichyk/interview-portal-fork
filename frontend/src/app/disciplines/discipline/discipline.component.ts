@@ -6,6 +6,7 @@ import { DisciplineDTO } from '../../api/models';
 import { DisciplineService } from '../service/discipline.service';
 import { DisciplineControllerService } from '../../api/services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 
 
 @Component({
@@ -23,8 +24,12 @@ export class DisciplineComponent implements OnInit, OnDestroy {
   public subDisciplinesList: Array<DisciplineDTO> = [];
   private readonly destroy: Subject<void> = new Subject();
 
-  constructor(private disciplinesControllerService: DisciplineControllerService,
-    private disciplineService: DisciplineService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(
+    private disciplinesControllerService: DisciplineControllerService,
+    private disciplineService: DisciplineService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private popupService: PopupService) { }
 
   ngOnInit(): void {
     this.backgroundColor = this.disciplineService.countBackgroundColor(this.childLevel);
@@ -37,7 +42,7 @@ export class DisciplineComponent implements OnInit, OnDestroy {
       .subscribe(disciplines => {
         this.subDisciplinesList = disciplines;
       }, (error) => {
-        console.log('Send to error page when it appears');
+        this.popupService.displayMessage('Error during sub items reading', this.router);
       });
   }
 
@@ -50,9 +55,9 @@ export class DisciplineComponent implements OnInit, OnDestroy {
     this.disciplinesControllerService.deleteDisciplineUsingDELETE(id)
       .takeUntil(this.destroy)
       .subscribe((success) => {
-        console.log('Discipline was deleted');
+        this.popupService.displayMessage('Discipline was deleted', this.router);
       }, (error) => {
-        console.log('Send to error page when it appears');
+        this.popupService.displayMessage('Error during discipline deleting', this.router);
       });
   }
 

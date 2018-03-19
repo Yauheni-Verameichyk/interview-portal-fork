@@ -1,16 +1,17 @@
 <form [formGroup]="candidateForm">
-  <caption>Choose discipline</caption>
+  <caption>Assigned disciplines</caption>
   <div formArrayName="disciplineList">
     <div class='selectDisciplines' *ngFor="let discipline of candidateForm.controls.disciplineList.controls; let i = index" [formGroupName]="i">
-      <select id="inputState" class="form-control" formControlName="id">
+      <select id="inputState" class="form-control" formControlName="id" 
+        [class.not-full-width]="(candidateForm.controls.disciplineList.controls.length > 1)&&candidateForm.enable"
+        [class.full-width]="candidateForm.disabled"
+      >
         <option value="" hidden disabled selected>Choose...</option>
         <option *ngFor="let dis of disciplines" value="{{dis.id}}" selected>{{dis.name}}</option>
       </select>
-      <div class="btn btn-light pull-right" (click)="remove(i,'disciplineList')" *ngIf="candidateForm.controls.disciplineList.controls.length > 1">
-        <img class="far fa-trash-alt align-middle" *ngIf="candidateForm.enabled"/>
+      <div class="btn btn-light pull-right remove-button" (click)="remove(i,'disciplineList')" *ngIf="(candidateForm.controls.disciplineList.controls.length > 1)&&candidateForm.enabled">
+        <img class="far fa-trash-alt align-middle"/>
       </div>
-      <br>
-      <br>
       <validator-message [field]="discipline.get('id')" [messageRequired]="messageDisciplineNotSelected"></validator-message>
     </div>
   </div>

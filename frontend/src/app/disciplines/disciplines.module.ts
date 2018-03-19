@@ -7,11 +7,9 @@ import { DisciplineService } from './service/discipline.service';
 import { DisciplineControllerService } from '../api/services';
 import { ApiModule } from '../api/api.module';
 import { SharedModule } from '../shared/shared.module';
-import { CreateDisciplineComponent } from './create-discipline/create-discipline.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserControllerService } from '../api/rest/service/user-controller.service';
-
-
+import { DisciplineFormComponent } from './discipline-form/discipline-form.component';
 
 @NgModule({
   imports: [
@@ -26,7 +24,7 @@ import { UserControllerService } from '../api/rest/service/user-controller.servi
     disciplineRouterComponents,
     DisciplineComponent,
     DisciplinesListComponent,
-    CreateDisciplineComponent
+    DisciplineFormComponent
   ],
   providers: [
     DisciplineService,

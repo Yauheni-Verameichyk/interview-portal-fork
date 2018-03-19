@@ -10,25 +10,35 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DisciplineService } from '../service/discipline.service';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { LightFieldService } from '../../shared/validator/service/light-field.service';
 
 @Component({
-  selector: 'app-create-discipline',
-  templateUrl: './create-discipline.component.html',
-  styleUrls: ['./create-discipline.component.css']
+  selector: 'app-discipline-form',
+  templateUrl: './discipline-form.component.html',
+  styleUrls: ['./discipline-form.component.css']
 })
-export class CreateDisciplineComponent implements OnInit, OnDestroy {
+export class DisciplineFormComponent implements OnInit, OnDestroy {
 
   public discipline: DisciplineWithDisciplineHeadsDTO = new DisciplineWithDisciplineHeadsDTO();
   public disciplineForm: FormGroup;
   public usersListObservable: Observable<UserInfo[]>;
+  public noEdit: boolean = false;
 
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private disciplineControllerService: DisciplineControllerService, private userControllerService: UserControllerService,
-    private disciplineService: DisciplineService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private disciplineControllerService: DisciplineControllerService,
+    private userControllerService: UserControllerService,
+    private disciplineService: DisciplineService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private popupService: PopupService,
+    private lightFieldService: LightFieldService) {
   }
 
   ngOnInit() {
     this.usersListObservable = this.userControllerService.getUsersByRole('DISCIPLINE_HEAD');
+    this.createDisciplineForm();
     if (+this.route.snapshot.paramMap.get('editDisciplineID')) {
       this.readDiscipline(+this.route.snapshot.paramMap.get('editDisciplineID'), this.disciplineService.createEditOptions.EDIT);
     }
@@ -36,11 +46,9 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
       this.readDiscipline(+this.route.snapshot.paramMap.get('parentDisciplineID'),
         this.disciplineService.createEditOptions.CREATE_SUB_ITEM);
     }
-    if (!this.route.snapshot.paramMap.get('parentDisciplineID') && this.route.snapshot.paramMap.get('editDisciplineID')) {
-      this.discipline.parentId = null;
-      this.discipline.parentName = null;
+    if (+this.route.snapshot.paramMap.get('viewDisciplineID')) {
+      this.readDiscipline(+this.route.snapshot.paramMap.get('viewDisciplineID'), this.disciplineService.createEditOptions.VIEW);
     }
-    this.createDisciplineForm();
   }
 
   createDisciplineForm() {
@@ -48,8 +56,11 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
       'disciplineName': new FormControl([this.discipline.name], [
         Validators.required,
         Validators.minLength(2),
+        Validators.maxLength(50)
       ]),
-      'disciplineSubscription': new FormControl([this.discipline.subscription])
+      'disciplineSubscription': new FormControl([this.discipline.subscription], [
+        Validators.maxLength(200)
+      ])
     });
   }
 
@@ -60,7 +71,7 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
         (discipline) => {
           this.initializeDiscipline(option, discipline);
         }, error => {
-          console.error('Error happened');
+          this.popupService.displayMessage('Error during discipline reading', this.router);
         }
       );
   }
@@ -74,8 +85,13 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
         this.discipline.parentId = discipline.id;
         this.discipline.parentName = discipline.name;
         break;
+      case this.disciplineService.createEditOptions.VIEW:
+        this.discipline = discipline;
+        this.noEdit = true;
+        this.disciplineForm.disable();
+        break;
       default:
-        Observable.throw('Perhaps you do not know what you want');
+      throw new Error('Perhaps you do not know what you want');
     }
   }
 
@@ -88,16 +104,13 @@ export class CreateDisciplineComponent implements OnInit, OnDestroy {
       this.disciplineControllerService.saveUsingPOST(this.discipline)
         .takeUntil(this.destroy)
         .subscribe((success) => {
-          console.log('Discipline was saved');   //show popup with message
+          this.popupService.displayMessage('Discipline was saved', this.router);
         }, error => {
-          console.error('Error happened');
+          this.popupService.displayMessage('Error during discipline saving', this.router);
         });
     } else {
-      console.error('Invalid input');
+      this.lightFieldService.lightField(this.disciplineForm.controls);
     }
-  }
-  cancel(){
-    this.router.navigate(['discipline'])
   }
 
   ngOnDestroy(): void {

@@ -18,7 +18,7 @@ img {
  }
 body{
     margin: 0 10%;
-    background: #edfffd;
+    background: #ffffff;
 }
 .logo {
     height: 100px;
@@ -93,7 +93,7 @@ main {
 
 .error-message {
     color: brown;
-    padding: 10px;
+    padding: 15px;
     font-size:14px;
     text-align: left;
 }
@@ -148,9 +148,6 @@ caption {
 }
 .addNews{
     text-align: center;
-}
-.add-candidates{
-   
 }
 .border{
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
@@ -207,10 +204,6 @@ caption {
 
 .subItem {
     padding-left: 40px;
-}
-
-.editButtons{
-    width: 130px;
 }
 
 .twoEditButtons{
@@ -273,5 +266,42 @@ select.ng-touched.ng-invalid{
 
 .bg-gray {
     background-color: #dee2e6 !important;
+}
+
+.popup-form { 
+    z-index: 900;
+    top: 10px;
+    background-color: white;
+    left: 50%;
+    transform: translate(-50%);
+    min-width: 450px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-align: center;
+    position: absolute;
+    margin-top: 50px;
+}
+
+.mask {
+    background-color:rgba(0,0,0,.3);
+    min-height: 100%;
+    position: fixed;
+    width:100%;
+    top:0;
+    left:0;
+    overflow:auto;
+}
+
+.window-close:before  {
+    position: absolute;
+    top: 22px;
+    right: 15px;
+    -webkit-transform: translate(20%, -50%);
+    transform: translate(30%, -50%);
+    font-size: 28px;
+    content: "\2716";
+}
+
+.window-close:hover {
+    cursor: pointer;
 }
 

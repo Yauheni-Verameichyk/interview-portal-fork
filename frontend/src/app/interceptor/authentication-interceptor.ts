@@ -17,7 +17,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse
   | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-    console.log("Interceptor work"); 
     const accessToken = this.auth.getTokenFromLocalStorage();
     if (accessToken) {
       if (!this.auth.isExpiredToken(accessToken)) {

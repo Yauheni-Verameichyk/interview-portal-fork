@@ -12,6 +12,7 @@ import { MessageWindowComponent } from './pop-up-window/message-window/message-w
 import { ValidatorMessageComponent } from './validator/validator-message/validator-message.component';
 import { RouterModule } from '@angular/router';
 import { AssignDisciplineComponent } from './assign-discipline/assign-discipline.component';
+import { PopupService } from './pop-up-window/popup-service/popup.service';
 
 
 
@@ -33,7 +34,9 @@ import { AssignDisciplineComponent } from './assign-discipline/assign-discipline
   providers: [
     UserFormMangerService,
     FormValidatorService,
-    LightFieldService
+    LightFieldService,
+    PopupService
+
   ],
   exports: [
     ShowAuthedDirective,

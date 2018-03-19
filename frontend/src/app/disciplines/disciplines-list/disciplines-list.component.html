@@ -14,7 +14,7 @@
       <th scope="col" class="disciplineNameHead">Name</th>
       <th scope="col">Description</th>
       <th>
-        <div *requiredAuthority="'DISCIPLINE_CREATE'" class="btn btn-light pull-right" [routerLink]="['create']" routerLinkActive="active">
+        <div *requiredAuthority="'DISCIPLINE_CREATE'" class="btn btn-light pull-right" [routerLink]="['', {outlets: { popup: ['discipline', 'create'] } }]" routerLinkActive="active">
           <img class="fas fa-plus-circle align-middle" />
         </div>
       </th>

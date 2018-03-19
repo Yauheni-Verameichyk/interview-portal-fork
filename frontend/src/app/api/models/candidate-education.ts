@@ -1,4 +1,4 @@
-export class EducationCandidate {
+export class CandidateEducation {
 
   endDate?: string;
 

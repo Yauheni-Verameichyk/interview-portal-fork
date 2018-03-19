@@ -14,16 +14,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "permission_name")
 public class PermissionName {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false, columnDefinition = "bigserial")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id", nullable = false, columnDefinition = "bigserial")
+	private Long id;
 
-    @Column(name = "name")
-    String name;
+	@Column(name = "name")
+	String name;
 }

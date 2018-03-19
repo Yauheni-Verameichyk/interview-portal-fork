@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-export class WorkCandidate {
+export class CandidateWork {
 
   endDate?: string;
 

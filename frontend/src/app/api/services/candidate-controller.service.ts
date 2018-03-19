@@ -101,7 +101,6 @@ export class CandidateControllerService extends BaseService {
    * @return OK
    */
   addUsingPOST(candidate: Candidate): Observable<ResponseEntity> {
-    console.log("add");
     return this.addUsingPOSTResponse(candidate).pipe(
       map(_r => _r.body)
     );
@@ -182,16 +181,54 @@ export class CandidateControllerService extends BaseService {
     return this.findByIdUsingGETResponse(id).pipe(
       map(response => {
         const candidate = response.body;
-        candidate.educationCandidateList.forEach(education => {
+        candidate.candidateEducationList.forEach(education => {
           education.endDate = this.bringDateFormat(education.endDate);
           education.startDate = this.bringDateFormat(education.startDate);
         });
-        candidate.workCandidateList.forEach(work => {
+        candidate.candidateWorkList.forEach(work => {
           work.endDate = this.bringDateFormat(work.endDate);
           work.startDate = this.bringDateFormat(work.startDate);
         })
         return candidate;
       })
+    );
+  }
+
+    /**
+   * @param id id
+   */
+  deleteUsingDELETEResponse(id: number): Observable<HttpResponse<void>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      "DELETE",
+      this.rootUrl + `/candidates/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: void = null;
+        
+        return _resp.clone({body: _body}) as HttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * @param id id
+   */
+   deleteUsingDELETE(id: number): Observable<void> {
+    return this.deleteUsingDELETEResponse(id).pipe(
+      map(_r => _r.body)
     );
   }
 

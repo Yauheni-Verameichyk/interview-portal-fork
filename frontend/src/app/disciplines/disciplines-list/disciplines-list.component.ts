@@ -7,6 +7,8 @@ import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
 import { DisciplineService } from '../service/discipline.service';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-disciplines-list',
@@ -17,7 +19,10 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
 
   disciplinesList: Array<DisciplineDTO> = [];
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private disciplineService: DisciplineService, private authenticationService: AuthenticationService) { }
+  constructor(private disciplineService: DisciplineService,
+    private authenticationService: AuthenticationService,
+    private popupService: PopupService,
+    private router: Router) { }
 
   ngOnInit(): void {
     (this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ'))
@@ -30,8 +35,7 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
       .subscribe((disciplines) => {
         this.disciplinesList = disciplines;
       }, (error) => {
-        console.log('Send to error page when it appears');
-        console.log(error);
+        this.popupService.displayMessage('Error during disciplines reading', this.router);
       });
   }
 

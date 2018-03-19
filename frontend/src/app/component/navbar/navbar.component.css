@@ -1,3 +1,13 @@
 .signOut {
    margin-left: auto;
 }
+
+.title {
+    color: white;
+    font-weight: bolder;
+    font-size: 28px;
+}
+
+.logout {
+    color: white !important;
+}

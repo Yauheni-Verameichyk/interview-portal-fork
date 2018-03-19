@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { Candidate } from '../../../api/models/candidate';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DisciplineDTO } from '../../../api/models';
-import { EducationCandidate } from '../../../api/models/education-candidate';
-import { WorkCandidate } from '../../../api/models/work-candidate';
+import { CandidateEducation } from '../../../api/models/candidate-education';
+import { CandidateWork } from '../../../api/models/candidate-work';
 import { FormGroup, FormBuilder, ValidatorFn, Validators, FormArray } from '@angular/forms';
 import { FormValidatorService } from '../../../shared/validator/validator-form/form-validator.service';
 import { LightFieldService } from '../../../shared/validator/service/light-field.service';
 import { CandidateControllerService } from '../../../api/services/candidate-controller.service';
 import { Subject } from 'rxjs';
 import { CandidateService } from '../../service/candidate.service';
+import { PopupService } from '../../../shared/pop-up-window/popup-service/popup.service';
 
 @Injectable()
 export class CandidateFormService {
@@ -21,8 +22,8 @@ export class CandidateFormService {
 
   private readonly emptyCandidate: Candidate = {
     disciplineList: [new DisciplineDTO()],
-    educationCandidateList: [new EducationCandidate()],
-    workCandidateList: [new WorkCandidate()]
+    candidateEducationList: [new CandidateEducation()],
+    candidateWorkList: [new CandidateWork()]
   }
 
   private readonly CANDIDATE_FORM_CONFIG = {
@@ -30,7 +31,7 @@ export class CandidateFormService {
       initMethod: () => this.candidateForm.enable(),
       formTitle: 'Add candidate',
       saveMethod: (candidate) => this.candidateControllerService.addUsingPOST(candidate),
-      successfullySaveMessage: "Candidate was successfully created !!!",
+      successfullySaveMessage: "Candidate was successfully created!!!",
       notSuccessfullySaveMessage: "Could not create candidate! Try later!"
     },
     'candidate-view': {
@@ -41,7 +42,7 @@ export class CandidateFormService {
       initMethod: () => this.candidateForm.enable(),
       formTitle: 'Edit candidate',
       saveMethod: (candidate) => this.candidateControllerService.updateUsingPUT(candidate),
-      successfullySaveMessage: "Candidate was successfully updated !!!",
+      successfullySaveMessage: "Candidate was successfully updated!!!",
       notSuccessfullySaveMessage: "Could not update candidate! Try later!"
     }
   };
@@ -53,7 +54,8 @@ export class CandidateFormService {
     private formValidator: FormValidatorService,
     private lightFieldService: LightFieldService,
     private candidateControllerService: CandidateControllerService,
-    private candidateService: CandidateService) { }
+    private candidateService: CandidateService,
+    private popupService: PopupService) { }
 
   get formTitle(): string {
     return this.CANDIDATE_FORM_CONFIG[this.operation].formTitle;
@@ -77,21 +79,21 @@ export class CandidateFormService {
       name: [this.candidate.name, this.formValidator.lengthValidator()],
       surname: [this.candidate.surname, this.formValidator.lengthValidator()],
       phoneNumber: [this.candidate.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
-      workCandidateList: this.formBuilder.array(this.initWorkFormList()),
-      educationCandidateList: this.formBuilder.array(this.initEducationFormList()),
+      candidateWorkList: this.formBuilder.array(this.initWorkFormList()),
+      candidateEducationList: this.formBuilder.array(this.initEducationFormList()),
       disciplineList: this.formBuilder.array(this.initDisciplineFormList())
     });
   }
 
   initWorkFormList(): FormGroup[] {
     const fromGroupList: FormGroup[] = [];
-    this.candidate.workCandidateList.forEach((workCandidate: WorkCandidate) =>
+    this.candidate.candidateWorkList.forEach((workCandidate: CandidateWork) =>
       fromGroupList.push(this.initWorkForm(workCandidate)));
     return fromGroupList;
   }
 
-  initWorkForm(workCandidate?: WorkCandidate): FormGroup {
-    const work = !workCandidate ? new WorkCandidate() : workCandidate;
+  initWorkForm(workCandidate?: CandidateWork): FormGroup {
+    const work = !workCandidate ? new CandidateWork() : workCandidate;
     return this.formBuilder.group({
       id: [work.id],
       companyName: [work.companyName, this.formValidator.lengthValidator()],
@@ -117,13 +119,13 @@ export class CandidateFormService {
 
   initEducationFormList(): FormGroup[] {
     const fromGroupList: FormGroup[] = [];
-    this.candidate.educationCandidateList.forEach((educationCandidate: EducationCandidate) =>
+    this.candidate.candidateEducationList.forEach((educationCandidate: CandidateEducation) =>
       fromGroupList.push(this.initEducationForm(educationCandidate)));
     return fromGroupList;
   }
 
-  initEducationForm(educationCandidate?: EducationCandidate): FormGroup {
-    const education = !educationCandidate ? new EducationCandidate() : educationCandidate;
+  initEducationForm(educationCandidate?: CandidateEducation): FormGroup {
+    const education = !educationCandidate ? new CandidateEducation() : educationCandidate;
     return this.formBuilder.group({
       id: [education.id],
       nameInstitution: [education.nameInstitution, this.formValidator.lengthValidator()],
@@ -149,8 +151,7 @@ export class CandidateFormService {
   }
 
   displayMessage(message: string) {
-    localStorage.setItem('message', message);
-    this.router.navigate([{ outlets: { popup: 'message' } }]);
+    this.popupService.displayMessage(message, this.router);
     this.candidateService.updateCandidateList();
   }
 
@@ -171,8 +172,8 @@ export class CandidateFormService {
 
   displayIncorrectField(formGroup: FormGroup): void {
     this.lightFieldService.lightField(formGroup.controls);
-    this.lightFieldService.lightArray('educationCandidateList', formGroup);
-    this.lightFieldService.lightArray('workCandidateList', formGroup);
+    this.lightFieldService.lightArray('candidateEducationList', formGroup);
+    this.lightFieldService.lightArray('candidateWorkList', formGroup);
     this.lightFieldService.lightArray('disciplineList', formGroup);
   }
 
