@@ -11,6 +11,8 @@ import { PopupService } from '../../shared/pop-up-window/popup-service/popup.ser
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { DisciplineDTO } from '../../api/models';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 
 describe('DisciplineComponent', () => {
   let component: DisciplineComponent;
