@@ -92,6 +92,24 @@ describe('DisciplineFormComponent', () => {
     })
   );
 
+  it('should throw error with unspecified operation', () => {
+    fixture.detectChanges();
+    expect(function () { component.initializeDiscipline('1', new DisciplineWithDisciplineHeadsDTO()); }
+    ).toThrowError('Perhaps you do not know what you want');
+  });
+
+  it('should fail to read discipline',
+    inject([ActivatedRoute, DisciplineControllerService],
+      (route: ActivatedRouteStub, disciplineControllerService: DisciplineControllerService) => {
+        spyOn(route.snapshot.paramMap, 'get').and
+          .callFake((parameterName) => parameterName === 'viewDisciplineID' ? 1 : false);
+        spyOn(disciplineControllerService, 'findByIdUsingGET').and
+          .callFake((parameterName) => Observable.throw(new Error()));
+        fixture.detectChanges();
+        expect(disciplineControllerService.findByIdUsingGET).toHaveBeenCalled();
+      })
+  );
+
   it('should create a new sub item',
     inject([ActivatedRoute], (route: ActivatedRouteStub) => {
       spyOn(route.snapshot.paramMap, 'get').and
@@ -151,13 +169,30 @@ describe('DisciplineFormComponent', () => {
   });
 
   it('should save discipline',
-    inject([DisciplineControllerService], (disciplineControllerService: DisciplineControllerService) => {
-      spyOn(disciplineControllerService, 'saveUsingPOST').and.callThrough();
-      component.discipline = java;
-      fixture.detectChanges();
-      component.sendDiscipline();
-      expect(disciplineControllerService.saveUsingPOST).toHaveBeenCalled();
-    })
+    inject([DisciplineControllerService, PopupService],
+      (disciplineControllerService: DisciplineControllerService, popupService: PopupService) => {
+        spyOn(disciplineControllerService, 'saveUsingPOST').and.callThrough();
+        spyOn(popupService, 'displayMessage').and.callThrough();
+        component.discipline = java;
+        fixture.detectChanges();
+        component.sendDiscipline();
+        expect(disciplineControllerService.saveUsingPOST).toHaveBeenCalled();
+        expect(popupService.displayMessage).toHaveBeenCalledWith('Discipline was saved', new RouterStub());
+      })
+  );
+
+  it('should fail to save discipline',
+    inject([DisciplineControllerService, PopupService],
+      (disciplineControllerService: DisciplineControllerService, popupService: PopupService) => {
+        spyOn(disciplineControllerService, 'saveUsingPOST').and
+          .callFake((parameterName) => Observable.throw(new Error()));
+        spyOn(popupService, 'displayMessage').and.callThrough();
+        component.discipline = java;
+        fixture.detectChanges();
+        component.sendDiscipline();
+        expect(disciplineControllerService.saveUsingPOST).toHaveBeenCalled();
+        expect(popupService.displayMessage).toHaveBeenCalledWith('Error during discipline saving', new RouterStub());
+      })
   );
 
   it('should not save the discipline with invalid field',
