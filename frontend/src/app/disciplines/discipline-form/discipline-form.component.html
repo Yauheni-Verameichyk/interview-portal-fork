@@ -25,6 +25,7 @@
       <textarea class="form-control discipline-description" formControlName="disciplineSubscription" placeholder="Enter description"
         [(ngModel)]="discipline.subscription"></textarea>
     </div>
+    <validator-message [field]="disciplineForm.controls.disciplineSubscription"></validator-message>
     <div *ngIf="!discipline?.parentName && !noEdit">
       <label for="inputState">Assign discipline head</label>
       <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">

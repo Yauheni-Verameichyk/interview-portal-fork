@@ -56,8 +56,11 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
       'disciplineName': new FormControl([this.discipline.name], [
         Validators.required,
         Validators.minLength(2),
+        Validators.maxLength(50)
       ]),
-      'disciplineSubscription': new FormControl([this.discipline.subscription])
+      'disciplineSubscription': new FormControl([this.discipline.subscription], [
+        Validators.maxLength(200)
+      ])
     });
   }
 
