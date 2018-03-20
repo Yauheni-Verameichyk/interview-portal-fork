@@ -42,7 +42,7 @@ export class DisciplineService {
       case this.searchOptions.ALL:
         return this.disciplinesControlerService.findAllUsingGET();
       default:
-        Observable.throw('Perhaps you do not know what you want');
+      throw new Error('Perhaps you do not know what you want');
     }
   }
 }
