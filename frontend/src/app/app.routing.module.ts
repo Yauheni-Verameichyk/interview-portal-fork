@@ -6,6 +6,7 @@ import { LoginComponent } from './component/login/login.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { MessageWindowComponent } from './shared/pop-up-window/message-window/message-window.component';
+import { WelcomePageComponent } from './component/welcome-page/welcome-page.component';
 
 const routes : Routes = [
   {
@@ -17,6 +18,10 @@ const routes : Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'welcome-page',
+    component: WelcomePageComponent
   },
   {
     // The router will match this route if the URL requested

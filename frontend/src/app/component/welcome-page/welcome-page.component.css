@@ -1,0 +1,10 @@
+.text-style {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+p {
+    color: red;
+    font-size: 25px;
+}

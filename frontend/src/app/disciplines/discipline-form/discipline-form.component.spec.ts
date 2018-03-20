@@ -6,15 +6,14 @@ import { DisciplineControllerService } from '../../api/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { DisciplineService } from '../service/discipline.service';
-import { APP_BASE_HREF } from '@angular/common';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import { Injectable } from '@angular/core';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { LightFieldService } from '../../shared/validator/service/light-field.service';
 import { SharedModule } from '../../shared/shared.module';
 import { UserInfo } from '../../domain/UserInfo';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 

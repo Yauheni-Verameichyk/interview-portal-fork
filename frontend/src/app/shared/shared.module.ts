@@ -14,8 +14,6 @@ import { RouterModule } from '@angular/router';
 import { AssignDisciplineComponent } from './assign-discipline/assign-discipline.component';
 import { PopupService } from './pop-up-window/popup-service/popup.service';
 
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -36,7 +34,6 @@ import { PopupService } from './pop-up-window/popup-service/popup.service';
     FormValidatorService,
     LightFieldService,
     PopupService
-
   ],
   exports: [
     ShowAuthedDirective,
