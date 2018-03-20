@@ -42,6 +42,13 @@
         </div>
         <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber" placeholder="Phone number">
       </div>
+      <div *ngIf="newUser" class="form-group col-md-6">
+        <label for="phoneNumber">Password</label>
+        <div>
+          <validator-message [field]="userForm.get('password')"></validator-message>
+        </div>
+        <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+      </div>
     </div>
     <appSelectRole [roles]="user.roleDisciplines" (editRoles)="getAssignRoles($event)"></appSelectRole>
     <app-assign-discipline *ngIf="isExistRole('DISCIPLINE_HEAD')" [assignDiscipline]="findAssignDiscipline('DISCIPLINE_HEAD')"
@@ -50,7 +57,8 @@
       (editAssignDiscipline)="getAssignDiscipline($event)"></app-assign-discipline>
     <div *ngIf='isInfo'>
       <div *requiredAuthority="'USER_EDIT'">
-        <button type="button" class="btn btn-primary" (click)="saveForm()">Save</button>
+        <button *ngIf="!user.id" type="button" class="btn btn-primary" (click)="saveForm()">Save</button>
+        <button *ngIf="user.id" type="button" class="btn btn-primary" (click)="saveForm()">Edit</button>
       </div>
     </div>
   </form>

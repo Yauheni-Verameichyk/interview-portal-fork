@@ -1,15 +1,10 @@
 package by.interview.portal.dto;
 
+import by.interview.portal.domain.Discipline;
+import by.interview.portal.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import by.interview.portal.domain.Discipline;
-import by.interview.portal.domain.Role;
 
 import java.util.List;
 import java.util.Map;

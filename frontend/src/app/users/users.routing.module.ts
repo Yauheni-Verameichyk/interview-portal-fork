@@ -5,6 +5,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserResolvedGuard } from '../guard/user-resolved.guard';
+import { CreateUserResolvedGuard } from '../guard/create-user-resolved.guard';
 const routes: Routes = [
   {
     path: 'users',
@@ -23,9 +24,14 @@ const routes: Routes = [
     resolve: {
       user: UserResolvedGuard
     }
+  },
+  {
+    path: 'users/new',
+    component: UserFormComponent,
+    resolve: {
+      user: CreateUserResolvedGuard
+    }
   }
-
-
 ];
 export let usersRouterComponents = [UserListComponent, UserComponent, UserFormComponent];
 @NgModule({

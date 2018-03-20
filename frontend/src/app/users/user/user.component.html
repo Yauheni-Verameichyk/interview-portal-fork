@@ -7,7 +7,7 @@
             <br>
         </span>
     </td>
-    <td (click)="editUserInfo()">
+    <td *requiredAuthority="'USER_EDIT'" (click)="editUserInfo()">
         <div class="btn btn-info">
             <img class="fas fa-pencil-alt align-middle" />
         </div>

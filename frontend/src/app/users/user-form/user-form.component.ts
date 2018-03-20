@@ -16,6 +16,7 @@ import { FormValidatorService } from '../../shared/validator/validator-form/form
 })
 export class UserFormComponent implements OnInit, OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
+  newUser = false;
   isEdit = false;
   isInfo = true;
   role: Array<string>;
@@ -27,9 +28,10 @@ export class UserFormComponent implements OnInit, OnDestroy {
     login: '',
     name: '',
     surname: '',
+    password: '',
     phoneNumber: '',
     roleDisciplines: null
-  };
+  }
 
   constructor(
     private userController: UserControllerService,
@@ -42,7 +44,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.route.snapshot.data['user'];
-    console.log(this.user.roleDisciplines);
     this.createFormGroup();
     this.formManager.showButton(true);
     if (this.router.url.includes('info')) {
@@ -50,6 +51,21 @@ export class UserFormComponent implements OnInit, OnDestroy {
       this.userForm.disable();
       this.formManager.showButton(false);
     }
+    if (this.router.url.includes('new')) {
+      this.newUser = true;
+    }
+    this.userForm.valueChanges
+      .takeUntil(this.destroy)
+      .subscribe(changeData => {
+        this.user.name = changeData.name;
+        this.user.login = changeData.login;
+        this.user.phoneNumber = changeData.phoneNumber;
+        this.user.surname = changeData.surname;
+        if(this.newUser){
+          this.user.password = changeData.password;
+        }
+      });
+
   }
   ngOnDestroy(): void {
     this.destroy.next();
@@ -62,7 +78,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
       login: [this.user.login, [Validators.required, this.formValidator.userNameValidator()]],
       surname: [this.user.surname, [Validators.required, this.formValidator.userNameValidator()]],
       email: [this.user.login, [Validators.required, Validators.email]],
-      phoneNumber: [this.user.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]]
+      phoneNumber: [this.user.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
+      password: [this.user.password, [Validators.required, this.formValidator.lengthValidator()]]
     });
   }
   public editFrom() {
@@ -73,7 +90,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     if (this.userForm.valid) {
       this.formManager.showButton(false);
       this.userForm.disable();
-      this.userController.saveUser(this.user)
+      this.userController.updateUser(this.user)
         .takeUntil(this.destroy)
         .subscribe(() => {
           alert('User was successfully save');

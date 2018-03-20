@@ -6,6 +6,7 @@ export class User {
         name: string;
         surname: string;
         phoneNumber: string;
+        password: string;
         roleDisciplines: { [key: string]: DisciplineDTO[] };
 }
 

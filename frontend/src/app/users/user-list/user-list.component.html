@@ -1,11 +1,14 @@
-<br>
+
+<div class="add-interview-btn" *requiredAuthority="'USER_EDIT'" (click)="addNewUser()">
+  <span class="btn btn-primary">New User</span>
+</div>
 <table class="user-table table table-hover table-bordered">
   <thead>
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Surname</th>
       <th scope="col">Role</th>
-      <th scope="col">Edit</th>
+      <th *requiredAuthority="'USER_EDIT'" scope="col">Edit</th>
     </tr>
   </thead>
   <tbody app-user *ngFor="let user of users" [userObj]="user" class='tbody-hover'>
