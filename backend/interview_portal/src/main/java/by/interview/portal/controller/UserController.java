@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import by.interview.portal.domain.Role;
 import by.interview.portal.dto.FullUserInfoDTO;
 import by.interview.portal.dto.UserBaseInfoDTO;
+import by.interview.portal.dto.UserDTO;
 import by.interview.portal.facade.UserFacade;
 
 @CrossOrigin
@@ -46,8 +47,8 @@ public class UserController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping
-    public void save(@RequestBody FullUserInfoDTO fullUserInfoDTO) {
-        // userFacade.save();
+    public void save(@RequestBody UserDTO fullUserInfoDTO) {
+        userFacade.save(fullUserInfoDTO);
     }
 
 }

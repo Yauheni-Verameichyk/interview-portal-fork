@@ -12,6 +12,7 @@ import { WorkTableComponent } from './candidate-form/work-table/work-table.compo
 import { DisciplineListComponent } from './candidate-form/discipline-list/discipline-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { CandidateResolvedGuard } from '../guard/candidate-resolved.guard';
+import { CandidateFormService } from './candidate-form/service/candidate-form.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { CandidateResolvedGuard } from '../guard/candidate-resolved.guard';
   providers: [
     CandidateControllerService,
     CandidateResolvedGuard,
-    CandidateService
+    CandidateService,
+    CandidateFormService
   ]
 })
 export class CandidatesModule { }
