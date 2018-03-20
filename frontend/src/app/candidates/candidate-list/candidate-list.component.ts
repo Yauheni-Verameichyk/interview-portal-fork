@@ -14,6 +14,7 @@ export class CandidateListComponent implements OnInit {
   constructor(private candidateService: CandidateService) { }
 
   ngOnInit() {
+    this.candidateService.showButtonLoad = true;
     this.candidateService.fetchCandidateList(0);
   }
 
