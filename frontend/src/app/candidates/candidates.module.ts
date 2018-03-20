@@ -34,8 +34,8 @@ import { CandidateFormService } from './candidate-form/service/candidate-form.se
   providers: [
     CandidateControllerService,
     CandidateResolvedGuard,
-    CandidateService,
-    CandidateFormService
+    CandidateService
+    // CandidateFormService
   ]
 })
 export class CandidatesModule { }
