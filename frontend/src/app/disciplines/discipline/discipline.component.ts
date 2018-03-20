@@ -32,7 +32,6 @@ export class DisciplineComponent implements OnInit, OnDestroy {
     private popupService: PopupService) { }
 
   ngOnInit(): void {
-    this.backgroundColor = this.disciplineService.countBackgroundColor(this.childLevel);
     this.parentDisciplineName = this.disciplineService.convertDisciplineName(this.parentDisciplineName);
   }
 
