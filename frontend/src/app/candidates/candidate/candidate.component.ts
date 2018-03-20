@@ -14,7 +14,6 @@ import { Subject } from 'rxjs';
 export class CandidateComponent{
 
   @Input() candidate: CandidateDTO; 
-  private readonly destroy: Subject<void> = new Subject();
 
   constructor(private candidateService: CandidateService) { }
 

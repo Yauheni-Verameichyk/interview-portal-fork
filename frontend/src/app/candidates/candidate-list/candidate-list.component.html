@@ -5,10 +5,9 @@
       <th scope="col">Name</th>
       <th scope="col">Surname</th>
       <th scope="col">Disciplines</th>
-      <th scope="col" class="th-btn">
-        <div class="add-interview-btn" *requiredAuthority="'CANDIDATE_CREATE'">
-          <span class="btn btn-primary" [routerLink]="['', {outlets: { popup: ['candidate-create'] } }]" >Add candidate</span>
-          
+      <th scope="col">
+        <div class="btn btn-light pull-right" *requiredAuthority="'CANDIDATE_CREATE'" [routerLink]="['', {outlets: { popup: ['candidate-create'] } }]">
+            <img class="fas fa-plus-circle align-middle" />
         </div>
       </th>
     </thead>

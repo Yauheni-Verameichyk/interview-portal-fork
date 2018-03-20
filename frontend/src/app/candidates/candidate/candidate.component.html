@@ -2,10 +2,10 @@
 <td>{{candidate.surname}}</td>
 <td>
     <span *ngFor="let discipline of candidate.disciplineList">
-        {{discipline.name}};
+        {{discipline.name}}&nbsp;
     </span>
 </td>
-<td>
+<td class="td-btn">
     <div class="btn btn-light pull-left" [routerLink]="['', {outlets: { popup: ['candidate-view', candidate.id] } }]">
         <img class="fas fa-eye align-middle" >
     </div>
