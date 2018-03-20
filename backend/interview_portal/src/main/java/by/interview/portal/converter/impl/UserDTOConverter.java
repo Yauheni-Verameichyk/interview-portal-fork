@@ -28,13 +28,9 @@ public class UserDTOConverter implements Converter<User, UserDTO> {
 
     @Override
     public User convertToEntity(UserDTO userDTO) {
-        System.err.println(userDTO);
         User user = modelMapper.map(userDTO, User.class);
-        if (userDTO.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        }
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUserRoleDisciplines(getUserRoleDisciplines(userDTO.getRoleDisciplines(), user));
-        System.err.println(user);
         return user;
     }
 
