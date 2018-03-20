@@ -13,8 +13,6 @@ import { ValidatorMessageComponent } from './validator/validator-message/validat
 import { RouterModule } from '@angular/router';
 import { PopupService } from './pop-up-window/popup-service/popup.service';
 
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -34,7 +32,6 @@ import { PopupService } from './pop-up-window/popup-service/popup.service';
     FormValidatorService,
     LightFieldService,
     PopupService
-
   ],
   exports: [
     ShowAuthedDirective,
