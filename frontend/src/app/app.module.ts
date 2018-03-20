@@ -20,6 +20,7 @@ import { SharedModule } from './shared/shared.module';
 import { CandidatesModule } from './candidates/candidates.module';
 import { CandidateControllerService } from './api/services/candidate-controller.service';
 import { AuthenticationInterceptor } from './interceptor/authentication-interceptor';
+import { WelcomePageComponent } from './component/welcome-page/welcome-page.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { AuthenticationInterceptor } from './interceptor/authentication-intercep
     AppComponent,
     LoginComponent,
     appRouterComponents,
-    NavbarComponent
+    NavbarComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,
