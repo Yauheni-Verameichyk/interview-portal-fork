@@ -1,0 +1,63 @@
+<mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="updateCalendarEvents()" (viewChange)="updateCalendarEvents()">
+</mwl-demo-utils-calendar-header>
+
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="calendarEvents">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="calendarEvents">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="calendarEvents">
+  </mwl-calendar-day-view>
+</div>
+
+
+
+<h3>
+  Edit events
+  <button class="btn btn-primary pull-right" (click)="addEvent()">
+    Add new
+  </button>
+  <div class="clearfix"></div>
+</h3>
+
+<table class="table table-bordered">
+
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Primary color</th>
+      <th>Secondary color</th>
+      <th>Starts at</th>
+      <th>Ends at</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let event of calendarEvents; let index = index">
+      <td>
+        <input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()">
+      </td>
+      <td>
+        <input type="color" [(ngModel)]="event.color.primary" (change)="refresh.next()">
+      </td>
+      <td>
+        <input type="color" [(ngModel)]="event.color.secondary" (change)="refresh.next()">
+      </td>
+      <td>
+        <mwl-demo-utils-date-time-picker [(ngModel)]="event.start" (ngModelChange)="refresh.next()" placeholder="Not set">
+        </mwl-demo-utils-date-time-picker>
+      </td>
+      <td>
+        <mwl-demo-utils-date-time-picker [(ngModel)]="event.end" (ngModelChange)="refresh.next()" placeholder="Not set">
+        </mwl-demo-utils-date-time-picker>
+      </td>
+      <td>
+        <button class="btn btn-danger" (click)="events.splice(index, 1); refresh.next()">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+
+</table>
