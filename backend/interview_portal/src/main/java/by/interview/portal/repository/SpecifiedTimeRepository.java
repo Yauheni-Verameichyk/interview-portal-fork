@@ -12,10 +12,9 @@ import by.interview.portal.domain.SpecifiedTime;
 
 @Repository
 public interface SpecifiedTimeRepository extends JpaRepository<SpecifiedTime, Long> {
-    // "SELECT u FROM USERS U WHERE u.DATEOFBIRTH BETWEEN "+ dateOfBirthSearch1 + " and " + dateOfBirthSearch2
-    // @Query("SELECT urd.discipline FROM UserRoleDiscipline urd where urd.user.login = :login and
-    // urd.discipline.parentId is null")
 
-    @Query("SELECT st FROM SpecifiedTime st where (( :requiredDate = st.startTime))")
-    List<SpecifiedTime> findAllInDate(@Param("requiredDate") LocalDateTime requiredDate);
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM select_specified_time_by_discipline( :rangeStart, :rangeEnd, :disciplineId)")
+    List<SpecifiedTime> findAllInRange(@Param("rangeStart") LocalDateTime rangeStart,
+            @Param("rangeEnd") LocalDateTime rangeEnd, @Param("disciplineId") Long disciplineId);
 }

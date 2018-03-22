@@ -1,7 +1,7 @@
 package by.interview.portal.domain;
 
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
+import java.time.Period;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,6 +15,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import by.interview.portal.attribute_converter.Interval;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "specified_time")
+@TypeDef(name = "interval", typeClass = Interval.class)
 public class SpecifiedTime {
 
     @Id
@@ -34,8 +39,12 @@ public class SpecifiedTime {
     @Column(name = "start_time")
     private LocalDateTime startTime;
 
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
+
     @Column(name = "repeat_interval", columnDefinition = "interval")
-    private TemporalAmount repeatInterval;
+    @Type(type = "interval")
+    private Period repeatInterval;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
