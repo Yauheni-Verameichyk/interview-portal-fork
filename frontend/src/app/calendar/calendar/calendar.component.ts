@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import RRule = require('rrule');
 import { Subject } from 'rxjs';
 import { CalendarService } from '../service/calendar.service';
@@ -63,11 +63,18 @@ export class CalendarComponent implements OnInit {
       const rule: RRule = this.calendarService.createRRule(this.view, this.viewDate, event);
       rule.all().forEach(date => {
         this.calendarEvents.push(
-          Object.assign({}, event, {
-            start: new Date(date)
-          })
-        );
+          Object.assign({}, event, { start: new Date(date) }, {
+            meta: { incrementsBadgeTotal: false }
+          }));
       });
+    });
+  }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach(day => {
+      day.badgeTotal = day.events.filter(
+        event => event.meta.incrementsBadgeTotal
+      ).length;
     });
   }
 }

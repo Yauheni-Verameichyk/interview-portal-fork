@@ -120,7 +120,8 @@ export class CalendarService {
       title: 'Empty slot ' + specifiedTime.id,
       start: new Date(specifiedTime.startTime),
       end: new Date(specifiedTime.endTime),
-      color: this.colors.green
+      color: this.colors.green,
+      meta: { incrementsBadgeTotal: false }
     }
   }
 
@@ -133,10 +134,10 @@ export class CalendarService {
 
   createRRule(view: string, viewDate: Date, event: RecurringEvent) {
     return new RRule(
-       Object.assign({}, event.rrule, {
-         dtstart: this.generateStartTime(view, viewDate, event.startTime),
-         until: this.generateEndTime(view, viewDate, event.endTime)
-       })
-     );
-   }
+      Object.assign({}, event.rrule, {
+        dtstart: this.generateStartTime(view, viewDate, event.startTime),
+        until: this.generateEndTime(view, viewDate, event.endTime)
+      })
+    );
+  }
 }
