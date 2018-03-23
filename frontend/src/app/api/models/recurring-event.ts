@@ -10,4 +10,3 @@ class RecurringEvent {
       byweekday?: RRule.Weekday[];
     };
   }
-  
