@@ -1,4 +1,4 @@
-<mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="updateCalendarEvents()" (viewChange)="updateCalendarEvents()">
+<mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="readAllEvents()" (viewChange)="readAllEvents()">
 </mwl-demo-utils-calendar-header>
 
 <div [ngSwitch]="view">
@@ -34,7 +34,7 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let event of calendarEvents; let index = index">
+    <tr *ngFor="let event of reccuringEvents; let index = index">
       <td>
         <input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()">
       </td>

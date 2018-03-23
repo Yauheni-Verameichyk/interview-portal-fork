@@ -1,4 +1,4 @@
-package by.interview.portal.attribute_converter;
+package by.interview.portal.utils;
 
 import java.io.Serializable;
 import java.sql.PreparedStatement;
