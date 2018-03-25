@@ -2,16 +2,15 @@
 
 -- DROP FUNCTION public.select_specified_time_by_discipline(timestamp without time zone, timestamp without time zone, bigint);
 
-CREATE OR REPLACE FUNCTION public.select_specified_time_by_discipline(
+CREATE OR REPLACE FUNCTION public.select_available_time_by_discipline(
 	range_start timestamp without time zone,
 	range_end timestamp without time zone,
 	for_discipline_id bigint)
     RETURNS SETOF specified_time 
     LANGUAGE 'plpgsql'
-    
-    STABLE 
-    ROWS 1000
+
 AS '
+
    DECLARE
    event specified_time;   
    id bigint;
@@ -20,6 +19,7 @@ AS '
    user_id bigint;
    end_time timestamp without time zone;
    next_time timestamp(4) without time zone;
+   interview interviews;
 
 BEGIN
 FOR event IN  SELECT * FROM specified_time 
@@ -30,7 +30,11 @@ where not (specified_time.end_time <= range_start OR specified_time.start_time >
     next_time = event.start_time;
 	WHILE (next_time <= range_end OR next_time <= event.end_time) 
     LOOP
-    	IF (next_time >= range_start AND next_time <= range_end)
+     SELECT * INTO interview
+        FROM interviews join interviews_users on interviews.id = interviews_users.interview_id
+        join users on interviews_users.user_id = users.id
+        WHERE users.id = event.user_id AND interviews.start_time = next_time;
+    	IF (next_time >= range_start AND next_time <= range_end AND interview is null)
           then RETURN NEXT event;
         END IF;
         EXIT WHEN (next_time >= range_start AND next_time <= range_end);
