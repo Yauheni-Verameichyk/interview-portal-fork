@@ -15,11 +15,11 @@
         <tr>
           <td>
             <form class="stub-div"> </form>
-            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click) = "specifiedTime.duration = specifiedTime.duration + 1">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration + 1">
               <span _ngcontent-c6="" class="chevron"></span>
             </button>
             <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.duration">
-            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click) = "specifiedTime.duration = specifiedTime.duration - 1">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration - 1">
               <span _ngcontent-c6="" class="chevron bottom"></span>
             </button>
           </td>
@@ -42,7 +42,44 @@
       <input type="radio" value="yearly" name="repeatPattern" [(ngModel)]="repeatPattern"> Yearly
       <input type="radio" value="custom" name="repeatPattern" [(ngModel)]="repeatPattern"> Custom
     </form>
-    <div *ngIf="repeatPattern === 'custom'">123</div>
+    <div *ngIf="repeatPattern === 'custom'">
+      <table class="table">
+        <tr>
+          <td>Years</td>
+          <td>Months</td>
+          <td>Days</td>
+        </tr>
+        <tr>
+          <td>
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration + 1">
+              <span _ngcontent-c6="" class="chevron"></span>
+            </button>
+            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.duration">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration - 1">
+              <span _ngcontent-c6="" class="chevron bottom"></span>
+            </button>
+          </td>
+          <td>
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration + 1">
+              <span _ngcontent-c6="" class="chevron"></span>
+            </button>
+            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.duration">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration - 1">
+              <span _ngcontent-c6="" class="chevron bottom"></span>
+            </button>
+          </td>
+          <td>
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration + 1">
+              <span _ngcontent-c6="" class="chevron"></span>
+            </button>
+            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.duration">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration - 1">
+              <span _ngcontent-c6="" class="chevron bottom"></span>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
     <div class="text-center" *ngIf="!noEdit">
       <a (click)="sendSpecifiedTime()" class="btn btn-primary">Save</a>
     </div>
