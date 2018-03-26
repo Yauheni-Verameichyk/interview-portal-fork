@@ -24,6 +24,44 @@ export class SpecifiedTimeControllerService extends BaseService {
   }
 
   /**
+   * @param specifiedTimeDTO specifiedTimeDTO
+   */
+   saveUsingPOST_2Response(specifiedTimeDTO: SpecifiedTimeDTO): Observable<HttpResponse<void>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = specifiedTimeDTO;
+    let req = new HttpRequest<any>(
+      "POST",
+      this.rootUrl + `/slots`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: void = null;
+        
+        return _resp.clone({body: _body}) as HttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * @param specifiedTimeDTO specifiedTimeDTO
+   */
+   saveUsingPOST_2(specifiedTimeDTO: SpecifiedTimeDTO): Observable<void> {
+    return this.saveUsingPOST_2Response(specifiedTimeDTO).pipe(
+      map(_r => _r.body)
+    );
+  }
+
+  /**
    * @param params The `SpecifiedTimeControllerService.FindAllInRangeUsingGETParams` containing the following parameters:
    *
    * - `rangeStart`: rangeStart
@@ -82,8 +120,6 @@ export class SpecifiedTimeControllerService extends BaseService {
   /**
    * @param params The `SpecifiedTimeControllerService.FindAllForUserInRangeUsingGETParams` containing the following parameters:
    *
-   * - `userId`: userId
-   *
    * - `rangeStart`: rangeStart
    *
    * - `rangeEnd`: rangeEnd
@@ -94,7 +130,6 @@ export class SpecifiedTimeControllerService extends BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-
 
 
     let req = new HttpRequest<any>(
@@ -120,8 +155,6 @@ export class SpecifiedTimeControllerService extends BaseService {
 
   /**
    * @param params The `SpecifiedTimeControllerService.FindAllForUserInRangeUsingGETParams` containing the following parameters:
-   *
-   * - `userId`: userId
    *
    * - `rangeStart`: rangeStart
    *

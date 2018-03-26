@@ -1,8 +1,9 @@
 class RecurringEvent {
+    id: number;
     title: string;
     color: any;
     startTime: Date;
-    endTime: Date
+    endTime: Date;
     rrule?: {
       freq: RRule.Frequency;
       bymonth?: number;

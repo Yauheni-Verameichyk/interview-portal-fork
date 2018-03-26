@@ -1,15 +1,15 @@
 /* tslint:disable */
 import { UserBaseInfoDTO } from './user-base-info-dto';
 
-export interface SpecifiedTimeDTO {
+export class SpecifiedTime {
 
-  endTime?: string;
+  endTime?: Date;
 
   id?: number;
 
   repeatInterval?: string;
 
-  startTime?: string;
+  startTime?: Date;
 
   user?: UserBaseInfoDTO;
 

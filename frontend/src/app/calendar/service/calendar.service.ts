@@ -11,7 +11,8 @@ import {
 } from 'date-fns';
 import RRule = require('rrule');
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
-import { CalendarEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CalendarService {
@@ -47,40 +48,61 @@ export class CalendarService {
     day: endOfDay
   };
 
+  actions: CalendarEventAction[] = [
+    {
+      label: '<i class="fas fa-pencil-alt"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        console.log('Edited ' + event.id);
+        this.router.navigate([{ outlets: { popup: ['calendar', 'edit', event.id]}} ]);
+      }
+    },
+    {
+      label: '<i class="fa fa-fw fa-times"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        console.log('Deleted ' + event.id);
+      }
+    }
+  ];
+
+
   weekDays = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA, RRule.SU];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   getStartOfPeriod(view: string, viewDate: Date): string {
-    return this.startOfPeriod[view](viewDate).toISOString().slice(0, -5)
+    return this.startOfPeriod[view](viewDate).toISOString().slice(0, -5);
   }
 
   getEndOfPeriod(view: string, viewDate: Date): string {
-    return this.endOfPeriod[view](viewDate).toISOString().slice(0, -5)
+    return this.endOfPeriod[view](viewDate).toISOString().slice(0, -5);
   }
 
   generateStartTime(view: string, viewDate: Date, startTime: Date) {
     return this.startOfPeriod[view](viewDate) > startTime
-      ? this.startOfPeriod[view](viewDate) : startTime
+      ? this.startOfPeriod[view](viewDate) : startTime;
   }
 
   generateEndTime(view: string, viewDate: Date, endTime: Date) {
     return this.endOfPeriod[view](viewDate) > endTime
-      ? endTime : this.endOfPeriod[view](viewDate)
+      ? endTime : this.endOfPeriod[view](viewDate);
   }
 
   generateRecurringEvent(specifiedTime: SpecifiedTimeDTO): RecurringEvent {
+    const startTime = new Date(specifiedTime.startTime);
+    const endTime = new Date(specifiedTime.endTime);
     return {
-      title: 'Empty slot ' + specifiedTime.id,
+      id: specifiedTime.id,
+      title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
+        + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
       color: this.colors.green,
-      startTime: new Date(specifiedTime.startTime),
-      endTime: new Date(specifiedTime.endTime),
-      rrule: this.generateRepeatRule(specifiedTime)
-    }
+      startTime: startTime,
+      endTime: endTime,
+      rrule: this.generateRepeatRule(specifiedTime),
+    };
   }
 
   generateRepeatRule(specifiedTime: SpecifiedTimeDTO): RecurringEvent['rrule'] {
-    let startTime = new Date(specifiedTime.startTime);
+    const startTime = new Date(specifiedTime.startTime);
     if (specifiedTime.repeatInterval.match(/\d+Y/)) {
       return this.generateYearlyRule(startTime);
     }
@@ -98,38 +120,39 @@ export class CalendarService {
       freq: RRule.YEARLY,
       bymonth: startTime.getMonth() + 1,
       bymonthday: startTime.getDate()
-    }
+    };
   }
 
   generateMonthlyRule(startTime: Date): RecurringEvent['rrule'] {
     return {
       freq: RRule.MONTHLY,
       bymonthday: startTime.getDate()
-    }
+    };
   }
 
   generateWeeklyRule(startTime: Date): RecurringEvent['rrule'] {
     return {
       freq: RRule.WEEKLY,
       byweekday: [this.weekDays[startTime.getDay() - 1]]
-    }
+    };
   }
 
   generateNonRepeatableEvent(specifiedTime: SpecifiedTimeDTO): CalendarEvent {
     return {
+      id: specifiedTime.id,
       title: 'Empty slot ' + specifiedTime.id,
       start: new Date(specifiedTime.startTime),
       end: new Date(specifiedTime.endTime),
       color: this.colors.green,
       meta: { incrementsBadgeTotal: false }
-    }
+    };
   }
 
   generateRequestParamsForEventsForUser(view: string, viewDate: Date) {
     return {
       rangeStart: this.getStartOfPeriod(view, viewDate),
       rangeEnd: this.getEndOfPeriod(view, viewDate)
-    }
+    };
   }
 
   createRRule(view: string, viewDate: Date, event: RecurringEvent) {

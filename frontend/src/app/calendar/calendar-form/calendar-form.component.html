@@ -1,0 +1,50 @@
+<div class="mask">
+  <div class="popup-form calendar-form">
+    <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
+    <table class="table table-bordered">
+
+      <thead>
+        <tr>
+          <th>Duration (hours)</th>
+          <th>Starts at</th>
+          <th>Ends at</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <form class="stub-div"> </form>
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click) = "specifiedTime.duration = specifiedTime.duration + 1">
+              <span _ngcontent-c6="" class="chevron"></span>
+            </button>
+            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.duration">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click) = "specifiedTime.duration = specifiedTime.duration - 1">
+              <span _ngcontent-c6="" class="chevron bottom"></span>
+            </button>
+          </td>
+          <td>
+            <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.startTime" (ngModelChange)="refresh.next()" placeholder="Not set">
+            </mwl-demo-utils-date-time-picker>
+          </td>
+          <td>
+            <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.endTime" (ngModelChange)="refresh.next()" placeholder="Not set">
+            </mwl-demo-utils-date-time-picker>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+    <input type="checkbox" [checked]="isRepeatable" (change)="isRepeatable = !isRepeatable; repeatPattern = null"> Checkbox
+    <form *ngIf="isRepeatable" #f="ngForm">
+      <input type="radio" value="weekly" name="repeatPattern" [(ngModel)]="repeatPattern"> Weekly
+      <input type="radio" value="monthly" name="repeatPattern" [(ngModel)]="repeatPattern"> Monthly
+      <input type="radio" value="yearly" name="repeatPattern" [(ngModel)]="repeatPattern"> Yearly
+      <input type="radio" value="custom" name="repeatPattern" [(ngModel)]="repeatPattern"> Custom
+    </form>
+    <div *ngIf="repeatPattern === 'custom'">123</div>
+    <div class="text-center" *ngIf="!noEdit">
+      <a (click)="sendSpecifiedTime()" class="btn btn-primary">Save</a>
+    </div>
+  </div>
+</div>
