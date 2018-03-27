@@ -13,9 +13,15 @@ export class CalendarFormComponent implements OnInit {
   specifiedTimeDTO: SpecifiedTimeDTO;
   specifiedTime: SpecifiedTime = new SpecifiedTime();
 
-  isRepeatable = false;
+  isRepeatable: boolean;
   repeatPattern: string;
   refresh: Subject<any> = new Subject();
+
+  repeatPeriod = {
+    years: 0,
+    months: 0,
+    days: 0
+  };
 
   constructor() { }
 

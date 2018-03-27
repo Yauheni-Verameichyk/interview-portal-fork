@@ -6,3 +6,8 @@
 .stub-div {
     height: 38px;
 }
+
+.is-repeatable {
+    width: 100px;
+    margin: auto;
+}

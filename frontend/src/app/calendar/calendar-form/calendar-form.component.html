@@ -2,15 +2,13 @@
   <div class="popup-form calendar-form">
     <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
     <table class="table table-bordered">
-
       <thead>
         <tr>
           <th>Duration (hours)</th>
           <th>Starts at</th>
-          <th>Ends at</th>
+          <th *ngIf="isRepeatable" >Ends at</th>
         </tr>
       </thead>
-
       <tbody>
         <tr>
           <td>
@@ -27,7 +25,7 @@
             <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.startTime" (ngModelChange)="refresh.next()" placeholder="Not set">
             </mwl-demo-utils-date-time-picker>
           </td>
-          <td>
+          <td *ngIf="isRepeatable" >
             <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.endTime" (ngModelChange)="refresh.next()" placeholder="Not set">
             </mwl-demo-utils-date-time-picker>
           </td>
@@ -35,7 +33,11 @@
       </tbody>
 
     </table>
-    <input type="checkbox" [checked]="isRepeatable" (change)="isRepeatable = !isRepeatable; repeatPattern = null"> Checkbox
+    <div class="custom-control custom-checkbox is-repeatable">
+      <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="isRepeatable" (change)="isRepeatable = !isRepeatable; repeatPattern = null">
+      <label class="custom-control-label" for="customCheck1">Repeatable</label>
+    </div>
+    <!-- <input type="checkbox" [checked]="isRepeatable" (change)="isRepeatable = !isRepeatable; repeatPattern = null"> Checkbox -->
     <form *ngIf="isRepeatable" #f="ngForm">
       <input type="radio" value="weekly" name="repeatPattern" [(ngModel)]="repeatPattern"> Weekly
       <input type="radio" value="monthly" name="repeatPattern" [(ngModel)]="repeatPattern"> Monthly
