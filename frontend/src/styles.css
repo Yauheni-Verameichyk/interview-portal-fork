@@ -225,15 +225,12 @@ caption {
     background-color: rgb(173, 173, 173) !important;
 }
 
-.customActive {
-    background-color: rgb(66, 65, 64) !important;
-}
 .button_close{
     text-align: right;
 }
 
 .discipline-table {
-   box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    border: 1px rgb(228, 227, 225) solid;
 }
 
 .unwrap-indicator {
