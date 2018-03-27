@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,18 @@ public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
 
     @Override
     public void save(SpecifiedTimeDTO specifiedTimeDTO) {
-        specifiedTimeService.save(specifiedTimeConverter.convertToEntity(specifiedTimeDTO));
+        LocalDateTime currentStartTime;
+        for (int i = 0; i < specifiedTimeDTO.getDuration(); i++) {
+            System.err.println(specifiedTimeDTO);
+            currentStartTime = specifiedTimeDTO.getStartTime();
+            SpecifiedTimeDTO timeSlot = specifiedTimeDTO;
+            BeanUtils.copyProperties(specifiedTimeDTO, timeSlot);
+            timeSlot.setStartTime(currentStartTime.plusHours(1));
+            System.err.println(timeSlot);
+            if (timeSlot.getEndTime() == null) {
+                timeSlot.setEndTime(currentStartTime.plusHours(2));
+            }
+            specifiedTimeService.save(specifiedTimeConverter.convertToEntity(specifiedTimeDTO));
+        }
     }
 }

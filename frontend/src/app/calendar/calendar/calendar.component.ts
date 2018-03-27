@@ -65,7 +65,8 @@ export class CalendarComponent implements OnInit {
     this.clearArrays();
     for (const timeSlot of timeSlots) {
       timeSlot.repeatInterval ? this.recurringEvents.push(this.calendarService.generateRecurringEvent(timeSlot))
-        : this.unreccuringCalendarEvents.push(this.calendarService.generateNonRepeatableEvent(timeSlot));
+        : this.calendarService.addCalendarEventToArray(this.unreccuringCalendarEvents,
+          this.calendarService.generateNonRepeatableEvent(timeSlot));
     }
     this.addRecurringEventsToCalendarEvents();
   }
@@ -81,12 +82,13 @@ export class CalendarComponent implements OnInit {
     this.recurringEvents.forEach(event => {
       const rule: RRule = this.calendarService.createRRule(this.view, this.viewDate, event);
       rule.all().forEach(date => {
-        this.calendarEvents.push(
-          Object.assign({}, event, { start: new Date(date) },
-          {actions: this.calendarService.actions},
-           {
+        console.log(date);
+        const calendarEvent = Object.assign({}, event, { start: new Date(date) },
+          { actions: this.calendarService.actions },
+          {
             meta: { incrementsBadgeTotal: false }
-          }));
+          });
+        this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent);
       });
     });
   }

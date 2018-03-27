@@ -14,7 +14,7 @@
 
 <h3>
   Edit events
-  <button class="btn btn-primary pull-right" (click)="specifyTime()">
+  <button class="btn btn-primary pull-right"  [routerLink]="['', {outlets: { popup: ['calendar', 'create'] } }]">
     Add new
   </button>
   <div class="clearfix"></div>

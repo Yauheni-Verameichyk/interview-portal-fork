@@ -30,6 +30,9 @@ public class Interval implements UserType {
 
     @Override
     public boolean equals(Object arg0, Object arg1) throws HibernateException {
+        if (arg0 == null) {
+            return arg1 == null;
+        }
         return arg0.equals(arg1);
     }
 
@@ -64,9 +67,9 @@ public class Interval implements UserType {
     public void nullSafeSet(PreparedStatement st, Object value, int index,
             SharedSessionContractImplementor session) throws HibernateException, SQLException {
         if (value == null) {
-            st.setNull(index, Types.VARCHAR);
+            st.setNull(index, Types.OTHER);
         } else {
-            st.setObject(index, getInterval(((Period) value)), Types.OTHER);
+            st.setObject(index, getInterval((Period) value), Types.OTHER);
         }
     }
 

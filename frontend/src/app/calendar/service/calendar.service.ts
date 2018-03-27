@@ -53,7 +53,7 @@ export class CalendarService {
       label: '<i class="fas fa-pencil-alt"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         console.log('Edited ' + event.id);
-        this.router.navigate([{ outlets: { popup: ['calendar', 'edit', event.id]}} ]);
+        this.router.navigate([{ outlets: { popup: ['calendar', 'edit', event.id] } }]);
       }
     },
     {
@@ -68,6 +68,14 @@ export class CalendarService {
   weekDays = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA, RRule.SU];
 
   constructor(private router: Router) { }
+
+  addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
+    console.log(event);
+    console.log(array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)));
+    // if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
+      array.push(event);
+    // }
+  }
 
   getStartOfPeriod(view: string, viewDate: Date): string {
     return this.startOfPeriod[view](viewDate).toISOString().slice(0, -5);
@@ -98,6 +106,21 @@ export class CalendarService {
       startTime: startTime,
       endTime: endTime,
       rrule: this.generateRepeatRule(specifiedTime),
+    };
+  }
+
+  generateNonRepeatableEvent(specifiedTime: SpecifiedTimeDTO): CalendarEvent {
+    const startTime = new Date(specifiedTime.startTime);
+    const endTime = new Date(specifiedTime.endTime);
+    return {
+      id: specifiedTime.id,
+      title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
+        + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
+      start: startTime,
+      end: endTime,
+      color: this.colors.green,
+      actions: this.actions,
+      meta: { incrementsBadgeTotal: false }
     };
   }
 
@@ -137,17 +160,6 @@ export class CalendarService {
     };
   }
 
-  generateNonRepeatableEvent(specifiedTime: SpecifiedTimeDTO): CalendarEvent {
-    return {
-      id: specifiedTime.id,
-      title: 'Empty slot ' + specifiedTime.id,
-      start: new Date(specifiedTime.startTime),
-      end: new Date(specifiedTime.endTime),
-      color: this.colors.green,
-      meta: { incrementsBadgeTotal: false }
-    };
-  }
-
   generateRequestParamsForEventsForUser(view: string, viewDate: Date) {
     return {
       rangeStart: this.getStartOfPeriod(view, viewDate),
@@ -162,5 +174,9 @@ export class CalendarService {
         until: this.generateEndTime(view, viewDate, event.endTime)
       })
     );
+  }
+
+  convertDateToString(date: Date) {
+    return date.toISOString().slice(0, -5);
   }
 }
