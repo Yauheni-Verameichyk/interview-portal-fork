@@ -10,7 +10,7 @@ import by.interview.portal.dto.UserDTO;
 
 public interface UserFacade {
 
-    List<UserDTO> findAll();
+    List<UserDTO> findAll(int quantity);
 
     void save(UserDTO user);
 
@@ -18,5 +18,5 @@ public interface UserFacade {
 
     List<UserBaseInfoDTO> findAllByRole(Role role);
 
-    List<UserBaseInfoDTO> findAllUserBaseInfo();
+    List<UserBaseInfoDTO> findAllUserBaseInfo(int page);
 }

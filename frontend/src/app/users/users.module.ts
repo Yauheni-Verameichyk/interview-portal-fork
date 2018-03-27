@@ -31,5 +31,4 @@ import { CreateUserResolvedGuard } from '../guard/create-user-resolved.guard';
   ]
 })
 export class UsersModule {
-  
 }

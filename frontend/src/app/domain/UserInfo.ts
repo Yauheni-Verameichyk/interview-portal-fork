@@ -7,12 +7,6 @@ export class UserInfo {
     public roles: Array<string>
   ) { }
 
-  // public id: number;
-  // public name: string;
-  // public surname: string;
-  // private roles: Array<string>;
-
-
   public get getRoles(): Array<string> | string[] {
     return this.roles.map(role => {
       role =  role.replace(/_/g, ' ').toLowerCase();

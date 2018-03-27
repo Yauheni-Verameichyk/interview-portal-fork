@@ -7,15 +7,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import by.interview.portal.domain.Discipline;
+import by.interview.portal.domain.Role;
+import by.interview.portal.dto.FullUserInfoDTO;
+import by.interview.portal.dto.UserBaseInfoDTO;
+import by.interview.portal.facade.UserFacade;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,11 +23,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import by.interview.portal.domain.Discipline;
-import by.interview.portal.domain.Role;
-import by.interview.portal.dto.FullUserInfoDTO;
-import by.interview.portal.dto.UserBaseInfoDTO;
-import by.interview.portal.facade.UserFacade;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @WithMockUser(username = "user1", password = "user1")
 @RunWith(SpringRunner.class)
@@ -67,7 +66,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnAllUsersList() throws Exception {
-        given(userFacade.findAllUserBaseInfo()).willReturn(Arrays.asList(userBaseInfoDTO));
+        given(userFacade.findAllUserBaseInfo(0)).willReturn(Arrays.asList(userBaseInfoDTO));
         mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(userBaseInfoDTO.getName())))

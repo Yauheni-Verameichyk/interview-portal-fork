@@ -12,8 +12,7 @@ import 'rxjs/add/operator/map';
 export class UserComponent implements OnInit {
   @Input() userObj: UserInfo;
   user: UserInfo;
- 
-
+  
   constructor(private router: Router, private route: ActivatedRoute) { }
   ngOnInit() {
     this.user = new UserInfo(this.userObj.id, this.userObj.name, this.userObj.surname, this.userObj.roles);

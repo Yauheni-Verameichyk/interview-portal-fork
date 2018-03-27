@@ -33,8 +33,8 @@ public class UserFacadeImpl implements UserFacade {
     private ModelMapper modelMapper;
 
     @Override
-    public List<UserDTO> findAll() {
-        return userService.findAll().stream().filter(Objects::nonNull)
+    public List<UserDTO> findAll(int quantity) {
+        return userService.findAll(quantity).stream().filter(Objects::nonNull)
                 .map(userDTOConverter::convertToDTO).collect(Collectors.toList());
     }
 
@@ -62,8 +62,8 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public List<UserBaseInfoDTO> findAllUserBaseInfo() {
-        return userService.findAll().stream().filter(Objects::nonNull)
+    public List<UserBaseInfoDTO> findAllUserBaseInfo(int page) {
+        return userService.findAll(page).stream().filter(Objects::nonNull)
                 .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
                 .collect(Collectors.toList());
     }

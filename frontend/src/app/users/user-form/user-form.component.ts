@@ -8,6 +8,7 @@ import { DisciplineDTO } from '../../api/models';
 import { UserFormMangerService } from '../../shared/select-role/service/user-form-manger.service';
 import 'rxjs/add/operator/takeUntil';
 import { FormValidatorService } from '../../shared/validator/validator-form/form-validator.service';
+import { LightFieldService } from '../../shared/validator/service/light-field.service';
 
 @Component({
   selector: 'app-user-form',
@@ -26,12 +27,12 @@ export class UserFormComponent implements OnInit, OnDestroy {
   user: User = {
     id: null,
     login: '',
+    password: '',
     name: '',
     surname: '',
-    password: '',
     phoneNumber: '',
     roleDisciplines: null
-  }
+  };
 
   constructor(
     private userController: UserControllerService,
@@ -40,6 +41,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     private formManager: UserFormMangerService,
     private router: Router,
     private formValidator: FormValidatorService,
+    private lightFieldService: LightFieldService
   ) { }
 
   ngOnInit(): void {
@@ -61,9 +63,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.user.login = changeData.login;
         this.user.phoneNumber = changeData.phoneNumber;
         this.user.surname = changeData.surname;
-        if(this.newUser){
-          this.user.password = changeData.password;
-        }
+        this.user.password = changeData.password;
       });
 
   }
@@ -79,7 +79,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
       surname: [this.user.surname, [Validators.required, this.formValidator.userNameValidator()]],
       email: [this.user.login, [Validators.required, Validators.email]],
       phoneNumber: [this.user.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
-      password: [this.user.password, [Validators.required, this.formValidator.lengthValidator()]]
+      password: [this.user.password, [Validators.required]]
     });
   }
   public editFrom() {
@@ -90,7 +90,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     if (this.userForm.valid) {
       this.formManager.showButton(false);
       this.userForm.disable();
-      this.userController.updateUser(this.user)
+      this.userController.saveUser(this.user)
         .takeUntil(this.destroy)
         .subscribe(() => {
           alert('User was successfully save');
@@ -100,6 +100,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
             alert('User was not successfully save');
             this.router.navigate(['users']);
           });
+    }else{
+      this.lightFieldService.lightField(this.userForm.controls);
     }
   }
   getAssignRoles(roles : { [key: string]: DisciplineDTO[] }): void {

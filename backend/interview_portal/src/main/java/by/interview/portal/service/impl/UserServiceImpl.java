@@ -7,6 +7,7 @@ import by.interview.portal.repository.UserRoleDisciplineRepository;
 import by.interview.portal.service.UserService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,8 @@ import java.util.Set;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+    private static final Integer QUANTITY_ELEMENTS_IN_PAGE = 10;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -25,8 +28,11 @@ public class UserServiceImpl implements UserService {
     private UserRoleDisciplineRepository userRoleDisciplineRepository;
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<User> findAll(int quantity) {
+        int pageCount = (int) Math.ceil(
+                new Integer(quantity).doubleValue() / QUANTITY_ELEMENTS_IN_PAGE.doubleValue());
+        return userRepository.findAll(PageRequest.of(pageCount, QUANTITY_ELEMENTS_IN_PAGE))
+                .getContent();
     }
 
     @Override

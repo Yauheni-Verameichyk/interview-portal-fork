@@ -11,7 +11,7 @@ import by.interview.portal.domain.User;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<User> findAll(int quantity);
 
     void save(User user);
 

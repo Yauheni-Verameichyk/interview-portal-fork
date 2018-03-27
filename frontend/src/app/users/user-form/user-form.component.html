@@ -47,7 +47,7 @@
         <div>
           <validator-message [field]="userForm.get('password')"></validator-message>
         </div>
-        <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+        <input type="password" class="form-control" formControlName="password" id="password" placeholder="password">
       </div>
     </div>
     <appSelectRole [roles]="user.roleDisciplines" (editRoles)="getAssignRoles($event)"></appSelectRole>

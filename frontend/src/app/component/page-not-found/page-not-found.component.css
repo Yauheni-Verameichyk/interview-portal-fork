@@ -1,0 +1,28 @@
+.container-scroller {
+    overflow: hidden; 
+    margin-top: 100px;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto; 
+}
+.content-wrapper.full-page-wrapper {
+    margin-left: 0;
+    width: 100%; 
+}
+.align-items-center{
+    align-items: baseline !important;
+}
+.text-center {
+    text-align: center !important; 
+}
+.error-page h1 {
+    font-size: 12rem; }
+    @media (max-width: 991px) {
+      .error-page h1 {
+        font-size: 8rem; } 
+}

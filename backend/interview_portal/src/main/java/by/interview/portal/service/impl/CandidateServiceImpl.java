@@ -5,8 +5,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import by.interview.portal.repository.CandidateEducationRepository;
-import by.interview.portal.repository.CandidateWorkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -14,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.interview.portal.domain.Candidate;
 import by.interview.portal.domain.Discipline;
+import by.interview.portal.repository.CandidateEducationRepository;
 import by.interview.portal.repository.CandidateRepository;
+import by.interview.portal.repository.CandidateWorkRepository;
 import by.interview.portal.repository.DisciplineRepository;
 import by.interview.portal.service.CandidateService;
 
@@ -59,7 +59,8 @@ public class CandidateServiceImpl implements CandidateService {
         candidateWorkRepository.removeWork();
     }
 
-    @Override public void delete(Long id) {
+    @Override
+    public void delete(Long id) {
         candidateRepository.deleteById(id);
     }
 

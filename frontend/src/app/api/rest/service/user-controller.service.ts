@@ -12,10 +12,10 @@ export class UserControllerService {
 
   constructor(private http: HttpClient) { }
 
-  public getUsers(): Observable<UserInfo[]> {
-    return this.http.get(this.baseUrl)
-      .pipe
-      (map(this.handlerData),
+  public getUsers(quantity?: number): Observable<UserInfo[]> {
+    const data = {quantity: quantity.toString()};
+    return this.http.get(this.baseUrl, {params: data})
+      .pipe(map(this.handlerData),
       catchError(this.handlerError)
       );
   }
@@ -50,7 +50,7 @@ export class UserControllerService {
     if (err.error instanceof Error) {
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
-      errorMessage = `Backend return code: ${err.status}, body was : ${err.error}`
+      errorMessage = `Backend return code: ${err.status}, body was : ${err.error}`;
     }
     console.log(errorMessage);
     return Observable.throw(errorMessage);

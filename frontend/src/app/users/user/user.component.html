@@ -2,15 +2,19 @@
     <td (click)="showUserInfo()">
         {{user.name}}</td>
     <td (click)="showUserInfo()">{{user.surname}}</td>
-    <td (click)="showUserInfo()">  
-        <span *ngFor="let role of user.getRoles">{{role}}
-            <br>
+    <td (click)="showUserInfo()">
+        <span *ngFor="let role of user.getRoles">{{role}},
         </span>
     </td>
-    <td *requiredAuthority="'USER_EDIT'" (click)="editUserInfo()">
-        <div class="btn btn-info">
-            <img class="fas fa-pencil-alt align-middle" />
+    <td *requiredAuthority="'USER_EDIT'">
+        <div (click)="showUserInfo()" class="btn btn-light pull-left">
+            <img class="fas fa-eye align-middle">
+        </div>
+        <div (click)="editUserInfo()" class="btn btn-light pull-left">
+            <img class="fas fa-pencil-alt align-middle">
+        </div>
+        <div class="btn btn-light pull-left" (click)="removeUser(user.id)">
+            <img class="far fa-trash-alt align-middle">
         </div>
     </td>
 </tr>
-
