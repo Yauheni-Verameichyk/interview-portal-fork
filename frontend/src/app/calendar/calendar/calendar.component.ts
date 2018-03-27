@@ -82,7 +82,6 @@ export class CalendarComponent implements OnInit {
     this.recurringEvents.forEach(event => {
       const rule: RRule = this.calendarService.createRRule(this.view, this.viewDate, event);
       rule.all().forEach(date => {
-        console.log(date);
         const calendarEvent = Object.assign({}, event, { start: new Date(date) },
           { actions: this.calendarService.actions },
           {
@@ -91,21 +90,6 @@ export class CalendarComponent implements OnInit {
         this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent);
       });
     });
-  }
-
-  specifyTime() {
-    const user: UserBaseInfoDTO = {
-      name: 'Vasia',
-      surname: 'Pupkin',
-      id: 563
-    };
-    const specifiedTime: SpecifiedTimeDTO = {
-      startTime: '2018-03-26T15:00:00',
-      endTime: '2019-03-26T15:00:00',
-      repeatInterval: 'P7D',
-      user: user
-    };
-    this.specifiedTimeControllerService.saveUsingPOST_2(specifiedTime).subscribe(response => { console.log('user was saved'); });
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {

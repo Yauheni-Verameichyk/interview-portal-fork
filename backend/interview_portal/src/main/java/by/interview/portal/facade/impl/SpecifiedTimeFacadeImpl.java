@@ -12,50 +12,61 @@ import org.springframework.stereotype.Service;
 
 import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.SpecifiedTime;
+import by.interview.portal.domain.User;
 import by.interview.portal.dto.SpecifiedTimeDTO;
 import by.interview.portal.facade.SpecifiedTimeFacade;
 import by.interview.portal.service.SpecifiedTimeService;
+import by.interview.portal.service.UserService;
+import by.interview.portal.utils.UserUtils;
 
 @Service
 public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
 
-    @Autowired
-    private SpecifiedTimeService specifiedTimeService;
+	@Autowired
+	private SpecifiedTimeService specifiedTimeService;
 
-    @Autowired
-    @Qualifier("specifiedTimeConverter")
-    private Converter<SpecifiedTime, SpecifiedTimeDTO> specifiedTimeConverter;
+	@Autowired
+	private UserService userService;
 
-    @Override
-    public List<SpecifiedTimeDTO> findAllInRange(LocalDateTime rangeStart, LocalDateTime rangeEnd,
-            Long disciplineId) {
-        return specifiedTimeService.findAllInRange(rangeStart, rangeEnd, disciplineId).stream()
-                .filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
-                .collect(Collectors.toList());
-    }
+	@Autowired
+	@Qualifier("specifiedTimeConverter")
+	private Converter<SpecifiedTime, SpecifiedTimeDTO> specifiedTimeConverter;
 
-    @Override
-    public List<SpecifiedTimeDTO> findAllForUserInRange(LocalDateTime rangeStart,
-            LocalDateTime rangeEnd) {
-        return specifiedTimeService.findAllForUserInRange(rangeStart, rangeEnd).stream()
-                .filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
-                .collect(Collectors.toList());
-    }
+	@Override
+	public List<SpecifiedTimeDTO> findAllInRange(LocalDateTime rangeStart, LocalDateTime rangeEnd,
+			Long disciplineId) {
+		return specifiedTimeService.findAllInRange(rangeStart, rangeEnd, disciplineId).stream()
+				.filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
+				.collect(Collectors.toList());
+	}
 
-    @Override
-    public void save(SpecifiedTimeDTO specifiedTimeDTO) {
-        LocalDateTime currentStartTime;
-        for (int i = 0; i < specifiedTimeDTO.getDuration(); i++) {
-            System.err.println(specifiedTimeDTO);
-            currentStartTime = specifiedTimeDTO.getStartTime();
-            SpecifiedTimeDTO timeSlot = specifiedTimeDTO;
-            BeanUtils.copyProperties(specifiedTimeDTO, timeSlot);
-            timeSlot.setStartTime(currentStartTime.plusHours(1));
-            System.err.println(timeSlot);
-            if (timeSlot.getEndTime() == null) {
-                timeSlot.setEndTime(currentStartTime.plusHours(2));
-            }
-            specifiedTimeService.save(specifiedTimeConverter.convertToEntity(specifiedTimeDTO));
-        }
-    }
+	@Override
+	public List<SpecifiedTimeDTO> findAllForUserInRange(LocalDateTime rangeStart,
+			LocalDateTime rangeEnd) {
+		return specifiedTimeService.findAllForUserInRange(rangeStart, rangeEnd).stream()
+				.filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public void save(SpecifiedTimeDTO specifiedTimeDTO) {
+		LocalDateTime currentStartTime = specifiedTimeDTO.getStartTime();
+		User user = userService.findUserByLogin(UserUtils.getCurrentUsersUsername()).get();
+		for (int i = 0; i < specifiedTimeDTO.getDuration(); i++) {
+			SpecifiedTimeDTO timeSlot = copyObject(specifiedTimeDTO);
+			timeSlot.setStartTime(currentStartTime.plusHours(i));
+			if (timeSlot.getEndTime() == null) {
+				timeSlot.setEndTime(currentStartTime.plusHours(1));
+			}
+			SpecifiedTime specifiedTime = specifiedTimeConverter.convertToEntity(timeSlot);
+			specifiedTime.setUser(user);
+			specifiedTimeService.save(specifiedTime);
+		}
+	}
+
+	private SpecifiedTimeDTO copyObject(SpecifiedTimeDTO specifiedTimeDTO) {
+		SpecifiedTimeDTO timeSlot = new SpecifiedTimeDTO();
+		BeanUtils.copyProperties(specifiedTimeDTO, timeSlot);
+		return timeSlot;
+	}
 }

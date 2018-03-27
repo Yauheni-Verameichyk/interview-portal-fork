@@ -65,32 +65,39 @@ export class CalendarService {
   ];
 
 
-  weekDays = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA, RRule.SU];
+  weekDays = [RRule.SU, RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA];
 
   constructor(private router: Router) { }
 
   addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
-    console.log(event);
-    console.log(array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)));
-    // if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
+    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
       array.push(event);
-    // }
+    }
   }
 
   getStartOfPeriod(view: string, viewDate: Date): string {
-    return this.startOfPeriod[view](viewDate).toISOString().slice(0, -5);
+    return new Date(this.startOfPeriod[view](viewDate).getTime()
+      - (this.startOfPeriod[view](viewDate).getTimezoneOffset() * 60000)).toISOString().slice(0, -5);
   }
 
   getEndOfPeriod(view: string, viewDate: Date): string {
-    return this.endOfPeriod[view](viewDate).toISOString().slice(0, -5);
+    return new Date(this.endOfPeriod[view](viewDate).getTime()
+      - (this.endOfPeriod[view](viewDate).getTimezoneOffset() * 60000)).toISOString().slice(0, -5);
   }
 
-  generateStartTime(view: string, viewDate: Date, startTime: Date) {
-    return this.startOfPeriod[view](viewDate) > startTime
-      ? this.startOfPeriod[view](viewDate) : startTime;
+  generateStartTime(view: string, viewDate: Date, startTime: Date): Date {
+    let date: Date;
+    if (this.startOfPeriod[view](viewDate) > startTime) {
+      date = this.startOfPeriod[view](viewDate);
+      date.setHours(startTime.getHours());
+      date.setDate(date.getDate() - 7);
+    } else {
+      date = startTime;
+    }
+    return date;
   }
 
-  generateEndTime(view: string, viewDate: Date, endTime: Date) {
+  generateEndTime(view: string, viewDate: Date, endTime: Date): Date {
     return this.endOfPeriod[view](viewDate) > endTime
       ? endTime : this.endOfPeriod[view](viewDate);
   }
@@ -156,7 +163,7 @@ export class CalendarService {
   generateWeeklyRule(startTime: Date): RecurringEvent['rrule'] {
     return {
       freq: RRule.WEEKLY,
-      byweekday: [this.weekDays[startTime.getDay() - 1]]
+      byweekday: [this.weekDays[startTime.getDay()]]
     };
   }
 
@@ -177,6 +184,6 @@ export class CalendarService {
   }
 
   convertDateToString(date: Date) {
-    return date.toISOString().slice(0, -5);
+    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -5);
   }
 }

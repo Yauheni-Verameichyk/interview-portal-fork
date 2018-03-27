@@ -38,11 +38,6 @@ export class CalendarFormComponent implements OnInit {
   }
 
   sendSpecifiedTime() {
-    const user: UserBaseInfoDTO = {
-      name: 'Vasia',
-      surname: 'Pupkin',
-      id: 563
-    };
     if (this.specifiedTime.endTime <= this.specifiedTime.startTime) {
       throw new Error('End time is earlier than start time');
     }
@@ -50,7 +45,7 @@ export class CalendarFormComponent implements OnInit {
       endTime: this.specifiedTime.endTime ? this.calendarService.convertDateToString(this.specifiedTime.endTime) : null,
       startTime: this.calendarService.convertDateToString(this.specifiedTime.startTime),
       id: this.specifiedTime.id,
-      user: user,
+      user: null,
       repeatInterval: this.isRepeatable ? this.generateRepeatInterval() : null,
       duration: this.specifiedTime.duration
     };
