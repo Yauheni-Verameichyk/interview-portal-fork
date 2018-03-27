@@ -38,10 +38,65 @@ table {
     display: inline-block;
     width: 44px;
     height: 44px;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:visited {
+    background-color: rgb(173, 173, 173) !important;
+}
+
+.button_close{
+    text-align: right;
+}
+
+.discipline-table {
+    border: 1px rgb(228, 227, 225) solid;
+}
+
+.unwrap-indicator {
+    border: 0px !important;
+}
+
+.big-icon {
+    font-size: 24px !important;
+    height: 100%;
+    width: 48px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.btn-xl {
+    padding: 0px;
+    font-size: 27px;
+}
+
+input.ng-touched.ng-invalid{
+    border-color: rgb(255, 113, 113);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+select.ng-touched.ng-invalid{
+    border-color: rgb(255, 113, 113);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.bg-gray {
+    background-color: #dee2e6 !important;
+}
+
+.popup-form { 
+    z-index: 900;
+    top: 10px;
+    background-color: white;
+    left: 50%;
+    transform: translate(-50%);
+    min-width: 450px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
     text-align: center;
     line-height: 1;
     font-size: 16px;
-    border-radius: 50%;
+    border-radius: 2%;
     right: 15px;
     bottom: 15px;
     transition: background 0.5s;

@@ -21,6 +21,7 @@ import { CandidatesModule } from './candidates/candidates.module';
 import { CandidateControllerService } from './api/services/candidate-controller.service';
 import { AuthenticationInterceptor } from './interceptor/authentication-interceptor';
 import { WelcomePageComponent } from './component/welcome-page/welcome-page.component';
+import { CustomCalendarModule } from './calendar/calendar.module';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { WelcomePageComponent } from './component/welcome-page/welcome-page.comp
     UsersModule,
     DisciplinesModule,
     CandidatesModule,
+    CustomCalendarModule,
     AppRoutingModule,
     SharedModule
   ],

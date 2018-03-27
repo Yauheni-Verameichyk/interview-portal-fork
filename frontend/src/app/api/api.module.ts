@@ -6,6 +6,7 @@ import { DisciplineControllerService } from './services/discipline-controller.se
 import { UserControllerService } from './services/user-controller.service';
 import { CandidateControllerService } from './services/candidate-controller.service';
 import { BaseService } from './base-service';
+import { SpecifiedTimeControllerService } from './services/specified-time-controller.service';
 
 
 
@@ -24,7 +25,8 @@ import { BaseService } from './base-service';
     ApiConfiguration,
     DisciplineControllerService,
     CandidateControllerService,
-    UserControllerService
+    UserControllerService,
+    SpecifiedTimeControllerService
   ],
 })
 export class ApiModule { }
