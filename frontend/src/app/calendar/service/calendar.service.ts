@@ -186,4 +186,10 @@ export class CalendarService {
   convertDateToString(date: Date) {
     return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -5);
   }
+
+  sortCalendarEvents(calendarEvents: CalendarEvent[]): void {
+    calendarEvents.sort(function (a, b) {
+      if (a.start > b.start) { return 1 } if (a.start < b.start) { return -1 } return 0
+    })
+  }
 }

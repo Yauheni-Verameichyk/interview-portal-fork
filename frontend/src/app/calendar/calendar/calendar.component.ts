@@ -84,12 +84,11 @@ export class CalendarComponent implements OnInit {
       rule.all().forEach(date => {
         const calendarEvent = Object.assign({}, event, { start: new Date(date) },
           { actions: this.calendarService.actions },
-          {
-            meta: { incrementsBadgeTotal: false }
-          });
+          { meta: { incrementsBadgeTotal: false } });
         this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent);
       });
     });
+    this.calendarService.sortCalendarEvents(this.calendarEvents);
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
