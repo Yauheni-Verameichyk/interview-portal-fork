@@ -29,4 +29,9 @@ public class SpecifiedTimeServiceImpl implements SpecifiedTimeService {
         return specifiedTimeRepository.findAllForUserInRange(rangeStart, rangeEnd,
                 UserUtils.getCurrentUsersUsername());
     }
+
+    @Override
+    public void save(SpecifiedTime specifiedTime) {
+        specifiedTimeRepository.save(specifiedTime);
+    }
 }

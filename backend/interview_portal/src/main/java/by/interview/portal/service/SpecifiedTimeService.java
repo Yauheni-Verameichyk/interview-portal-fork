@@ -11,4 +11,6 @@ public interface SpecifiedTimeService {
             Long disciplineId);
 
     List<SpecifiedTime> findAllForUserInRange(LocalDateTime rangeStart, LocalDateTime rangeEnd);
+
+    void save(SpecifiedTime specifiedTime);
 }

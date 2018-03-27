@@ -40,4 +40,9 @@ public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
                 .filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void save(SpecifiedTimeDTO specifiedTimeDTO) {
+        specifiedTimeService.save(specifiedTimeConverter.convertToEntity(specifiedTimeDTO));
+    }
 }
