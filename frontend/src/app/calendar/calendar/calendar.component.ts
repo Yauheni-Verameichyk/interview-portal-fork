@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
-import RRule = require('rrule');
+import {RRule} from 'rrule';
 import { Subject } from 'rxjs';
 import { CalendarService } from '../service/calendar.service';
 import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
