@@ -189,7 +189,7 @@ export class CalendarService {
 
   sortCalendarEvents(calendarEvents: CalendarEvent[]): void {
     calendarEvents.sort(function (a, b) {
-      if (a.start > b.start) { return 1 } if (a.start < b.start) { return -1 } return 0
-    })
+      if (a.start > b.start) { return 1; } if (a.start < b.start) { return -1; } return 0;
+    });
   }
 }

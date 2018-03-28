@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { CalendarService } from '../service/calendar.service';
 import { UserBaseInfoDTO } from '../../api/models/user-base-info-dto';
 import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar-form',
@@ -28,9 +29,14 @@ export class CalendarFormComponent implements OnInit {
 
   constructor(
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
-    private calendarService: CalendarService) { }
+    private calendarService: CalendarService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
+    if (+this.route.snapshot.paramMap.get('specifiedTimeId')) {
+      
+    }
     this.specifiedTime.startTime = new Date();
     this.specifiedTime.startTime.setMinutes(0);
     this.specifiedTime.startTime.setSeconds(0);
