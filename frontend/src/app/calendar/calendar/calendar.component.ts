@@ -65,7 +65,8 @@ export class CalendarComponent implements OnInit {
     this.clearArrays();
     for (const timeSlot of timeSlots) {
       timeSlot.repeatInterval ? this.recurringEvents.push(this.calendarService.generateRecurringEvent(timeSlot))
-        : this.unreccuringCalendarEvents.push(this.calendarService.generateNonRepeatableEvent(timeSlot));
+        : this.calendarService.addCalendarEventToArray(this.unreccuringCalendarEvents,
+          this.calendarService.generateNonRepeatableEvent(timeSlot));
     }
     this.addRecurringEventsToCalendarEvents();
   }
@@ -81,29 +82,13 @@ export class CalendarComponent implements OnInit {
     this.recurringEvents.forEach(event => {
       const rule: RRule = this.calendarService.createRRule(this.view, this.viewDate, event);
       rule.all().forEach(date => {
-        this.calendarEvents.push(
-          Object.assign({}, event, { start: new Date(date) },
-          {actions: this.calendarService.actions},
-           {
-            meta: { incrementsBadgeTotal: false }
-          }));
+        const calendarEvent = Object.assign({}, event, { start: new Date(date) },
+          { actions: this.calendarService.actions },
+          { meta: { incrementsBadgeTotal: false } });
+        this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent);
       });
     });
-  }
-
-  specifyTime() {
-    const user: UserBaseInfoDTO = {
-      name: 'Vasia',
-      surname: 'Pupkin',
-      id: 563
-    };
-    const specifiedTime: SpecifiedTimeDTO = {
-      startTime: '2018-03-26T15:00:00',
-      endTime: '2019-03-26T15:00:00',
-      repeatInterval: 'P7D',
-      user: user
-    };
-    this.specifiedTimeControllerService.saveUsingPOST_2(specifiedTime).subscribe(response => { console.log('user was saved'); });
+    this.calendarService.sortCalendarEvents(this.calendarEvents);
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {

@@ -53,7 +53,7 @@ export class CalendarService {
       label: '<i class="fas fa-pencil-alt"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         console.log('Edited ' + event.id);
-        this.router.navigate([{ outlets: { popup: ['calendar', 'edit', event.id]}} ]);
+        this.router.navigate([{ outlets: { popup: ['calendar', 'edit', event.id] } }]);
       }
     },
     {
@@ -65,24 +65,39 @@ export class CalendarService {
   ];
 
 
-  weekDays = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA, RRule.SU];
+  weekDays = [RRule.SU, RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA];
 
   constructor(private router: Router) { }
 
+  addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
+    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
+      array.push(event);
+    }
+  }
+
   getStartOfPeriod(view: string, viewDate: Date): string {
-    return this.startOfPeriod[view](viewDate).toISOString().slice(0, -5);
+    return new Date(this.startOfPeriod[view](viewDate).getTime()
+      - (this.startOfPeriod[view](viewDate).getTimezoneOffset() * 60000)).toISOString().slice(0, -5);
   }
 
   getEndOfPeriod(view: string, viewDate: Date): string {
-    return this.endOfPeriod[view](viewDate).toISOString().slice(0, -5);
+    return new Date(this.endOfPeriod[view](viewDate).getTime()
+      - (this.endOfPeriod[view](viewDate).getTimezoneOffset() * 60000)).toISOString().slice(0, -5);
   }
 
-  generateStartTime(view: string, viewDate: Date, startTime: Date) {
-    return this.startOfPeriod[view](viewDate) > startTime
-      ? this.startOfPeriod[view](viewDate) : startTime;
+  generateStartTime(view: string, viewDate: Date, startTime: Date): Date {
+    let date: Date;
+    if (this.startOfPeriod[view](viewDate) > startTime) {
+      date = this.startOfPeriod[view](viewDate);
+      date.setHours(startTime.getHours());
+      date.setDate(date.getDate() - 7);
+    } else {
+      date = startTime;
+    }
+    return date;
   }
 
-  generateEndTime(view: string, viewDate: Date, endTime: Date) {
+  generateEndTime(view: string, viewDate: Date, endTime: Date): Date {
     return this.endOfPeriod[view](viewDate) > endTime
       ? endTime : this.endOfPeriod[view](viewDate);
   }
@@ -98,6 +113,21 @@ export class CalendarService {
       startTime: startTime,
       endTime: endTime,
       rrule: this.generateRepeatRule(specifiedTime),
+    };
+  }
+
+  generateNonRepeatableEvent(specifiedTime: SpecifiedTimeDTO): CalendarEvent {
+    const startTime = new Date(specifiedTime.startTime);
+    const endTime = new Date(specifiedTime.endTime);
+    return {
+      id: specifiedTime.id,
+      title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
+        + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
+      start: startTime,
+      end: endTime,
+      color: this.colors.green,
+      actions: this.actions,
+      meta: { incrementsBadgeTotal: false }
     };
   }
 
@@ -133,18 +163,7 @@ export class CalendarService {
   generateWeeklyRule(startTime: Date): RecurringEvent['rrule'] {
     return {
       freq: RRule.WEEKLY,
-      byweekday: [this.weekDays[startTime.getDay() - 1]]
-    };
-  }
-
-  generateNonRepeatableEvent(specifiedTime: SpecifiedTimeDTO): CalendarEvent {
-    return {
-      id: specifiedTime.id,
-      title: 'Empty slot ' + specifiedTime.id,
-      start: new Date(specifiedTime.startTime),
-      end: new Date(specifiedTime.endTime),
-      color: this.colors.green,
-      meta: { incrementsBadgeTotal: false }
+      byweekday: [this.weekDays[startTime.getDay()]]
     };
   }
 
@@ -162,5 +181,15 @@ export class CalendarService {
         until: this.generateEndTime(view, viewDate, event.endTime)
       })
     );
+  }
+
+  convertDateToString(date: Date) {
+    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -5);
+  }
+
+  sortCalendarEvents(calendarEvents: CalendarEvent[]): void {
+    calendarEvents.sort(function (a, b) {
+      if (a.start > b.start) { return 1; } if (a.start < b.start) { return -1; } return 0;
+    });
   }
 }
