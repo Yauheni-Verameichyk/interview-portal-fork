@@ -9,7 +9,7 @@ import {
   endOfWeek,
   endOfDay
 } from 'date-fns';
-import { RRule } from 'rrule';
+import {RRule} from 'rrule';
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { Router } from '@angular/router';
