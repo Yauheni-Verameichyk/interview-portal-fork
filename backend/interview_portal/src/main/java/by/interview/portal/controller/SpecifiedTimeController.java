@@ -44,13 +44,10 @@ public class SpecifiedTimeController {
                     pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime rangeEnd) {
         return specifiedTimeFacade.findAllForUserInRange(rangeStart, rangeEnd);
     }
-<<<<<<< HEAD
-=======
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping
     public void save(@RequestBody SpecifiedTimeDTO specifiedTimeDTO) {
         specifiedTimeFacade.save(specifiedTimeDTO);
     }
->>>>>>> 6ee54243affd6fa31590350239f933b2e5d2cd90
 }

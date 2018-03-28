@@ -1,8 +1,6 @@
-<div class="user_form">
+<div class="popup-form">
   <div class="button_close">
-    <button (click)="close()" type="button" class="btn btn-primary">Close
-      <i class="fas fa-times"></i>
-    </button>
+    <span class="window-close"(click)="close()"></span>
   </div>
   <form [formGroup]='userForm'>
     <h2>User: {{user.name}}</h2>

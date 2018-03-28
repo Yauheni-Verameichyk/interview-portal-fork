@@ -1,5 +1,7 @@
-.user_form{
-    width: 50%;
-    margin: 0 auto;
-    margin-top: 80px;
+.popup-form {
+    margin-top: 100px;
+}
+.popup-form form{
+    margin: 10px 10px;
+    margin-bottom: 20px;
 }

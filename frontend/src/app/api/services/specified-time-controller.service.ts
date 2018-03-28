@@ -120,11 +120,6 @@ export class SpecifiedTimeControllerService extends BaseService {
   /**
    * @param params The `SpecifiedTimeControllerService.FindAllForUserInRangeUsingGETParams` containing the following parameters:
    *
-<<<<<<< HEAD
-   * - `userId`: userId
-   *
-=======
->>>>>>> 6ee54243affd6fa31590350239f933b2e5d2cd90
    * - `rangeStart`: rangeStart
    *
    * - `rangeEnd`: rangeEnd
@@ -137,10 +132,6 @@ export class SpecifiedTimeControllerService extends BaseService {
     let __body: any = null;
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6ee54243affd6fa31590350239f933b2e5d2cd90
     let req = new HttpRequest<any>(
       "GET",
       this.rootUrl + `/slots/user/${params.rangeStart}/${params.rangeEnd}`,
@@ -165,11 +156,6 @@ export class SpecifiedTimeControllerService extends BaseService {
   /**
    * @param params The `SpecifiedTimeControllerService.FindAllForUserInRangeUsingGETParams` containing the following parameters:
    *
-<<<<<<< HEAD
-   * - `userId`: userId
-   *
-=======
->>>>>>> 6ee54243affd6fa31590350239f933b2e5d2cd90
    * - `rangeStart`: rangeStart
    *
    * - `rangeEnd`: rangeEnd

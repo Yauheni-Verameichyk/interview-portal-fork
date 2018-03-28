@@ -1,6 +1,6 @@
 <form [formGroup]="candidateForm">
+  <h4 class="table-title">Work history</h4>
   <table class="table table-bordered" formArrayName="candidateWorkList">
-    <caption>Work history</caption>
     <thead class="thead-light">
       <tr>
         <th scope="col">Company name</th>
@@ -36,7 +36,7 @@
       </tr>
     </tbody>
   </table>
-  <button class="btn btn-light bg-gray col-md-12" (click)="additionWork()" *ngIf="candidateForm.enabled" >
+  <button class="btn btn-info mr-2 col-md-12" (click)="additionWork()" *ngIf="candidateForm.enabled" >
     <span class="fas fa-plus align-middle"></span>
     Add work
   </button>

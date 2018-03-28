@@ -1,5 +1,5 @@
 <form [formGroup]="candidateForm">
-  <caption>Assigned disciplines</caption>
+  <h4 class="assigned-discipline-title">Assigned disciplines</h4>
   <div formArrayName="disciplineList">
     <div class='selectDisciplines' *ngFor="let discipline of candidateForm.controls.disciplineList.controls; let i = index" [formGroupName]="i">
       <select id="inputState" class="form-control" formControlName="id" 
@@ -15,7 +15,7 @@
       <validator-message [field]="discipline.get('id')" [messageRequired]="messageDisciplineNotSelected"></validator-message>
     </div>
   </div>
-  <button class="btn btn-light col-md-12 bg-gray" (click)="additionDiscipline()" *ngIf="candidateForm.enabled">
+  <button class="btn btn-info mr-2 col-md-12" (click)="additionDiscipline()" *ngIf="candidateForm.enabled">
     <span class="fas fa-plus align-middle"></span>
     Assign to the additional discipline
   </button>

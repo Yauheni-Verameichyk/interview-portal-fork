@@ -1,3 +1,10 @@
 .edit-buttons{
     width: 170px;
 }
+
+.subItem{
+    padding-left:25px;
+}
+.disciplinesList{
+    margin-bottom: 0;
+}

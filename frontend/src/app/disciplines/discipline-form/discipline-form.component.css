@@ -6,5 +6,10 @@
 }
 .popup-form form{
     margin: 10px 10px;
+    margin-bottom: 20px;
+}
+.d-f-button_close{
+    text-align: center;
+    margin-bottom: 20px;
 }
 

@@ -19,3 +19,7 @@ table {
 th, td {
     padding: 7px;
 }
+.table-title {
+    margin-top: 10px;
+    text-align: center;
+}
