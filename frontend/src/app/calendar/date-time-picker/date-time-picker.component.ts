@@ -41,9 +41,9 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 
   datePicker: any;
 
-  private onChangeCallback: (date: Date) => void = () => {};
+  private onChangeCallback: (date: Date) => void = () => { };
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   writeValue(date: Date): void {
     this.date = date;
@@ -64,7 +64,7 @@ export class DateTimePickerComponent implements ControlValueAccessor {
     this.onChangeCallback = fn;
   }
 
-  registerOnTouched(fn: any): void {}
+  registerOnTouched(fn: any): void { }
 
   updateDate(): void {
     const newDate: Date = setYear(

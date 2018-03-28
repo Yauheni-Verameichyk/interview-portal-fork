@@ -22,51 +22,56 @@ import by.interview.portal.utils.UserUtils;
 @Service
 public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
 
-	@Autowired
-	private SpecifiedTimeService specifiedTimeService;
+    @Autowired
+    private SpecifiedTimeService specifiedTimeService;
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	@Qualifier("specifiedTimeConverter")
-	private Converter<SpecifiedTime, SpecifiedTimeDTO> specifiedTimeConverter;
+    @Autowired
+    @Qualifier("specifiedTimeConverter")
+    private Converter<SpecifiedTime, SpecifiedTimeDTO> specifiedTimeConverter;
 
-	@Override
-	public List<SpecifiedTimeDTO> findAllInRange(LocalDateTime rangeStart, LocalDateTime rangeEnd,
-			Long disciplineId) {
-		return specifiedTimeService.findAllInRange(rangeStart, rangeEnd, disciplineId).stream()
-				.filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
-				.collect(Collectors.toList());
-	}
+    @Override
+    public List<SpecifiedTimeDTO> findAllInRange(LocalDateTime rangeStart, LocalDateTime rangeEnd,
+            Long disciplineId) {
+        return specifiedTimeService.findAllInRange(rangeStart, rangeEnd, disciplineId).stream()
+                .filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
+                .collect(Collectors.toList());
+    }
 
-	@Override
-	public List<SpecifiedTimeDTO> findAllForUserInRange(LocalDateTime rangeStart,
-			LocalDateTime rangeEnd) {
-		return specifiedTimeService.findAllForUserInRange(rangeStart, rangeEnd).stream()
-				.filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
-				.collect(Collectors.toList());
-	}
+    @Override
+    public List<SpecifiedTimeDTO> findAllForUserInRange(LocalDateTime rangeStart,
+            LocalDateTime rangeEnd) {
+        return specifiedTimeService.findAllForUserInRange(rangeStart, rangeEnd).stream()
+                .filter(Objects::nonNull).map(specifiedTimeConverter::convertToDTO)
+                .collect(Collectors.toList());
+    }
 
-	@Override
-	public void save(SpecifiedTimeDTO specifiedTimeDTO) {
-		LocalDateTime currentStartTime = specifiedTimeDTO.getStartTime();
-		User user = userService.findUserByLogin(UserUtils.getCurrentUsersUsername()).get();
-		for (int i = 0; i < specifiedTimeDTO.getDuration(); i++) {
-			SpecifiedTimeDTO timeSlot = copyObject(specifiedTimeDTO);
-			timeSlot.setStartTime(currentStartTime.plusHours(i));
-			if (timeSlot.getEndTime() == null) {
-				timeSlot.setEndTime(currentStartTime.plusHours(1));
-			}
-			SpecifiedTime specifiedTime = specifiedTimeConverter.convertToEntity(timeSlot);
-			specifiedTime.setUser(user);
-			specifiedTimeService.save(specifiedTime);
-		}
-	}
+    @Override
+    public void save(SpecifiedTimeDTO specifiedTimeDTO) {
+        LocalDateTime currentStartTime = specifiedTimeDTO.getStartTime();
+        User user = userService.findUserByLogin(UserUtils.getCurrentUsersUsername()).get();
+        for (int i = 0; i < specifiedTimeDTO.getDuration(); i++) {
+            SpecifiedTimeDTO timeSlot = copyObject(specifiedTimeDTO);
+            timeSlot.setStartTime(currentStartTime.plusHours(i));
+            if (timeSlot.getEndTime() == null) {
+                timeSlot.setEndTime(currentStartTime.plusHours(i + 1));
+            }
+            SpecifiedTime specifiedTime = specifiedTimeConverter.convertToEntity(timeSlot);
+            specifiedTime.setUser(user);
+            specifiedTimeService.save(specifiedTime);
+        }
+    }
 
-	private SpecifiedTimeDTO copyObject(SpecifiedTimeDTO specifiedTimeDTO) {
-		SpecifiedTimeDTO timeSlot = new SpecifiedTimeDTO();
-		BeanUtils.copyProperties(specifiedTimeDTO, timeSlot);
-		return timeSlot;
-	}
+    private SpecifiedTimeDTO copyObject(SpecifiedTimeDTO specifiedTimeDTO) {
+        SpecifiedTimeDTO timeSlot = new SpecifiedTimeDTO();
+        BeanUtils.copyProperties(specifiedTimeDTO, timeSlot);
+        return timeSlot;
+    }
+
+    @Override
+    public SpecifiedTimeDTO findById(Long id) {
+        return specifiedTimeConverter.convertToDTO(specifiedTimeService.findById(id));
+    }
 }

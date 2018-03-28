@@ -15,5 +15,4 @@ public interface UserRoleDisciplineRepository extends JpaRepository<UserRoleDisc
     List<UserRoleDiscipline> findAllByRoleAndDiscipline(Role role, Discipline discipline);
 
     void deleteByDiscipline(Discipline discipline);
-
 }

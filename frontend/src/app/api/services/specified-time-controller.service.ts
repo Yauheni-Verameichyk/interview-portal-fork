@@ -167,6 +167,46 @@ export class SpecifiedTimeControllerService extends BaseService {
       map(_r => _r.body)
     );
   }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+   findByIdUsingGET_3Response(id: number): Observable<HttpResponse<SpecifiedTimeDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      "GET",
+      this.rootUrl + `/slots/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: SpecifiedTimeDTO = null;
+        _body = _resp.body as SpecifiedTimeDTO
+        return _resp.clone({body: _body}) as HttpResponse<SpecifiedTimeDTO>;
+      })
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+   findByIdUsingGET_3(id: number): Observable<SpecifiedTimeDTO> {
+    return this.findByIdUsingGET_3Response(id).pipe(
+      map(_r => _r.body)
+    );
+  }
 }
 
 export module SpecifiedTimeControllerService {
