@@ -92,6 +92,10 @@
   .nav-menu li:hover > a, .nav-menu > .menu-active > a {
     color: #18d26e;
   }
+  .menu-active{
+    color:  #18d26e !important;
+    text-decoration: underline !important;
+  }
   
   .nav-menu > li {
     margin-left: 10px;

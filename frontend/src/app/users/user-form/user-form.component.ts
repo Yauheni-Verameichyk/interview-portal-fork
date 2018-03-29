@@ -118,7 +118,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.user.roleDisciplines[role] = assignDiscipline[role];
   }
   close() {
-    this.router.navigate(['users']);
+    this.router.navigate(['', { outlets: { popup: null } }]);
   }
   findAssignDiscipline(role: string) {
     const disciplineForRole = {};

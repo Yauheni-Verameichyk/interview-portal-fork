@@ -20,12 +20,10 @@ export class UserComponent implements OnInit, OnDestroy {
     this.user = new UserInfo(this.userObj.id, this.userObj.name, this.userObj.surname, this.userObj.roles);
   }
   showUserInfo() {
-    const link = ['/users/' + this.user.id + '/info'];
-    this.router.navigate(link, { relativeTo: this.route });
+    this.router.navigate([{ outlets: { popup: ['users', this.user.id, 'info'] } }]);
   }
   editUserInfo() {
-    const link = ['/users/' + this.user.id + '/edit'];
-    this.router.navigate(link, { relativeTo: this.route });
+    this.router.navigate([{ outlets: { popup: ['users', this.user.id, 'edit'] } }]);
   }
   removeUser() {
     if (confirm('Delete user ' + this.user.name)) {
@@ -33,6 +31,7 @@ export class UserComponent implements OnInit, OnDestroy {
       .takeUntil(this.destroy)
       .subscribe( () => {
         alert('User deleted successfully');
+        this.router.navigate(['/users']);
       });
     }
   }

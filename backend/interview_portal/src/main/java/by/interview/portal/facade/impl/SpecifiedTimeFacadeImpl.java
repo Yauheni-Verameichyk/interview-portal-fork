@@ -68,12 +68,9 @@ public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
         BeanUtils.copyProperties(specifiedTimeDTO, timeSlot);
         return timeSlot;
     }
-<<<<<<< HEAD
-=======
 
     @Override
     public SpecifiedTimeDTO findById(Long id) {
         return specifiedTimeConverter.convertToDTO(specifiedTimeService.findById(id));
     }
->>>>>>> 9f2d1223b611bf5e209e5d4c7f8c5a80468b4bc1
 }
