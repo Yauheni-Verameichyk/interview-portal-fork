@@ -1,13 +1,6 @@
 package by.interview.portal.controller;
 
 
-import by.interview.portal.domain.Candidate;
-import by.interview.portal.domain.Discipline;
-import by.interview.portal.dto.CandidateDTO;
-import by.interview.portal.facade.CandidateFacade;
-import by.interview.portal.service.CandidateService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
@@ -36,6 +29,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import by.interview.portal.domain.Candidate;
+import by.interview.portal.domain.Discipline;
+import by.interview.portal.dto.CandidateDTO;
+import by.interview.portal.facade.CandidateFacade;
+import by.interview.portal.service.CandidateService;
+
 @WithMockUser(username = "user1", password = "user1")
 @RunWith(SpringRunner.class)
 @WebMvcTest(CandidateController.class)
@@ -56,9 +57,10 @@ public class CandidateControllerTest {
 
     @Before
     public void beforeTest() {
-        candidateDTO = new CandidateDTO(1L, "Viktor", "Hrynko", "+3754454745414", null);
+        candidateDTO =
+                new CandidateDTO(1L, "Viktor", "mail@mail.ru", "Hrynko", "+3754454745414", null);
         Discipline discipline = new Discipline(1L, "Java", "Best of the best!!", null);
-        candidate = new Candidate(2L, "Eugene", " Veremeichik", "+3454145544",
+        candidate = new Candidate(2L, "Eugene", "mail@mail.ru", " Veremeichik", "+3454145544",
                 Stream.of(discipline).collect(Collectors.toSet()), null, null);
     }
 
@@ -98,10 +100,10 @@ public class CandidateControllerTest {
     }
 
     @Test
-    public void shouldRemoveCandidate() throws Exception{
+    public void shouldRemoveCandidate() throws Exception {
         doNothing().when(candidateService).delete(1L);
         mockMvc.perform(delete("/candidates/1").contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+                .andExpect(status().isOk());
         verify(candidateService, times(1)).delete(1L);
     }
 

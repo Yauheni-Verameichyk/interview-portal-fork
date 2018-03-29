@@ -64,7 +64,6 @@ export class CalendarService {
     }
   ];
 
-
   weekDays = [RRule.SU, RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA];
 
   constructor(private router: Router) { }

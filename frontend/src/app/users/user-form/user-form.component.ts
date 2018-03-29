@@ -31,6 +31,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     name: '',
     surname: '',
     phoneNumber: '',
+    email: '',
     roleDisciplines: null
   };
 
@@ -46,6 +47,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.route.snapshot.data['user'];
+    if (this.router.url.includes('new')) {
+      this.newUser = true;
+    }
     this.createFormGroup();
     this.formManager.showButton(true);
     if (this.router.url.includes('info')) {
@@ -53,14 +57,21 @@ export class UserFormComponent implements OnInit, OnDestroy {
       this.userForm.disable();
       this.formManager.showButton(false);
     }
+<<<<<<< HEAD
     if (this.router.url.includes('new')) {
       this.newUser = true;
     }
+=======
+>>>>>>> 171e8095b1148078c15cc4019687c84fff9cfc46
     this.userForm.valueChanges
       .takeUntil(this.destroy)
       .subscribe(changeData => {
         this.user.name = changeData.name;
         this.user.login = changeData.login;
+<<<<<<< HEAD
+=======
+        this.user.email = changeData.email;
+>>>>>>> 171e8095b1148078c15cc4019687c84fff9cfc46
         this.user.phoneNumber = changeData.phoneNumber;
         this.user.surname = changeData.surname;
         this.user.password = changeData.password;
@@ -77,10 +88,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
       name: [this.user.name, [Validators.required, this.formValidator.userNameValidator()]],
       login: [this.user.login, [Validators.required, this.formValidator.userNameValidator()]],
       surname: [this.user.surname, [Validators.required, this.formValidator.userNameValidator()]],
-      email: [this.user.login, [Validators.required, Validators.email]],
+      email: [this.user.email, [Validators.required, Validators.email]],
       phoneNumber: [this.user.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
       password: [this.user.password, [Validators.required]]
     });
+    this.isEditUser();
   }
   public editFrom() {
     this.isEdit = true;
@@ -100,11 +112,19 @@ export class UserFormComponent implements OnInit, OnDestroy {
             alert('User was not successfully save');
             this.router.navigate(['users']);
           });
+<<<<<<< HEAD
     }else{
       this.lightFieldService.lightField(this.userForm.controls);
     }
   }
   getAssignRoles(roles : { [key: string]: DisciplineDTO[] }): void {
+=======
+    } else {
+      this.lightFieldService.lightField(this.userForm.controls);
+    }
+  }
+  getAssignRoles(roles: { [key: string]: DisciplineDTO[] }): void {
+>>>>>>> 171e8095b1148078c15cc4019687c84fff9cfc46
     this.user.roleDisciplines = roles;
   }
   getAssignDiscipline(assignDiscipline) {
@@ -113,7 +133,10 @@ export class UserFormComponent implements OnInit, OnDestroy {
       role = typeRole;
     });
     this.user.roleDisciplines[role] = assignDiscipline[role];
+<<<<<<< HEAD
     console.log(this.user);
+=======
+>>>>>>> 171e8095b1148078c15cc4019687c84fff9cfc46
   }
   close() {
     this.router.navigate(['users']);
@@ -128,4 +151,12 @@ export class UserFormComponent implements OnInit, OnDestroy {
     disciplineForRole[role] = this.user.roleDisciplines[role];
     return this.user.roleDisciplines[role];
   }
+<<<<<<< HEAD
+=======
+  private isEditUser(): void {
+    if (!this.newUser) {
+      this.userForm.removeControl('password');
+    }
+  }
+>>>>>>> 171e8095b1148078c15cc4019687c84fff9cfc46
 }

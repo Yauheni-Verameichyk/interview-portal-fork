@@ -1,31 +1,5 @@
 package by.interview.portal.service;
 
-import by.interview.portal.domain.Candidate;
-import by.interview.portal.domain.Discipline;
-import by.interview.portal.repository.CandidateRepository;
-import by.interview.portal.repository.DisciplineRepository;
-import by.interview.portal.repository.CandidateEducationRepository;
-import by.interview.portal.repository.CandidateWorkRepository;
-import by.interview.portal.service.impl.CandidateServiceImpl;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -34,6 +8,31 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import by.interview.portal.domain.Candidate;
+import by.interview.portal.domain.Discipline;
+import by.interview.portal.repository.CandidateEducationRepository;
+import by.interview.portal.repository.CandidateRepository;
+import by.interview.portal.repository.CandidateWorkRepository;
+import by.interview.portal.repository.DisciplineRepository;
+import by.interview.portal.service.impl.CandidateServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateServiceTest {
@@ -57,9 +56,9 @@ public class CandidateServiceTest {
     @Before
     public void beforeTest() {
         discipline = new Discipline(1L, "Java", "Best of the best!!!", null);
-        Candidate candidate = new Candidate(1L, "Eugene", " Veremeichik", "+254545454",
-                Stream.of(discipline).collect(Collectors.toSet()), null, null);
-        Candidate candidate2 = new Candidate(2L, "Ilya", " Nikalayeu", "+254545454",
+        Candidate candidate = new Candidate(1L, "Eugene", "mail@mail.ru", " Veremeichik",
+                "+254545454", Stream.of(discipline).collect(Collectors.toSet()), null, null);
+        Candidate candidate2 = new Candidate(2L, "Ilya", "mail@mail.ru", " Nikalayeu", "+254545454",
                 Stream.of(discipline).collect(Collectors.toSet()), null, null);
         candidateList = Arrays.asList(candidate, candidate2);
         page = new PageImpl<Candidate>(candidateList);
@@ -141,11 +140,11 @@ public class CandidateServiceTest {
     public void shouldReturnExceptionUpdateCandidate() {
         initWorkAndEducationAndEducationRepository();
         when(candidateRepository.saveAndFlush(candidateList.get(0)))
-            .thenThrow(new DataIntegrityViolationException("error"));
+                .thenThrow(new DataIntegrityViolationException("error"));
         candidateService.update(candidateList.get(0));
     }
 
-    private void initWorkAndEducationAndEducationRepository(){
+    private void initWorkAndEducationAndEducationRepository() {
         doNothing().when(candidateWorkRepository).removeWork();
         doNothing().when(candidateEducationRepository).removeEducation();
         when(disciplineRepository.findById(1L)).thenReturn(Optional.of(discipline));

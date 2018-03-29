@@ -1,14 +1,12 @@
 package by.interview.portal.repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import static org.junit.Assert.assertTrue;
 
-import javax.persistence.EntityManager;
-
+import by.interview.portal.config.TestRepositoryConfig;
+import by.interview.portal.domain.Candidate;
 import by.interview.portal.domain.CandidateEducation;
+import by.interview.portal.domain.CandidateWork;
+import by.interview.portal.domain.Discipline;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,14 +15,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import by.interview.portal.config.TestRepositoryConfig;
-import by.interview.portal.domain.Candidate;
-import by.interview.portal.domain.Discipline;
-import by.interview.portal.domain.CandidateWork;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.persistence.EntityManager;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {TestRepositoryConfig.class})
@@ -45,10 +41,9 @@ public class CandidateRepositoryTest {
     public void doSetup() {
         discipline = new Discipline(1L, "Java", "Best of the best language!!!", null);
         discipline = entityManager.merge(discipline);
-        Candidate candidate = new Candidate(5L, "Viktar", "Hrynko", "+12312312312",
-            Stream.of(discipline).collect(Collectors.toSet()),
-            new ArrayList<CandidateWork>(),
-            new ArrayList<CandidateEducation>());
+        Candidate candidate = new Candidate(5L, "Viktar", "Hrynko", "mail@mail.ru", "+12312312312",
+                Stream.of(discipline).collect(Collectors.toSet()), new ArrayList<CandidateWork>(),
+                new ArrayList<CandidateEducation>());
         candidateList = Arrays.asList(candidate);
     }
 

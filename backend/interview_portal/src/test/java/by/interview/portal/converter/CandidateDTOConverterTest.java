@@ -1,12 +1,11 @@
 package by.interview.portal.converter;
 
-import by.interview.portal.config.SpringConfig;
-import by.interview.portal.config.TestConverterConfig;
-import by.interview.portal.domain.Candidate;
-import by.interview.portal.domain.CandidateEducation;
-import by.interview.portal.domain.CandidateWork;
-import by.interview.portal.domain.Discipline;
-import by.interview.portal.dto.CandidateDTO;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,11 +14,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import by.interview.portal.config.SpringConfig;
+import by.interview.portal.config.TestConverterConfig;
+import by.interview.portal.domain.Candidate;
+import by.interview.portal.domain.CandidateEducation;
+import by.interview.portal.domain.CandidateWork;
+import by.interview.portal.domain.Discipline;
+import by.interview.portal.dto.CandidateDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {SpringConfig.class, TestConverterConfig.class})
@@ -41,13 +42,13 @@ public class CandidateDTOConverterTest {
         CandidateEducation candidateEducation =
                 new CandidateEducation(1L, "PSU", "Radio-Technical");
         Discipline discipline = new Discipline(1L, "Java", "Best of the best!!!", null);
-        candidate = new Candidate(1L, "Eugene", " Veremeichik", "+254545454",
+        candidate = new Candidate(1L, "Eugene", "mail@mail.ru", " Veremeichik", "+254545454",
                 Stream.of(discipline).collect(Collectors.toSet()),
                 Stream.of(candidateWork).collect(Collectors.toList()),
                 Stream.of(candidateEducation).collect(Collectors.toList()));
-        afterConverterCandidate = new Candidate(1L, "Eugene", " Veremeichik", "+254545454",
-                Stream.of(discipline).collect(Collectors.toSet()), null, null);
-        candidateDTO = new CandidateDTO(1L, "Eugene", " Veremeichik", "+254545454",
+        afterConverterCandidate = new Candidate(1L, "Eugene", "mail@mail.ru", " Veremeichik",
+                "+254545454", Stream.of(discipline).collect(Collectors.toSet()), null, null);
+        candidateDTO = new CandidateDTO(1L, "Eugene", "mail@mail.ru", " Veremeichik", "+254545454",
                 Stream.of(discipline).collect(Collectors.toSet()));
 
     }
@@ -59,7 +60,8 @@ public class CandidateDTOConverterTest {
 
     @Test
     public void shouldConvertCandidateDTOToCandidate() {
-        assertThat(candidateDTOConverter.convertToEntity(candidateDTO), equalTo(afterConverterCandidate));
+        assertThat(candidateDTOConverter.convertToEntity(candidateDTO),
+                equalTo(afterConverterCandidate));
     }
 
 }

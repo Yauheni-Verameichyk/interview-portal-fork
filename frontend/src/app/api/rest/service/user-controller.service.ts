@@ -41,6 +41,12 @@ export class UserControllerService {
       };
     return this.http.post(this.baseUrl, body, options).pipe(map(this.handlerData), catchError(this.handlerError));
   }
+  deleteUser(userId: number): Observable<HttpResponse<void>> {
+    return this.http.delete(this.baseUrl + `/${userId}`)
+    .pipe(map(this.handlerData),
+    catchError(this.handlerError)
+    );
+  }
   handlerData(response: HttpResponse<UserInfo>) {
     const body = response;
     return body || {};
