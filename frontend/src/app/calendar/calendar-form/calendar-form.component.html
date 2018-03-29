@@ -34,7 +34,7 @@
 
     </table>
     <div class="custom-control custom-checkbox is-repeatable">
-      <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="isRepeatable" (change)="specifiedTime.isRepeatable = !specifiedTime.isRepeatable; specifiedTime.repeatPattern = null">
+      <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="specifiedTime.isRepeatable" (change)="specifiedTime.isRepeatable = !specifiedTime.isRepeatable; specifiedTime.repeatPattern = null">
       <label class="custom-control-label" for="customCheck1">Repeatable</label>
     </div>
     <form *ngIf="specifiedTime.isRepeatable" #f="ngForm">
