@@ -9,10 +9,11 @@ import {
   endOfWeek,
   endOfDay
 } from 'date-fns';
-import {RRule} from 'rrule';
+import { RRule } from 'rrule';
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { Router } from '@angular/router';
+import { SpecifiedTime } from '../../api/models/specified-time';
 
 @Injectable()
 export class CalendarService {
@@ -52,7 +53,6 @@ export class CalendarService {
     {
       label: '<i class="fas fa-pencil-alt"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        console.log('Edited ' + event.id);
         this.router.navigate([{ outlets: { popup: ['calendar', 'edit', event.id] } }]);
       }
     },
@@ -63,7 +63,6 @@ export class CalendarService {
       }
     }
   ];
-
 
   weekDays = [RRule.SU, RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA];
 
@@ -192,4 +191,71 @@ export class CalendarService {
       if (a.start > b.start) { return 1; } if (a.start < b.start) { return -1; } return 0;
     });
   }
+
+  convertDTOToSpecifiedTime(specifiedTimeDTO: SpecifiedTimeDTO) {
+    const specifiedTime = {
+      endTime: new Date(specifiedTimeDTO.endTime),
+      id: specifiedTimeDTO.id,
+      repeatInterval: specifiedTimeDTO.repeatInterval,
+      startTime: new Date(specifiedTimeDTO.startTime),
+      user: specifiedTimeDTO.user,
+      duration: 1,
+      isRepeatable: !!specifiedTimeDTO.repeatInterval
+    };
+    if (specifiedTime.isRepeatable) {
+      this.setRepeatPattern(specifiedTimeDTO.repeatInterval, specifiedTime);
+    }
+    return specifiedTime;
+  }
+
+  setRepeatPattern(repeatInterval: string, specifiedTime: SpecifiedTime): void {
+    switch (repeatInterval) {
+      case 'P1Y':
+        specifiedTime.repeatPattern = 'yearly';
+        specifiedTime.repeatPeriod = { years: 1 };
+        break;
+      case 'P1M':
+        specifiedTime.repeatPattern = 'monthly';
+        specifiedTime.repeatPeriod = { months: 1 };
+        break;
+      case 'P7D':
+        specifiedTime.repeatPattern = 'weekly';
+        specifiedTime.repeatPeriod = { days: 7 };
+        break;
+      default:
+        specifiedTime.repeatPattern = 'custom';
+        specifiedTime.repeatPeriod = {
+          years: +repeatInterval.match(/\d+Y/)[0].slice(0, -1),
+          months: +repeatInterval.match(/\d+M/)[0].slice(0, -1),
+          days: + repeatInterval.match(/\d+D/)[0].slice(0, -1)
+        };
+    }
+  }
+
+  convertSpecifiedTimeToDTO(specifiedTime: SpecifiedTime): SpecifiedTimeDTO {
+    return {
+      endTime: specifiedTime.endTime ? this.convertDateToString(specifiedTime.endTime) : null,
+      startTime: this.convertDateToString(specifiedTime.startTime),
+      id: specifiedTime.id,
+      user: null,
+      repeatInterval: specifiedTime.isRepeatable ? this.generateRepeatInterval(specifiedTime) : null,
+      duration: specifiedTime.duration
+    };
+  }
+
+  generateRepeatInterval(specifiedTime: SpecifiedTime): string {
+    switch (specifiedTime.repeatPattern) {
+      case 'yearly':
+        return 'P1Y';
+      case 'monthly':
+        return 'P1M';
+      case 'weekly':
+        return 'P7D';
+      case 'custom':
+        return `P${specifiedTime.repeatPeriod.years}Y${specifiedTime.repeatPeriod.months}M${specifiedTime.repeatPeriod.days}D`;
+      default:
+        throw new Error('Unknown repeat interval');
+    }
+  }
 }
+

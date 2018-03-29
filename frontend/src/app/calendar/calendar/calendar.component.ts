@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
+import { Subject } from 'rxjs/Subject';
 import {RRule} from 'rrule';
-import { Subject } from 'rxjs';
 import { CalendarService } from '../service/calendar.service';
 import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
@@ -10,21 +10,23 @@ import { Router } from '@angular/router';
 import { repeat } from 'rxjs/operators';
 import { UserBaseInfoDTO } from '../../api/models/user-base-info-dto';
 import { isSameMonth, isSameDay } from 'date-fns';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
 
   view = 'month';
   viewDate: Date = new Date();
   recurringEvents: RecurringEvent[] = [];
   unreccuringCalendarEvents: CalendarEvent[] = [];
   calendarEvents: CalendarEvent[] = [];
-
   activeDayIsOpen = true;
+  private readonly destroy: Subject<void> = new Subject();
   constructor(
     private calendarService: CalendarService,
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
@@ -52,6 +54,7 @@ export class CalendarComponent implements OnInit {
   readAllEvents(): void {
     this.specifiedTimeControllerService.findAllForUserInRangeUsingGET(
       this.calendarService.generateRequestParamsForEventsForUser(this.view, this.viewDate))
+      .takeUntil(this.destroy)
       .subscribe(
         timeSlots => {
           this.processResponce(timeSlots);
@@ -97,5 +100,10 @@ export class CalendarComponent implements OnInit {
         event => event.meta.incrementsBadgeTotal
       ).length;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

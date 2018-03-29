@@ -41,7 +41,7 @@ public class CandidateRepositoryTest {
     public void doSetup() {
         discipline = new Discipline(1L, "Java", "Best of the best language!!!", null);
         discipline = entityManager.merge(discipline);
-        Candidate candidate = new Candidate(5L, "Viktar", null, "Hrynko", "+12312312312",
+        Candidate candidate = new Candidate(5L, "Viktar", "Hrynko", "mail@mail.ru", "+12312312312",
                 Stream.of(discipline).collect(Collectors.toSet()), new ArrayList<CandidateWork>(),
                 new ArrayList<CandidateEducation>());
         candidateList = Arrays.asList(candidate);

@@ -86,8 +86,13 @@ input.ng-touched.ng-invalid{
 .popup-form {
   z-index:50;
   top: 10px;
+<<<<<<< HEAD
   background: #fff;
   color: #000000;
+=======
+  background: #563d7c;
+  color: #dee2e6;
+>>>>>>> 9f2d1223b611bf5e209e5d4c7f8c5a80468b4bc1
   left: 50%;
   transform: translate(-50%);
   min-width: 450px;

@@ -13,4 +13,6 @@ public interface SpecifiedTimeService {
     List<SpecifiedTime> findAllForUserInRange(LocalDateTime rangeStart, LocalDateTime rangeEnd);
 
     void save(SpecifiedTime specifiedTime);
+
+    SpecifiedTime findById(Long id);
 }

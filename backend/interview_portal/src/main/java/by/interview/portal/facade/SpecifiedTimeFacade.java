@@ -13,4 +13,6 @@ public interface SpecifiedTimeFacade {
     List<SpecifiedTimeDTO> findAllForUserInRange(LocalDateTime rangeStart, LocalDateTime rangeEnd);
 
     void save(SpecifiedTimeDTO specifiedTimeDTO);
+
+    SpecifiedTimeDTO findById(Long id);
 }

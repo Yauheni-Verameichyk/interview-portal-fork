@@ -34,4 +34,9 @@ public class SpecifiedTimeServiceImpl implements SpecifiedTimeService {
     public void save(SpecifiedTime specifiedTime) {
         specifiedTimeRepository.save(specifiedTime);
     }
+
+    @Override
+    public SpecifiedTime findById(Long id) {
+        return specifiedTimeRepository.findById(id).get();
+    }
 }
