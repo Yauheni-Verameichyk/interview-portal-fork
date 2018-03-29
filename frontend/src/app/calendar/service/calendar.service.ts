@@ -53,7 +53,6 @@ export class CalendarService {
     {
       label: '<i class="fas fa-pencil-alt"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        console.log('Edited ' + event.id);
         this.router.navigate([{ outlets: { popup: ['calendar', 'edit', event.id] } }]);
       }
     },
