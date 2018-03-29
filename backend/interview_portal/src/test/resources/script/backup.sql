@@ -4,7 +4,8 @@ CREATE TABLE candidates (
     id bigint NOT NULL,
     name character varying(50),
     phone_number character varying(50),
-    surname character varying(50)
+    surname character varying(50),
+    email character varying(50)
 );
 
 DROP SEQUENCE IF EXISTS hibernate_sequence;

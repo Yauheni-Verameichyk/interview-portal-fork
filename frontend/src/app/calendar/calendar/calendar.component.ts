@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import {RRule} from 'rrule';
 import { Subject } from 'rxjs';
 import { CalendarService } from '../service/calendar.service';
