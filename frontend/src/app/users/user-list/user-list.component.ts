@@ -26,7 +26,7 @@ export class UserListComponent implements OnInit {
     const link = ['/users/new'];
     this.router.navigate(link);
   }
-  @HostListener("window:scroll", ["$event"])
+  @HostListener('window:scroll', ['$event'])
   windowScrollListener() {
     const position = document.documentElement.scrollTop;
     const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -34,7 +34,6 @@ export class UserListComponent implements OnInit {
       this.userController
       .getUsers(this.users.length).subscribe(userList => {
         this.users.push(...userList);
-        console.log(this.users.length);
       },
         error => {
           console.log(`Error in user list component typy error: ${error}`);

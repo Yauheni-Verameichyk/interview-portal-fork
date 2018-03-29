@@ -1,15 +1,5 @@
 package by.interview.portal.facade.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.Role;
 import by.interview.portal.domain.User;
@@ -18,6 +8,15 @@ import by.interview.portal.dto.UserBaseInfoDTO;
 import by.interview.portal.dto.UserDTO;
 import by.interview.portal.facade.UserFacade;
 import by.interview.portal.service.UserService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserFacadeImpl implements UserFacade {
@@ -66,6 +65,11 @@ public class UserFacadeImpl implements UserFacade {
         return userService.findAll(page).stream().filter(Objects::nonNull)
                 .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(Long userId) {
+        userService.delete(userId);
     }
 
     private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {

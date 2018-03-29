@@ -37,8 +37,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        user = userRepository.save(user);
-        userRoleDisciplineRepository.saveAll(user.getUserRoleDisciplines());
+        if (user.getPassword() == null && user.getId() != null) {
+            User userExist = findById(user.getId()).get();
+            user.setPassword(userExist.getPassword());
+            userRoleDisciplineRepository.deleteAll(userExist.getUserRoleDisciplines());
+            user.setUserRoleDisciplines(
+                    userRoleDisciplineRepository.saveAll(user.getUserRoleDisciplines()));
+            user = userRepository.save(user);
+        } else {
+            user = userRepository.save(user);
+            userRoleDisciplineRepository.saveAll(user.getUserRoleDisciplines());
+        }
     }
 
     @Override
@@ -55,5 +64,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<User> findAllByRole(Role role) {
         return userRepository.findAllByRole(role);
+    }
+
+    @Override
+    public void delete(Long userId) {
+        userRoleDisciplineRepository.deleteByUserId(userId);
+        userRepository.deleteById(userId);
     }
 }

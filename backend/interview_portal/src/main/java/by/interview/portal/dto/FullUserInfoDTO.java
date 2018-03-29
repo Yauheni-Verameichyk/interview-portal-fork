@@ -18,6 +18,8 @@ public class FullUserInfoDTO {
 
     private String name;
 
+    private String email;
+
     private String surname;
 
     private String login;
