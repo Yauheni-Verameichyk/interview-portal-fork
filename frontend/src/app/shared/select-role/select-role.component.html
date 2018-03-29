@@ -1,18 +1,38 @@
-<div id="roles" class="form-group col-md-6">
-  <legend>
-    Roles
-    <button *ngIf="isShowButton"  class="btn btn-primary">
-      <img class="fas fa-plus-circle align-middle" />
-    </button>
-  </legend>
-  <div class="row">
-    <div class="card col-md-6" *ngFor="let role of roles; let i = index">
-      <div class="card-block">
-        <p class="card-title">{{transformStyle(role)}}
-          <button (click)='deleteRole(i)' *ngIf="isShowButton" class="btn btn-primary">
-            <img class="far fa-trash-alt align-middle" />
-          </button>
-        </p>
+<div class="form-row">
+  <div id="roles" class="select-roles form-group col-md-12">
+    <legend>
+      Roles
+      <button *ngIf="isShowButton" class="btn btn-info" (click)='addRoles()'>
+        <img class="fas fa-plus-circle align-middle" />
+      </button>
+    </legend>
+    <div class="form-row">
+      <div class="card col-md-6 select-roles" *ngFor="let role of assignRolesForUser; let i = index">
+        <div class="card-block">
+            <button (click)='deleteRole(i)' *ngIf="isShowButton" class="card-btn btn btn-info">
+                <img class="far fa-trash-alt align-middle" />
+              </button>
+          <p class="card-name">
+            {{renderRoles(role)}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="roles" class="select-roles form-group col-md-12" *ngIf="isNewRolesShown">
+    <legend>
+      New Roles
+    </legend>
+    <div class="form-row">
+      <div class="card col-md-6 select-roles" *ngFor="let newRole of newRoles; let i = index">
+        <div class="card-block">
+            <button (click)='addNewRole(i)' *ngIf="isShowButton" class="card-btn btn btn-info">
+                <img class="fas fa-plus-circle align-middle" />
+            </button>
+          <p class="card-name">
+            {{renderRoles(newRole)}}
+          </p>
+        </div>
       </div>
     </div>
   </div>

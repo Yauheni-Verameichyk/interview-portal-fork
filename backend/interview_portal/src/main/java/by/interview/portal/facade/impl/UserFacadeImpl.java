@@ -1,15 +1,5 @@
 package by.interview.portal.facade.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.Role;
 import by.interview.portal.domain.User;
@@ -18,6 +8,15 @@ import by.interview.portal.dto.UserBaseInfoDTO;
 import by.interview.portal.dto.UserDTO;
 import by.interview.portal.facade.UserFacade;
 import by.interview.portal.service.UserService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserFacadeImpl implements UserFacade {
@@ -33,8 +32,8 @@ public class UserFacadeImpl implements UserFacade {
     private ModelMapper modelMapper;
 
     @Override
-    public List<UserDTO> findAll() {
-        return userService.findAll().stream().filter(Objects::nonNull)
+    public List<UserDTO> findAll(int quantity) {
+        return userService.findAll(quantity).stream().filter(Objects::nonNull)
                 .map(userDTOConverter::convertToDTO).collect(Collectors.toList());
     }
 
@@ -51,7 +50,6 @@ public class UserFacadeImpl implements UserFacade {
 
     private FullUserInfoDTO getFullUserInfoDTO(UserDTO userDTO) {
         FullUserInfoDTO fullUserInfoDTO = modelMapper.map(userDTO, FullUserInfoDTO.class);
-        fullUserInfoDTO.setRoles(userDTO.getRoleDisciplines().keySet());
         return fullUserInfoDTO;
     }
 
@@ -63,10 +61,15 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public List<UserBaseInfoDTO> findAllUserBaseInfo() {
-        return userService.findAll().stream().filter(Objects::nonNull)
+    public List<UserBaseInfoDTO> findAllUserBaseInfo(int page) {
+        return userService.findAll(page).stream().filter(Objects::nonNull)
                 .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(Long userId) {
+        userService.delete(userId);
     }
 
     private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {

@@ -8,6 +8,7 @@ import { DisciplineDTO } from '../../api/models';
 import { UserFormMangerService } from '../../shared/select-role/service/user-form-manger.service';
 import 'rxjs/add/operator/takeUntil';
 import { FormValidatorService } from '../../shared/validator/validator-form/form-validator.service';
+import { LightFieldService } from '../../shared/validator/service/light-field.service';
 
 @Component({
   selector: 'app-user-form',
@@ -16,19 +17,23 @@ import { FormValidatorService } from '../../shared/validator/validator-form/form
 })
 export class UserFormComponent implements OnInit, OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
-  isEdit: boolean = false;
+  newUser = false;
+  isEdit = false;
+  isInfo = true;
   role: Array<string>;
+  assignDiscipline: Array<string>;
   private originalUser: User;
   userForm: FormGroup;
   user: User = {
     id: null,
     login: '',
+    password: '',
     name: '',
     surname: '',
     phoneNumber: '',
-    roleDisciplines: null,
-    roles: new Array<string>()
-  }
+    email: '',
+    roleDisciplines: null
+  };
 
   constructor(
     private userController: UserControllerService,
@@ -37,13 +42,33 @@ export class UserFormComponent implements OnInit, OnDestroy {
     private formManager: UserFormMangerService,
     private router: Router,
     private formValidator: FormValidatorService,
+    private lightFieldService: LightFieldService
   ) { }
 
   ngOnInit(): void {
     this.user = this.route.snapshot.data['user'];
+    if (this.router.url.includes('new')) {
+      this.newUser = true;
+    }
     this.createFormGroup();
-    this.userForm.disable();
-  };
+    this.formManager.showButton(true);
+    if (this.router.url.includes('info')) {
+      this.isInfo = false;
+      this.userForm.disable();
+      this.formManager.showButton(false);
+    }
+    this.userForm.valueChanges
+      .takeUntil(this.destroy)
+      .subscribe(changeData => {
+        this.user.name = changeData.name;
+        this.user.login = changeData.login;
+        this.user.email = changeData.email;
+        this.user.phoneNumber = changeData.phoneNumber;
+        this.user.surname = changeData.surname;
+        this.user.password = changeData.password;
+      });
+
+  }
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
@@ -54,37 +79,60 @@ export class UserFormComponent implements OnInit, OnDestroy {
       name: [this.user.name, [Validators.required, this.formValidator.userNameValidator()]],
       login: [this.user.login, [Validators.required, this.formValidator.userNameValidator()]],
       surname: [this.user.surname, [Validators.required, this.formValidator.userNameValidator()]],
-      email: [this.user.login, [Validators.required, Validators.email]],
+      email: [this.user.email, [Validators.required, Validators.email]],
       phoneNumber: [this.user.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
-      roles: this.fb.array(this.user.roles)
+      password: [this.user.password, [Validators.required]]
     });
+    this.isEditUser();
   }
   public editFrom() {
     this.isEdit = true;
     this.userForm.enable();
-    this.formManager.showButton(true);
   }
   public saveForm(): void {
-    this.isEdit = false;
-    this.formManager.showButton(false);
-    this.userForm.disable();
-    if (!this.userForm.valid) {
+    if (this.userForm.valid) {
+      this.formManager.showButton(false);
+      this.userForm.disable();
       this.userController.saveUser(this.user)
         .takeUntil(this.destroy)
         .subscribe(() => {
-          alert("User was successfully save");
+          alert('User was successfully save');
           this.router.navigate(['users']);
         },
           () => {
-            alert("User was not successfully save");
+            alert('User was not successfully save');
             this.router.navigate(['users']);
           });
+    } else {
+      this.lightFieldService.lightField(this.userForm.controls);
     }
   }
-  getRoles(roles: Array<string>): void {
-    this.user.roles = roles;
+  getAssignRoles(roles: { [key: string]: DisciplineDTO[] }): void {
+    this.user.roleDisciplines = roles;
+  }
+  getAssignDiscipline(assignDiscipline) {
+    let role: string;
+    Object.keys(assignDiscipline).map(typeRole => {
+      role = typeRole;
+    });
+    this.user.roleDisciplines[role] = assignDiscipline[role];
   }
   close() {
     this.router.navigate(['users']);
+  }
+  findAssignDiscipline(role: string) {
+    const disciplineForRole = {};
+    disciplineForRole[role] = this.user.roleDisciplines[role];
+    return disciplineForRole;
+  }
+  isExistRole(role: string) {
+    const disciplineForRole = {};
+    disciplineForRole[role] = this.user.roleDisciplines[role];
+    return this.user.roleDisciplines[role];
+  }
+  private isEditUser(): void {
+    if (!this.newUser) {
+      this.userForm.removeControl('password');
+    }
   }
 }

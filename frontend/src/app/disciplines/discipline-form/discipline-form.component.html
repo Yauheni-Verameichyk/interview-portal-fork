@@ -1,46 +1,53 @@
 <div class="mask">
-  <form class='form-group popup-form signIn_form' [formGroup]="disciplineForm">
+  <div class="border popup-form">
+    <form class='form-group' [formGroup]="disciplineForm">
       <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
-    <h3>
-      <span *ngIf="!discipline.parentName">Discipline</span>
-      <span *ngIf="discipline.parentName">Sub-item</span>
-    </h3>
-    <div class="form-group">
-      <label for="disciplineName">
+      <h3>
         <span *ngIf="!discipline.parentName">Discipline</span>
-        <span *ngIf="discipline.parentName">Sub-item</span> name
-        <span *ngIf="!noEdit">*</span>
-      </label>
-      <input name="disciplineName" class="form-control" placeholder="Enter name" formControlName="disciplineName" [(ngModel)]="discipline.name"
-        required>
-    </div>
-    <validator-message [field]="disciplineForm.controls.disciplineName"></validator-message>
+        <span *ngIf="discipline.parentName">Sub-item</span>
+      </h3>
+      <div class="form-group">
+        <label for="disciplineName">
+          <span *ngIf="!discipline.parentName">Discipline</span>
+          <span *ngIf="discipline.parentName">Sub-item</span> name
+          <span *ngIf="!noEdit">*</span>
+        </label>
+        <input name="disciplineName" class="form-control" placeholder="Enter name" formControlName="disciplineName" [(ngModel)]="discipline.name"
+          required>
+      </div>
+      <validator-message [field]="disciplineForm.controls.disciplineName"></validator-message>
 
-    <div class="form-group">
-      <label for="disciplineDescription">Description</label>
-      <textarea class="form-control discipline-description" formControlName="disciplineSubscription" placeholder="Enter description"
-        [(ngModel)]="discipline.subscription"></textarea>
-    </div>
-    <validator-message [field]="disciplineForm.controls.disciplineSubscription"></validator-message>
-    <div *ngIf="!discipline?.parentName && !noEdit">
-      <label for="inputState">Assign discipline head</label>
-      <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
-        <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
+      <div class="form-group">
+        <label for="disciplineDescription">Description</label>
+        <textarea class="form-control discipline-description" formControlName="disciplineSubscription" placeholder="Enter description"
+          [(ngModel)]="discipline.subscription"></textarea>
       </div>
-      <ng-template #heads_present>
-        <app-select-user (addUsers)="addUsers($event)" [selectedUsersList]="discipline.disciplineHeadsList" [usersList]="usersListObservable | async"></app-select-user>
-      </ng-template>
-    </div>
-    <div *ngIf="noEdit && !discipline.parentName">
-      Discipline heads:
-      <div *ngFor="let user of discipline.disciplineHeadsList">
-        <input type="text" class="form-control" value="{{user?.name}} {{user?.surname}}" disabled>
+      <validator-message [field]="disciplineForm.controls.disciplineSubscription"></validator-message>
+      <div *ngIf="!discipline?.parentName && !noEdit">
+        <label for="inputState">Assign discipline head</label>
+        <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
+          <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
+        </div>
+        <ng-template #heads_present>
+          <app-select-user (addUsers)="addUsers($event)" [selectedUsersList]="discipline.disciplineHeadsList" [usersList]="usersListObservable | async"></app-select-user>
+        </ng-template>
       </div>
+      <div *ngIf="noEdit && !discipline.parentName">
+        Discipline heads:
+        <div *ngFor="let user of discipline.disciplineHeadsList">
+          <input type="text" class="form-control" value="{{user?.name}} {{user?.surname}}" disabled>
+        </div>
+      </div>
+      <span *ngIf="!noEdit">* Required field</span>
+      <br>
+      <div class="text-center" *ngIf="!noEdit">
+        <a (click)="sendDiscipline()" class="btn btn-primary">Save</a>
+      </div>
+    </form>
+    <div class="d-f-button_close">
+      <button [routerLink]="['',{ outlets: { popup: null }}]" type="button" class="btn btn-primary">Close
+        <i class="fas fa-times"></i>
+      </button>
     </div>
-    <span *ngIf="!noEdit">* Required field</span>
-    <br>
-    <div class="text-center" *ngIf="!noEdit">
-      <a (click)="sendDiscipline()" class="btn btn-primary">Save</a>
-    </div>
-  </form>
+  </div>
 </div>

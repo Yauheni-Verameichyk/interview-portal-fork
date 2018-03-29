@@ -16,8 +16,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import by.interview.portal.domain.CandidateEducation;
-import by.interview.portal.domain.CandidateWork;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +26,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import by.interview.portal.converter.Converter;
 import by.interview.portal.domain.Candidate;
+import by.interview.portal.domain.CandidateEducation;
+import by.interview.portal.domain.CandidateWork;
 import by.interview.portal.domain.Discipline;
 import by.interview.portal.domain.Role;
 import by.interview.portal.domain.User;
@@ -266,8 +266,9 @@ public class DisciplineServiceTest {
 
         Set<Discipline> disciplineList = new HashSet<>();
         disciplineList.add(discipline);
-        Candidate candidate = new Candidate(5L, "Viktar", "Hrynko", "+12312312312", disciplineList,
-                new ArrayList<CandidateWork>(), new ArrayList<CandidateEducation>());
+        Candidate candidate = new Candidate(5L, "Viktar", "Hrynko", "mail@mail.ru", "+12312312312",
+                disciplineList, new ArrayList<CandidateWork>(),
+                new ArrayList<CandidateEducation>());
         given(candidateRepository.findByDiscipline(discipline))
                 .willReturn(Arrays.asList(candidate));
         disciplineService.deleteDiscipline(1L);

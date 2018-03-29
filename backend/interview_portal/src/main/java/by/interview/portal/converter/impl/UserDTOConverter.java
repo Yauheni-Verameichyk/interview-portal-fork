@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +21,7 @@ import by.interview.portal.dto.UserDTO;
 
 @Component("userDTOConverter")
 public class UserDTOConverter implements Converter<User, UserDTO> {
-
+    private static final Logger LOG = LogManager.getLogger(UserDTOConverter.class);
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -29,7 +31,9 @@ public class UserDTOConverter implements Converter<User, UserDTO> {
     @Override
     public User convertToEntity(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        if (userDTO.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
         user.setUserRoleDisciplines(getUserRoleDisciplines(userDTO.getRoleDisciplines(), user));
         return user;
     }

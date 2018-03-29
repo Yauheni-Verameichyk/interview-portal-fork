@@ -7,6 +7,9 @@ import { SpecifiedTimeControllerService } from '../../api/services/specified-tim
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { Router } from '@angular/router';
+import { repeat } from 'rxjs/operators';
+import { UserBaseInfoDTO } from '../../api/models/user-base-info-dto';
+import { isSameMonth, isSameDay } from 'date-fns';
 
 @Component({
   selector: 'app-calendar',
@@ -15,11 +18,13 @@ import { Router } from '@angular/router';
 })
 export class CalendarComponent implements OnInit {
 
-  view: string = 'month';
+  view = 'month';
   viewDate: Date = new Date();
   recurringEvents: RecurringEvent[] = [];
   unreccuringCalendarEvents: CalendarEvent[] = [];
   calendarEvents: CalendarEvent[] = [];
+
+  activeDayIsOpen = true;
   constructor(
     private calendarService: CalendarService,
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
@@ -28,6 +33,20 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.readAllEvents();
+  }
+
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+        this.viewDate = date;
+      }
+    }
   }
 
   readAllEvents(): void {
@@ -44,9 +63,10 @@ export class CalendarComponent implements OnInit {
 
   processResponce(timeSlots: SpecifiedTimeDTO[]): void {
     this.clearArrays();
-    for (let i in timeSlots) {
-      timeSlots[i].repeatInterval ? this.recurringEvents.push(this.calendarService.generateRecurringEvent(timeSlots[i]))
-        : this.unreccuringCalendarEvents.push(this.calendarService.generateNonRepeatableEvent(timeSlots[i]));
+    for (const timeSlot of timeSlots) {
+      timeSlot.repeatInterval ? this.recurringEvents.push(this.calendarService.generateRecurringEvent(timeSlot))
+        : this.calendarService.addCalendarEventToArray(this.unreccuringCalendarEvents,
+          this.calendarService.generateNonRepeatableEvent(timeSlot));
     }
     this.addRecurringEventsToCalendarEvents();
   }
@@ -62,12 +82,20 @@ export class CalendarComponent implements OnInit {
     this.recurringEvents.forEach(event => {
       const rule: RRule = this.calendarService.createRRule(this.view, this.viewDate, event);
       rule.all().forEach(date => {
-        this.calendarEvents.push(
-          Object.assign({}, event, {
-            start: new Date(date)
-          })
-        );
+        const calendarEvent = Object.assign({}, event, { start: new Date(date) },
+          { actions: this.calendarService.actions },
+          { meta: { incrementsBadgeTotal: false } });
+        this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent);
       });
+    });
+    this.calendarService.sortCalendarEvents(this.calendarEvents);
+  }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach(day => {
+      day.badgeTotal = day.events.filter(
+        event => event.meta.incrementsBadgeTotal
+      ).length;
     });
   }
 }

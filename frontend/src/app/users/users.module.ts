@@ -9,6 +9,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserResolvedGuard } from '../guard/user-resolved.guard';
 import { SharedModule } from '../shared/shared.module';
 import { UserFormMangerService } from '../shared/select-role/service/user-form-manger.service';
+import { CreateUserResolvedGuard } from '../guard/create-user-resolved.guard';
 
 @NgModule({
   imports: [
@@ -25,9 +26,9 @@ import { UserFormMangerService } from '../shared/select-role/service/user-form-m
   providers: [
     UserService,
     UserControllerService,
-    UserResolvedGuard
+    UserResolvedGuard,
+    CreateUserResolvedGuard
   ]
 })
 export class UsersModule {
-  
 }

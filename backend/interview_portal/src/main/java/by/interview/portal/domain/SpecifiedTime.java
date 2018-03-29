@@ -1,9 +1,15 @@
 package by.interview.portal.domain;
 
+import by.interview.portal.utils.Interval;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,14 +20,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-
-import by.interview.portal.utils.Interval;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -55,4 +53,5 @@ public class SpecifiedTime {
             joinColumns = {@JoinColumn(name = "specified_time_id")},
             inverseJoinColumns = {@JoinColumn(name = "interview_id")})
     private Set<Interview> interviewsSet;
+
 }

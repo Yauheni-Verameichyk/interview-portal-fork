@@ -11,6 +11,7 @@ import { LightFieldService } from './validator/service/light-field.service';
 import { MessageWindowComponent } from './pop-up-window/message-window/message-window.component';
 import { ValidatorMessageComponent } from './validator/validator-message/validator-message.component';
 import { RouterModule } from '@angular/router';
+import { AssignDisciplineComponent } from './assign-discipline/assign-discipline.component';
 import { PopupService } from './pop-up-window/popup-service/popup.service';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { PopupService } from './pop-up-window/popup-service/popup.service';
     SelectUserComponent,
     ValidatorMessageComponent,
     SelectRoleComponent,
-    MessageWindowComponent
+    MessageWindowComponent,
+    AssignDisciplineComponent
   ],
   providers: [
     UserFormMangerService,
@@ -38,7 +40,8 @@ import { PopupService } from './pop-up-window/popup-service/popup.service';
     SelectUserComponent,
     ValidatorMessageComponent,
     SelectRoleComponent,
-    MessageWindowComponent
+    MessageWindowComponent,
+    AssignDisciplineComponent
   ]
 })
 export class SharedModule { }

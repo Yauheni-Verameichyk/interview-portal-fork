@@ -20,3 +20,7 @@ select {
 .remove-button {
     width: 5%;
 }
+.assigned-discipline-title {
+    margin-top: 10px;
+    text-align: center;
+}

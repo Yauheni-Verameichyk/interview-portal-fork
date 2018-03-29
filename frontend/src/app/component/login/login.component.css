@@ -1,0 +1,24 @@
+.content-wrapper {
+    background: #F6F8FA;
+    margin-left: 247px;
+    min-height: 100vh;
+    padding: 1.8rem 1.7rem;
+    transition: width 0.25s ease, margin 0.25s ease;
+    width: calc(100% - 247px); 
+    background: url("../../../images/Login_bg.jpg") no-repeat center center;
+    background-size: cover;
+}
+@media (max-width: 991px) {
+    .content-wrapper {
+      margin-left: 0;
+      width: 100%; } }
+  .content-wrapper.full-page-wrapper {
+    margin-left: 0;
+    width: 100%; }
+
+.container-scroller {
+  overflow: hidden; }
+
+.align-items-center{
+    align-items: baseline !important; }
+

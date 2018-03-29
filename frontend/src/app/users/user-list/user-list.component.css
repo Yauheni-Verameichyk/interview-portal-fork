@@ -1,6 +1,56 @@
 .tbody-hover:hover{
     cursor: pointer;
 }
+.user-list{
+    margin-top: 80px;
+}
 .header-table{
     background-color: #e3f2fd !important;
 }
+ div.dataTables_length select {
+    width: 75px;
+    display: inline-block;
+  }
+ div.dataTables_filter {
+    text-align: right;
+  }
+div.dataTables_filter label {
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: left;
+  } div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: auto;
+  }
+div.dataTables_length label {
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+  }
+div.dataTables_length select {
+    width: 75px;
+    display: inline-block;
+  }
+div.dataTables_info {
+    padding-top: 0.85em;
+    white-space: nowrap;
+  }
+div.dataTables_paginate ul.pagination {
+    margin: 2px 0;
+    white-space: nowrap;
+    justify-content: flex-end;
+}
+div.dataTables_paginate {
+    margin: 0;
+    white-space: nowrap;
+    text-align: right;
+  }
+@media screen and (max-width: 767px) {
+    div.dataTables_length,
+    div.dataTables_filter,
+    div.dataTables_info,
+    div.dataTables_paginate {
+      text-align: center;
+    }
+  }

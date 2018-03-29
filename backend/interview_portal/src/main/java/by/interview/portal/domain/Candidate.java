@@ -11,14 +11,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -29,26 +29,28 @@ import lombok.NoArgsConstructor;
 @Table(name = "candidates")
 public class Candidate extends Person {
 
-	@ManyToMany
-	@JoinTable(name = "candidate_discipline", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "discipline_id"))
-	@LazyCollection(LazyCollectionOption.TRUE)
-	private Set<Discipline> disciplineList;
-	@OneToMany(cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.TRUE)
-	@JoinColumn(name = "candidate_id")
-	private List<CandidateWork> candidateWorkList;
+    @ManyToMany
+    @JoinTable(name = "candidate_discipline", joinColumns = @JoinColumn(name = "candidate_id"),
+            inverseJoinColumns = @JoinColumn(name = "discipline_id"))
+    @LazyCollection(LazyCollectionOption.TRUE)
+    private Set<Discipline> disciplineList;
+    @OneToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.TRUE)
+    @JoinColumn(name = "candidate_id")
+    private List<CandidateWork> candidateWorkList;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.TRUE)
-	@JoinColumn(name = "candidate_id")
-	private List<CandidateEducation> candidateEducationList;
+    @OneToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.TRUE)
+    @JoinColumn(name = "candidate_id")
+    private List<CandidateEducation> candidateEducationList;
 
-	public Candidate(Long id, String name, String surname, String phoneNumber, Set<Discipline> disciplineList,
-			List<CandidateWork> candidateWorkList, List<CandidateEducation> candidateEducationList) {
-		super(id, name, surname, phoneNumber);
-		this.disciplineList = disciplineList;
-		this.candidateWorkList = candidateWorkList;
-		this.candidateEducationList = candidateEducationList;
-	}
+    public Candidate(Long id, String name, String email, String surname, String phoneNumber,
+            Set<Discipline> disciplineList, List<CandidateWork> candidateWorkList,
+            List<CandidateEducation> candidateEducationList) {
+        super(id, email, name, surname, phoneNumber);
+        this.disciplineList = disciplineList;
+        this.candidateWorkList = candidateWorkList;
+        this.candidateEducationList = candidateEducationList;
+    }
 
 }

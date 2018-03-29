@@ -9,6 +9,8 @@ import { CalendarHeaderComponent } from './calendar-header/calendar-header.compo
 import { DateTimePickerComponent } from './date-time-picker/date-time-picker.component';
 import { NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarService } from './service/calendar.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarFormComponent } from './calendar-form/calendar-form.component';
 
 
 @NgModule({
@@ -21,12 +23,14 @@ import { CalendarService } from './service/calendar.service';
     CalendarModule.forRoot(),
     NgbDatepickerModule.forRoot(),
     NgbTimepickerModule.forRoot(),
+    BrowserAnimationsModule
   ],
   declarations: [
     calendarRouterComponents,
     CalendarComponent,
     CalendarHeaderComponent,
-    DateTimePickerComponent
+    DateTimePickerComponent,
+    CalendarFormComponent
   ],
   providers: [
     CalendarService

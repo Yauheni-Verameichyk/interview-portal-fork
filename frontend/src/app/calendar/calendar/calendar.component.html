@@ -1,8 +1,11 @@
-<mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="readAllEvents()" (viewChange)="readAllEvents()">
+<div class="calendar">
+<mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="readAllEvents(); activeDayIsOpen = false"
+  (viewChange)="readAllEvents()">
 </mwl-demo-utils-calendar-header>
 
 <div [ngSwitch]="view">
-  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="calendarEvents">
+  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="calendarEvents" (beforeViewRender)="beforeMonthViewRender($event)"
+    (dayClicked)="dayClicked($event.day)" [activeDayIsOpen]="activeDayIsOpen">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="calendarEvents">
   </mwl-calendar-week-view>
@@ -12,7 +15,7 @@
 
 <h3>
   Edit events
-  <button class="btn btn-primary pull-right" (click)="addEvent()">
+  <button class="btn btn-primary pull-right"  [routerLink]="['', {outlets: { popup: ['calendar', 'create'] } }]">
     Add new
   </button>
   <div class="clearfix"></div>
@@ -57,5 +60,5 @@
       </td>
     </tr>
   </tbody>
-
 </table>
+</div>
