@@ -55,7 +55,7 @@ public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
             SpecifiedTimeDTO timeSlot = copyObject(specifiedTimeDTO);
             timeSlot.setStartTime(currentStartTime.plusHours(i));
             if (timeSlot.getEndTime() == null) {
-                timeSlot.setEndTime(currentStartTime.plusHours(1));
+                timeSlot.setEndTime(currentStartTime.plusHours(i + 1));
             }
             SpecifiedTime specifiedTime = specifiedTimeConverter.convertToEntity(timeSlot);
             specifiedTime.setUser(user);
@@ -67,5 +67,10 @@ public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
         SpecifiedTimeDTO timeSlot = new SpecifiedTimeDTO();
         BeanUtils.copyProperties(specifiedTimeDTO, timeSlot);
         return timeSlot;
+    }
+
+    @Override
+    public SpecifiedTimeDTO findById(Long id) {
+        return specifiedTimeConverter.convertToDTO(specifiedTimeService.findById(id));
     }
 }

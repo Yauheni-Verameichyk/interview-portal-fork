@@ -50,4 +50,10 @@ public class SpecifiedTimeController {
     public void save(@RequestBody SpecifiedTimeDTO specifiedTimeDTO) {
         specifiedTimeFacade.save(specifiedTimeDTO);
     }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/{id}")
+    public SpecifiedTimeDTO findById(@PathVariable Long id) {
+        return specifiedTimeFacade.findById(id);
+    }
 }

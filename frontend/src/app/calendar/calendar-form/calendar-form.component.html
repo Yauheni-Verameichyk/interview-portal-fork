@@ -6,7 +6,7 @@
         <tr>
           <th>Duration (hours)</th>
           <th>Starts at</th>
-          <th *ngIf="isRepeatable">Ends at</th>
+          <th *ngIf="specifiedTime.isRepeatable">Ends at</th>
         </tr>
       </thead>
       <tbody>
@@ -25,7 +25,7 @@
             <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.startTime" (ngModelChange)="refresh.next()" placeholder="Not set">
             </mwl-demo-utils-date-time-picker>
           </td>
-          <td *ngIf="isRepeatable">
+          <td *ngIf="specifiedTime.isRepeatable">
             <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.endTime" (ngModelChange)="refresh.next()" placeholder="Not set">
             </mwl-demo-utils-date-time-picker>
           </td>
@@ -34,16 +34,16 @@
 
     </table>
     <div class="custom-control custom-checkbox is-repeatable">
-      <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="isRepeatable" (change)="isRepeatable = !isRepeatable; repeatPattern = null">
+      <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="specifiedTime.isRepeatable" (change)="specifiedTime.isRepeatable = !specifiedTime.isRepeatable; specifiedTime.repeatPattern = null">
       <label class="custom-control-label" for="customCheck1">Repeatable</label>
     </div>
-    <form *ngIf="isRepeatable" #f="ngForm">
-      <input type="radio" value="weekly" name="repeatPattern" [(ngModel)]="repeatPattern"> Weekly
-      <input type="radio" value="monthly" name="repeatPattern" [(ngModel)]="repeatPattern"> Monthly
-      <input type="radio" value="yearly" name="repeatPattern" [(ngModel)]="repeatPattern"> Yearly
-      <input type="radio" value="custom" name="repeatPattern" [(ngModel)]="repeatPattern"> Custom
+    <form *ngIf="specifiedTime.isRepeatable" #f="ngForm">
+      <input type="radio" value="weekly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"> Weekly
+      <input type="radio" value="monthly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"> Monthly
+      <input type="radio" value="yearly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"> Yearly
+      <input type="radio" value="custom" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"> Custom
     </form>
-    <div *ngIf="repeatPattern === 'custom'">
+    <div *ngIf="specifiedTime.repeatPattern === 'custom'">
       <table class="table">
         <tr>
           <td>Years</td>
@@ -52,29 +52,29 @@
         </tr>
         <tr>
           <td>
-            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="repeatPeriod.years = repeatPeriod.years + 1">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.repeatPeriod.years = specifiedTime.repeatPeriod.years + 1">
               <span _ngcontent-c6="" class="chevron"></span>
             </button>
-            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="repeatPeriod.years">
-            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="repeatPeriod.years = repeatPeriod.years - 1">
+            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.years">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.repeatPeriod.years = specifiedTime.repeatPeriod.years - 1">
               <span _ngcontent-c6="" class="chevron bottom"></span>
             </button>
           </td>
           <td>
-            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="repeatPeriod.months = repeatPeriod.months + 1">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.repeatPeriod.months = specifiedTime.repeatPeriod.months + 1">
               <span _ngcontent-c6="" class="chevron"></span>
             </button>
-            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="repeatPeriod.months">
-            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="repeatPeriod.months = repeatPeriod.months - 1">
+            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.months">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.repeatPeriod.months = specifiedTime.repeatPeriod.months - 1">
               <span _ngcontent-c6="" class="chevron bottom"></span>
             </button>
           </td>
           <td>
-            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="repeatPeriod.days = repeatPeriod.days + 1">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.repeatPeriod.days = specifiedTime.repeatPeriod.days + 1">
               <span _ngcontent-c6="" class="chevron"></span>
             </button>
-            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="repeatPeriod.days">
-            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="repeatPeriod.days = repeatPeriod.days - 1">
+            <input _ngcontent-c6="" aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.days">
+            <button _ngcontent-c6="" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.repeatPeriod.days = specifiedTime.repeatPeriod.days - 1">
               <span _ngcontent-c6="" class="chevron bottom"></span>
             </button>
           </td>
