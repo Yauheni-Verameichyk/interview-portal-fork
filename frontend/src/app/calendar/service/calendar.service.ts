@@ -9,7 +9,7 @@ import {
   endOfWeek,
   endOfDay
 } from 'date-fns';
-import {RRule} from 'rrule';
+import { RRule } from 'rrule';
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { Router } from '@angular/router';
@@ -212,15 +212,15 @@ export class CalendarService {
     switch (repeatInterval) {
       case 'P1Y':
         specifiedTime.repeatPattern = 'yearly';
-        specifiedTime.repeatPeriod.years = 1;
+        specifiedTime.repeatPeriod = { years: 1 };
         break;
       case 'P1M':
         specifiedTime.repeatPattern = 'monthly';
-        specifiedTime.repeatPeriod.months = 1;
+        specifiedTime.repeatPeriod = { months: 1 };
         break;
       case 'P7D':
         specifiedTime.repeatPattern = 'weekly';
-        specifiedTime.repeatPeriod.months = 1;
+        specifiedTime.repeatPeriod = { days: 7 };
         break;
       default:
         specifiedTime.repeatPattern = 'custom';
