@@ -5,7 +5,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
 
 const routes: Routes = [
-  { path: 'calendar', component: CalendarComponent },
+  { path: 'calendar', component: CalendarComponent, runGuardsAndResolvers: 'always', },
   { path: 'calendar/create', component: CalendarFormComponent, outlet: 'popup' },
   { path: 'calendar/edit/:specifiedTimeId', component: CalendarFormComponent, outlet: 'popup' },
 ];
