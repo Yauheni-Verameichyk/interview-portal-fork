@@ -7,20 +7,20 @@
     </div>
     <nav id="nav-menu-container">
       <ul class="nav-menu">
-        <li class=" menu -active">
-          <a routerLink="users" routerLinkActive="active">Users</a>
+        <li>
+          <a class="menu" routerLink="users" routerLinkActive="menu-active">Users</a>
         </li>
         <li>
-          <a routerLink="discipline" routerLinkActive="active">Discipline</a>
+          <a  class="menu" routerLink="discipline" routerLinkActive="menu-active">Discipline</a>
         </li>
         <li *requiredAuthority="'CANDIDATE_LIST_READ'">
-          <a routerLink="candidate" routerLinkActive="active">Candidates</a>
+          <a  class="menu" routerLink="candidate" routerLinkActive="menu-active">Candidates</a>
         </li>
         <li>
-            <a routerLink="calendar" routerLinkActive="active">Calendar</a>
+            <a class="menu" routerLink="calendar" routerLinkActive="menu-active">Calendar</a>
         </li>
         <li>
-          <a>Our team</a>
+          <a class="menu" >Our team</a>
         </li>
         <li>
           <a class="point" routerLink="login">Sign Out</a>

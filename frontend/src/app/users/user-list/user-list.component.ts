@@ -23,8 +23,7 @@ export class UserListComponent implements OnInit {
         });
   }
   addNewUser() {
-    const link = ['/users/new'];
-    this.router.navigate(link);
+    this.router.navigate([{ outlets: { popup: ['users', 'new'] } }]);
   }
   @HostListener('window:scroll', ['$event'])
   windowScrollListener() {

@@ -14,6 +14,7 @@ const routes: Routes = [
   {
     path: 'users/:id/info',
     component: UserFormComponent,
+    outlet: 'popup',
     resolve: {
       user: UserResolvedGuard
     }
@@ -21,12 +22,14 @@ const routes: Routes = [
   {
     path: 'users/:id/edit',
     component: UserFormComponent,
+    outlet: 'popup',
     resolve: {
       user: UserResolvedGuard
     }
   },
   {
     path: 'users/new',
+    outlet: 'popup',
     component: UserFormComponent,
     resolve: {
       user: CreateUserResolvedGuard

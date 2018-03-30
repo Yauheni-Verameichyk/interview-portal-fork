@@ -5,7 +5,7 @@
     padding: 1.8rem 1.7rem;
     transition: width 0.25s ease, margin 0.25s ease;
     width: calc(100% - 247px); 
-    background: url("../../../images/Login_bg.jpg") no-repeat center center;
+    background: url("../../../images/lockscreen-bg.jpg") no-repeat center center;
     background-size: cover;
 }
 @media (max-width: 991px) {
