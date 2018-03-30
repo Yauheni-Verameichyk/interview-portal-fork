@@ -24,11 +24,10 @@ export class CandidateListComponent implements OnInit {
 
   @HostListener("window:scroll", ["$event"])
   windowScrollListener() {
-    let position = document.documentElement.scrollTop;
-    let max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    if ((position == max) && this.showButtonLoad) {
+    const position = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+    const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if ((position === max) && this.showButtonLoad) {
       this.candidateService.fetchCandidateList(this.candidateService.candidateList.length);
     }
   }
-
 }

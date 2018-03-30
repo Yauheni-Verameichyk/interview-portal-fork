@@ -14,6 +14,8 @@ import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { Router } from '@angular/router';
 import { SpecifiedTime } from '../../api/models/specified-time';
+import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 
 @Injectable()
 export class CalendarService {
@@ -59,14 +61,23 @@ export class CalendarService {
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        console.log('Deleted ' + event.id);
+        if (confirm('Delete chosen time slot?')) {
+          this.specifiedTimeControllerService.deleteUsingDELETE_1(+event.id).subscribe((success) => {
+            this.router.navigate(['calendar']);
+            this.popupService.displayMessage('Time slot was deleted', this.router);
+          }, (error) => {
+            this.popupService.displayMessage('Error during time slot deleting', this.router);
+          });
+        }
       }
     }
   ];
 
   weekDays = [RRule.SU, RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private specifiedTimeControllerService: SpecifiedTimeControllerService,
+    private popupService: PopupService) { }
 
   addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
     if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {

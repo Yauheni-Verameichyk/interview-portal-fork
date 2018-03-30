@@ -56,6 +56,7 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
     this.specifiedTimeControllerService.saveUsingPOST_2(this.specifiedTimeDTO)
       .takeUntil(this.destroy)
       .subscribe(response => {
+        this.router.navigate(['calendar']);
         this.popupService.displayMessage('Specified time was saved', this.router);
       },
         error => {

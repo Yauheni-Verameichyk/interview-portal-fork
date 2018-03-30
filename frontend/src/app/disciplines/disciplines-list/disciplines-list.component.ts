@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
@@ -8,25 +8,30 @@ import { Observable } from 'rxjs/Observable';
 import { DisciplineService } from '../service/discipline.service';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-disciplines-list',
   templateUrl: './disciplines-list.component.html',
   styleUrls: ['./disciplines-list.component.css']
 })
-export class DisciplinesListComponent implements OnInit, OnDestroy {
+export class DisciplinesListComponent implements OnDestroy {
 
   disciplinesList: Array<DisciplineDTO> = [];
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineService: DisciplineService,
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
-    private router: Router) { }
-
-  ngOnInit(): void {
-    (this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ'))
-      ? this.findDisciplines('MY') : this.findDisciplines('ALL');
+    private router: Router
+  ) {
+    this.router.events
+      .takeUntil(this.destroy)
+      .subscribe((e: any) => {
+        if (e instanceof NavigationEnd) {
+          (this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ'))
+            ? this.findDisciplines('MY') : this.findDisciplines('ALL');
+        }
+      });
   }
 
   findDisciplines(searchOption: string): void {
