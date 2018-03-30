@@ -54,6 +54,7 @@ export class DisciplineComponent implements OnInit, OnDestroy {
     this.disciplinesControllerService.deleteDisciplineUsingDELETE(id)
       .takeUntil(this.destroy)
       .subscribe((success) => {
+        this.router.navigate(['discipline']);
         this.popupService.displayMessage('Discipline was deleted', this.router);
       }, (error) => {
         this.popupService.displayMessage('Error during discipline deleting', this.router);

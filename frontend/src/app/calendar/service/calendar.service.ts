@@ -63,7 +63,6 @@ export class CalendarService {
       onClick: ({ event }: { event: CalendarEvent }): void => {
         if (confirm('Delete chosen time slot?')) {
           this.specifiedTimeControllerService.deleteUsingDELETE_1(+event.id).subscribe((success) => {
-            // window.location.reload();
             this.router.navigate(['calendar']);
             this.popupService.displayMessage('Time slot was deleted', this.router);
           }, (error) => {

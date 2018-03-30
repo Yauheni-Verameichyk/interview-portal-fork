@@ -18,7 +18,7 @@ import 'rxjs/add/operator/takeUntil';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit, OnDestroy {
+export class CalendarComponent implements OnDestroy {
 
   view = 'month';
   viewDate: Date = new Date();
@@ -31,18 +31,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private calendarService: CalendarService,
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
     private popupService: PopupService,
-    private router: Router, ) {
-      this.readAllEvents();
-     }
-
-  ngOnInit(): void {
+    private router: Router
+  ) {
     this.router.events
-    .takeUntil(this.destroy)
-    .subscribe((e: any) => {
-      if (e instanceof NavigationEnd) {
-        this.readAllEvents();
-      }
-    });
+      .takeUntil(this.destroy)
+      .subscribe((e: any) => {
+        if (e instanceof NavigationEnd) {
+          this.readAllEvents();
+        }
+      });
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

@@ -104,6 +104,7 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
       this.disciplineControllerService.saveUsingPOST(this.discipline)
         .takeUntil(this.destroy)
         .subscribe((success) => {
+          this.router.navigate(['discipline']);
           this.popupService.displayMessage('Discipline was saved', this.router);
         }, error => {
           this.popupService.displayMessage('Error during discipline saving', this.router);
