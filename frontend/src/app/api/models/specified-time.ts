@@ -4,7 +4,7 @@ import { UserBaseInfoDTO } from './user-base-info-dto';
 interface Period {
   years?: number;
   months?: number;
-  days?: number;
+  weeks?: number;
 }
 
 export class SpecifiedTime {

@@ -44,6 +44,7 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
       this.specifiedTime.startTime.setMinutes(0);
       this.specifiedTime.startTime.setSeconds(0);
       this.specifiedTime.duration = 1;
+      this.specifiedTime.repeatPeriod = { years: 1, months: 1, weeks: 1 };
     }
   }
 
