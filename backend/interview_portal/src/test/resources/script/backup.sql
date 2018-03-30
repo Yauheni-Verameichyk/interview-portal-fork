@@ -4,7 +4,8 @@ CREATE TABLE candidates (
     id bigint NOT NULL,
     name character varying(50),
     phone_number character varying(50),
-    surname character varying(50)
+    surname character varying(50),
+    email character varying(50)
 );
 
 DROP SEQUENCE IF EXISTS hibernate_sequence;
@@ -59,6 +60,7 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id bigint NOT NULL,
     login character varying(50) NOT NULL,
+    email character varying(50) NOT NULL,
     name character varying(50) NOT NULL,
     password character varying(100) NOT NULL,
     phone_number character varying(50) NOT NULL,
@@ -74,11 +76,11 @@ CREATE TABLE users_roles_disciplines (
     user_id bigint NOT NULL
 );
 
-INSERT INTO candidates (id, name, phone_number, surname) VALUES (5, 'Viktar', '+12312312312', 'Hrynko');
-INSERT INTO candidates (id, name, phone_number, surname) VALUES (6, 'Ilya', '1123123123', 'Nikalaeu');
-INSERT INTO candidates (id, name, phone_number, surname) VALUES (8, '45654654', '456546546546', '546546');
-INSERT INTO candidates (id, name, phone_number, surname) VALUES (9, 'Viktar', '123123123123', 'Hrynko');
-INSERT INTO candidates (id, name, phone_number, surname) VALUES (10, '4456546546', '54654654645', '54546546');
+INSERT INTO candidates (id, name, email, phone_number, surname) VALUES (5, 'Viktar', 'mail@mail.ru', '+12312312312', 'Hrynko');
+INSERT INTO candidates (id, name, email, phone_number, surname) VALUES (6, 'Ilya', 'mail@mail.ru', '1123123123', 'Nikalaeu');
+INSERT INTO candidates (id, name, email, phone_number, surname) VALUES (8, '45654654', 'mail@mail.ru', '456546546546', '546546');
+INSERT INTO candidates (id, name, email, phone_number, surname) VALUES (9, 'Viktar', 'mail@mail.ru', '123123123123', 'Hrynko');
+INSERT INTO candidates (id, name, email, phone_number, surname) VALUES (10, '4456546546', 'mail@mail.ru', '54654654645', '54546546');
 
 INSERT INTO candidate_discipline (candidate_id, discipline_id) VALUES (5, 1);
 
@@ -97,8 +99,8 @@ INSERT INTO work_candidate (id, date_end, date_start, name_company, position, ca
 
 INSERT INTO disciplines (id, name, parent_id, subscription) VALUES (13, 'Java core', 1, 'sdfsdffsdfs');
 
-INSERT INTO users (id, login, name, password, phone_number, surname) VALUES (19, 'lsanders5@cornell.edu', 'Larry', '$2a$10$JNOt6MitwnaS6NO.t8ancesyDhHrC82QPRc01GysrQTYbo1mB7vyO', '2015-01-11', 'Sanders');
-INSERT INTO users (id, login, name, password, phone_number, surname) VALUES (22, 'gortiz0@mapy.cz', 'Gary', '$2a$10$z6YihsM92D9v4Og.RhDP9OHNRlX1GkzXJLDvi6R/B8PPi7uDTeZnS', '2015-05-16', 'Ortiz');
+INSERT INTO users (id, login, email, name, password, phone_number, surname) VALUES (19, 'lsanders5@cornell.edu', 'mail@mail.ru', 'Larry', '$2a$10$JNOt6MitwnaS6NO.t8ancesyDhHrC82QPRc01GysrQTYbo1mB7vyO', '2015-01-11', 'Sanders');
+INSERT INTO users (id, login, email, name, password, phone_number, surname) VALUES (22, 'gortiz0@mapy.cz', 'mail@mail.ru', 'Gary', '$2a$10$z6YihsM92D9v4Og.RhDP9OHNRlX1GkzXJLDvi6R/B8PPi7uDTeZnS', '2015-05-16', 'Ortiz');
 
 INSERT INTO users_roles_disciplines (id, role_id, discipline_id, user_id) VALUES (20, 0, NULL, 19);
 INSERT INTO users_roles_disciplines (id, role_id, discipline_id, user_id) VALUES (21, 3, NULL, 19);
