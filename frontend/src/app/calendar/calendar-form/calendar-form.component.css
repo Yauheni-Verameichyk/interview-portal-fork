@@ -63,3 +63,26 @@ input{
     display:inline-block;
     width:auto;
 }
+
+table {
+    padding: 10px;
+}
+
+.repeat-pattern {
+    border: 20px;
+    margin: 10px;
+}
+
+.repeat-number {
+    width: 45px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.repeat-numbers {
+    float: left;
+}
+
+.patterns-list {
+    margin-top: 10px;
+}

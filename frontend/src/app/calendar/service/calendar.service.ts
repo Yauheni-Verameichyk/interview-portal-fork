@@ -216,7 +216,9 @@ export class CalendarService {
       duration: 1,
       isRepeatable: !!specifiedTimeDTO.repeatInterval
     };
-    this.setRepeatPattern(specifiedTimeDTO.repeatInterval, specifiedTime);
+    if (specifiedTimeDTO.repeatInterval) {
+      this.setRepeatPattern(specifiedTimeDTO.repeatInterval, specifiedTime);
+    }
     return specifiedTime;
   }
 

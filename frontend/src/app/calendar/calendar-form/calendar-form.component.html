@@ -34,30 +34,32 @@
       <label class="custom-control-label" for="customCheck1">Repeatable</label>
     </div>
 
-    <div>
+    
       <table class="table" *ngIf="specifiedTime.isRepeatable">
+          <div class="repeat-pattern">
         <tr>
           <th>Repeat pattern</th>
           <th *ngIf="specifiedTime.isRepeatable">Ends at</th>
         </tr>
         <tr>
-          <form class="pull-left">
-            <input type="radio" value="weekly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern" checked> Weekly
-            <input type="radio" value="monthly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"> Monthly
-            <input type="radio" value="yearly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"> Yearly
-          </form>
-          <div *ngIf="specifiedTime.repeatPattern === 'yearly'">
-            Repeat every
-            <input class="form-control input-sm" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.years"> year(s).
-          </div>
-          <div *ngIf="specifiedTime.repeatPattern === 'monthly'">
-            Repeat every
-            <input class="form-control" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.months"> month(s).
-          </div>
-          <div *ngIf="specifiedTime.repeatPattern === 'weekly'">
-            Repeat every
-            <input class="form-control" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.weeks"> week(s).
-          </div>
+            <div class="custom-controls-stacked patterns-list">
+                <label class="custom-control custom-radio">
+                  <input id="radioStacked1" value="weekly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern" type="radio" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Weekly</span>
+                </label>
+                <label class="custom-control custom-radio">
+                  <input id="radioStacked2" value="monthly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern" type="radio" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Monthly</span>
+                </label>
+                <label class="custom-control custom-radio">
+                  <input id="radioStacked3" value="yearly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern" type="radio" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Yearly</span>
+                </label>
+              </div>
+        
 
           <td>
             <div *ngIf="specifiedTime.isRepeatable">
@@ -65,10 +67,23 @@
                 placeholder="Not set">
               </mwl-demo-utils-date-time-picker>
             </div>
+            <div *ngIf="specifiedTime.repeatPattern === 'yearly'" class="repeat-numbers">
+                Repeat every
+                <input class="form-control input-sm repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.years"> year(s).
+              </div>
+              <div *ngIf="specifiedTime.repeatPattern === 'monthly'" class="repeat-numbers">
+                Repeat every
+                <input class="form-control repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.months"> month(s).
+              </div>
+              <div *ngIf="specifiedTime.repeatPattern === 'weekly'" class="repeat-numbers">
+                Repeat every
+                <input class="form-control repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.weeks"> week(s).
+              </div>
           </td>
         </tr>
+      </div>
       </table>
-    </div>
+  
     <div class="text-center" *ngIf="!noEdit">
       <a (click)="sendSpecifiedTime()" class="btn btn-primary">Save</a>
     </div>
