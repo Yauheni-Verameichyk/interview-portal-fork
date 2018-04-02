@@ -2,14 +2,14 @@
   <div id="roles" class="select-roles form-group col-md-12">
     <legend>
       Roles
-      <button *ngIf="isShowButton" class="btn btn-info" (click)='addRoles()'>
+      <button *ngIf="isShowButton" class="btn btn-outline-success" (click)='addRoles()'>
         <img class="fas fa-plus-circle align-middle" />
       </button>
     </legend>
     <div class="form-row">
       <div class="card col-md-6 select-roles" *ngFor="let role of assignRolesForUser; let i = index">
         <div class="card-block">
-            <button (click)='deleteRole(i)' *ngIf="isShowButton" class="card-btn btn btn-info">
+            <button (click)='deleteRole(i)' *ngIf="isShowButton" class="card-btn btn btn-outline-danger">
                 <img class="far fa-trash-alt align-middle" />
               </button>
           <p class="card-name">
@@ -26,7 +26,7 @@
     <div class="form-row">
       <div class="card col-md-6 select-roles" *ngFor="let newRole of newRoles; let i = index">
         <div class="card-block">
-            <button (click)='addNewRole(i)' *ngIf="isShowButton" class="card-btn btn btn-info">
+            <button (click)='addNewRole(i)' *ngIf="isShowButton" class="card-btn btn btn-outline-success">
                 <img class="fas fa-plus-circle align-middle" />
             </button>
           <p class="card-name">
