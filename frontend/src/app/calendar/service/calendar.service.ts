@@ -144,36 +144,39 @@ export class CalendarService {
   generateRepeatRule(specifiedTime: SpecifiedTimeDTO): RecurringEvent['rrule'] {
     const startTime = new Date(specifiedTime.startTime);
     if (specifiedTime.repeatInterval.match(/\d+Y/)) {
-      return this.generateYearlyRule(startTime);
+      return this.generateYearlyRule(startTime, +specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1));
     }
     if (specifiedTime.repeatInterval.match(/\d+M/)) {
-      return this.generateMonthlyRule(startTime);
+      return this.generateMonthlyRule(startTime, +specifiedTime.repeatInterval.match(/\d+M/)[0].slice(0, -1));
     }
     if (specifiedTime.repeatInterval.match(/\d+D/)) {
-      return this.generateWeeklyRule(startTime);
+      return this.generateWeeklyRule(startTime, +specifiedTime.repeatInterval.match(/\d+D/)[0].slice(0, -1));
     }
     throw new Error('Unknown period');
   }
 
-  generateYearlyRule(startTime: Date): RecurringEvent['rrule'] {
+  generateYearlyRule(startTime: Date, interval: number): RecurringEvent['rrule'] {
     return {
       freq: RRule.YEARLY,
       bymonth: startTime.getMonth() + 1,
-      bymonthday: startTime.getDate()
+      bymonthday: startTime.getDate(),
+      interval: interval
     };
   }
 
-  generateMonthlyRule(startTime: Date): RecurringEvent['rrule'] {
+  generateMonthlyRule(startTime: Date, interval: number): RecurringEvent['rrule'] {
     return {
       freq: RRule.MONTHLY,
-      bymonthday: startTime.getDate()
+      bymonthday: startTime.getDate(),
+      interval: interval
     };
   }
 
-  generateWeeklyRule(startTime: Date): RecurringEvent['rrule'] {
+  generateWeeklyRule(startTime: Date, interval: number): RecurringEvent['rrule'] {
     return {
       freq: RRule.WEEKLY,
-      byweekday: [this.weekDays[startTime.getDay()]]
+      byweekday: [this.weekDays[startTime.getDay()]],
+      interval: interval / 7
     };
   }
 
@@ -213,37 +216,31 @@ export class CalendarService {
       duration: 1,
       isRepeatable: !!specifiedTimeDTO.repeatInterval
     };
-    if (specifiedTime.isRepeatable) {
+    if (specifiedTimeDTO.repeatInterval) {
       this.setRepeatPattern(specifiedTimeDTO.repeatInterval, specifiedTime);
     }
     return specifiedTime;
   }
 
   setRepeatPattern(repeatInterval: string, specifiedTime: SpecifiedTime): void {
-    switch (repeatInterval) {
-      case 'P1Y':
-        specifiedTime.repeatPattern = 'yearly';
-        specifiedTime.repeatPeriod = { years: 1 };
-        break;
-      case 'P1M':
-        specifiedTime.repeatPattern = 'monthly';
-        specifiedTime.repeatPeriod = { months: 1 };
-        break;
-      case 'P7D':
-        specifiedTime.repeatPattern = 'weekly';
-        specifiedTime.repeatPeriod = { days: 7 };
-        break;
-      default:
-        specifiedTime.repeatPattern = 'custom';
-        specifiedTime.repeatPeriod = {
-          years: +repeatInterval.match(/\d+Y/)[0].slice(0, -1),
-          months: +repeatInterval.match(/\d+M/)[0].slice(0, -1),
-          days: + repeatInterval.match(/\d+D/)[0].slice(0, -1)
-        };
+    if (specifiedTime.repeatInterval.match(/\d+Y/)) {
+      specifiedTime.repeatPattern = 'yearly';
+      specifiedTime.repeatPeriod = { years: +specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1) };
+    }
+    if (specifiedTime.repeatInterval.match(/\d+M/)) {
+      specifiedTime.repeatPattern = 'monthly';
+      specifiedTime.repeatPeriod = { months: +specifiedTime.repeatInterval.match(/\d+M/)[0].slice(0, -1) };
+    }
+    if (specifiedTime.repeatInterval.match(/\d+D/)) {
+      specifiedTime.repeatPattern = 'weekly';
+      specifiedTime.repeatPeriod = { weeks: +specifiedTime.repeatInterval.match(/\d+D/)[0].slice(0, -1) / 7 };
     }
   }
 
   convertSpecifiedTimeToDTO(specifiedTime: SpecifiedTime): SpecifiedTimeDTO {
+    if (specifiedTime.endTime) {
+      specifiedTime.endTime.setHours(specifiedTime.startTime.getHours() + specifiedTime.duration);
+    }
     return {
       endTime: specifiedTime.endTime ? this.convertDateToString(specifiedTime.endTime) : null,
       startTime: this.convertDateToString(specifiedTime.startTime),
@@ -257,13 +254,11 @@ export class CalendarService {
   generateRepeatInterval(specifiedTime: SpecifiedTime): string {
     switch (specifiedTime.repeatPattern) {
       case 'yearly':
-        return 'P1Y';
+        return `P${specifiedTime.repeatPeriod.years}Y`;
       case 'monthly':
-        return 'P1M';
+        return `P${specifiedTime.repeatPeriod.months}M`;
       case 'weekly':
-        return 'P7D';
-      case 'custom':
-        return `P${specifiedTime.repeatPeriod.years}Y${specifiedTime.repeatPeriod.months}M${specifiedTime.repeatPeriod.days}D`;
+        return `P${specifiedTime.repeatPeriod.weeks * 7}D`;
       default:
         throw new Error('Unknown repeat interval');
     }
