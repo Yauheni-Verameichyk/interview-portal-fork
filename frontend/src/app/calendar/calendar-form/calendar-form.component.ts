@@ -34,6 +34,13 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
     private lightFieldService: LightFieldService) { }
 
   ngOnInit() {
+    this.specifiedTimeForm = this.calendarService.initFormGroup(this.specifiedTime);
+    this.initializeSpecifiedTime();
+    this.updateValidatorsForRepeatable();
+    this.updateValidatorsForEndTime();
+  }
+
+  initializeSpecifiedTime(): void {
     if (+this.route.snapshot.paramMap.get('specifiedTimeId')) {
       this.specifiedTimeControllerService
         .findByIdUsingGET_3(+this.route.snapshot.paramMap.get('specifiedTimeId'))
@@ -45,24 +52,31 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
           this.popupService.displayMessage('Error during specified time getting', this.router);
         });
     } else {
-      this.specifiedTime.startTime = new Date();
-      this.specifiedTime.startTime.setMinutes(0);
-      this.specifiedTime.startTime.setSeconds(0);
+      this.specifiedTime.startTime = this.calendarService.getCurrentDate();
+      this.specifiedTime.endTime = this.calendarService.getCurrentDate();
       this.specifiedTime.duration = 1;
       this.specifiedTime.repeatPeriod = 1;
     }
-    this.initFormGroup();
   }
 
-  initFormGroup(): void {
-    this.specifiedTimeForm = new FormGroup({
-      'duration': new FormControl([this.specifiedTime.duration], [Validators.required,
-      CustomValidators.digits, CustomValidators.range([1, 8])]),
-      'startTime': new FormControl([this.specifiedTime.duration], [Validators.required, CustomValidators.date]),
-      'repeatPattern': new FormControl([this.specifiedTime.repeatPattern]),
-      'repeatPeriod': new FormControl([this.specifiedTime.repeatPeriod], [CustomValidators.digits, CustomValidators.min(1)]),
-      'endTime': new FormControl([this.specifiedTime.endTime], [CustomValidators.minDate(this.specifiedTime.startTime)])
-    });
+  updateValidatorsForRepeatable() {
+    this.specifiedTimeForm.get('isRepeatable').valueChanges
+      .takeUntil(this.destroy)
+      .subscribe(isRepeatable => {
+        if (isRepeatable) {
+          this.calendarService.setValidatorsForRepeatable(this.specifiedTimeForm);
+        } else {
+          this.calendarService.setValidatorsForNonRepeatable(this.specifiedTimeForm);
+        }
+      });
+  }
+
+  updateValidatorsForEndTime() {
+    this.specifiedTimeForm.get('startTime').valueChanges
+      .takeUntil(this.destroy)
+      .subscribe(isRepeatable => {
+        this.calendarService.updateEndTimeValidator(this.specifiedTimeForm);
+      });
   }
 
   sendSpecifiedTime() {

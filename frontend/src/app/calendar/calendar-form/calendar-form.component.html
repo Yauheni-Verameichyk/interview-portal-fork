@@ -36,7 +36,8 @@
       </table>
 
       <div class="custom-control custom-checkbox is-repeatable">
-        <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="specifiedTime.isRepeatable" (change)="specifiedTime.isRepeatable = !specifiedTime.isRepeatable; specifiedTime.repeatPattern = null">
+        <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="specifiedTime.isRepeatable" formControlName="isRepeatable"
+          (change)="specifiedTime.isRepeatable = !specifiedTime.isRepeatable; specifiedTime.repeatPattern = null">
         <label class="custom-control-label" for="customCheck1">Repeatable</label>
       </div>
       <table class="table" *ngIf="specifiedTime.isRepeatable">
@@ -68,19 +69,22 @@
             </div>
             <validator-message [field]="specifiedTimeForm.controls.repeatPattern"></validator-message>
             <td>
+
               <div *ngIf="specifiedTime.isRepeatable">
                 <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.endTime" (ngModelChange)="refresh.next()" (showTime)="false"
-                  formControlName="endTime" placeholder="Not set" (change) = "specifiedTimeForm.controls.endTime.markAsTouched()">
+                  formControlName="endTime" placeholder="Not set" (click)="specifiedTimeForm.controls.endTime.markAsTouched()">
                 </mwl-demo-utils-date-time-picker>
+                <validator-message [field]="specifiedTimeForm.controls.endTime"></validator-message>
               </div>
-              <validator-message [field]="specifiedTimeForm.controls.endTime"></validator-message>
-              <div *ngIf="specifiedTime.repeatPattern" class="repeat-numbers">
-                Repeat every
-                <input class="form-control input-sm repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod"
-                  formControlName="repeatPeriod">
-                <span *ngIf="specifiedTime.repeatPattern === 'yearly'"> year(s). </span>
-                <span *ngIf="specifiedTime.repeatPattern === 'monthly'"> month(s). </span>
-                <span *ngIf="specifiedTime.repeatPattern === 'weekly'"> week(s). </span>
+              <div *ngIf="specifiedTime.repeatPattern">
+                <div class="repeat-numbers">
+                  Repeat every
+                  <input class="form-control input-sm repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod"
+                    formControlName="repeatPeriod">
+                  <span *ngIf="specifiedTime.repeatPattern === 'yearly'"> year(s). </span>
+                  <span *ngIf="specifiedTime.repeatPattern === 'monthly'"> month(s). </span>
+                  <span *ngIf="specifiedTime.repeatPattern === 'weekly'"> week(s). </span>
+                </div>
               </div>
               <br>
               <br>
