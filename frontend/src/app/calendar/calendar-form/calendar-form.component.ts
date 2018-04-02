@@ -48,6 +48,18 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  // initFormGroup(): void {
+  //   this.candidateForm = this.formBuilder.group({
+  //     id: [this.candidate.id],
+  //     name: [this.candidate.name, this.formValidator.lengthValidator()],
+  //     surname: [this.candidate.surname, this.formValidator.lengthValidator()],
+  //     phoneNumber: [this.candidate.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
+  //     candidateWorkList: this.formBuilder.array(this.initWorkFormList()),
+  //     candidateEducationList: this.formBuilder.array(this.initEducationFormList()),
+  //     disciplineList: this.formBuilder.array(this.initDisciplineFormList())
+  //   });
+  // }
+
   sendSpecifiedTime() {
     if (!this.specifiedTime.isRepeatable) { this.specifiedTime.endTime = null; }
     if (this.specifiedTime.endTime && this.specifiedTime.endTime <= this.specifiedTime.startTime) {
