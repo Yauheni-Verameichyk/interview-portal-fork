@@ -41,13 +41,9 @@
       <span *ngIf="!noEdit">* Required field</span>
       <br>
       <div class="text-center" *ngIf="!noEdit">
-        <a (click)="sendDiscipline()" class="btn btn-primary">Save</a>
+        <a (click)="sendDiscipline()" class="btn btn-success">Save</a>
+        <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Close</a>
       </div>
     </form>
-    <div class="d-f-button_close">
-      <button [routerLink]="['',{ outlets: { popup: null }}]" type="button" class="btn btn-primary">Close
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
   </div>
 </div>

@@ -22,3 +22,10 @@
 .align-items-center{
     align-items: baseline !important; }
 
+.container-login {
+    text-align: center;
+}
+
+.card-body {
+    min-width: 400px;
+}

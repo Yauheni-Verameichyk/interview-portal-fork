@@ -3,7 +3,7 @@
   <div id="discipline" class="select-disciplines form-group col-md-12">
     <legend>
       Assign disciplines for {{renderRole(typeRole)}}
-      <button *ngIf="isShowButton" class="btn btn-info" (click)='addNewDiscipline()'>
+      <button *ngIf="isShowButton" class="btn btn-outline-success" (click)='addNewDiscipline()'>
         <img class="fas fa-plus-circle align-middle" />
       </button>
     </legend>
@@ -11,7 +11,7 @@
       <div class="card select-disciplines col-md-6" *ngFor="let discipline of assignDisciplineForUser; let i = index">
         <div class="card-block">
           <p class="card-name">{{discipline.name}}
-            <button (click)='deleteDiscipline(i)' *ngIf="isShowButton" class="card-btn btn btn-info">
+            <button (click)='deleteDiscipline(i)' *ngIf="isShowButton" class="card-btn btn btn-outline-danger">
               <img class="far fa-trash-alt align-middle" />
             </button>
           </p>
@@ -27,7 +27,7 @@
       <div class="select-disciplines card col-md-6" *ngFor="let newDiscipline of newListDiscipline; let i = index">
         <div class="card-block">
           <p class="card-name">{{newDiscipline.name}}
-            <button (click)='assignNewDiscipline(i)' *ngIf="isShowButton" class="card-btn btn btn-info">
+            <button (click)='assignNewDiscipline(i)' *ngIf="isShowButton" class="card-btn btn btn-outline-success">
               <img class="fas fa-plus-circle align-middle" />
             </button>
           </p>
