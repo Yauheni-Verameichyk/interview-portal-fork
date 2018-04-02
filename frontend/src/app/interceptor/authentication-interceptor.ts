@@ -8,6 +8,7 @@ import 'rxjs/add/operator/mergeMap';
 import { error } from 'protractor';
 import { Router } from '@angular/router';
 import { AuthenticationControllerService } from '../api/rest/service/authentication-controller.service';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
@@ -36,9 +37,9 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         }
       }
     } else {
-      if (req.url === 'http://localhost:8080/interview-portal/auth') {
+      if (req.url === (environment.backendUrl+'/auth')) {
         return next.handle(req);
-      } else if (req.url === 'http://localhost:8080/interview-portal/auth/refresh') {
+      } else if (req.url === (environment.backendUrl+'/auth/refresh')) {
         return next.handle(req);
       }
       else {
