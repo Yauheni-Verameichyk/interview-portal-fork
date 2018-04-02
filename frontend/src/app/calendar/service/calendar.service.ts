@@ -239,7 +239,7 @@ export class CalendarService {
 
   convertSpecifiedTimeToDTO(specifiedTime: SpecifiedTime): SpecifiedTimeDTO {
     if (specifiedTime.endTime) {
-      specifiedTime.endTime.setHours(23);
+      specifiedTime.endTime.setHours(specifiedTime.startTime.getHours() + specifiedTime.duration);
     }
     return {
       endTime: specifiedTime.endTime ? this.convertDateToString(specifiedTime.endTime) : null,
