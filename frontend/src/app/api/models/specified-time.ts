@@ -1,12 +1,6 @@
 /* tslint:disable */
 import { UserBaseInfoDTO } from './user-base-info-dto';
 
-interface Period {
-  years?: number;
-  months?: number;
-  weeks?: number;
-}
-
 export class SpecifiedTime {
 
   endTime?: Date;
@@ -25,5 +19,5 @@ export class SpecifiedTime {
 
   repeatPattern?: string;
 
-  repeatPeriod?: Period;
+  repeatPeriod?: number;
 }

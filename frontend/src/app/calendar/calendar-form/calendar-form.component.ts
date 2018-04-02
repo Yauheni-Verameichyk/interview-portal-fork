@@ -9,8 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { CustomValidators } from 'ng4-validators';
+import { LightFieldService } from '../../shared/validator/service/light-field.service';
 
 @Component({
   selector: 'app-calendar-form',
@@ -29,7 +30,8 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private popupService: PopupService,
-    private router: Router) { }
+    private router: Router,
+    private lightFieldService: LightFieldService) { }
 
   ngOnInit() {
     if (+this.route.snapshot.paramMap.get('specifiedTimeId')) {
@@ -47,47 +49,38 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
       this.specifiedTime.startTime.setMinutes(0);
       this.specifiedTime.startTime.setSeconds(0);
       this.specifiedTime.duration = 1;
-      this.specifiedTime.repeatPeriod = { years: 1, months: 1, weeks: 1 };
+      this.specifiedTime.repeatPeriod = 1;
     }
+    this.initFormGroup();
+  }
+
+  initFormGroup(): void {
     this.specifiedTimeForm = new FormGroup({
       'duration': new FormControl([this.specifiedTime.duration], [Validators.required,
-      CustomValidators.number,
-      CustomValidators.range([1, 8])
-      ]),
-      'startTime' : new FormControl([this.specifiedTime.duration], [Validators.required,
-        CustomValidators.date
-        ])
+      CustomValidators.digits, CustomValidators.range([1, 8])]),
+      'startTime': new FormControl([this.specifiedTime.duration], [Validators.required, CustomValidators.date]),
+      'repeatPattern': new FormControl([this.specifiedTime.repeatPattern]),
+      'repeatPeriod': new FormControl([this.specifiedTime.repeatPeriod], [CustomValidators.digits, CustomValidators.min(1)]),
+      'endTime': new FormControl([this.specifiedTime.endTime], [CustomValidators.minDate(this.specifiedTime.startTime)])
     });
   }
 
-  // initFormGroup(): void {
-  //   this.candidateForm = this.formBuilder.group({
-  //     id: [this.candidate.id],
-  //     name: [this.candidate.name, this.formValidator.lengthValidator()],
-  //     surname: [this.candidate.surname, this.formValidator.lengthValidator()],
-  //     phoneNumber: [this.candidate.phoneNumber, [Validators.required, this.formValidator.phoneValidator()]],
-  //     candidateWorkList: this.formBuilder.array(this.initWorkFormList()),
-  //     candidateEducationList: this.formBuilder.array(this.initEducationFormList()),
-  //     disciplineList: this.formBuilder.array(this.initDisciplineFormList())
-  //   });
-  // }
-
   sendSpecifiedTime() {
-    console.log(this.specifiedTimeForm.valid);
-    // if (!this.specifiedTime.isRepeatable) { this.specifiedTime.endTime = null; }
-    // if (this.specifiedTime.endTime && this.specifiedTime.endTime <= this.specifiedTime.startTime) {
-    //   throw new Error('End time is earlier than start time');
-    // }
-    // this.specifiedTimeDTO = this.calendarService.convertSpecifiedTimeToDTO(this.specifiedTime);
-    // this.specifiedTimeControllerService.saveUsingPOST_2(this.specifiedTimeDTO)
-    //   .takeUntil(this.destroy)
-    //   .subscribe(response => {
-    //     this.router.navigate(['calendar']);
-    //     this.popupService.displayMessage('Specified time was saved', this.router);
-    //   },
-    //     error => {
-    //       this.popupService.displayMessage('Error during specified time saving', this.router);
-    //     });
+    if (this.specifiedTimeForm.valid) {
+      if (!this.specifiedTime.isRepeatable) { this.specifiedTime.endTime = null; }
+      this.specifiedTimeDTO = this.calendarService.convertSpecifiedTimeToDTO(this.specifiedTime);
+      this.specifiedTimeControllerService.saveUsingPOST_2(this.specifiedTimeDTO)
+        .takeUntil(this.destroy)
+        .subscribe(response => {
+          this.router.navigate(['calendar']);
+          this.popupService.displayMessage('Specified time was saved', this.router);
+        },
+          error => {
+            this.popupService.displayMessage('Error during specified time saving', this.router);
+          });
+    } else {
+      this.lightFieldService.lightField(this.specifiedTimeForm.controls);
+    }
   }
 
   ngOnDestroy(): void {

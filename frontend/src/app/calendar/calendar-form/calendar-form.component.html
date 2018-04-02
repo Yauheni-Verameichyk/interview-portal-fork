@@ -1,7 +1,8 @@
 <div class="mask">
-  <div class="popup-form calendar-form">
-    <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
-    <div [formGroup]="specifiedTimeForm">
+  <form [formGroup]="specifiedTimeForm">
+    <div class="popup-form calendar-form">
+      <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
+
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -16,7 +17,7 @@
               <button class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration + 1">
                 <span class="chevron"></span>
               </button>
-             
+
               <input aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.duration"
                 formControlName="duration">
               <button class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration - 1">
@@ -26,14 +27,14 @@
             </td>
             <td>
               <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.startTime" (ngModelChange)="refresh.next()" [showTime]="true"
-                placeholder="Not set">
+                formControlName="startTime" placeholder="Not set">
               </mwl-demo-utils-date-time-picker>
+              <validator-message [field]="specifiedTimeForm.controls.startTime"></validator-message>
             </td>
           </tr>
         </tbody>
-
       </table>
-    </div>
+
       <div class="custom-control custom-checkbox is-repeatable">
         <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="specifiedTime.isRepeatable" (change)="specifiedTime.isRepeatable = !specifiedTime.isRepeatable; specifiedTime.repeatPattern = null">
         <label class="custom-control-label" for="customCheck1">Repeatable</label>
@@ -47,46 +48,50 @@
           <tr>
             <div class="custom-controls-stacked patterns-list">
               <label class="custom-control custom-radio">
-                <input id="radioStacked1" value="weekly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern" type="radio" class="custom-control-input">
+                <input id="radioStacked1" value="weekly" name="repeatPattern" formControlName="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"
+                  type="radio" class="custom-control-input">
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">Weekly</span>
               </label>
               <label class="custom-control custom-radio">
-                <input id="radioStacked2" value="monthly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern" type="radio" class="custom-control-input">
+                <input id="radioStacked2" value="monthly" name="repeatPattern" formControlName="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"
+                  type="radio" class="custom-control-input">
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">Monthly</span>
               </label>
               <label class="custom-control custom-radio">
-                <input id="radioStacked3" value="yearly" name="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern" type="radio" class="custom-control-input">
+                <input id="radioStacked3" value="yearly" name="repeatPattern" formControlName="repeatPattern" [(ngModel)]="specifiedTime.repeatPattern"
+                  type="radio" class="custom-control-input">
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">Yearly</span>
               </label>
             </div>
+            <validator-message [field]="specifiedTimeForm.controls.repeatPattern"></validator-message>
             <td>
               <div *ngIf="specifiedTime.isRepeatable">
                 <mwl-demo-utils-date-time-picker [(ngModel)]="specifiedTime.endTime" (ngModelChange)="refresh.next()" (showTime)="false"
-                  placeholder="Not set">
+                  formControlName="endTime" placeholder="Not set" (change) = "specifiedTimeForm.controls.endTime.markAsTouched()">
                 </mwl-demo-utils-date-time-picker>
               </div>
-              <div *ngIf="specifiedTime.repeatPattern === 'yearly'" class="repeat-numbers">
+              <validator-message [field]="specifiedTimeForm.controls.endTime"></validator-message>
+              <div *ngIf="specifiedTime.repeatPattern" class="repeat-numbers">
                 Repeat every
-                <input class="form-control input-sm repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.years"> year(s).
+                <input class="form-control input-sm repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod"
+                  formControlName="repeatPeriod">
+                <span *ngIf="specifiedTime.repeatPattern === 'yearly'"> year(s). </span>
+                <span *ngIf="specifiedTime.repeatPattern === 'monthly'"> month(s). </span>
+                <span *ngIf="specifiedTime.repeatPattern === 'weekly'"> week(s). </span>
               </div>
-              <div *ngIf="specifiedTime.repeatPattern === 'monthly'" class="repeat-numbers">
-                Repeat every
-                <input class="form-control repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.months"> month(s).
-              </div>
-              <div *ngIf="specifiedTime.repeatPattern === 'weekly'" class="repeat-numbers">
-                Repeat every
-                <input class="form-control repeat-number" maxlength="2" size="2" type="text" [(ngModel)]="specifiedTime.repeatPeriod.weeks"> week(s).
-              </div>
+              <br>
+              <br>
+              <validator-message [field]="specifiedTimeForm.controls.repeatPeriod"></validator-message>
             </td>
           </tr>
         </div>
       </table>
-   
-    <div class="text-center" *ngIf="!noEdit">
-      <a (click)="sendSpecifiedTime()" class="btn btn-primary">Save</a>
+      <div class="text-center" *ngIf="!noEdit">
+        <a (click)="sendSpecifiedTime()" class="btn btn-primary">Save</a>
+      </div>
     </div>
-  </div>
+  </form>
 </div>

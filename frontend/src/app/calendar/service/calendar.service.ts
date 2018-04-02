@@ -225,15 +225,15 @@ export class CalendarService {
   setRepeatPattern(repeatInterval: string, specifiedTime: SpecifiedTime): void {
     if (specifiedTime.repeatInterval.match(/\d+Y/)) {
       specifiedTime.repeatPattern = 'yearly';
-      specifiedTime.repeatPeriod = { years: +specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1) };
+      specifiedTime.repeatPeriod =+specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1);
     }
     if (specifiedTime.repeatInterval.match(/\d+M/)) {
       specifiedTime.repeatPattern = 'monthly';
-      specifiedTime.repeatPeriod = { months: +specifiedTime.repeatInterval.match(/\d+M/)[0].slice(0, -1) };
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+M/)[0].slice(0, -1);
     }
     if (specifiedTime.repeatInterval.match(/\d+D/)) {
       specifiedTime.repeatPattern = 'weekly';
-      specifiedTime.repeatPeriod = { weeks: +specifiedTime.repeatInterval.match(/\d+D/)[0].slice(0, -1) / 7 };
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+D/)[0].slice(0, -1) / 7;
     }
   }
 
@@ -254,11 +254,11 @@ export class CalendarService {
   generateRepeatInterval(specifiedTime: SpecifiedTime): string {
     switch (specifiedTime.repeatPattern) {
       case 'yearly':
-        return `P${specifiedTime.repeatPeriod.years}Y`;
+        return `P${specifiedTime.repeatPeriod}Y`;
       case 'monthly':
-        return `P${specifiedTime.repeatPeriod.months}M`;
+        return `P${specifiedTime.repeatPeriod}M`;
       case 'weekly':
-        return `P${specifiedTime.repeatPeriod.weeks * 7}D`;
+        return `P${specifiedTime.repeatPeriod * 7}D`;
       default:
         throw new Error('Unknown repeat interval');
     }
