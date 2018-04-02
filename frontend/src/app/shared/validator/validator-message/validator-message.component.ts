@@ -37,14 +37,23 @@ export class ValidatorMessageComponent {
     }
 
     if (field.errors.hasOwnProperty('minlength')) {
-      config['minlength'] = `Minimum length ${ field.errors.minlength.requiredLength}`;
+      config['minlength'] = `Minimum length ${field.errors.minlength.requiredLength}`;
     }
     if (field.errors.hasOwnProperty('maxlength')) {
-      config['maxlength'] = `Maximum length ${ field.errors.maxlength.requiredLength}`;
+      config['maxlength'] = `Maximum length ${field.errors.maxlength.requiredLength}`;
+    }
+    console.log(field.errors);
+    if (field.errors.hasOwnProperty('digits')) {
+      config['digits'] = 'Value should be a number';
+    }
+    if (field.errors.hasOwnProperty('range') && !field.errors.hasOwnProperty('digits')) {
+      config['range'] = `Value should be in range between ${field.errors.requiredValue[0]} and ${field.errors.requiredValue[1]}`;
     }
 
     Object.keys(field.errors).forEach((error: string) => {
-      errors.push(config[error]);
+      if (config[error]) {
+        errors.push(config[error]);
+      }
     });
 
     return errors;

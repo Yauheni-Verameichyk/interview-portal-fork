@@ -11,13 +11,17 @@ import { NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-boots
 import { CalendarService } from './service/calendar.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     ApiModule,
+    BrowserModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     CalendarRoutingModule,
     CalendarModule.forRoot(),
