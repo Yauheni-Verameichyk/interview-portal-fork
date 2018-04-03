@@ -136,7 +136,6 @@ export class CalendarService {
       title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
         + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
       start: startTime,
-      end: endTime,
       color: this.colors.green,
       actions: this.actions,
       meta: { incrementsBadgeTotal: false }
