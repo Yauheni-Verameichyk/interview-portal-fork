@@ -17,8 +17,8 @@
                                 <validator-message [field]="password"></validator-message>
                             </div><br>
                             <div class="text-center">
-                                <button [disabled]="userForm.invalid" (click)="authorize()" class="btn btn-success"> Login </button><br><br>
-                                <span class="error-message">{{errorMessage}}</span>
+                                <button [disabled]="userForm.invalid" (click)="authorize()" class="btn btn-success"> Login </button>
+                                <div class="error-message">{{errorMessage}}</div>
                             </div>
                         </form>
                     </div>
