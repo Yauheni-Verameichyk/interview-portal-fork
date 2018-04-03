@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs';
@@ -30,19 +30,28 @@ export class DisciplinesListComponent implements OnDestroy {
       .takeUntil(this.destroy)
       .subscribe((e: any) => {
         if (e instanceof NavigationEnd) {
-           this.findDisciplines(this.activeFilter);
+           this.findDisciplines(this.activeFilter, this.disciplinesList.length);
         }
       });
   }
 
-  findDisciplines(searchOption: string): void {
-    this.disciplineService.chooseRequest(searchOption)
+  findDisciplines(activeFilter: string, disciplinesNumber: number): void {
+    this.disciplineService.chooseRequest(activeFilter, disciplinesNumber)
       .takeUntil(this.destroy)
       .subscribe((disciplines) => {
-        this.disciplinesList = disciplines;
+        this.disciplinesList.push(...disciplines);
       }, (error) => {
         this.popupService.displayMessage('Error during disciplines reading', this.router);
       });
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  windowScrollListener() {
+    const position = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+    const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (position === max && this.activeFilter === 'ALL') {
+      this.findDisciplines(this.activeFilter, this.disciplinesList.length);
+    }
   }
 
   ngOnDestroy(): void {

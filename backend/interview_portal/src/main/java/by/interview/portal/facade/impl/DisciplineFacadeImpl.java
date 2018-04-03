@@ -28,6 +28,11 @@ public class DisciplineFacadeImpl implements DisciplineFacade {
     }
 
     @Override
+    public List<DisciplineDTO> findByParentId(Long id, Integer quantity) {
+        return disciplineService.findByParentId(id, quantity);
+    }
+
+    @Override
     public void save(DisciplineWithHeadsDTO disciplineDTO) {
         disciplineService.save(disciplineDTO);
     }

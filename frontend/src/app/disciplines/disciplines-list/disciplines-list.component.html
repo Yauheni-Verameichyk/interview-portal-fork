@@ -2,8 +2,8 @@
   <div class="row" *requiredAuthority="'DISCIPLINES_FILTER_READ'">
     <div class="col-sm-7 align-middle">
       <div class="btn-group align-middle myAllFilter pull-right">
-        <button type="button" class="btn btn-primary" [ngClass]="{'active': !(activeFilter === 'MY'), 'active': (activeFilter === 'MY')}" (click)="activeFilter = 'MY'; findDisciplines('MY')">My</button>
-        <button type="button" class="btn btn-primary" [ngClass]="{'active': !(activeFilter === 'ALL'), 'active': (activeFilter === 'ALL')}" (click)="activeFilter = 'ALL'; findDisciplines('ALL')">All</button>
+        <button type="button" class="btn btn-primary" [ngClass]="{'active': !(activeFilter === 'MY'), 'active': (activeFilter === 'MY')}" (click)="activeFilter = 'MY'; disciplinesList = []; findDisciplines('MY');">My</button>
+        <button type="button" class="btn btn-primary" [ngClass]="{'active': !(activeFilter === 'ALL'), 'active': (activeFilter === 'ALL')}" (click)="activeFilter = 'ALL'; disciplinesList = []; findDisciplines('ALL')">All</button>
       </div>
     </div>
   </div><br>
