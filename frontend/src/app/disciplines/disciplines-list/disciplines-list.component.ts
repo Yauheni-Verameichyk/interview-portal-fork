@@ -26,11 +26,12 @@ export class DisciplinesListComponent implements OnDestroy {
     private router: Router
   ) {
     this.activeFilter = this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ') ? 'MY' : 'ALL';
+    this.findDisciplines(this.activeFilter, this.disciplinesList.length);
     this.router.events
       .takeUntil(this.destroy)
       .subscribe((e: any) => {
-        if (e instanceof NavigationEnd) {
-           this.findDisciplines(this.activeFilter, this.disciplinesList.length);
+        if (e instanceof NavigationEnd && e.urlAfterRedirects.includes('popup:message')) {
+          this.findDisciplines(this.activeFilter, this.disciplinesList.length);
         }
       });
   }
@@ -39,7 +40,7 @@ export class DisciplinesListComponent implements OnDestroy {
     this.disciplineService.chooseRequest(activeFilter, disciplinesNumber)
       .takeUntil(this.destroy)
       .subscribe((disciplines) => {
-        this.disciplinesList.push(...disciplines);
+        (this.activeFilter === 'ALL') ? this.disciplinesList.push(...disciplines) : this.disciplinesList = disciplines;
       }, (error) => {
         this.popupService.displayMessage('Error during disciplines reading', this.router);
       });
