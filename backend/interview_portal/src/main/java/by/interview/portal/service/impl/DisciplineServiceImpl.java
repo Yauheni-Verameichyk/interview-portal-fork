@@ -32,7 +32,7 @@ import by.interview.portal.service.DisciplineService;
 @Transactional
 public class DisciplineServiceImpl implements DisciplineService {
 
-    private static final Integer QUANTITY_ELEMENTS_IN_PAGE = 10;
+    private static final Integer QUANTITY_ELEMENTS_IN_PAGE = 15;
 
     @Autowired
     private DisciplineRepository disciplineRepository;
