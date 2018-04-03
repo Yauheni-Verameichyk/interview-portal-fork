@@ -136,7 +136,6 @@ export class CalendarService {
       title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
         + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
       start: startTime,
-      end: endTime,
       color: this.colors.green,
       actions: this.actions,
       meta: { incrementsBadgeTotal: false }
@@ -306,9 +305,12 @@ export class CalendarService {
 
   updateEndTimeValidator(specifiedTimeForm: FormGroup): void {
     specifiedTimeForm.get('endTime').setErrors(null);
-    specifiedTimeForm.get('endTime').setValidators([Validators.required,
-    CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
-    if (specifiedTimeForm.get('startTime').value > specifiedTimeForm.get('endTime').value) {
+    if (!(specifiedTimeForm.get('endTime').value instanceof Array) && specifiedTimeForm.get('endTime').value) {
+      specifiedTimeForm.get('endTime').setValidators([Validators.required,
+      CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
+    }
+    if (specifiedTimeForm.get('endTime').value && specifiedTimeForm.get('startTime').value >= specifiedTimeForm.get('endTime').value
+      && !(specifiedTimeForm.get('endTime').value instanceof Array)) {
       specifiedTimeForm.get('endTime').setErrors({ minDate: 'minDate' });
     }
     specifiedTimeForm.updateValueAndValidity();
