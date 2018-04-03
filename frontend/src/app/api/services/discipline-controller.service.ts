@@ -26,12 +26,14 @@ export class DisciplineControllerService extends BaseService {
   }
 
   /**
+   * @param quantity quantity
    * @return OK
    */
-   findAllUsingGETResponse(): Observable<HttpResponse<DisciplineDTO[]>> {
+  findAllUsingGETResponse(quantity?: number): Observable<HttpResponse<DisciplineDTO[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (quantity != null) __params = __params.set("quantity", quantity.toString());
     let req = new HttpRequest<any>(
       "GET",
       this.rootUrl + `/discipline`,
@@ -54,10 +56,11 @@ export class DisciplineControllerService extends BaseService {
   }
 
   /**
+   * @param quantity quantity
    * @return OK
    */
-   findAllUsingGET(): Observable<DisciplineDTO[]> {
-    return this.findAllUsingGETResponse().pipe(
+   findAllUsingGET(quantity?: number): Observable<DisciplineDTO[]> {
+    return this.findAllUsingGETResponse(quantity).pipe(
       map(_r => _r.body)
     );
   }

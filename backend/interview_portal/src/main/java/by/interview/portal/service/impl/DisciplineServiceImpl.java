@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,8 @@ import by.interview.portal.service.DisciplineService;
 @Service
 @Transactional
 public class DisciplineServiceImpl implements DisciplineService {
+
+    private static final Integer QUANTITY_ELEMENTS_IN_PAGE = 15;
 
     @Autowired
     private DisciplineRepository disciplineRepository;
@@ -80,6 +83,20 @@ public class DisciplineServiceImpl implements DisciplineService {
     @Override
     public List<DisciplineDTO> findByParentId(Long id) {
         List<DisciplineDTO> disciplineDTOsList = disciplineRepository.findAllByParentId(id).stream()
+                .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toList());
+        for (DisciplineDTO discipline : disciplineDTOsList) {
+            discipline.setHasSubItems(
+                    disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);
+        }
+        return disciplineDTOsList;
+    }
+
+    @Override
+    public List<DisciplineDTO> findByParentId(Long id, Integer quantity) {
+        Integer page =
+                (int) Math.ceil(quantity.doubleValue() / QUANTITY_ELEMENTS_IN_PAGE.doubleValue());
+        List<DisciplineDTO> disciplineDTOsList = disciplineRepository
+                .findAllByParentId(null, PageRequest.of(page, QUANTITY_ELEMENTS_IN_PAGE)).stream()
                 .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toList());
         for (DisciplineDTO discipline : disciplineDTOsList) {
             discipline.setHasSubItems(
