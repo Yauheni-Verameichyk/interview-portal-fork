@@ -18,18 +18,19 @@ import { Router, NavigationEnd } from '@angular/router';
 export class DisciplinesListComponent implements OnDestroy {
 
   disciplinesList: Array<DisciplineDTO> = [];
+  activeFilter: string;
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineService: DisciplineService,
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
     private router: Router
   ) {
+    this.activeFilter = this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ') ? 'MY' : 'ALL';
     this.router.events
       .takeUntil(this.destroy)
       .subscribe((e: any) => {
         if (e instanceof NavigationEnd) {
-          (this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ'))
-            ? this.findDisciplines('MY') : this.findDisciplines('ALL');
+           this.findDisciplines(this.activeFilter);
         }
       });
   }

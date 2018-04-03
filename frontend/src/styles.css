@@ -37,6 +37,7 @@ table {
 
 .btn-primary, .btn-primary:hover, .btn-primary:visited {
     background-color: rgb(173, 173, 173) !important;
+    border: 0px !important;
 }
 
 .button_close{
@@ -131,8 +132,9 @@ input.ng-touched.ng-invalid{
 
 .error-message {
   color: red;
-  text-align: left;
+  text-align: center;
   padding: 5px;
+  margin-top: 10px;
 }
 
 .ball {
@@ -171,4 +173,8 @@ input.ng-touched.ng-invalid{
  @-webkit-keyframes spinoff {
   0% { -webkit-transform:rotate(0deg); }
   100% { -webkit-transform:rotate(-360deg); }
+ }
+
+ .btn-success {
+   color: white !important;
  }

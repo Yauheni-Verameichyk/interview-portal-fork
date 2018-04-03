@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 import { SpecifiedTime } from '../../api/models/specified-time';
 import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CustomValidators } from 'ng4-validators';
 
 @Injectable()
 export class CalendarService {
@@ -225,15 +227,15 @@ export class CalendarService {
   setRepeatPattern(repeatInterval: string, specifiedTime: SpecifiedTime): void {
     if (specifiedTime.repeatInterval.match(/\d+Y/)) {
       specifiedTime.repeatPattern = 'yearly';
-      specifiedTime.repeatPeriod = { years: +specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1) };
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1);
     }
     if (specifiedTime.repeatInterval.match(/\d+M/)) {
       specifiedTime.repeatPattern = 'monthly';
-      specifiedTime.repeatPeriod = { months: +specifiedTime.repeatInterval.match(/\d+M/)[0].slice(0, -1) };
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+M/)[0].slice(0, -1);
     }
     if (specifiedTime.repeatInterval.match(/\d+D/)) {
       specifiedTime.repeatPattern = 'weekly';
-      specifiedTime.repeatPeriod = { weeks: +specifiedTime.repeatInterval.match(/\d+D/)[0].slice(0, -1) / 7 };
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+D/)[0].slice(0, -1) / 7;
     }
   }
 
@@ -254,14 +256,61 @@ export class CalendarService {
   generateRepeatInterval(specifiedTime: SpecifiedTime): string {
     switch (specifiedTime.repeatPattern) {
       case 'yearly':
-        return `P${specifiedTime.repeatPeriod.years}Y`;
+        return `P${specifiedTime.repeatPeriod}Y`;
       case 'monthly':
-        return `P${specifiedTime.repeatPeriod.months}M`;
+        return `P${specifiedTime.repeatPeriod}M`;
       case 'weekly':
-        return `P${specifiedTime.repeatPeriod.weeks * 7}D`;
+        return `P${specifiedTime.repeatPeriod * 7}D`;
       default:
         throw new Error('Unknown repeat interval');
     }
   }
-}
 
+  getCurrentDate(): Date {
+    const date = new Date();
+    date.setMinutes(0);
+    date.setSeconds(0);
+    return date;
+  }
+
+  initFormGroup(specifiedTime: SpecifiedTime): FormGroup {
+    return new FormGroup({
+      'duration': new FormControl([specifiedTime.duration], [Validators.required,
+      CustomValidators.digits, CustomValidators.range([1, 8])]),
+      'startTime': new FormControl([specifiedTime.duration], [Validators.required, CustomValidators.date]),
+      'isRepeatable': new FormControl([specifiedTime.isRepeatable]),
+      'repeatPattern': new FormControl([specifiedTime.repeatPattern]),
+      'repeatPeriod': new FormControl([specifiedTime.repeatPeriod]),
+      'endTime': new FormControl([specifiedTime.endTime])
+    });
+  }
+
+  setValidatorsForRepeatable(specifiedTimeForm: FormGroup): void {
+    specifiedTimeForm.get('repeatPattern').setValidators([Validators.required]);
+    specifiedTimeForm.get('repeatPeriod').setValidators([Validators.required, CustomValidators.digits, CustomValidators.min(1)]);
+    specifiedTimeForm.get('endTime').setValidators([Validators.required,
+    CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
+    specifiedTimeForm.get('repeatPattern').setErrors(null);
+    specifiedTimeForm.get('repeatPeriod').setErrors(null);
+    specifiedTimeForm.get('endTime').setErrors(null);
+  }
+
+  setValidatorsForNonRepeatable(specifiedTimeForm: FormGroup): void {
+    specifiedTimeForm.get('repeatPattern').setValidators([]);
+    specifiedTimeForm.get('repeatPeriod').setValidators([]);
+    specifiedTimeForm.get('endTime').setValidators([]);
+    specifiedTimeForm.get('repeatPattern').setErrors(null);
+    specifiedTimeForm.get('repeatPeriod').setErrors(null);
+    specifiedTimeForm.get('endTime').setErrors(null);
+  }
+
+  updateEndTimeValidator(specifiedTimeForm: FormGroup): void {
+    specifiedTimeForm.get('endTime').setErrors(null);
+    specifiedTimeForm.get('endTime').setValidators([Validators.required,
+    CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
+    if (specifiedTimeForm.get('startTime').value > specifiedTimeForm.get('endTime').value) {
+      specifiedTimeForm.get('endTime').setErrors({ minDate: 'minDate' });
+    }
+    specifiedTimeForm.updateValueAndValidity();
+  }
+}

@@ -25,7 +25,7 @@ export class CalendarComponent implements OnDestroy {
   recurringEvents: RecurringEvent[] = [];
   unreccuringCalendarEvents: CalendarEvent[] = [];
   calendarEvents: CalendarEvent[] = [];
-  activeDayIsOpen = true;
+  activeDayIsOpen = false;
   private readonly destroy: Subject<void> = new Subject();
   constructor(
     private calendarService: CalendarService,
