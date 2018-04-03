@@ -227,7 +227,7 @@ export class CalendarService {
   setRepeatPattern(repeatInterval: string, specifiedTime: SpecifiedTime): void {
     if (specifiedTime.repeatInterval.match(/\d+Y/)) {
       specifiedTime.repeatPattern = 'yearly';
-      specifiedTime.repeatPeriod =+specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1);
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1);
     }
     if (specifiedTime.repeatInterval.match(/\d+M/)) {
       specifiedTime.repeatPattern = 'monthly';
@@ -272,7 +272,7 @@ export class CalendarService {
     date.setSeconds(0);
     return date;
   }
-  
+
   initFormGroup(specifiedTime: SpecifiedTime): FormGroup {
     return new FormGroup({
       'duration': new FormControl([specifiedTime.duration], [Validators.required,
@@ -288,7 +288,8 @@ export class CalendarService {
   setValidatorsForRepeatable(specifiedTimeForm: FormGroup): void {
     specifiedTimeForm.get('repeatPattern').setValidators([Validators.required]);
     specifiedTimeForm.get('repeatPeriod').setValidators([Validators.required, CustomValidators.digits, CustomValidators.min(1)]);
-    specifiedTimeForm.get('endTime').setValidators([Validators.required, CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
+    specifiedTimeForm.get('endTime').setValidators([Validators.required,
+    CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
     specifiedTimeForm.get('repeatPattern').setErrors(null);
     specifiedTimeForm.get('repeatPeriod').setErrors(null);
     specifiedTimeForm.get('endTime').setErrors(null);
@@ -305,9 +306,10 @@ export class CalendarService {
 
   updateEndTimeValidator(specifiedTimeForm: FormGroup): void {
     specifiedTimeForm.get('endTime').setErrors(null);
-    specifiedTimeForm.get('endTime').setValidators([Validators.required, CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
-    if(specifiedTimeForm.get('startTime').value > specifiedTimeForm.get('endTime').value) {
-      specifiedTimeForm.get('endTime').setErrors({minDate: 'minDate'});
+    specifiedTimeForm.get('endTime').setValidators([Validators.required,
+    CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
+    if (specifiedTimeForm.get('startTime').value > specifiedTimeForm.get('endTime').value) {
+      specifiedTimeForm.get('endTime').setErrors({ minDate: 'minDate' });
     }
     specifiedTimeForm.updateValueAndValidity();
   }
