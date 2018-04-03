@@ -90,3 +90,7 @@ table {
 .duration-column {
     width: 130px;
 }
+
+table {
+    background: white !important;
+}
