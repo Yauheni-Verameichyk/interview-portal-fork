@@ -31,11 +31,11 @@ export class UserComponent implements OnInit, OnDestroy {
   removeUser() {
     if (confirm('Delete user ' + this.user.name)) {
       this.userController.deleteUser(this.user.id)
-        .takeUntil(this.destroy)
-        .subscribe(() => {
-          alert('User deleted successfully');
-          this.router.navigate(['/users']);
-        });
+      .takeUntil(this.destroy)
+      .subscribe( () => {
+        alert('User deleted successfully');
+        this.router.navigate(['/users']);
+      });
     }
   }
 

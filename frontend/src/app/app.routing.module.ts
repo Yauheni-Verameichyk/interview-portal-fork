@@ -36,10 +36,10 @@ const routes : Routes = [
   }
 ];
 
-export let appRouterComponents = [LoginComponent, PageNotFoundComponent]
+export let appRouterComponents = [LoginComponent, PageNotFoundComponent];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})
   ],
   declarations: [],
   exports: [RouterModule]

@@ -6,7 +6,7 @@ import { DisciplineComponent } from './discipline/discipline.component';
 import { DisciplineFormComponent } from './discipline-form/discipline-form.component';
 
 const routes: Routes = [
-  { path: 'discipline', component: DisciplinesListComponent },
+  { path: 'discipline', component: DisciplinesListComponent, runGuardsAndResolvers: 'always'},
   { path: 'discipline/create', component: DisciplineFormComponent, outlet: 'popup' },
   { path: 'discipline/edit/:editDisciplineID', component: DisciplineFormComponent, outlet: 'popup' },
   { path: 'discipline/create/:parentDisciplineID', component: DisciplineFormComponent, outlet: 'popup' },

@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit {
         this.users = userList;
       },
         error => {
-          console.log(`Error in user list component typy error: ${error}`);
+          console.log(`Error in user list component type error: ${error}`);
         });
   }
   addNewUser() {
@@ -27,7 +27,7 @@ export class UserListComponent implements OnInit {
   }
   @HostListener('window:scroll', ['$event'])
   windowScrollListener() {
-    const position = document.documentElement.scrollTop;
+    const position = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     if ((position === max)) {
       this.userController
@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit {
         this.users.push(...userList);
       },
         error => {
-          console.log(`Error in user list component typy error: ${error}`);
+          console.log(`Error in user list component type error: ${error}`);
         });
     }
   }

@@ -39,4 +39,9 @@ public class SpecifiedTimeServiceImpl implements SpecifiedTimeService {
     public SpecifiedTime findById(Long id) {
         return specifiedTimeRepository.findById(id).get();
     }
+
+    @Override
+    public void deleteById(Long id) {
+        specifiedTimeRepository.deleteById(id);
+    }
 }

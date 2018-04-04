@@ -15,4 +15,6 @@ public interface SpecifiedTimeService {
     void save(SpecifiedTime specifiedTime);
 
     SpecifiedTime findById(Long id);
+
+    void deleteById(Long id);
 }

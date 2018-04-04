@@ -4,11 +4,12 @@ import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { UserInfo } from '../../../domain/UserInfo';
 import { User } from '../../../domain/User';
+import { environment } from '../../../../environments/environment';
 
 
 @Injectable()
 export class UserControllerService {
-  private baseUrl: string = 'http://localhost:8080/interview-portal/users';
+  private baseUrl: string = environment.backendUrl+'/users';
 
   constructor(private http: HttpClient) { }
 

@@ -8,3 +8,7 @@
 .disciplinesList{
     margin-bottom: 0;
 }
+
+.discipline-name {
+    width: 200px;
+}

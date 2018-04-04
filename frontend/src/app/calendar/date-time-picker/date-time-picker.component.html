@@ -16,7 +16,7 @@
     </div>
   </div>
 </form>
-<ngb-timepicker
+<ngb-timepicker *ngIf="showTime"
   [(ngModel)]="timeStruct"
   (ngModelChange)="updateTime()">
 </ngb-timepicker>

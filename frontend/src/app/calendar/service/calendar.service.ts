@@ -14,7 +14,10 @@ import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { Router } from '@angular/router';
 import { SpecifiedTime } from '../../api/models/specified-time';
-import { RecurringEvent } from '../../api/models/recurring-event';
+import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CustomValidators } from 'ng4-validators';
 
 @Injectable()
 export class CalendarService {
@@ -60,14 +63,23 @@ export class CalendarService {
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        console.log('Deleted ' + event.id);
+        if (confirm('Delete chosen time slot?')) {
+          this.specifiedTimeControllerService.deleteUsingDELETE_1(+event.id).subscribe((success) => {
+            this.router.navigate(['calendar']);
+            this.popupService.displayMessage('Time slot was deleted', this.router);
+          }, (error) => {
+            this.popupService.displayMessage('Error during time slot deleting', this.router);
+          });
+        }
       }
     }
   ];
 
   weekDays = [RRule.SU, RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private specifiedTimeControllerService: SpecifiedTimeControllerService,
+    private popupService: PopupService) { }
 
   addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
     if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
@@ -124,7 +136,6 @@ export class CalendarService {
       title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
         + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
       start: startTime,
-      end: endTime,
       color: this.colors.green,
       actions: this.actions,
       meta: { incrementsBadgeTotal: false }
@@ -134,36 +145,39 @@ export class CalendarService {
   generateRepeatRule(specifiedTime: SpecifiedTimeDTO): RecurringEvent['rrule'] {
     const startTime = new Date(specifiedTime.startTime);
     if (specifiedTime.repeatInterval.match(/\d+Y/)) {
-      return this.generateYearlyRule(startTime);
+      return this.generateYearlyRule(startTime, +specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1));
     }
     if (specifiedTime.repeatInterval.match(/\d+M/)) {
-      return this.generateMonthlyRule(startTime);
+      return this.generateMonthlyRule(startTime, +specifiedTime.repeatInterval.match(/\d+M/)[0].slice(0, -1));
     }
     if (specifiedTime.repeatInterval.match(/\d+D/)) {
-      return this.generateWeeklyRule(startTime);
+      return this.generateWeeklyRule(startTime, +specifiedTime.repeatInterval.match(/\d+D/)[0].slice(0, -1));
     }
     throw new Error('Unknown period');
   }
 
-  generateYearlyRule(startTime: Date): RecurringEvent['rrule'] {
+  generateYearlyRule(startTime: Date, interval: number): RecurringEvent['rrule'] {
     return {
       freq: RRule.YEARLY,
       bymonth: startTime.getMonth() + 1,
-      bymonthday: startTime.getDate()
+      bymonthday: startTime.getDate(),
+      interval: interval
     };
   }
 
-  generateMonthlyRule(startTime: Date): RecurringEvent['rrule'] {
+  generateMonthlyRule(startTime: Date, interval: number): RecurringEvent['rrule'] {
     return {
       freq: RRule.MONTHLY,
-      bymonthday: startTime.getDate()
+      bymonthday: startTime.getDate(),
+      interval: interval
     };
   }
 
-  generateWeeklyRule(startTime: Date): RecurringEvent['rrule'] {
+  generateWeeklyRule(startTime: Date, interval: number): RecurringEvent['rrule'] {
     return {
       freq: RRule.WEEKLY,
-      byweekday: [this.weekDays[startTime.getDay()]]
+      byweekday: [this.weekDays[startTime.getDay()]],
+      interval: interval / 7
     };
   }
 
@@ -203,37 +217,31 @@ export class CalendarService {
       duration: 1,
       isRepeatable: !!specifiedTimeDTO.repeatInterval
     };
-    if (specifiedTime.isRepeatable) {
+    if (specifiedTimeDTO.repeatInterval) {
       this.setRepeatPattern(specifiedTimeDTO.repeatInterval, specifiedTime);
     }
     return specifiedTime;
   }
 
   setRepeatPattern(repeatInterval: string, specifiedTime: SpecifiedTime): void {
-    switch (repeatInterval) {
-      case 'P1Y':
-        specifiedTime.repeatPattern = 'yearly';
-        specifiedTime.repeatPeriod = { years: 1 };
-        break;
-      case 'P1M':
-        specifiedTime.repeatPattern = 'monthly';
-        specifiedTime.repeatPeriod = { months: 1 };
-        break;
-      case 'P7D':
-        specifiedTime.repeatPattern = 'weekly';
-        specifiedTime.repeatPeriod = { days: 7 };
-        break;
-      default:
-        specifiedTime.repeatPattern = 'custom';
-        specifiedTime.repeatPeriod = {
-          years: +repeatInterval.match(/\d+Y/)[0].slice(0, -1),
-          months: +repeatInterval.match(/\d+M/)[0].slice(0, -1),
-          days: + repeatInterval.match(/\d+D/)[0].slice(0, -1)
-        };
+    if (specifiedTime.repeatInterval.match(/\d+Y/)) {
+      specifiedTime.repeatPattern = 'yearly';
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+Y/)[0].slice(0, -1);
+    }
+    if (specifiedTime.repeatInterval.match(/\d+M/)) {
+      specifiedTime.repeatPattern = 'monthly';
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+M/)[0].slice(0, -1);
+    }
+    if (specifiedTime.repeatInterval.match(/\d+D/)) {
+      specifiedTime.repeatPattern = 'weekly';
+      specifiedTime.repeatPeriod = +specifiedTime.repeatInterval.match(/\d+D/)[0].slice(0, -1) / 7;
     }
   }
 
   convertSpecifiedTimeToDTO(specifiedTime: SpecifiedTime): SpecifiedTimeDTO {
+    if (specifiedTime.endTime) {
+      specifiedTime.endTime.setHours(specifiedTime.startTime.getHours() + specifiedTime.duration);
+    }
     return {
       endTime: specifiedTime.endTime ? this.convertDateToString(specifiedTime.endTime) : null,
       startTime: this.convertDateToString(specifiedTime.startTime),
@@ -247,16 +255,64 @@ export class CalendarService {
   generateRepeatInterval(specifiedTime: SpecifiedTime): string {
     switch (specifiedTime.repeatPattern) {
       case 'yearly':
-        return 'P1Y';
+        return `P${specifiedTime.repeatPeriod}Y`;
       case 'monthly':
-        return 'P1M';
+        return `P${specifiedTime.repeatPeriod}M`;
       case 'weekly':
-        return 'P7D';
-      case 'custom':
-        return `P${specifiedTime.repeatPeriod.years}Y${specifiedTime.repeatPeriod.months}M${specifiedTime.repeatPeriod.days}D`;
+        return `P${specifiedTime.repeatPeriod * 7}D`;
       default:
         throw new Error('Unknown repeat interval');
     }
   }
-}
 
+  getCurrentDate(): Date {
+    const date = new Date();
+    date.setMinutes(0);
+    date.setSeconds(0);
+    return date;
+  }
+
+  initFormGroup(specifiedTime: SpecifiedTime): FormGroup {
+    return new FormGroup({
+      'duration': new FormControl([specifiedTime.duration], [Validators.required,
+      CustomValidators.digits, CustomValidators.range([1, 8])]),
+      'startTime': new FormControl([specifiedTime.duration], [Validators.required, CustomValidators.date]),
+      'isRepeatable': new FormControl([specifiedTime.isRepeatable]),
+      'repeatPattern': new FormControl([specifiedTime.repeatPattern]),
+      'repeatPeriod': new FormControl([specifiedTime.repeatPeriod]),
+      'endTime': new FormControl([specifiedTime.endTime])
+    });
+  }
+
+  setValidatorsForRepeatable(specifiedTimeForm: FormGroup): void {
+    specifiedTimeForm.get('repeatPattern').setValidators([Validators.required]);
+    specifiedTimeForm.get('repeatPeriod').setValidators([Validators.required, CustomValidators.digits, CustomValidators.min(1)]);
+    specifiedTimeForm.get('endTime').setValidators([Validators.required,
+    CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
+    specifiedTimeForm.get('repeatPattern').setErrors(null);
+    specifiedTimeForm.get('repeatPeriod').setErrors(null);
+    specifiedTimeForm.get('endTime').setErrors(null);
+  }
+
+  setValidatorsForNonRepeatable(specifiedTimeForm: FormGroup): void {
+    specifiedTimeForm.get('repeatPattern').setValidators([]);
+    specifiedTimeForm.get('repeatPeriod').setValidators([]);
+    specifiedTimeForm.get('endTime').setValidators([]);
+    specifiedTimeForm.get('repeatPattern').setErrors(null);
+    specifiedTimeForm.get('repeatPeriod').setErrors(null);
+    specifiedTimeForm.get('endTime').setErrors(null);
+  }
+
+  updateEndTimeValidator(specifiedTimeForm: FormGroup): void {
+    specifiedTimeForm.get('endTime').setErrors(null);
+    if (!(specifiedTimeForm.get('endTime').value instanceof Array) && specifiedTimeForm.get('endTime').value) {
+      specifiedTimeForm.get('endTime').setValidators([Validators.required,
+      CustomValidators.minDate(specifiedTimeForm.get('startTime').value)]);
+    }
+    if (specifiedTimeForm.get('endTime').value && specifiedTimeForm.get('startTime').value >= specifiedTimeForm.get('endTime').value
+      && !(specifiedTimeForm.get('endTime').value instanceof Array)) {
+      specifiedTimeForm.get('endTime').setErrors({ minDate: 'minDate' });
+    }
+    specifiedTimeForm.updateValueAndValidity();
+  }
+}

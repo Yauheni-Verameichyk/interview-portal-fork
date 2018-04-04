@@ -5,11 +5,12 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angul
 import { map, catchError } from 'rxjs/operators';
 import { UserCredentials } from '../../../domain/UserCredentials';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class AuthenticationControllerService {
   
-  private baseUrl:string = 'http://localhost:8080/interview-portal/auth';
+  private baseUrl:string = environment.backendUrl+'/auth';
   constructor(private http: HttpClient){}
 
   authorizationUserPOST(user: Authentication): Observable<UserCredentials> {

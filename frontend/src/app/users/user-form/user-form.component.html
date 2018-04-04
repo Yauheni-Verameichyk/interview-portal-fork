@@ -8,45 +8,45 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="Name">Name</label>
+          <input type="text" formControlName="name" class="form-control" id="name" placeholder="Name">
           <div>
             <validator-message [field]="userForm.get('name')"></validator-message>
           </div>
-          <input type="text" formControlName="name" class="form-control" id="name" placeholder="Name">
         </div>
         <div class="form-group col-md-6">
           <label for="surname">Surname</label>
+          <input type="text" class="form-control" formControlName="surname" id="surname" placeholder="SurName">
           <div>
             <validator-message [field]="userForm.get('surname')"></validator-message>
           </div>
-          <input type="text" class="form-control" formControlName="surname" id="surname" placeholder="SurName">
         </div>
         <div class="form-group col-md-6">
           <label for="login">Login</label>
+          <input type="text" class="form-control" formControlName="login" id="login" placeholder="Login">
           <div>
             <validator-message [field]="userForm.get('login')"></validator-message>
           </div>
-          <input type="text" class="form-control" formControlName="login" id="login" placeholder="Login">
         </div>
         <div class="form-group col-md-6">
           <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
           <div>
             <validator-message [field]="userForm.get('email')"></validator-message>
           </div>
-          <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
         </div>
         <div class="form-group col-md-6">
           <label for="phoneNumber">Phone number</label>
+          <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber" placeholder="Phone number">
           <div>
             <validator-message [field]="userForm.get('phoneNumber')"></validator-message>
           </div>
-          <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber" placeholder="Phone number">
         </div>
         <div *ngIf="newUser" class="form-group col-md-6">
           <label for="phoneNumber">Password</label>
+          <input type="password" class="form-control" formControlName="password" id="password" placeholder="password">
           <div>
             <validator-message [field]="userForm.get('password')"></validator-message>
           </div>
-          <input type="password" class="form-control" formControlName="password" id="password" placeholder="password">
         </div>
       </div>
       <appSelectRole [roles]="user.roleDisciplines" (editRoles)="getAssignRoles($event)"></appSelectRole>

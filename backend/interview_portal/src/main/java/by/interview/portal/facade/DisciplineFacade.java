@@ -11,6 +11,8 @@ public interface DisciplineFacade {
 
     List<DisciplineDTO> findByParentId(Long id);
 
+    List<DisciplineDTO> findByParentId(Long id, Integer quantity);
+
     void save(DisciplineWithHeadsDTO discipline);
 
     List<DisciplineDTO> findDisciplinesByUser(String login);

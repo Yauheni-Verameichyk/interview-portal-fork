@@ -9,5 +9,6 @@ export class RecurringEvent {
       bymonth?: number;
       bymonthday?: number;
       byweekday?: RRule.Weekday[];
+      interval?: number;
     };
   }
