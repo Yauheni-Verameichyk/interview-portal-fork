@@ -15,7 +15,10 @@ export class UserComponent implements OnInit, OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
   @Input() userObj: UserInfo;
   user: UserInfo;
-  constructor(private router: Router, private route: ActivatedRoute, private userController: UserControllerService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private userController: UserControllerService) { }
   ngOnInit() {
     this.user = new UserInfo(this.userObj.id, this.userObj.name, this.userObj.surname, this.userObj.roles);
   }
@@ -28,11 +31,11 @@ export class UserComponent implements OnInit, OnDestroy {
   removeUser() {
     if (confirm('Delete user ' + this.user.name)) {
       this.userController.deleteUser(this.user.id)
-      .takeUntil(this.destroy)
-      .subscribe( () => {
-        alert('User deleted successfully');
-        this.router.navigate(['/users']);
-      });
+        .takeUntil(this.destroy)
+        .subscribe(() => {
+          alert('User deleted successfully');
+          this.router.navigate(['/users']);
+        });
     }
   }
 

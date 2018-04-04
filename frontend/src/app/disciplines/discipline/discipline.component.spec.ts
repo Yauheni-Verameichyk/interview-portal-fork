@@ -122,7 +122,6 @@ class DisciplineControllerServiceStub {
     return Observable.of(null);
   }
 }
-
 class DisciplineServiceStub {
   countBackgroundColor(childLevel): number {
     return 240 - childLevel * 30;

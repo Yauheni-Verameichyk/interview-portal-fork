@@ -12,6 +12,7 @@ import { UserBaseInfoDTO } from '../../api/models/user-base-info-dto';
 import { isSameMonth, isSameDay } from 'date-fns';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
+import { RecurringEvent } from '../../api/models/recurring-event';
 
 @Component({
   selector: 'app-calendar',

@@ -14,6 +14,7 @@ import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { Router } from '@angular/router';
 import { SpecifiedTime } from '../../api/models/specified-time';
+import { RecurringEvent } from '../../api/models/recurring-event';
 
 @Injectable()
 export class CalendarService {
