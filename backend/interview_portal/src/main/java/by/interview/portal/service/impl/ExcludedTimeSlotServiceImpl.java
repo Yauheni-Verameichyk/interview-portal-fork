@@ -27,4 +27,11 @@ public class ExcludedTimeSlotServiceImpl implements ExcludedTimeSlotService {
         return excludedTimeSlotRepository.findByStartTimeBetweenAndUser(rangeStart, rangeEnd,
                 userRepository.findFirstByLogin(UserUtils.getCurrentUsersUsername()));
     }
+
+    @Override
+    public void save(ExcludedTimeSlot excludedTimeSlot) {
+        excludedTimeSlot
+                .setUser(userRepository.findFirstByLogin(UserUtils.getCurrentUsersUsername()));
+        excludedTimeSlotRepository.save(excludedTimeSlot);
+    }
 }
