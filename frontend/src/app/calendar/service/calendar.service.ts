@@ -18,6 +18,7 @@ import { SpecifiedTimeControllerService } from '../../api/services/specified-tim
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng4-validators';
+import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
 
 @Injectable()
 export class CalendarService {
@@ -81,8 +82,10 @@ export class CalendarService {
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
     private popupService: PopupService) { }
 
-  addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
-    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
+  addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent, excludedTimeSlots: ExcludedTimeSlot[]) {
+    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0 &&
+      excludedTimeSlots.filter(excludedTimeSlot => JSON.stringify(new Date(excludedTimeSlot.startTime))
+        === JSON.stringify(event.start)).length === 0) {
       array.push(event);
     }
   }
