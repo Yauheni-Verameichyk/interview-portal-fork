@@ -18,6 +18,7 @@ import { SpecifiedTimeControllerService } from '../../api/services/specified-tim
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng4-validators';
+import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
 
 @Injectable()
 export class CalendarService {
@@ -63,14 +64,13 @@ export class CalendarService {
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        if (confirm('Delete chosen time slot?')) {
-          this.specifiedTimeControllerService.deleteUsingDELETE_1(+event.id).subscribe((success) => {
-            this.router.navigate(['calendar']);
-            this.popupService.displayMessage('Time slot was deleted', this.router);
-          }, (error) => {
-            this.popupService.displayMessage('Error during time slot deleting', this.router);
-          });
-        }
+        event.meta.repeatable ? this.router.navigate([{
+          outlets: {
+            popup: ['calendar', 'delete', event.id, 'start',
+              this.convertDateToString(event.start)]
+          }
+        }])
+          : this.deleteSpecifiedTime(event);
       }
     }
   ];
@@ -81,8 +81,10 @@ export class CalendarService {
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
     private popupService: PopupService) { }
 
-  addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
-    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
+  addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent, excludedTimeSlots: ExcludedTimeSlot[]) {
+    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0 &&
+      excludedTimeSlots.filter(excludedTimeSlot => JSON.stringify(new Date(excludedTimeSlot.startTime))
+        === JSON.stringify(event.start)).length === 0) {
       array.push(event);
     }
   }
@@ -130,7 +132,6 @@ export class CalendarService {
 
   generateNonRepeatableEvent(specifiedTime: SpecifiedTimeDTO): CalendarEvent {
     const startTime = new Date(specifiedTime.startTime);
-    const endTime = new Date(specifiedTime.endTime);
     return {
       id: specifiedTime.id,
       title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
@@ -138,6 +139,20 @@ export class CalendarService {
       start: startTime,
       color: this.colors.green,
       actions: this.actions,
+      meta: { incrementsBadgeTotal: false, repeatable: false }
+    };
+  }
+
+  generateExcludedTimeSlot(excludedTimeSlot: ExcludedTimeSlot) {
+    const startTime = new Date(excludedTimeSlot.startTime);
+    return {
+      id: excludedTimeSlot.id,
+      title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
+        + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0 +
+        ' ( you have excluded this time slot from recurring event )',
+      start: startTime,
+      color: this.colors.red,
+      // actions: this.actions,
       meta: { incrementsBadgeTotal: false }
     };
   }
@@ -314,5 +329,22 @@ export class CalendarService {
       specifiedTimeForm.get('endTime').setErrors({ minDate: 'minDate' });
     }
     specifiedTimeForm.updateValueAndValidity();
+  }
+
+  deleteSpecifiedTime(event: CalendarEvent): void {
+    if (confirm('Delete chosen time slot?')) {
+      this.specifiedTimeControllerService.deleteUsingDELETE_1(+event.id).subscribe(
+        (success) => this.displayDeletedMessage(success),
+        (error) => this.displayErrorMessage(error));
+    }
+  }
+
+  displayDeletedMessage(success): void {
+    this.router.navigate(['calendar']);
+    this.popupService.displayMessage('Time slot was deleted', this.router);
+  }
+
+  displayErrorMessage(error): void {
+    this.popupService.displayMessage('Error during time slot deleting', this.router);
   }
 }

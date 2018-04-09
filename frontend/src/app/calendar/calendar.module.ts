@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../shared/shared.module';
+import { CalendarDeleteFormComponent } from './calendar-delete-form/calendar-delete-form.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { SharedModule } from '../shared/shared.module';
     CalendarComponent,
     CalendarHeaderComponent,
     DateTimePickerComponent,
-    CalendarFormComponent
+    CalendarFormComponent,
+    CalendarDeleteFormComponent
   ],
   providers: [
     CalendarService

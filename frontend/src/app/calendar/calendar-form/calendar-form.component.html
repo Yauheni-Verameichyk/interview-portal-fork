@@ -2,7 +2,6 @@
   <form [formGroup]="specifiedTimeForm">
     <div class="popup-form calendar-form">
       <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
-
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -95,6 +94,7 @@
       </table>
       <div class="text-center" *ngIf="!noEdit">
         <a (click)="sendSpecifiedTime()" class="btn btn-success">Save</a>
+        <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Close</a>
       </div>
     </div>
   </form>
