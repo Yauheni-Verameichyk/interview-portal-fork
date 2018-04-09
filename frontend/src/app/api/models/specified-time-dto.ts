@@ -14,4 +14,6 @@ export interface SpecifiedTimeDTO {
   user?: UserBaseInfoDTO;
 
   duration?: number;
+
+  groupId?: number;
 }

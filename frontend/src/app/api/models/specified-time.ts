@@ -20,4 +20,6 @@ export class SpecifiedTime {
   repeatPattern?: string;
 
   repeatPeriod?: number;
+
+  groupId?: number;
 }

@@ -63,4 +63,10 @@ public class SpecifiedTimeController {
     public void delete(@PathVariable Long id) {
         specifiedTimeFacade.deleteById(id);
     }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @DeleteMapping(value = "/group/{id}")
+    public void deleteByGroupId(@PathVariable Long id) {
+        specifiedTimeFacade.deleteByGroupId(id);
+    }
 }
