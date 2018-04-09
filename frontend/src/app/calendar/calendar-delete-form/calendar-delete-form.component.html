@@ -1,0 +1,29 @@
+<div class="mask">
+  <div class="popup-form calendar-form">
+    <form [formGroup]="deleteOptionForm">
+        <span class="window-close" [routerLink]="['',{ outlets: { popup: null }}]"></span>
+      <h4>
+        <span>Choose delete option</span>
+      </h4>
+      <div class="custom-controls-stacked patterns-list delete-option">
+        <label class="custom-control custom-radio">
+          <input id="radioStacked1" value="DELETE_OCCURRENCE" name="deleteOption" formControlName="deleteOption" [(ngModel)]="deleteOption"
+            type="radio" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Delete occurrence</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input id="radioStacked2" value="DELETE_SERIES" name="deleteOption" formControlName="deleteOption" [(ngModel)]="deleteOption"
+            type="radio" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Delete series</span>
+        </label>
+      </div>
+      <validator-message [field]="deleteOptionForm.controls.deleteOption"></validator-message>
+    </form>
+    <div class="text-center">
+      <a (click)="deleteSpecifiedTime()" class="btn btn-danger">Delete</a>
+      <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Close</a>
+    </div>
+  </div>
+</div>

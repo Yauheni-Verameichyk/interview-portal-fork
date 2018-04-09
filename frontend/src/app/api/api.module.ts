@@ -7,6 +7,8 @@ import { UserControllerService } from './services/user-controller.service';
 import { CandidateControllerService } from './services/candidate-controller.service';
 import { BaseService } from './base-service';
 import { SpecifiedTimeControllerService } from './services/specified-time-controller.service';
+import { CalendarControllerService } from './services/calendar-controller.service';
+import { ExcludedTimeSlotControllerService } from './services/excluded-time-slot-controller.service';
 
 
 
@@ -26,7 +28,9 @@ import { SpecifiedTimeControllerService } from './services/specified-time-contro
     DisciplineControllerService,
     CandidateControllerService,
     UserControllerService,
-    SpecifiedTimeControllerService
+    SpecifiedTimeControllerService,
+    CalendarControllerService,
+    ExcludedTimeSlotControllerService
   ],
 })
 export class ApiModule { }

@@ -12,6 +12,9 @@ import { UserBaseInfoDTO } from '../../api/models/user-base-info-dto';
 import { isSameMonth, isSameDay } from 'date-fns';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
+import { CalendarControllerService } from '../../api/services/calendar-controller.service';
+import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
+import { CalendarDTO } from '../../api/models/calendar-dto';
 
 @Component({
   selector: 'app-calendar',
@@ -25,11 +28,13 @@ export class CalendarComponent implements OnDestroy {
   recurringEvents: RecurringEvent[] = [];
   unreccuringCalendarEvents: CalendarEvent[] = [];
   calendarEvents: CalendarEvent[] = [];
+  excludedTimeSlots: ExcludedTimeSlot[] = [];
   activeDayIsOpen = false;
   private readonly destroy: Subject<void> = new Subject();
   constructor(
     private calendarService: CalendarService,
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
+    private calendarControllerService: CalendarControllerService,
     private popupService: PopupService,
     private router: Router
   ) {
@@ -57,32 +62,41 @@ export class CalendarComponent implements OnDestroy {
   }
 
   readAllEvents(): void {
-    this.specifiedTimeControllerService.findAllForUserInRangeUsingGET(
+    this.calendarControllerService.findAllForUserInRangeUsingGET(
       this.calendarService.generateRequestParamsForEventsForUser(this.view, this.viewDate))
       .takeUntil(this.destroy)
       .subscribe(
-        timeSlots => {
-          this.processResponse(timeSlots);
+        calendarDTO => {
+          this.processResponse(calendarDTO);
         },
         error => {
           this.popupService.displayMessage('Error during time slots getting', this.router);
         });
   }
 
-  processResponse(timeSlots: SpecifiedTimeDTO[]): void {
+  processResponse(calendarDTO: CalendarDTO): void {
     this.clearArrays();
-    for (const timeSlot of timeSlots) {
+    this.excludedTimeSlots = calendarDTO.excludedTimeSlots;
+    this.addExcludedTimeSlotsToCalendarEvents(this.excludedTimeSlots);
+    for (const timeSlot of calendarDTO.specifiedTimeDTOs) {
       timeSlot.repeatInterval ? this.recurringEvents.push(this.calendarService.generateRecurringEvent(timeSlot))
         : this.calendarService.addCalendarEventToArray(this.unreccuringCalendarEvents,
-          this.calendarService.generateNonRepeatableEvent(timeSlot));
+          this.calendarService.generateNonRepeatableEvent(timeSlot), this.excludedTimeSlots);
     }
     this.addRecurringEventsToCalendarEvents();
   }
 
   clearArrays() {
+    this.excludedTimeSlots = [];
     this.recurringEvents = [];
     this.calendarEvents = [];
     this.unreccuringCalendarEvents = [];
+  }
+
+  addExcludedTimeSlotsToCalendarEvents(excludedTimeSlots: ExcludedTimeSlot[]): void {
+    for (const excludedTimeSlot of excludedTimeSlots) {
+      this.calendarEvents.push(this.calendarService.generateExcludedTimeSlot(excludedTimeSlot));
+    }
   }
 
   addRecurringEventsToCalendarEvents(): void {
@@ -92,8 +106,8 @@ export class CalendarComponent implements OnDestroy {
       rule.all().forEach(date => {
         const calendarEvent = Object.assign({}, event, { start: new Date(date) },
           { actions: this.calendarService.actions },
-          { meta: { incrementsBadgeTotal: false } });
-        this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent);
+          { meta: { incrementsBadgeTotal: false, repeatable: true } });
+        this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent, this.excludedTimeSlots);
       });
     });
     this.calendarService.sortCalendarEvents(this.calendarEvents);

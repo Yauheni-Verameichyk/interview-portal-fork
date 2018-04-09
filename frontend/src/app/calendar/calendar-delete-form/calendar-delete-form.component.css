@@ -1,0 +1,18 @@
+.calendar-form {
+    margin-top: 170px;
+    padding: 20px;
+}
+
+.patterns-list {
+    margin-top: 10px;
+}
+
+.delete-option {
+    border: 20px;
+    margin: 10px auto ;
+    width: 200px;
+}
+
+.btn-danger {
+    color: white !important;
+  }
