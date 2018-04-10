@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../shared/shared.module';
 import { DisciplineControllerService } from '../../api/services';
 import { DisciplineService } from '../service/discipline.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { DisciplineDTO } from '../../api/models';
@@ -147,6 +147,7 @@ class PopupServiceServiceStub {
 }
 
 class RouterStub {
+  navigate(commands: any[], extras?: NavigationExtras) { }
 }
 
 class AuthenticationServiceStub {

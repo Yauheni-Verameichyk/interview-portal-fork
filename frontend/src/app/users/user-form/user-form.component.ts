@@ -34,7 +34,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
     email: '',
     roleDisciplines: null
   };
-
   constructor(
     private userController: UserControllerService,
     private fb: FormBuilder,

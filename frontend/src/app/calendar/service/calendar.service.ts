@@ -19,6 +19,7 @@ import { PopupService } from '../../shared/pop-up-window/popup-service/popup.ser
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng4-validators';
 import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
+import { RecurringEvent } from '../../api/models/recurring-event';
 
 @Injectable()
 export class CalendarService {

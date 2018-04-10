@@ -1,11 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { Subject } from 'rxjs/Subject';
-<<<<<<< HEAD
 import {RRule} from 'rrule';
-=======
-import { RRule } from 'rrule';
->>>>>>> 3a43b7708240898ad3da6232a53994a3df912c39
 import { CalendarService } from '../service/calendar.service';
 import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
@@ -19,6 +15,7 @@ import 'rxjs/add/operator/takeUntil';
 import { CalendarControllerService } from '../../api/services/calendar-controller.service';
 import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
 import { CalendarDTO } from '../../api/models/calendar-dto';
+import { RecurringEvent } from '../../api/models/recurring-event';
 
 @Component({
   selector: 'app-calendar',
