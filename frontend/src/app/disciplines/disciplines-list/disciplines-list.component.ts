@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { DisciplineDTO } from '../../api/models';
 import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
@@ -21,6 +21,7 @@ export class DisciplinesListComponent implements OnDestroy {
   activeFilter: string;
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineService: DisciplineService,
+    private disciplineControllerService: DisciplineControllerService,
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
     private router: Router
@@ -33,6 +34,16 @@ export class DisciplinesListComponent implements OnDestroy {
         if (e instanceof NavigationEnd && e.urlAfterRedirects.includes('popup:message')) {
           this.findDisciplines(this.activeFilter, this.disciplinesList.length);
         }
+      });
+  }
+
+  searchByName(disciplineName) {
+
+    const searchString = `search=name:${disciplineName},parentId=null`;
+    this.disciplineControllerService.findDisciplinesWithParametersUsingGET(searchString)
+      .subscribe(disciplines => {
+        // this.activeFilter = 'ALL';
+        this.disciplinesList = disciplines;
       });
   }
 
