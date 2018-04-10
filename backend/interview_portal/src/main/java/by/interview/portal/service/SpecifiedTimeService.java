@@ -17,4 +17,6 @@ public interface SpecifiedTimeService {
     SpecifiedTime findById(Long id);
 
     void deleteById(Long id);
+
+    void deleteByGroupId(Long id);
 }

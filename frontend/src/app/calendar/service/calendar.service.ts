@@ -19,6 +19,7 @@ import { PopupService } from '../../shared/pop-up-window/popup-service/popup.ser
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng4-validators';
 import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
+import { ExcludedTimeSlotControllerService } from '../../api/services/excluded-time-slot-controller.service';
 
 @Injectable()
 export class CalendarService {
@@ -64,13 +65,29 @@ export class CalendarService {
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        event.meta.repeatable ? this.router.navigate([{
+        this.router.navigate([{
           outlets: {
             popup: ['calendar', 'delete', event.id, 'start',
-              this.convertDateToString(event.start)]
+              this.convertDateToString(event.start), 'group', event.meta.groupId, 'repeatable', event.meta.repeatable]
           }
-        }])
-          : this.deleteSpecifiedTime(event);
+        }]);
+      }
+    }
+  ];
+
+  excludedActions: CalendarEventAction[] = [
+    {
+      label: '<i class="fas fa-undo"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.excludedTimeSotControllerService.deleteUsingDELETE_1(+event.id).subscribe(
+          (success) => {
+            this.router.navigate(['calendar']);
+            this.popupService.displayMessage('Time slot was restored', this.router);
+          },
+          (error) => {
+            this.router.navigate(['error']);
+            this.popupService.displayMessage('Error during time slot restoration', this.router);
+          });
       }
     }
   ];
@@ -79,12 +96,11 @@ export class CalendarService {
 
   constructor(private router: Router,
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
+    private excludedTimeSotControllerService: ExcludedTimeSlotControllerService,
     private popupService: PopupService) { }
 
   addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent, excludedTimeSlots: ExcludedTimeSlot[]) {
-    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0 &&
-      excludedTimeSlots.filter(excludedTimeSlot => JSON.stringify(new Date(excludedTimeSlot.startTime))
-        === JSON.stringify(event.start)).length === 0) {
+    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
       array.push(event);
     }
   }
@@ -127,6 +143,7 @@ export class CalendarService {
       startTime: startTime,
       endTime: endTime,
       rrule: this.generateRepeatRule(specifiedTime),
+      meta: { groupId: specifiedTime.groupId }
     };
   }
 
@@ -139,7 +156,7 @@ export class CalendarService {
       start: startTime,
       color: this.colors.green,
       actions: this.actions,
-      meta: { incrementsBadgeTotal: false, repeatable: false }
+      meta: { incrementsBadgeTotal: false, repeatable: false, groupId: specifiedTime.groupId }
     };
   }
 
@@ -152,7 +169,7 @@ export class CalendarService {
         ' ( you have excluded this time slot from recurring event )',
       start: startTime,
       color: this.colors.red,
-      // actions: this.actions,
+      actions: this.excludedActions,
       meta: { incrementsBadgeTotal: false }
     };
   }
@@ -218,7 +235,8 @@ export class CalendarService {
 
   sortCalendarEvents(calendarEvents: CalendarEvent[]): void {
     calendarEvents.sort(function (a, b) {
-      if (a.start > b.start) { return 1; } if (a.start < b.start) { return -1; } return 0;
+      if (a.start > b.start) { return 1; }
+      if (a.start < b.start) { return -1; } return 0;
     });
   }
 
@@ -331,20 +349,24 @@ export class CalendarService {
     specifiedTimeForm.updateValueAndValidity();
   }
 
-  deleteSpecifiedTime(event: CalendarEvent): void {
-    if (confirm('Delete chosen time slot?')) {
-      this.specifiedTimeControllerService.deleteUsingDELETE_1(+event.id).subscribe(
-        (success) => this.displayDeletedMessage(success),
-        (error) => this.displayErrorMessage(error));
-    }
-  }
-
   displayDeletedMessage(success): void {
     this.router.navigate(['calendar']);
     this.popupService.displayMessage('Time slot was deleted', this.router);
   }
 
   displayErrorMessage(error): void {
+    this.router.navigate(['error']);
     this.popupService.displayMessage('Error during time slot deleting', this.router);
+  }
+
+  addExcludedTimeSlotsToCalendarEvents(excludedTimeSlots: ExcludedTimeSlot[], calendarEvents: CalendarEvent[]): void {
+    for (const excludedTimeSlot of excludedTimeSlots) {
+     const excludedEvents = calendarEvents.filter(calendarEvent => JSON.stringify(calendarEvent.start) ===
+     JSON.stringify(new Date(excludedTimeSlot.startTime)));
+      if (excludedEvents.length !== 0) {
+        calendarEvents.splice(calendarEvents.indexOf(excludedEvents[0]), 1);
+        calendarEvents.push(this.generateExcludedTimeSlot(excludedTimeSlot));
+      }
+    }
   }
 }

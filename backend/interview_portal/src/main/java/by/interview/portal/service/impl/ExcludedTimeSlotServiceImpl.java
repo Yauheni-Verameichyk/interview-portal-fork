@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import by.interview.portal.domain.ExcludedTimeSlot;
 import by.interview.portal.repository.ExcludedTimeSlotRepository;
@@ -13,6 +14,7 @@ import by.interview.portal.service.ExcludedTimeSlotService;
 import by.interview.portal.utils.UserUtils;
 
 @Service
+@Transactional
 public class ExcludedTimeSlotServiceImpl implements ExcludedTimeSlotService {
 
     @Autowired
@@ -33,5 +35,10 @@ public class ExcludedTimeSlotServiceImpl implements ExcludedTimeSlotService {
         excludedTimeSlot
                 .setUser(userRepository.findFirstByLogin(UserUtils.getCurrentUsersUsername()));
         excludedTimeSlotRepository.save(excludedTimeSlot);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        excludedTimeSlotRepository.deleteById(id);
     }
 }

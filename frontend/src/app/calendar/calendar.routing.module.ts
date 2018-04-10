@@ -9,7 +9,10 @@ const routes: Routes = [
   { path: 'calendar', component: CalendarComponent, runGuardsAndResolvers: 'always' },
   { path: 'calendar/create', component: CalendarFormComponent, outlet: 'popup' },
   { path: 'calendar/edit/:specifiedTimeId', component: CalendarFormComponent, outlet: 'popup' },
-  { path: 'calendar/delete/:specifiedTimeId/start/:startTime', component: CalendarDeleteFormComponent, outlet: 'popup' },
+  {
+    path: 'calendar/delete/:specifiedTimeId/start/:startTime/group/:groupId/repeatable/:repeatable',
+    component: CalendarDeleteFormComponent, outlet: 'popup'
+  },
 ];
 
 export let calendarRouterComponents = [CalendarComponent, CalendarFormComponent, CalendarDeleteFormComponent];
