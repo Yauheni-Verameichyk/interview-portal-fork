@@ -15,6 +15,7 @@ import 'rxjs/add/operator/takeUntil';
 import { CalendarControllerService } from '../../api/services/calendar-controller.service';
 import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
 import { CalendarDTO } from '../../api/models/calendar-dto';
+import { RecurringEvent } from '../../api/models/recurring-event';
 
 @Component({
   selector: 'app-calendar',
@@ -23,6 +24,7 @@ import { CalendarDTO } from '../../api/models/calendar-dto';
 })
 export class CalendarComponent implements OnDestroy {
 
+  public isLoaded: boolean = false;
   view = 'month';
   viewDate: Date = new Date();
   recurringEvents: RecurringEvent[] = [];
@@ -86,6 +88,7 @@ export class CalendarComponent implements OnDestroy {
     this.addRecurringEventsToCalendarEvents();
     this.calendarService.addExcludedTimeSlotsToCalendarEvents(this.excludedTimeSlots, this.calendarEvents);
     this.calendarService.sortCalendarEvents(this.calendarEvents);
+    this.isLoaded = true;
   }
 
   clearArrays() {

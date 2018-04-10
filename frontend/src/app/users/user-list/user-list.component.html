@@ -1,4 +1,4 @@
-<div class="card mb-3 user-list">
+<div class="card mb-3 user-list" *ngIf="isLoaded;else elseBlock">
   <div class="card-header">
     <div class="row">
         <div class="col-sm-12 col-md-4">
@@ -45,3 +45,6 @@
     </div>
   </div>
 </div>
+<ng-template #elseBlock>
+  <div class="ball"></div>
+</ng-template>

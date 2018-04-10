@@ -10,13 +10,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  users: Array<UserInfo>;
+  
+  public isLoaded: boolean = false;
+  users: Array<UserInfo> = new Array<UserInfo>();
   constructor(private userController: UserControllerService, private router: Router) { }
 
   ngOnInit() {
     this.userController
       .getUsers(0).subscribe(userList => {
         this.users = userList;
+        this.isLoaded = true;
       },
         error => {
           console.log(`Error in user list component type error: ${error}`);

@@ -17,6 +17,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class DisciplinesListComponent implements OnDestroy {
 
+  public isLoaded: boolean = false;
   disciplinesList: Array<DisciplineDTO> = [];
   activeFilter: string;
   private readonly destroy: Subject<void> = new Subject();
@@ -40,6 +41,7 @@ export class DisciplinesListComponent implements OnDestroy {
     this.disciplineService.chooseRequest(activeFilter, disciplinesNumber)
       .takeUntil(this.destroy)
       .subscribe((disciplines) => {
+        this.isLoaded = true;
         (this.activeFilter === 'ALL') ? this.disciplinesList.push(...disciplines) : this.disciplinesList = disciplines;
       }, (error) => {
         this.popupService.displayMessage('Error during disciplines reading', this.router);

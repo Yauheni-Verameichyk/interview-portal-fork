@@ -1,4 +1,4 @@
-class RecurringEvent {
+export class RecurringEvent {
     id: number;
     title: string;
     color: any;
