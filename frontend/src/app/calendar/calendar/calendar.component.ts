@@ -24,6 +24,7 @@ import { RecurringEvent } from '../../api/models/recurring-event';
 })
 export class CalendarComponent implements OnDestroy {
 
+  public isLoaded: boolean = false;
   view = 'month';
   viewDate: Date = new Date();
   recurringEvents: RecurringEvent[] = [];
@@ -71,6 +72,7 @@ export class CalendarComponent implements OnDestroy {
           this.processResponse(calendarDTO);
         },
         error => {
+          this.router.navigate(['error']);
           this.popupService.displayMessage('Error during time slots getting', this.router);
         });
   }
@@ -78,13 +80,15 @@ export class CalendarComponent implements OnDestroy {
   processResponse(calendarDTO: CalendarDTO): void {
     this.clearArrays();
     this.excludedTimeSlots = calendarDTO.excludedTimeSlots;
-    this.addExcludedTimeSlotsToCalendarEvents(this.excludedTimeSlots);
     for (const timeSlot of calendarDTO.specifiedTimeDTOs) {
       timeSlot.repeatInterval ? this.recurringEvents.push(this.calendarService.generateRecurringEvent(timeSlot))
         : this.calendarService.addCalendarEventToArray(this.unreccuringCalendarEvents,
           this.calendarService.generateNonRepeatableEvent(timeSlot), this.excludedTimeSlots);
     }
     this.addRecurringEventsToCalendarEvents();
+    this.calendarService.addExcludedTimeSlotsToCalendarEvents(this.excludedTimeSlots, this.calendarEvents);
+    this.calendarService.sortCalendarEvents(this.calendarEvents);
+    this.isLoaded = true;
   }
 
   clearArrays() {
@@ -94,12 +98,6 @@ export class CalendarComponent implements OnDestroy {
     this.unreccuringCalendarEvents = [];
   }
 
-  addExcludedTimeSlotsToCalendarEvents(excludedTimeSlots: ExcludedTimeSlot[]): void {
-    for (const excludedTimeSlot of excludedTimeSlots) {
-      this.calendarEvents.push(this.calendarService.generateExcludedTimeSlot(excludedTimeSlot));
-    }
-  }
-
   addRecurringEventsToCalendarEvents(): void {
     this.calendarEvents = this.calendarEvents.concat(this.unreccuringCalendarEvents);
     this.recurringEvents.forEach(event => {
@@ -107,11 +105,10 @@ export class CalendarComponent implements OnDestroy {
       rule.all().forEach(date => {
         const calendarEvent = Object.assign({}, event, { start: new Date(date) },
           { actions: this.calendarService.actions },
-          { meta: { incrementsBadgeTotal: false, repeatable: true } });
+          { meta: { incrementsBadgeTotal: false, repeatable: true, groupId: event.meta.groupId } });
         this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent, this.excludedTimeSlots);
       });
     });
-    this.calendarService.sortCalendarEvents(this.calendarEvents);
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {

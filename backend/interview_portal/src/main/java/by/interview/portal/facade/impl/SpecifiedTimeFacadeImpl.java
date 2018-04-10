@@ -1,6 +1,7 @@
 package by.interview.portal.facade.impl;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -50,17 +51,27 @@ public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
 
     @Override
     public void save(SpecifiedTimeDTO specifiedTimeDTO) {
-        LocalDateTime currentStartTime = specifiedTimeDTO.getStartTime();
+        specifiedTimeDTO.setGroupId(specifiedTimeDTO.getStartTime().atZone(ZoneId.systemDefault())
+                .toInstant().toEpochMilli());
         User user = userService.findUserByLogin(UserUtils.getCurrentUsersUsername()).get();
+        saveTimeSlots(specifiedTimeDTO, user);
+    }
+
+    private void saveTimeSlots(SpecifiedTimeDTO specifiedTimeDTO, User user) {
+        LocalDateTime currentStartTime = specifiedTimeDTO.getStartTime();
         for (int i = 0; i < specifiedTimeDTO.getDuration(); i++) {
             SpecifiedTimeDTO timeSlot = copyObject(specifiedTimeDTO);
             timeSlot.setStartTime(currentStartTime.plusHours(i));
-            if (timeSlot.getEndTime() == null) {
-                timeSlot.setEndTime(currentStartTime.plusHours(i + 1));
-            }
+            setEndTime(timeSlot, currentStartTime.plusHours(i + 1));
             SpecifiedTime specifiedTime = specifiedTimeConverter.convertToEntity(timeSlot);
             specifiedTime.setUser(user);
             specifiedTimeService.save(specifiedTime);
+        }
+    }
+
+    private void setEndTime(SpecifiedTimeDTO timeSlot, LocalDateTime currentStartTime) {
+        if (timeSlot.getEndTime() == null) {
+            timeSlot.setEndTime(currentStartTime);
         }
     }
 
@@ -78,5 +89,10 @@ public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
     @Override
     public void deleteById(Long id) {
         specifiedTimeService.deleteById(id);
+    }
+
+    @Override
+    public void deleteByGroupId(Long id) {
+        specifiedTimeService.deleteByGroupId(id);
     }
 }

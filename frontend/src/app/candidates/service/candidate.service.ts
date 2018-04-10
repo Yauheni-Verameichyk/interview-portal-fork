@@ -15,6 +15,7 @@ export class CandidateService {
 
     candidateList: Array<CandidateDTO> = new Array<CandidateDTO>();
     showButtonLoad: boolean = true;
+    public isLoaded: boolean = false;
 
     constructor(
         private router: Router,
@@ -30,6 +31,7 @@ export class CandidateService {
             .subscribe(candidateList => {
                 if (candidateList.length !== 0) {
                     this.candidateList = this.candidateList.concat(candidateList);
+                    this.isLoaded = true;
                 } else {
                     this.showButtonLoad = false;
                 }

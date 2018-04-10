@@ -26,4 +26,9 @@ public class ExcludedTimeSlotFacadeImpl implements ExcludedTimeSlotFacade {
     public void save(ExcludedTimeSlot excludedTimeSlot) {
         excludedTimeSlotService.save(excludedTimeSlot);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        excludedTimeSlotService.deleteById(id);
+    }
 }

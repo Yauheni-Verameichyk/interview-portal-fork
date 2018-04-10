@@ -1,4 +1,4 @@
-<div class="discipline-list">
+<div class="discipline-list" *ngIf="isLoaded;else elseBlock">
   <div class="row" *requiredAuthority="'DISCIPLINES_FILTER_READ'">
     <div class="col-sm-7 align-middle">
       <div class="btn-group align-middle myAllFilter pull-right">
@@ -25,3 +25,6 @@
   </table>
   <app-discipline *ngFor="let discipline of disciplinesList" [discipline]="discipline" [childLevel]="0" [parentDisciplineName]="discipline.name"></app-discipline>
 </div>
+<ng-template #elseBlock>
+  <div class="ball"></div>
+</ng-template>

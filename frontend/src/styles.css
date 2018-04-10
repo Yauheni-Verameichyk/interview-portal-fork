@@ -2,6 +2,7 @@ body {
     background-size: cover;
     color: #1a1c1d;
     font-family: "Open Sans", sans-serif;
+    overflow: scroll;
   }
 table {
   color: #000000;

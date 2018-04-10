@@ -1,11 +1,11 @@
 package by.interview.portal.dto;
 
-import java.time.LocalDateTime;
-import java.time.Period;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.time.Period;
 
 @Data
 @NoArgsConstructor
@@ -23,4 +23,6 @@ public class SpecifiedTimeDTO {
     private UserBaseInfoDTO user;
 
     private Integer duration;
+
+    private Long groupId;
 }

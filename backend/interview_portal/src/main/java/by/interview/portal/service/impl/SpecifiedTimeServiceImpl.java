@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import by.interview.portal.domain.SpecifiedTime;
 import by.interview.portal.repository.SpecifiedTimeRepository;
@@ -12,6 +13,7 @@ import by.interview.portal.service.SpecifiedTimeService;
 import by.interview.portal.utils.UserUtils;
 
 @Service
+@Transactional
 public class SpecifiedTimeServiceImpl implements SpecifiedTimeService {
 
     @Autowired
@@ -43,5 +45,10 @@ public class SpecifiedTimeServiceImpl implements SpecifiedTimeService {
     @Override
     public void deleteById(Long id) {
         specifiedTimeRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByGroupId(Long id) {
+        specifiedTimeRepository.deleteByGroupId(id);
     }
 }

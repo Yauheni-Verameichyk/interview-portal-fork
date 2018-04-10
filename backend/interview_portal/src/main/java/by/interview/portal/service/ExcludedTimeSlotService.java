@@ -10,4 +10,6 @@ public interface ExcludedTimeSlotService {
     List<ExcludedTimeSlot> findByStartTimeBetween(LocalDateTime rangeStart, LocalDateTime rangeEnd);
 
     void save(ExcludedTimeSlot excludedTimeSlot);
+
+    void deleteById(Long id);
 }

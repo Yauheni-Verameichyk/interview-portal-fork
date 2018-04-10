@@ -17,4 +17,6 @@ public interface SpecifiedTimeFacade {
     SpecifiedTimeDTO findById(Long id);
 
     void deleteById(Long id);
+
+    void deleteByGroupId(Long id);
 }

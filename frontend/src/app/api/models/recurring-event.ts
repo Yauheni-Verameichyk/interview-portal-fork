@@ -11,4 +11,5 @@ export class RecurringEvent {
       byweekday?: RRule.Weekday[];
       interval?: number;
     };
+    meta?: any;
   }

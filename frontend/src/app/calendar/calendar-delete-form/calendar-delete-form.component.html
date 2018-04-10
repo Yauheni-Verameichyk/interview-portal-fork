@@ -6,17 +6,23 @@
         <span>Choose delete option</span>
       </h4>
       <div class="custom-controls-stacked patterns-list delete-option">
-        <label class="custom-control custom-radio">
-          <input id="radioStacked1" value="DELETE_OCCURRENCE" name="deleteOption" formControlName="deleteOption" [(ngModel)]="deleteOption"
+        <label class="custom-control custom-radio" *ngIf = "repeatable">
+          <input  id="radioStacked1" value="DELETE_OCCURRENCE" name="deleteOption" formControlName="deleteOption" [(ngModel)]="deleteOption"
             type="radio" class="custom-control-input">
           <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">Delete occurrence</span>
+          <span class="custom-control-description">Delete single occurrence</span>
         </label>
         <label class="custom-control custom-radio">
           <input id="radioStacked2" value="DELETE_SERIES" name="deleteOption" formControlName="deleteOption" [(ngModel)]="deleteOption"
             type="radio" class="custom-control-input">
           <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">Delete series</span>
+          <span class="custom-control-description">Delete hour <span *ngIf = "repeatable">from series</span></span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input id="radioStacked2" value="DELETE_GROUP" name="deleteOption" formControlName="deleteOption" [(ngModel)]="deleteOption"
+            type="radio" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Delete <span *ngIf = "!repeatable">group</span><span *ngIf = "repeatable">series</span></span>
         </label>
       </div>
       <validator-message [field]="deleteOptionForm.controls.deleteOption"></validator-message>

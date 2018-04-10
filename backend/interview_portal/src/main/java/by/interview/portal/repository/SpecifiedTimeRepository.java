@@ -22,4 +22,6 @@ public interface SpecifiedTimeRepository extends JpaRepository<SpecifiedTime, Lo
             value = "SELECT DISTINCT * FROM select_specified_time_by_user( :rangeStart, :rangeEnd, :login)")
     List<SpecifiedTime> findAllForUserInRange(@Param("rangeStart") LocalDateTime rangeStart,
             @Param("rangeEnd") LocalDateTime rangeEnd, @Param("login") String login);
+
+    void deleteByGroupId(Long id);
 }
