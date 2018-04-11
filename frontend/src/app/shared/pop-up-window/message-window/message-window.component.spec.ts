@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MessageWindowComponent } from './message-window.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MessageWindowComponent', () => {
   let component: MessageWindowComponent;
@@ -8,7 +9,8 @@ describe('MessageWindowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MessageWindowComponent ]
+      declarations: [ MessageWindowComponent ],
+      imports: [RouterTestingModule],
     })
     .compileComponents();
   }));

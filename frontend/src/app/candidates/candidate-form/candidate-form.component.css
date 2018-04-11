@@ -8,12 +8,14 @@
     pointer-events:none;
     background-color: #dee2e6;
 }
-.popup-form {
-    margin-top: 2%;
-}
+
 .popup-form form{
     margin: 10px 10px;
 }
 .btn-close{
     margin-top: 20px;
+}
+
+.table-list {
+    max-height: 60vh;
 }

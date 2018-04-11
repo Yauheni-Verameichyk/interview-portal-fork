@@ -23,19 +23,21 @@
           [(ngModel)]="discipline.subscription"></textarea>
       </div>
       <validator-message [field]="disciplineForm.controls.disciplineSubscription"></validator-message>
-      <div *ngIf="!discipline?.parentName && !noEdit">
-        <label for="inputState">Assign discipline head</label>
-        <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
-          <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
+      <div class="table-list">
+        <div *ngIf="!discipline?.parentName && !noEdit">
+          <label for="inputState">Assign discipline head</label>
+          <div *ngIf="!discipline.disciplineHeadsList || (discipline.disciplineHeadsList.length == 0);else heads_present">
+            <app-select-user (addUsers)="addUsers($event)" [usersList]="usersListObservable | async"></app-select-user>
+          </div>
+          <ng-template #heads_present>
+            <app-select-user (addUsers)="addUsers($event)" [selectedUsersList]="discipline.disciplineHeadsList" [usersList]="usersListObservable | async"></app-select-user>
+          </ng-template>
         </div>
-        <ng-template #heads_present>
-          <app-select-user (addUsers)="addUsers($event)" [selectedUsersList]="discipline.disciplineHeadsList" [usersList]="usersListObservable | async"></app-select-user>
-        </ng-template>
-      </div>
-      <div *ngIf="noEdit && !discipline.parentName">
-        Discipline heads:
-        <div *ngFor="let user of discipline.disciplineHeadsList">
-          <input type="text" class="form-control" value="{{user?.name}} {{user?.surname}}" disabled>
+        <div *ngIf="noEdit && !discipline.parentName">
+          Discipline heads:
+          <div *ngFor="let user of discipline.disciplineHeadsList">
+            <input type="text" class="form-control" value="{{user?.name}} {{user?.surname}}" disabled>
+          </div>
         </div>
       </div>
       <span *ngIf="!noEdit">* Required field</span>

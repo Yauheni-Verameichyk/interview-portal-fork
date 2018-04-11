@@ -8,6 +8,7 @@ import { ApiConfiguration } from '../api-configuration';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { filter } from 'rxjs/operators/filter';
+import 'rxjs/add/operator/takeUntil';
 
 import { DisciplineDTO } from '../models/discipline';
 import { DisciplineWithDisciplineHeadsDTO } from '../models/disciplineWithDisciplineHeadsDTO';

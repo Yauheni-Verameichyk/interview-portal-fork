@@ -14,7 +14,7 @@ import { DisciplineService } from '../service/discipline.service';
   styleUrls: ['./discipline-search.component.css']
 })
 export class DisciplineSearchComponent implements OnDestroy {
-  isSearchShown = true;
+  isSearchShown = false;
   searchSubItems = false;
   searchDisciplines = true;
   disciplinesList: Array<DisciplineDTO> = [];

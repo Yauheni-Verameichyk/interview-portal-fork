@@ -4,6 +4,8 @@ import { UserFormMangerService } from '../select-role/service/user-form-manger.s
 import { DisciplineControllerService } from '../../api/services';
 import { DisciplineDTO } from '../../api/models';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/takeUntil';
+
 @Component({
   selector: 'app-assign-discipline',
   templateUrl: './assign-discipline.component.html',

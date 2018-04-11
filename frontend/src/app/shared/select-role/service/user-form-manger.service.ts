@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { serializePath } from '@angular/router/src/url_tree';
 import { SrvRecord } from 'dns';
 import { DisciplineDTO } from '../../../api/models';
+import 'rxjs/add/operator/takeUntil';
 
 @Injectable()
 export class UserFormMangerService {

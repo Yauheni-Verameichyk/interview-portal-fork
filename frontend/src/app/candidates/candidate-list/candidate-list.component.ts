@@ -11,9 +11,11 @@ import { CandidateService } from '../service/candidate.service';
 })
 export class CandidateListComponent implements OnInit {
 
-  constructor(private candidateService: CandidateService) { }
+
+  constructor(public candidateService: CandidateService) { }
 
   ngOnInit() {
+    this.candidateService.isLoaded = false;
     this.candidateService.showButtonLoad = true;
     this.candidateService.fetchCandidateList(0);
   }

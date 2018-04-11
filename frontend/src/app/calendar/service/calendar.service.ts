@@ -20,6 +20,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng4-validators';
 import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
 import { ExcludedTimeSlotControllerService } from '../../api/services/excluded-time-slot-controller.service';
+import { RecurringEvent } from '../../api/models/recurring-event';
 
 @Injectable()
 export class CalendarService {

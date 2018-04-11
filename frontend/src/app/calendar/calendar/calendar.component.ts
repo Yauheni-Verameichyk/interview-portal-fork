@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { Subject } from 'rxjs/Subject';
-import { RRule } from 'rrule';
+import {RRule} from 'rrule';
 import { CalendarService } from '../service/calendar.service';
 import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
@@ -15,6 +15,7 @@ import 'rxjs/add/operator/takeUntil';
 import { CalendarControllerService } from '../../api/services/calendar-controller.service';
 import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
 import { CalendarDTO } from '../../api/models/calendar-dto';
+import { RecurringEvent } from '../../api/models/recurring-event';
 
 @Component({
   selector: 'app-calendar',
@@ -23,6 +24,7 @@ import { CalendarDTO } from '../../api/models/calendar-dto';
 })
 export class CalendarComponent implements OnDestroy {
 
+  public isLoaded: boolean = false;
   view = 'month';
   viewDate: Date = new Date();
   recurringEvents: RecurringEvent[] = [];
@@ -86,6 +88,7 @@ export class CalendarComponent implements OnDestroy {
     this.addRecurringEventsToCalendarEvents();
     this.calendarService.addExcludedTimeSlotsToCalendarEvents(this.excludedTimeSlots, this.calendarEvents);
     this.calendarService.sortCalendarEvents(this.calendarEvents);
+    this.isLoaded = true;
   }
 
   clearArrays() {

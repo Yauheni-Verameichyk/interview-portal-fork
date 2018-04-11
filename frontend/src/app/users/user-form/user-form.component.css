@@ -1,7 +1,9 @@
-.popup-form {
-    margin-top: 100px;
-}
 .popup-form form{
     margin: 10px 10px;
     margin-bottom: 20px;
+}
+
+.table-list {
+    max-height: 30vh;
+    padding: 5px;
 }

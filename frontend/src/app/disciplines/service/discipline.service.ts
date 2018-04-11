@@ -35,7 +35,7 @@ export class DisciplineService {
     return (childLevel === 0) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${disciplineName}`;
   }
 
-  chooseRequest(searchOption: string, disciplinesNumber): Observable<DisciplineDTO[]> {
+  chooseRequest(searchOption: string, disciplinesNumber?): Observable<DisciplineDTO[]> {
     switch (searchOption) {
       case this.searchOptions.MY:
         return this.disciplinesControlerService.findDisciplinesForUserUsingGET();

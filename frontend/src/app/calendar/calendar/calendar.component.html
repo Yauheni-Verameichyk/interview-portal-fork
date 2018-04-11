@@ -1,4 +1,4 @@
-<div class="calendar">
+<div class="calendar" *ngIf="isLoaded;else elseBlock">
   <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="readAllEvents(); activeDayIsOpen = false"
     (viewChange)="readAllEvents()">
   </mwl-demo-utils-calendar-header>
@@ -59,3 +59,6 @@
     </table> -->
   </div>
 </div>
+<ng-template #elseBlock>
+  <div class="ball"></div>
+</ng-template>
