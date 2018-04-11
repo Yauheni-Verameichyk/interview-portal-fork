@@ -15,7 +15,10 @@ export class UserComponent implements OnInit, OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
   @Input() userObj: UserInfo;
   user: UserInfo;
-  constructor(private router: Router, private route: ActivatedRoute, private userController: UserControllerService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private userController: UserControllerService) { }
   ngOnInit() {
     this.user = new UserInfo(this.userObj.id, this.userObj.name, this.userObj.surname, this.userObj.roles);
   }
@@ -35,7 +38,6 @@ export class UserComponent implements OnInit, OnDestroy {
       });
     }
   }
-
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();

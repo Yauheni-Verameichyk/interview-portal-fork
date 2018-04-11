@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { Subject } from 'rxjs/Subject';
-import { RRule } from 'rrule';
+import {RRule} from 'rrule';
 import { CalendarService } from '../service/calendar.service';
 import { SpecifiedTimeControllerService } from '../../api/services/specified-time-controller.service';
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';

@@ -10,14 +10,16 @@ import { AuthenticationService } from '../../service/authentication/authenticati
 })
 export class NavbarComponent implements OnInit {
 
-  isShowNavbar:boolean = false;
+  isShowNavbar = false;
 
-  constructor(private navbarmanager: NavbarManager, private authService: AuthenticationService) {
-    this.navbarmanager.showNavBarEmitter.subscribe(isShow =>{this.isShowNavbar = isShow});
-   }
+  constructor(
+    private navbarManager: NavbarManager,
+    private authService: AuthenticationService) {
+    this.navbarManager.showNavBarEmitter.subscribe(isShow => { this.isShowNavbar = isShow });
+  }
 
-   ngOnInit(): void {
-    if(this.authService.getTokenFromLocalStorage()){
+  ngOnInit(): void {
+    if (this.authService.getTokenFromLocalStorage()) {
       this.isShowNavbar = true;
     }
   }

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { UserCredentials } from '../../domain/UserCredentials';
 @Injectable()
 export class AuthenticationService {
-  
+
   constructor() { }
 
   public setCredentialsUser(credentialsUser: UserCredentials) {
@@ -71,8 +71,7 @@ export class AuthenticationService {
   };
 
   public isPermissionPresent(permissionName: string): boolean {
-   return (this.getPermissions().indexOf(permissionName) > -1)
-     
+    return (this.getPermissions().indexOf(permissionName) > -1)
   }
 
   public getPermissions(): Array<String> {

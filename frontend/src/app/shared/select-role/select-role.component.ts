@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserFormMangerService } from './service/user-form-manger.service';
 import { Subject } from 'rxjs';
 import { DisciplineDTO } from '../../api/models';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'appSelectRole',
@@ -19,14 +20,14 @@ export class SelectRoleComponent implements OnInit, OnDestroy {
   isShowButton;
 
   constructor(private userFormManager: UserFormMangerService) {
-    userFormManager.showButtonEmitter
+  }
+
+  ngOnInit() {
+    this.userFormManager.showButtonEmitter
       .takeUntil(this.destroy)
       .subscribe(isShow => {
         this.isShowButton = isShow;
       });
-  }
-
-  ngOnInit() {
     Object.keys(this.roles).map(role => {
       this.assignRolesForUser.push(role);
     });
