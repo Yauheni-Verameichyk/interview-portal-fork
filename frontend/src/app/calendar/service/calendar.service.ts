@@ -362,8 +362,8 @@ export class CalendarService {
 
   addExcludedTimeSlotsToCalendarEvents(excludedTimeSlots: ExcludedTimeSlot[], calendarEvents: CalendarEvent[]): void {
     for (const excludedTimeSlot of excludedTimeSlots) {
-     const excludedEvents = calendarEvents.filter(calendarEvent => JSON.stringify(calendarEvent.start) ===
-     JSON.stringify(new Date(excludedTimeSlot.startTime)));
+      const excludedEvents = calendarEvents.filter(calendarEvent => JSON.stringify(calendarEvent.start) ===
+        JSON.stringify(new Date(excludedTimeSlot.startTime)));
       if (excludedEvents.length !== 0) {
         calendarEvents.splice(calendarEvents.indexOf(excludedEvents[0]), 1);
         calendarEvents.push(this.generateExcludedTimeSlot(excludedTimeSlot));

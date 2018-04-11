@@ -51,7 +51,7 @@ public class SpecifiedTime {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "group_id")
+    @Column(name = "group_id", nullable = false)
     private Long groupId;
 
     @ManyToMany
