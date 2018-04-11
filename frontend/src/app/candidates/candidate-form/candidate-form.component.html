@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="table-list">
                 <app-education-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.candidateEducationList.length)"></app-education-table>
                 <app-work-table [candidateForm]="candidateForm" *ngIf="!(candidateForm.disabled&&!candidate.candidateWorkList.length)"></app-work-table>
                 <app-discipline-list [candidateForm]="candidateForm"></app-discipline-list>

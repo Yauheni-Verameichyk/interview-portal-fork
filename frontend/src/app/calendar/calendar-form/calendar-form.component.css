@@ -1,5 +1,4 @@
 .calendar-form {
-    margin-top: 170px;
     padding-bottom: 20px;
 }
 
@@ -93,4 +92,8 @@ table {
 
 table {
     background: white !important;
+}
+
+.mask {
+    overflow-y: hidden;
 }

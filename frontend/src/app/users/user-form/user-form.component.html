@@ -49,10 +49,12 @@
           </div>
         </div>
       </div>
-      <appSelectRole [roles]="user.roleDisciplines" (editRoles)="getAssignRoles($event)"></appSelectRole>
-      <app-assign-discipline *ngIf="isExistRole('DISCIPLINE_HEAD')" [assignDiscipline]="findAssignDiscipline('DISCIPLINE_HEAD')"
-        (editAssignDiscipline)="getAssignDiscipline($event)"></app-assign-discipline>
-      <app-assign-discipline *ngIf="isExistRole('INTERVIEWER')" [assignDiscipline]="findAssignDiscipline('INTERVIEWER')" (editAssignDiscipline)="getAssignDiscipline($event)"></app-assign-discipline>
+      <div class="table-list">
+        <appSelectRole [roles]="user.roleDisciplines" (editRoles)="getAssignRoles($event)"></appSelectRole>
+        <app-assign-discipline *ngIf="isExistRole('DISCIPLINE_HEAD')" [assignDiscipline]="findAssignDiscipline('DISCIPLINE_HEAD')"
+          (editAssignDiscipline)="getAssignDiscipline($event)"></app-assign-discipline>
+        <app-assign-discipline *ngIf="isExistRole('INTERVIEWER')" [assignDiscipline]="findAssignDiscipline('INTERVIEWER')" (editAssignDiscipline)="getAssignDiscipline($event)"></app-assign-discipline>
+      </div><br>
       <div *ngIf='isInfo'>
         <div *requiredAuthority="'USER_EDIT'">
           <button *ngIf="!user.id" type="button" class="btn btn-success" (click)="saveForm()">Save</button>

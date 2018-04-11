@@ -46,6 +46,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    document.body.style.overflowY = 'hidden';
     this.user = this.route.snapshot.data['user'];
     if (this.router.url.includes('new')) {
       this.newUser = true;
@@ -72,6 +73,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
+    document.body.style.overflowY = 'scroll';
   }
 
   private createFormGroup(): void {
