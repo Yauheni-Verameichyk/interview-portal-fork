@@ -1,20 +1,6 @@
 
 <div class="discipline-list">
-    <div class="card-header">
-        <div class="row">
-            <div class="col-sm-12 col-md-4">
-                <i class="fa fa-table"></i> Disciplines list
-            </div>
-            <div class="col-sm-12 col-md-4">
-              <div id="dataTable_filter" class="dataTables_filter">
-                <label>Search by discipline name:
-                  <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" 
-                  #disciplineName (change) = "searchByName(disciplineName.value)">
-                </label>
-              </div>
-            </div>
-          </div> 
-      </div>
+  <app-discipline-search (emitDisciplines)="receiveDisciplinesFromSearch($event)"></app-discipline-search>
   <div class="row" *requiredAuthority="'DISCIPLINES_FILTER_READ'">
     <div class="col-sm-7 align-middle">
       <div class="btn-group align-middle myAllFilter pull-right">

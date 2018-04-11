@@ -1,35 +1,35 @@
-package by.interview.portal.utils;
+package by.interview.portal.utils.search;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import by.interview.portal.domain.Discipline;
+import by.interview.portal.utils.SearchCriteria;
 
-public class DisciplineSpecificationBuilder {
+public class SpecificationBuilder<T> {
     private final List<SearchCriteria> params;
 
-    public DisciplineSpecificationBuilder() {
+    public SpecificationBuilder() {
         params = new ArrayList<SearchCriteria>();
     }
 
-    public DisciplineSpecificationBuilder with(String key, String operation, Object value) {
+    public SpecificationBuilder<T> with(String key, String operation, Object value) {
         params.add(new SearchCriteria(key, operation, value));
         return this;
     }
 
-    public Specification<Discipline> build() {
+    public Specification<T> build() {
         if (params.size() == 0) {
             return null;
         }
 
-        List<Specification<Discipline>> specs = new ArrayList<Specification<Discipline>>();
+        List<Specification<T>> specs = new ArrayList<Specification<T>>();
         for (SearchCriteria param : params) {
-            specs.add(new DisciplineSpecification(param));
+            specs.add(new SpecificationImpl<T>(param));
         }
 
-        Specification<Discipline> result = specs.get(0);
+        Specification<T> result = specs.get(0);
         for (int i = 1; i < specs.size(); i++) {
             result = Specification.where(result).and(specs.get(i));
         }

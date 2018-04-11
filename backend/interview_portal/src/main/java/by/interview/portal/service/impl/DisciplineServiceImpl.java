@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,7 @@ import by.interview.portal.repository.DisciplineRepository;
 import by.interview.portal.repository.UserRepository;
 import by.interview.portal.repository.UserRoleDisciplineRepository;
 import by.interview.portal.service.DisciplineService;
-import by.interview.portal.utils.DisciplineSpecificationBuilder;
+import by.interview.portal.utils.search.SearchUtils;
 
 @Service
 @Transactional
@@ -137,15 +135,9 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     public Set<DisciplineDTO> findWithParameters(String search) {
-        DisciplineSpecificationBuilder builder = new DisciplineSpecificationBuilder();
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>|=|<>)(\\w+?),");
-        Matcher matcher = pattern.matcher(search + ",");
-        while (matcher.find()) {
-            System.err.println("matcher");
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-        }
-        Set<DisciplineDTO> disciplineDTOs = disciplineRepository.findAll(builder.build()).stream()
-                .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toSet());
+        Set<DisciplineDTO> disciplineDTOs =
+                disciplineRepository.findAll(SearchUtils.getSearchSpecifications(search)).stream()
+                        .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toSet());
         for (DisciplineDTO discipline : disciplineDTOs) {
             discipline.setHasSubItems(
                     disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);

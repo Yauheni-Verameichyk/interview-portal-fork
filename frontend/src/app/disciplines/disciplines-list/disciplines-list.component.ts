@@ -37,16 +37,6 @@ export class DisciplinesListComponent implements OnDestroy {
       });
   }
 
-  searchByName(disciplineName) {
-
-    const searchString = `search=name:${disciplineName},parentId=null`;
-    this.disciplineControllerService.findDisciplinesWithParametersUsingGET(searchString)
-      .subscribe(disciplines => {
-        // this.activeFilter = 'ALL';
-        this.disciplinesList = disciplines;
-      });
-  }
-
   findDisciplines(activeFilter: string, disciplinesNumber: number): void {
     this.disciplineService.chooseRequest(activeFilter, disciplinesNumber)
       .takeUntil(this.destroy)
@@ -55,6 +45,11 @@ export class DisciplinesListComponent implements OnDestroy {
       }, (error) => {
         this.popupService.displayMessage('Error during disciplines reading', this.router);
       });
+  }
+
+  receiveDisciplinesFromSearch(disciplines: DisciplineDTO[]): void {
+    this.activeFilter = null;
+    this.disciplinesList = disciplines;
   }
 
   @HostListener('window:scroll', ['$event'])

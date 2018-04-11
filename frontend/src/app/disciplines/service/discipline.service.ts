@@ -45,4 +45,19 @@ export class DisciplineService {
       throw new Error('Perhaps you do not know what you want');
     }
   }
+
+  selectSearchPattern(searchDisciplines: boolean, searchSubItems: boolean): string {
+    if (searchDisciplines && searchSubItems) {
+      return '';
+    }
+    if (searchDisciplines && !searchSubItems) {
+      return ',parentId=null';
+    }
+    if (!searchDisciplines && searchSubItems) {
+      return ',parentId<>null';
+    }
+    if (!searchDisciplines && !searchSubItems) {
+      throw new Error();
+    }
+  }
 }
