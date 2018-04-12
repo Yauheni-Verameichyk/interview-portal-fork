@@ -12,4 +12,10 @@ describe('NavbarManagerService', () => {
   it('should be created', inject([NavbarManager], (service: NavbarManager) => {
     expect(service).toBeTruthy();
   }));
+  it('should to changed the isShowNavBar variable', inject([NavbarManager], (service: NavbarManager) => {
+    service.showNavbar(true);
+    service.showNavBarEmitter.subscribe(isShow => {
+      expect(isShow).toBeTruthy();
+    });
+  }));
 });
