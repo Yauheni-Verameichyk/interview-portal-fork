@@ -1,6 +1,7 @@
 package by.interview.portal.facade.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,10 @@ public class DisciplineFacadeImpl implements DisciplineFacade {
     @Override
     public void deleteDiscipline(Long id) {
         disciplineService.deleteDiscipline(id);
+    }
+
+    @Override
+    public Set<DisciplineDTO> findWithParameters(String search) {
+        return disciplineService.findWithParameters(search);
     }
 }

@@ -27,6 +27,7 @@ import by.interview.portal.repository.DisciplineRepository;
 import by.interview.portal.repository.UserRepository;
 import by.interview.portal.repository.UserRoleDisciplineRepository;
 import by.interview.portal.service.DisciplineService;
+import by.interview.portal.utils.search.SearchUtils;
 
 @Service
 @Transactional
@@ -130,6 +131,18 @@ public class DisciplineServiceImpl implements DisciplineService {
         deleteCandidateAssignements(discipline);
         deleteChilds(discipline);
         disciplineRepository.delete(discipline);
+    }
+
+    @Override
+    public Set<DisciplineDTO> findWithParameters(String search) {
+        Set<DisciplineDTO> disciplineDTOs =
+                disciplineRepository.findAll(SearchUtils.getSearchSpecifications(search)).stream()
+                        .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toSet());
+        for (DisciplineDTO discipline : disciplineDTOs) {
+            discipline.setHasSubItems(
+                    disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);
+        }
+        return disciplineDTOs;
     }
 
     private void deleteChilds(Discipline discipline) {

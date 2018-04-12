@@ -1,6 +1,6 @@
 .viewInterviewWait {
     z-index: 900;
-    top: 55px;
+    top: 80px;
     background-color: white;
     position: fixed;
     left: 50%;
@@ -11,4 +11,3 @@
     font-size: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
-

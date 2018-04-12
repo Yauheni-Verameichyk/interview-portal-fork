@@ -37,6 +37,7 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    document.body.style.overflowY = 'hidden';
     this.usersListObservable = this.userControllerService.getUsersByRole('DISCIPLINE_HEAD');
     this.createDisciplineForm();
     if (+this.route.snapshot.paramMap.get('editDisciplineID')) {
@@ -117,5 +118,6 @@ export class DisciplineFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
+    document.body.style.overflowY = 'scroll';
   }
 }

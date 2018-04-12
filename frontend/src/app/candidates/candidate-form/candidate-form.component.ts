@@ -12,7 +12,7 @@ import { CandidateFormService } from './service/candidate-form.service';
   styleUrls: ['./candidate-form.component.css'],
   providers: [ CandidateFormService ]
 })
-export class CandidateFormComponent implements OnInit {
+export class CandidateFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private candidateFormService: CandidateFormService,
@@ -20,6 +20,7 @@ export class CandidateFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.candidateFormService.initCandidateForm();
+    document.body.style.overflowY = 'hidden';
   }
 
   get candidateForm(): FormGroup {
@@ -36,6 +37,10 @@ export class CandidateFormComponent implements OnInit {
 
   get displayErrorMessage(): boolean {
     return this.candidateFormService.displayErrorMessage;
+  }
+
+  ngOnDestroy(): void {
+    document.body.style.overflowY = 'scroll';
   }
 
 }
