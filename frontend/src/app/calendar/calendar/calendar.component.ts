@@ -24,7 +24,7 @@ import { RecurringEvent } from '../../api/models/recurring-event';
 })
 export class CalendarComponent implements OnDestroy {
 
-  public isLoaded: boolean = false;
+  public isLoaded = false;
   view = 'month';
   viewDate: Date = new Date();
   recurringEvents: RecurringEvent[] = [];
@@ -83,7 +83,7 @@ export class CalendarComponent implements OnDestroy {
     for (const timeSlot of calendarDTO.specifiedTimeDTOs) {
       timeSlot.repeatInterval ? this.recurringEvents.push(this.calendarService.generateRecurringEvent(timeSlot))
         : this.calendarService.addCalendarEventToArray(this.unreccuringCalendarEvents,
-          this.calendarService.generateNonRepeatableEvent(timeSlot), this.excludedTimeSlots);
+          this.calendarService.generateNonRepeatableEvent(timeSlot));
     }
     this.addRecurringEventsToCalendarEvents();
     this.calendarService.addExcludedTimeSlotsToCalendarEvents(this.excludedTimeSlots, this.calendarEvents);
@@ -106,7 +106,7 @@ export class CalendarComponent implements OnDestroy {
         const calendarEvent = Object.assign({}, event, { start: new Date(date) },
           { actions: this.calendarService.actions },
           { meta: { incrementsBadgeTotal: false, repeatable: true, groupId: event.meta.groupId } });
-        this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent, this.excludedTimeSlots);
+        this.calendarService.addCalendarEventToArray(this.calendarEvents, calendarEvent);
       });
     });
   }

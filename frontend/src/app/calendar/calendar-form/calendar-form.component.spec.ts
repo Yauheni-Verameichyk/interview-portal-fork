@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CalendarFormComponent } from './calendar-form.component';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../shared/shared.module';
 import { CalendarService } from '../service/calendar.service';
@@ -9,7 +9,7 @@ import { SpecifiedTimeControllerService } from '../../api/services/specified-tim
 import { ExcludedTimeSlotControllerService } from '../../api/services/excluded-time-slot-controller.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LightFieldService } from '../../shared/validator/service/light-field.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Component, Input, forwardRef } from '@angular/core';
 import { IfObservable } from 'rxjs/observable/IfObservable';
 import { Observable } from 'rxjs/Observable';
 import { SpecifiedTime } from '../../api/models/specified-time';
@@ -22,7 +22,7 @@ describe('CalendarFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, FormsModule, SharedModule],
-      declarations: [CalendarFormComponent],
+      declarations: [CalendarFormComponent, MockComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: CalendarService, useClass: CalendarServiceStub },
@@ -30,7 +30,6 @@ describe('CalendarFormComponent', () => {
         { provide: ExcludedTimeSlotControllerService, useClass: ExcludedTimeSlotControllerServiceStub },
         { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         { provide: LightFieldService, useClass: LightFieldServiceStub },
-        { provide: Router, useClass: RouterStub },
       ]
     })
       .compileComponents();
@@ -46,6 +45,29 @@ describe('CalendarFormComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => MockComponent),
+  multi: true
+};
+
+@Component({
+  selector: 'mwl-demo-utils-date-time-picker',
+  template: '<p>Mock Product Settings Component</p>',
+  providers: [DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR]
+})
+class MockComponent {
+  @Input() placeholder: string;
+  @Input() showTime;
+  date: Date;
+
+  writeValue(date: Date): void { }
+
+  registerOnChange(fn: any): void { }
+
+  registerOnTouched(fn: any): void { }
+}
 
 class CalendarServiceStub {
   initFormGroup(specifiedTime: SpecifiedTime): FormGroup {
@@ -95,7 +117,3 @@ class ActivatedRouteStub {
 }
 
 class LightFieldServiceStub { }
-
-class RouterStub {
-  navigate(any) { }
-}

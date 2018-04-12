@@ -100,7 +100,7 @@ export class CalendarService {
     private excludedTimeSotControllerService: ExcludedTimeSlotControllerService,
     private popupService: PopupService) { }
 
-  addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent, excludedTimeSlots: ExcludedTimeSlot[]) {
+  addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
     if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
       array.push(event);
     }
