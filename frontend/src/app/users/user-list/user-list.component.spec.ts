@@ -38,7 +38,31 @@ const users = [{
   roles: ['HUMAN_RESOURCE', 'DISCIPLINE_HEAD', 'COORDINATOR'],
   get getRoles(): Array<string> | string[] {
     return this.roles.map(role => {
-      role =  role.replace(/_/g, ' ').toLowerCase();
+      role = role.replace(/_/g, ' ').toLowerCase();
+      return role.charAt(0).toUpperCase() + role.slice(1);
+    });
+  }
+},
+{
+  id: 1,
+  name: 'Petrovich',
+  surname: 'Petrovich',
+  roles: ['HUMAN_RESOURCE', 'DISCIPLINE_HEAD', 'COORDINATOR'],
+  get getRoles(): Array<string> | string[] {
+      return this.roles.map(role => {
+        role = role.replace(/_/g, ' ').toLowerCase();
+        return role.charAt(0).toUpperCase() + role.slice(1);
+      });
+  }
+},
+{
+  id: 1,
+  name: 'Petrovich',
+  surname: 'Petrovich',
+  roles: ['HUMAN_RESOURCE', 'DISCIPLINE_HEAD', 'COORDINATOR'],
+  get getRoles(): Array<string> | string[] {
+    return this.roles.map(role => {
+      role = role.replace(/_/g, ' ').toLowerCase();
       return role.charAt(0).toUpperCase() + role.slice(1);
     });
   }
@@ -50,7 +74,7 @@ const users = [{
   roles: ['HUMAN_RESOURCE', 'DISCIPLINE_HEAD', 'COORDINATOR'],
   get getRoles(): Array<string> | string[] {
     return this.roles.map(role => {
-      role =  role.replace(/_/g, ' ').toLowerCase();
+      role = role.replace(/_/g, ' ').toLowerCase();
       return role.charAt(0).toUpperCase() + role.slice(1);
     });
   }
@@ -78,10 +102,14 @@ describe('UserListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
+    component.users = users;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should check is exists scroll', () => {
+    expect(document.body.offsetHeight).toBeLessThan(window.innerHeight);
   });
 });
