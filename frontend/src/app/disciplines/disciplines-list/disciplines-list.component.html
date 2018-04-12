@@ -1,4 +1,6 @@
+
 <div class="discipline-list" *ngIf="isLoaded;else elseBlock">
+  <app-discipline-search (emitDisciplines)="receiveDisciplinesFromSearch($event)"></app-discipline-search>
   <div class="row" *requiredAuthority="'DISCIPLINES_FILTER_READ'">
     <div class="col-sm-7 align-middle">
       <div class="btn-group align-middle myAllFilter pull-right">

@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserControllerService } from '../api/rest/service/user-controller.service';
 import { DisciplineFormComponent } from './discipline-form/discipline-form.component';
+import { DisciplineSearchComponent } from './discipline-search/discipline-search.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { DisciplineFormComponent } from './discipline-form/discipline-form.compo
     disciplineRouterComponents,
     DisciplineComponent,
     DisciplinesListComponent,
-    DisciplineFormComponent
+    DisciplineFormComponent,
+    DisciplineSearchComponent
   ],
   providers: [
     DisciplineService,

@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { DisciplineDTO } from '../../api/models';
 import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
@@ -22,6 +22,7 @@ export class DisciplinesListComponent implements OnDestroy {
   activeFilter: string;
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineService: DisciplineService,
+    private disciplineControllerService: DisciplineControllerService,
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
     private router: Router
@@ -46,6 +47,11 @@ export class DisciplinesListComponent implements OnDestroy {
       }, (error) => {
         this.popupService.displayMessage('Error during disciplines reading', this.router);
       });
+  }
+
+  receiveDisciplinesFromSearch(disciplines: DisciplineDTO[]): void {
+    this.activeFilter = null;
+    this.disciplinesList = disciplines;
   }
 
   @HostListener('window:scroll', ['$event'])
