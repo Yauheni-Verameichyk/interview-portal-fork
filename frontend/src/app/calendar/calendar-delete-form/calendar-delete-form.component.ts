@@ -24,10 +24,8 @@ export class CalendarDeleteFormComponent implements OnInit {
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
     private excludedTimeSlotControllerService: ExcludedTimeSlotControllerService,
     private calendarService: CalendarService,
-    private router: Router,
     private route: ActivatedRoute,
-    private lightFieldService: LightFieldService,
-    private popupService: PopupService) { }
+    private lightFieldService: LightFieldService) { }
 
   ngOnInit() {
     this.specifiedTimeId = +this.route.snapshot.paramMap.get('specifiedTimeId');

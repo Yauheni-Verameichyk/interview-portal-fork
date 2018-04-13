@@ -38,7 +38,7 @@ describe('DisciplineFormComponent', () => {
   ];
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule, SharedModule],
+      imports: [ReactiveFormsModule, FormsModule, SharedModule],
       declarations: [DisciplineFormComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -230,6 +230,7 @@ class DisciplineServiceStub {
 }
 
 class RouterStub {
+    navigate(any) {}
 }
 
 class UserControllerServiceStub {
