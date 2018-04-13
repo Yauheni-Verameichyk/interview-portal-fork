@@ -1,8 +1,8 @@
 <td>{{candidate.name}}</td>
 <td>{{candidate.surname}}</td>
 <td>
-    <span *ngFor="let discipline of candidate.disciplineList">
-        {{discipline.name}}&nbsp;
+    <span *ngFor="let discipline of candidate.disciplineList" [routerLink]="['', {outlets: { popup: ['discipline', 'view', discipline.id] } }]">
+        <u>{{discipline.name}}</u>&nbsp;
     </span>
 </td>
 <td class="td-btn">

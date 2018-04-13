@@ -12,7 +12,6 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@ResponseStatus(HttpStatus.OK)
 @RequestMapping("candidates")
 public class CandidateController {
 

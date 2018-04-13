@@ -1,6 +1,5 @@
 package by.interview.portal.domain;
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +13,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -25,16 +25,17 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "work_candidate")
 public class CandidateWork extends DateInterval {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(name = "name_company")
-	private String companyName;
-	private String position;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "name_company")
+    private String companyName;
+    private String position;
 
-	public CandidateWork(Long id, String nameCompany, String position, Date dateStart, Date dateEnd) {
-		this(id, nameCompany, position);
-		setEndDate(dateEnd);
-		setStartDate(dateStart);
-	}
+    public CandidateWork(Long id, String nameCompany, String position, Date dateStart,
+            Date dateEnd) {
+        this(id, nameCompany, position);
+        setStartDate(dateStart);
+        setEndDate(dateEnd);
+    }
 }

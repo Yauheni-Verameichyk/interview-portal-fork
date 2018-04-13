@@ -1,12 +1,14 @@
-<div class="row" *ngFor="let userForm of selectedUsersList; let i = index">
-  <div class="form-group col-10" id="elementToAdd">
-    <select id="inputState" class="form-control" [(ngModel)]="selectedUsersList[i]" (change)="userChanged()">
-      <option [ngValue]="null" hidden disabled selected>Choose...</option>
-      <option *ngFor="let user of usersList" [ngValue]="user">{{user?.name}} {{user?.surname}}</option>
-    </select>
-  </div>
-  <div class="form-group btn btn-light pull-right col-0" (click)="deleteDHForm(i)">
-    <img class="far fa-trash-alt align-middle" />
+<div class="table-list">
+  <div class="row" *ngFor="let userForm of selectedUsersList; let i = index">
+    <div class="form-group col-10" id="elementToAdd">
+      <select id="inputState" class="form-control" [(ngModel)]="selectedUsersList[i]" (change)="userChanged()">
+        <option [ngValue]="null" hidden disabled selected>Choose...</option>
+        <option *ngFor="let user of usersList" [ngValue]="user">{{user?.name}} {{user?.surname}}</option>
+      </select>
+    </div>
+    <div class="form-group btn btn-light pull-right col-0" (click)="deleteDHForm(i)">
+      <img class="far fa-trash-alt align-middle" />
+    </div>
   </div>
 </div>
 <button class="btn btn-light col-md-12 bg-gray" (click)="addDHForm()">

@@ -1,6 +1,7 @@
 package by.interview.portal.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -30,9 +32,6 @@ public class Interview {
     @Column(name = "id", columnDefinition = "bigserial")
     private Long id;
 
-    @Column(name = "title", length = 50)
-    private String title;
-
     @Column(name = "description", length = 200)
     private String description;
 
@@ -46,8 +45,27 @@ public class Interview {
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
+    private String place;
+
+    @Column(name = "final_mark")
+    private Byte finalMark;
+
+    private String feedback;
+
+    private String status;
+
     @ManyToMany
     @JoinTable(name = "interviews_users", joinColumns = {@JoinColumn(name = "interview_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private Set<User> interviewersSet;
+    private Set<User> interviewerSet;
+
+    @ManyToMany
+    @JoinTable(name = "interview_discipline", joinColumns = {@JoinColumn(name = "interview_id")},
+            inverseJoinColumns = {@JoinColumn(name = "discipline_id")})
+    private Set<Discipline> disciplineSet;
+
+    @OneToMany
+    @JoinColumn(name = "interview_id")
+    private List<DisciplineMark> markList;
+
 }

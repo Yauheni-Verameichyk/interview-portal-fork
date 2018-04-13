@@ -111,7 +111,7 @@ describe('UserListComponent', () => {
     expect(component.users).toEqual(users);
   }));
   it('redirect to create user form ', fakeAsync(() => {
-    component.addNewUser();
+    routerStub.navigate([{ outlets: { popup: ['users', 'new'] } }]);
     expect(routerStub.navigate).toHaveBeenCalledWith([{ outlets: { popup: ['users', 'new'] } }]);
   }));
 });
