@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { CalendarFormComponent } from './calendar-form.component';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -14,10 +14,40 @@ import { IfObservable } from 'rxjs/observable/IfObservable';
 import { Observable } from 'rxjs/Observable';
 import { SpecifiedTime } from '../../api/models/specified-time';
 import { CustomValidators } from 'ng4-validators';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 
 describe('CalendarFormComponent', () => {
   let component: CalendarFormComponent;
   let fixture: ComponentFixture<CalendarFormComponent>;
+
+  const activatedRouteStub = {
+    snapshot: {
+      paramMap: {
+        get(string: string) { return string === 'specifiedTimeId' ? '0' : null; }
+      }
+    }
+  };
+
+  const specifiedTime = {
+    endTime: new Date('2018-05-10T20:00:00'),
+    id: 1,
+    repeatInterval: 'P7D',
+    startTime: new Date('2018-04-10T20:00:00'),
+    user: { id: 1, name: 'Ananas' },
+    duration: 1,
+    isRepeatable: true,
+    repeatPattern: 'weekly',
+    repeatPeriod: 1
+  };
+
+  const specifiedTimeDTO = {
+    endTime: '2018-05-10T20:00:00',
+    startTime: '2018-04-10T20:00:00',
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    repeatInterval: 'P7D',
+    duration: 1
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,7 +58,7 @@ describe('CalendarFormComponent', () => {
         { provide: CalendarService, useClass: CalendarServiceStub },
         { provide: SpecifiedTimeControllerService, useClass: SpecifiedTimeControllerServiceStub },
         { provide: ExcludedTimeSlotControllerService, useClass: ExcludedTimeSlotControllerServiceStub },
-        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: LightFieldService, useClass: LightFieldServiceStub },
       ]
     })
@@ -41,9 +71,37 @@ describe('CalendarFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create new specified time', () => {
+    expect(component.specifiedTime).toBeTruthy();
+    expect(component.specifiedTime.duration).toEqual(1);
+    expect(component.specifiedTime.repeatPeriod).toEqual(1);
+  });
+
+  it('should read specified time to edit', inject([SpecifiedTimeControllerService, ActivatedRoute],
+    (specifiedTimeControllerService: SpecifiedTimeControllerService, activatedRoute: ActivatedRoute) => {
+      spyOn(specifiedTimeControllerService, 'findByIdUsingGET_3').and.returnValue(Observable.of(specifiedTimeDTO));
+      spyOn(activatedRoute.snapshot.paramMap, 'get').and.returnValue(1);
+      fixture = TestBed.createComponent(CalendarFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      expect(component.specifiedTime).toEqual(specifiedTime);
+      expect(component.specifiedTimeDTO).toEqual(specifiedTimeDTO);
+    }));
+
+  it('should fail to read specified time to edit', inject([SpecifiedTimeControllerService, ActivatedRoute, PopupService],
+    (specifiedTimeControllerService: SpecifiedTimeControllerService, activatedRoute: ActivatedRoute, popupService: PopupService) => {
+      spyOn(specifiedTimeControllerService, 'findByIdUsingGET_3').and.callFake((parameterName) => Observable.throw(new Error()));
+      spyOn(activatedRoute.snapshot.paramMap, 'get').and.returnValue(1);
+      spyOn(popupService, 'displayMessage').and.callThrough();
+      fixture = TestBed.createComponent(CalendarFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      expect(popupService.displayMessage).toHaveBeenCalled();
+    }));
 });
 
 export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
@@ -61,11 +119,8 @@ class MockComponent {
   @Input() placeholder: string;
   @Input() showTime;
   date: Date;
-
   writeValue(date: Date): void { }
-
   registerOnChange(fn: any): void { }
-
   registerOnTouched(fn: any): void { }
 }
 
@@ -82,15 +137,25 @@ class CalendarServiceStub {
     });
   }
 
-  convertDTOToSpecifiedTime(any) {
-    return null;
-  }
-
   getCurrentDate(): Date {
     const date = new Date();
     date.setMinutes(0);
     date.setSeconds(0);
     return date;
+  }
+
+  convertDTOToSpecifiedTime(any) {
+    return {
+      endTime: new Date('2018-05-10T20:00:00'),
+      id: 1,
+      repeatInterval: 'P7D',
+      startTime: new Date('2018-04-10T20:00:00'),
+      user: { id: 1, name: 'Ananas' },
+      duration: 1,
+      isRepeatable: true,
+      repeatPattern: 'weekly',
+      repeatPeriod: 1
+    };
   }
 
   setValidatorsForNonRepeatable(any) { }
@@ -105,15 +170,5 @@ class SpecifiedTimeControllerServiceStub {
 }
 
 class ExcludedTimeSlotControllerServiceStub { }
-
-class ActivatedRouteStub {
-  snapshot = {
-    paramMap: {
-      get(string: string) {
-        return string === 'specifiedTimeId' ? '0' : null;
-      }
-    }
-  };
-}
 
 class LightFieldServiceStub { }
