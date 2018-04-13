@@ -4,6 +4,7 @@ import { DisciplineDTO } from '../../../api/models/discipline';
 import { Subject } from 'rxjs';
 import { DisciplineControllerService } from '../../../api/services';
 import { CandidateFormService } from '../service/candidate-form.service';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-discipline-list',

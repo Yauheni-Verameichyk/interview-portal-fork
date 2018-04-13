@@ -18,6 +18,12 @@ const routerStub = {
   navigate: jasmine.createSpy('navigate'),
   navigateByUrl(url: string) { return url; }
 };
+const activatedRouterStub = {
+  params: Observable.of(),
+  snapshot() {
+    return { params: {} };
+  }
+};
 const userControllerServiceStub = {
   deleteUser(userId: number): Observable<HttpResponse> {
     return Observable.of(null);
