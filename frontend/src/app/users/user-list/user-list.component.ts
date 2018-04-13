@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  
+
   public isLoaded: boolean = false;
   users: Array<UserInfo> = new Array<UserInfo>();
   constructor(private userController: UserControllerService, private router: Router) { }

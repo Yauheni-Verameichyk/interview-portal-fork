@@ -22,6 +22,7 @@ export class DisciplinesListComponent implements OnDestroy {
   activeFilter: string;
   private readonly destroy: Subject<void> = new Subject();
   constructor(private disciplineService: DisciplineService,
+    private disciplineControllerService: DisciplineControllerService,
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
     private router: Router

@@ -35,7 +35,6 @@ import { CandidateFormService } from './candidate-form/service/candidate-form.se
     CandidateControllerService,
     CandidateResolvedGuard,
     CandidateService
-    // CandidateFormService
   ]
 })
 export class CandidatesModule { }
