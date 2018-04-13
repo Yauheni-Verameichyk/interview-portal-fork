@@ -14,8 +14,14 @@ import { CalendarEvent } from 'angular-calendar';
 import { SpecifiedTimeDTO } from '../../api/models/specified-time-dto';
 import { RecurringEvent } from '../../api/models/recurring-event';
 import RRule = require('rrule');
+import 'rxjs/add/observable/of';
 
 describe('CalendarComponent', () => {
+
+  const routerStub = {
+    events: Observable.of(new NavigationEnd(1, 'asd', 'asd')),
+    navigate(commands: any[]) { }
+  };
 
   const nonrecurringCalendarEvent = {
     id: 1,
@@ -60,6 +66,11 @@ describe('CalendarComponent', () => {
     endTime: '2018-03-24T21:00:00',
     user: { id: 1, name: 'Ananas' }
   };
+  const monthDay = {
+    date: new Date, isPast: false, isToday: true, isFuture: false,
+    isWeekend: false, inMonth: true,
+    events: [nonrecurringCalendarEvent], badgeTotal: 0
+  };
 
   let component: CalendarComponent;
   let fixture: ComponentFixture<CalendarComponent>;
@@ -71,103 +82,110 @@ describe('CalendarComponent', () => {
       declarations: [CalendarComponent],
       providers: [
         { provide: CalendarService, useClass: CalendarServiceStub },
-        { provide: SpecifiedTimeControllerService, useClass: SpecifiedTimeControllerServiceStub },
         { provide: CalendarControllerService, useClass: CalendarControllerServiceStub },
         { provide: PopupService, useClass: PopupServiceStub },
-        { provide: Router, useClass: RouterStub },
+        { provide: Router, useValue: routerStub },
       ]
     })
       .compileComponents();
+      fixture = TestBed.createComponent(CalendarComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
   }));
 
   it('should be created', () => {
-    fixture = TestBed.createComponent(CalendarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   it('should read nonrecurring events', () => {
-    fixture = TestBed.createComponent(CalendarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
     expect(component.calendarEvents).toEqual([nonrecurringCalendarEvent]);
   });
 
-  it('should read recurring events',
-    inject([CalendarControllerService],
-      (calendarControllerService: CalendarControllerService) => {
+  it('should read recurring events', inject([CalendarService], (calendarService: CalendarService) => {
+    spyOn(calendarService, 'generateCalendarEvents').and.returnValue([firstRecurringCalendarEvent, secondRecurringCalendarEvent]);
+    fixture = TestBed.createComponent(CalendarComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    expect(component.calendarEvents).toEqual([firstRecurringCalendarEvent, secondRecurringCalendarEvent]);
+  }));
+
+  it('should read recurring events', inject([CalendarService], (calendarService: CalendarService) => {
+    spyOn(calendarService, 'generateCalendarEvents').and.returnValue([firstRecurringCalendarEvent, secondRecurringCalendarEvent]);
+    fixture = TestBed.createComponent(CalendarComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    expect(component.calendarEvents).toEqual([firstRecurringCalendarEvent, secondRecurringCalendarEvent]);
+  }));
+
+  it('should fail to read calendar events',
+    inject([CalendarControllerService, PopupService],
+      (calendarControllerService: CalendarControllerService, popupService: PopupService) => {
         spyOn(calendarControllerService, 'findAllForUserInRangeUsingGET').and
-          .returnValue(Observable.of({
-            excludedTimeSlots: [],
-            interviews: [],
-            specifiedTimeDTOs: [recurringEvent]
-          }));
+          .callFake((parameterName) => Observable.throw(new Error()));
+        spyOn(popupService, 'displayMessage').and.callThrough();
         fixture = TestBed.createComponent(CalendarComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        expect(component.calendarEvents).toEqual([firstRecurringCalendarEvent, secondRecurringCalendarEvent]);
+        expect(calendarControllerService.findAllForUserInRangeUsingGET).toHaveBeenCalled();
+        expect(popupService.displayMessage).toHaveBeenCalledWith('Error during time slots getting', routerStub);
       })
   );
+
+  it('should do nothing if navigation is not ended', inject([Router], (router: Router) => {
+    routerStub.events = Observable.of(null);
+    spyOn(component, 'readAllEvents').and.callThrough();
+    expect(component.readAllEvents).not.toHaveBeenCalled();
+  }));
+
+  it('should set activeDayIsOpen to true and set current date as viewDate', () => {
+    const date = new Date();
+    date.setDate((new Date).getDate() - 5);
+    component.dayClicked({ date: (date), events: [nonrecurringCalendarEvent] });
+    expect(component.activeDayIsOpen).toEqual(true);
+    expect(component.viewDate).toEqual(date);
+  });
+
+  it('should not set activeDayIsOpen to true if there is no events', () => {
+    const date = new Date();
+    date.setDate((new Date).getDate() - 5);
+    component.dayClicked({ date: (date), events: [] });
+    expect(component.activeDayIsOpen).toEqual(false);
+  });
+
+  it('should set activeDayIsOpen to false if it was opened', () => {
+    const date = new Date();
+    component.dayClicked({ date: (date), events: [] });
+    expect(component.activeDayIsOpen).toEqual(false);
+  });
+
+  it('should do nothing if chosen day is beyond view range', () => {
+    const date = new Date('2018-03-10T20:00:00');
+    component.dayClicked({ date: (date), events: [] });
+    expect(component.activeDayIsOpen).toEqual(false);
+  });
+
+  it('should do nothing if chosen day is beyond view range', () => {
+    component.beforeMonthViewRender({ body: [monthDay] });
+    expect(monthDay.badgeTotal).toEqual(0);
+  });
 });
 
 class CalendarServiceStub {
+  generateCalendarEvents(calendarDTO, view, viewDate) {
+    const nonrecurringCalendarEvent = {
+      id: 1,
+      color: { primary: '#008000', secondary: '#ccffcc' },
+      meta: { incrementsBadgeTotal: false, repeatable: false, groupId: undefined },
+      start: new Date('2018-04-10T20:00:00'),
+      title: '20:00 - 21:00'
+    };
+
+    return [nonrecurringCalendarEvent];
+  }
   generateRequestParamsForEventsForUser(view, viewDate) {
     return {};
   }
-
-  addExcludedTimeSlotsToCalendarEvents(excludedTimeSlots, calendarEvents) { }
-
-  sortCalendarEvents(calendarEvents) { }
-
-  generateRecurringEvent(specifiedTime: SpecifiedTimeDTO): RecurringEvent {
-    const startTime = new Date(specifiedTime.startTime);
-    const endTime = new Date(specifiedTime.endTime);
-    return {
-      id: specifiedTime.id,
-      title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
-        + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
-      color: { primary: '#008000', secondary: '#ccffcc' },
-      startTime: startTime,
-      endTime: endTime,
-      rrule: {
-        freq: RRule.WEEKLY,
-        byweekday: [RRule.SU]
-      },
-      meta: { groupId: specifiedTime.groupId }
-    };
-  }
-
-  createRRule(view: string, viewDate: Date, event: RecurringEvent) {
-    return new RRule(
-      Object.assign({}, event.rrule, {
-        dtstart: new Date('2018-03-10T20:00:00'),
-        until: new Date('2018-03-24T20:00:00')
-      })
-    );
-  }
-
-  generateNonRepeatableEvent(specifiedTime: SpecifiedTimeDTO): CalendarEvent {
-    const startTime = new Date(specifiedTime.startTime);
-    return {
-      id: specifiedTime.id,
-      title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
-        + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
-      start: startTime,
-      color: { primary: '#008000', secondary: '#ccffcc' },
-      // actions: this.actions,
-      meta: { incrementsBadgeTotal: false, repeatable: false, groupId: specifiedTime.groupId }
-    };
-  }
-
-  addCalendarEventToArray(array, event) {
-    if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
-      array.push(event);
-    }
-  }
 }
-
-class SpecifiedTimeControllerServiceStub { }
 
 class CalendarControllerServiceStub {
   nonrecurringEvent = { id: 1, startTime: '2018-04-10T20:00:00', user: { id: 1, name: 'Ananas' } };
@@ -185,7 +203,3 @@ class PopupServiceStub {
   displayMessage(string: string, router: Router) { }
 }
 
-class RouterStub {
-  events = Observable.of(new NavigationEnd(1, 'asd', 'asd'));
-  navigate(commands: any[]) { }
-}

@@ -21,6 +21,7 @@ import { CustomValidators } from 'ng4-validators';
 import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
 import { ExcludedTimeSlotControllerService } from '../../api/services/excluded-time-slot-controller.service';
 import { RecurringEvent } from '../../api/models/recurring-event';
+import { CalendarDTO } from '../../api/models/calendar-dto';
 
 @Injectable()
 export class CalendarService {
@@ -99,6 +100,41 @@ export class CalendarService {
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
     private excludedTimeSotControllerService: ExcludedTimeSlotControllerService,
     private popupService: PopupService) { }
+
+  generateCalendarEvents(calendarDTO: CalendarDTO, view: string, viewDate: Date): CalendarEvent[] {
+    const calendarEvents = this.generateAvailableTimeSlots(calendarDTO, view, viewDate);
+    this.addExcludedTimeSlotsToCalendarEvents(calendarDTO.excludedTimeSlots, calendarEvents);
+    this.sortCalendarEvents(calendarEvents);
+    return calendarEvents;
+  }
+
+  generateAvailableTimeSlots(calendarDTO: CalendarDTO, view: string, viewDate: Date): CalendarEvent[] {
+    let calendarEvents = [];
+    const recurringEvents = [];
+    const nonrecurringCalendarEvents = [];
+    for (const timeSlot of calendarDTO.specifiedTimeDTOs) {
+      timeSlot.repeatInterval ? recurringEvents.push(this.generateRecurringEvent(timeSlot))
+        : this.addCalendarEventToArray(nonrecurringCalendarEvents,
+          this.generateNonRepeatableEvent(timeSlot));
+    }
+    calendarEvents = calendarEvents.concat(nonrecurringCalendarEvents);
+    this.addRecurringEventsToCalendarEvents(recurringEvents, calendarEvents, view, viewDate);
+    return calendarEvents;
+  }
+
+  addRecurringEventsToCalendarEvents(recurringEvents: RecurringEvent[], calendarEvents: CalendarEvent[],
+    view: string, viewDate: Date): void {
+    recurringEvents.forEach(event => {
+      const rule: RRule = this.createRRule(view, viewDate, event);
+      rule.all().forEach(date => {
+        const calendarEvent = Object.assign({}, event, { start: new Date(date) },
+          { actions: this.actions },
+          { meta: { incrementsBadgeTotal: false, repeatable: true, groupId: event.meta.groupId } });
+        this.addCalendarEventToArray(calendarEvents, calendarEvent);
+      });
+    });
+  }
+
 
   addCalendarEventToArray(array: CalendarEvent[], event: CalendarEvent) {
     if (array.filter(listEvent => JSON.stringify(listEvent.start) === JSON.stringify(event.start)).length === 0) {
