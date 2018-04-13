@@ -102,6 +102,12 @@ describe('CalendarFormComponent', () => {
       fixture.detectChanges();
       expect(popupService.displayMessage).toHaveBeenCalled();
     }));
+
+    it('should create new specified time', () => {
+      expect(component.specifiedTime).toBeTruthy();
+      expect(component.specifiedTime.duration).toEqual(1);
+      expect(component.specifiedTime.repeatPeriod).toEqual(1);
+    });
 });
 
 export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
