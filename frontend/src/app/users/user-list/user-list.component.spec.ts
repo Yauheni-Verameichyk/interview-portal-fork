@@ -18,6 +18,12 @@ const routerStub = {
   navigate: jasmine.createSpy('navigate'),
   navigateByUrl(url: string) { return url; }
 };
+const activatedRouterStub = {
+  params: Observable.of(),
+  snapshot() {
+    return { params: {} };
+  }
+};
 const userControllerServiceStub = {
   deleteUser(userId: number): Observable<HttpResponse> {
     return Observable.of(null);
@@ -105,7 +111,7 @@ describe('UserListComponent', () => {
     expect(component.users).toEqual(users);
   }));
   it('redirect to create user form ', fakeAsync(() => {
-    routerStub.navigate([{ outlets: { popup: ['users', 'new'] } }]);
+    component.addNewUser();
     expect(routerStub.navigate).toHaveBeenCalledWith([{ outlets: { popup: ['users', 'new'] } }]);
   }));
 });
