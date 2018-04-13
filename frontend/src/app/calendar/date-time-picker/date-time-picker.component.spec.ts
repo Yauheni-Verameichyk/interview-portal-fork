@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DateTimePickerComponent } from './date-time-picker.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('DateTimePickerComponent', () => {
   let component: DateTimePickerComponent;
@@ -8,9 +10,14 @@ describe('DateTimePickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateTimePickerComponent ]
+      imports: [
+        NgbDatepickerModule.forRoot(),
+        NgbTimepickerModule.forRoot(),
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [DateTimePickerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +26,7 @@ describe('DateTimePickerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 });

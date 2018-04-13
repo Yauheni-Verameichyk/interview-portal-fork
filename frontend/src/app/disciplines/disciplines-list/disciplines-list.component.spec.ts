@@ -12,6 +12,7 @@ import { DisciplineDTO } from '../../api/models';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
+import { DisciplineControllerService } from '../../api/services/discipline-controller.service';
 
 describe('DisciplinesListComponent', () => {
   let component: DisciplinesListComponent;
@@ -43,17 +44,18 @@ describe('DisciplinesListComponent', () => {
       ]
     })
       .compileComponents();
-    fixture = TestBed.createComponent(DisciplinesListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
   }));
 
   it('should be created', () => {
+    fixture = TestBed.createComponent(DisciplinesListComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   it('should find disciplines for user', () => {
+    fixture = TestBed.createComponent(DisciplinesListComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
     expect(component.disciplinesList).toEqual([java]);
   });
@@ -61,11 +63,10 @@ describe('DisciplinesListComponent', () => {
   it('should find all disciplines',
     inject([DisciplineService, AuthenticationService],
       (disciplineService: DisciplineService, authenticationService: AuthenticationService) => {
-        spyOn(authenticationService, 'isPermissionPresent').and
-        .returnValue(false);
-        spyOn(disciplineService, 'chooseRequest').and
-          .returnValue(Observable.of([java, javaScript]));
-        expect(component.disciplinesList).toEqual([]);
+        spyOn(authenticationService, 'isPermissionPresent').and.returnValue(false);
+        spyOn(disciplineService, 'chooseRequest').and.returnValue(Observable.of([java, javaScript]));
+        fixture = TestBed.createComponent(DisciplinesListComponent);
+        component = fixture.componentInstance;
         fixture.detectChanges();
         expect(component.disciplinesList).toEqual([java, javaScript]);
       })
@@ -77,6 +78,8 @@ describe('DisciplinesListComponent', () => {
         spyOn(popupService, 'displayMessage').and.callThrough();
         spyOn(disciplineService, 'chooseRequest')
           .and.callFake((parameterName) => Observable.throw(new Error()));
+        fixture = TestBed.createComponent(DisciplinesListComponent);
+        component = fixture.componentInstance;
         expect(component.disciplinesList).toEqual([]);
         fixture.detectChanges();
         expect(disciplineService.chooseRequest).toHaveBeenCalled();

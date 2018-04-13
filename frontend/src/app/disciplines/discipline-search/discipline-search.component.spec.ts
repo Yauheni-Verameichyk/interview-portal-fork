@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DisciplineSearchComponent } from './discipline-search.component';
+import { Router } from '@angular/router';
+import { DisciplineControllerService } from '../../api/services/discipline-controller.service';
+import { DisciplineService } from '../service/discipline.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 
 describe('DisciplineSearchComponent', () => {
   let component: DisciplineSearchComponent;
@@ -8,7 +12,13 @@ describe('DisciplineSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DisciplineSearchComponent ]
+      declarations: [ DisciplineSearchComponent ],
+      providers: [
+        { provide: DisciplineControllerService, useClass: DisciplineControllerServiceStub },
+        { provide: DisciplineService, useClass: DisciplineServiceStub },
+        { provide: PopupService, useClass: PopupServiceStub },
+        { provide: Router, useClass: RouterStub },
+      ]
     })
     .compileComponents();
   }));
@@ -19,7 +29,22 @@ describe('DisciplineSearchComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 });
+
+
+class DisciplineControllerServiceStub {
+
+}
+class DisciplineServiceStub {
+}
+
+class PopupServiceStub {
+  displayMessage(string: string, router: Router) {  }
+}
+
+class RouterStub {
+  navigate(commands: any[]) { }
+}
