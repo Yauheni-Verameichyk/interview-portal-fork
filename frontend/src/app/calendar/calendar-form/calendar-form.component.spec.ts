@@ -51,7 +51,7 @@ describe('CalendarFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, FormsModule, SharedModule],
+      imports: [ReactiveFormsModule, FormsModule, SharedModule],
       declarations: [CalendarFormComponent, MockComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -60,6 +60,7 @@ describe('CalendarFormComponent', () => {
         { provide: ExcludedTimeSlotControllerService, useClass: ExcludedTimeSlotControllerServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: LightFieldService, useClass: LightFieldServiceStub },
+        { provide: Router, useClass: RouterStub },
       ]
     })
       .compileComponents();
@@ -103,11 +104,71 @@ describe('CalendarFormComponent', () => {
       expect(popupService.displayMessage).toHaveBeenCalled();
     }));
 
-    it('should create new specified time', () => {
-      expect(component.specifiedTime).toBeTruthy();
-      expect(component.specifiedTime.duration).toEqual(1);
-      expect(component.specifiedTime.repeatPeriod).toEqual(1);
-    });
+  it('should set validators for repeatable specified time', inject([CalendarService],
+    (calendarService: CalendarService) => {
+      spyOn(calendarService, 'setValidatorsForRepeatable').and.callThrough();
+      component.specifiedTimeForm.controls['isRepeatable'].setValue(true);
+      fixture.detectChanges();
+      expect(calendarService.setValidatorsForRepeatable).toHaveBeenCalled();
+    }));
+
+  it('should set validators for non repeatable specified time', inject([CalendarService],
+    (calendarService: CalendarService) => {
+      spyOn(calendarService, 'setValidatorsForNonRepeatable').and.callThrough();
+      component.specifiedTimeForm.controls['isRepeatable'].setValue(false);
+      fixture.detectChanges();
+      expect(calendarService.setValidatorsForNonRepeatable).toHaveBeenCalled();
+    }));
+
+  it('should save specified time',
+    inject([PopupService],
+      (popupService: PopupService) => {
+        spyOn(popupService, 'displayMessage').and.callThrough();
+        fixture.detectChanges();
+        component.sendSpecifiedTime();
+        expect(popupService.displayMessage).toHaveBeenCalledWith('Specified time was saved', new RouterStub());
+      })
+  );
+
+  it('should fail to save specified time',
+    inject([SpecifiedTimeControllerService, PopupService],
+      (specifiedTimeControllerService: SpecifiedTimeControllerService, popupService: PopupService) => {
+        spyOn(specifiedTimeControllerService, 'saveUsingPOST_2').and
+          .callFake((parameterName) => Observable.throw(new Error()));
+        spyOn(popupService, 'displayMessage').and.callThrough();
+        fixture.detectChanges();
+        component.sendSpecifiedTime();
+        expect(specifiedTimeControllerService.saveUsingPOST_2).toHaveBeenCalled();
+        expect(popupService.displayMessage).toHaveBeenCalledWith('Error during specified time saving', new RouterStub());
+      })
+  );
+
+  it('should highlight error fields if form is not valid',
+    inject([LightFieldService],
+      (lightFieldService: LightFieldService) => {
+        spyOn(lightFieldService, 'lightField').and.callThrough();
+        component.specifiedTimeForm.controls.duration.setValue(undefined);
+        fixture.detectChanges();
+        component.sendSpecifiedTime();
+        expect(lightFieldService.lightField).toHaveBeenCalled();
+      })
+  );
+
+  it('should set end time as null for non repeatable event', () => {
+    component.specifiedTime.isRepeatable = false;
+    fixture.detectChanges();
+    component.sendSpecifiedTime();
+    expect(component.specifiedTime.endTime).toEqual(null);
+  });
+
+  it('should not set end time as null for repeatable event', () => {
+    const date = new Date();
+    component.specifiedTime.isRepeatable = true;
+    component.specifiedTime.endTime = date;
+    fixture.detectChanges();
+    component.sendSpecifiedTime();
+    expect(component.specifiedTime.endTime).toEqual(date);
+  });
 });
 
 export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
@@ -164,17 +225,33 @@ class CalendarServiceStub {
     };
   }
 
+  convertSpecifiedTimeToDTO(any) {
+    return {
+      endTime: '2018-05-10T20:00:00',
+      startTime: '2018-04-10T20:00:00',
+      id: 1,
+      user: { id: 1, name: 'Ananas' },
+      repeatInterval: 'P7D',
+      duration: 1
+    };
+  }
+
   setValidatorsForNonRepeatable(any) { }
+
+  setValidatorsForRepeatable(any) { }
 
   updateEndTimeValidator(any) { }
 }
 
 class SpecifiedTimeControllerServiceStub {
-  findByIdUsingGET_3(any) {
-    return Observable.of(null);
-  }
+  findByIdUsingGET_3(any) { return Observable.of(null); }
+  saveUsingPOST_2(any) { return Observable.of(null); }
 }
 
 class ExcludedTimeSlotControllerServiceStub { }
 
-class LightFieldServiceStub { }
+class LightFieldServiceStub { lightField(any) { } }
+
+class RouterStub { navigate(any) { } }
+
+
