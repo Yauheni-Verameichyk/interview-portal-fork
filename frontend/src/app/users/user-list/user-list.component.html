@@ -1,47 +1,53 @@
 <div class="card mb-3 user-list" *ngIf="isLoaded;else elseBlock">
   <div class="card-header">
     <div class="row">
-        <div class="col-sm-12 col-md-4">
-            <i class="fa fa-table"></i> Users list
+      <div class="col-sm-12 col-md-4">
+        <i class="fa fa-table"></i> Users list
+        <i class="ion-loop text-info h5 link" (click)="ngOnInit()"></i>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <div id="dataTable_filter" class="dataTables_filter">
+          <label>Search by Role:
+            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
+          </label>
         </div>
-        <div class="col-sm-12 col-md-4">
-          <div id="dataTable_filter" class="dataTables_filter">
-            <label>Search by Role:
-              <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
-            </label>
-          </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <div id="dataTable_filter" class="dataTables_filter">
+          <label>Search by Name or Surname:
+            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
+          </label>
         </div>
-        <div class="col-sm-12 col-md-4">
-          <div id="dataTable_filter" class="dataTables_filter">
-            <label>Search by Name or Surname:
-              <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
-            </label>
-          </div>
-        </div>
-      </div> 
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="80%" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Role</th>
-            <th width="10%" *requiredAuthority="'USER_EDIT'"> <button class="btn btn-success mr-2" (click)="addNewUser()">Create new User</button></th>
-          </tr>
-        </thead>
-        <tbody app-user *ngFor="let user of users" [userObj]="user" class='tbody-hover'>
-        </tbody>
-         <tfoot>
-          <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Role</th>
-            <th width="10%" *requiredAuthority="'USER_EDIT'"> <button class="btn btn-success mr-2" (click)="addNewUser()">Create new User</button></th>
-          </tr>
-        </tfoot>
-      </table>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table" id="dataTable" width="80%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Role</th>
+              <th width="10%" *requiredAuthority="'USER_EDIT'">
+                <button class="btn btn-success mr-2" (click)="addNewUser()">Create new User</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody app-user *ngFor="let user of users" [userObj]="user" class='tbody-hover'>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Role</th>
+              <th width="10%" *requiredAuthority="'USER_EDIT'">
+                <button class="btn btn-success mr-2" (click)="addNewUser()">Create new User</button>
+              </th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   </div>
 </div>

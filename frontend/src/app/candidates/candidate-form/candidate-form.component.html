@@ -29,7 +29,7 @@
             </div><br>
             <div class="text-center add-candidates">
                 <a *ngIf="candidateForm.enabled" class="btn btn-success" (click)="candidateFormService.saveCandidate()">Save</a>
-                <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Close</a>
+                <!-- <a class="btn btn-secondary" [routerLink]="['',{ outlets: { popup: null }}]">Close</a> -->
                 <br>
                 <br>
                 <span *ngIf="displayErrorMessage" class="error-message">Fill in all the fields</span>

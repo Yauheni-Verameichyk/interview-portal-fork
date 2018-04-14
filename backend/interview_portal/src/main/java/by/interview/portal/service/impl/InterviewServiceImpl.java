@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static by.interview.portal.constant.PageConstant.QUANTITY_ELEMENTS_IN_PAGE;
+
 @Service
 @Transactional
 public class InterviewServiceImpl implements InterviewService {
-
-    private static final Integer QUANTITY_ELEMENTS_IN_PAGE = 10;
 
     @Autowired
     private InterviewRepository interviewRepository;

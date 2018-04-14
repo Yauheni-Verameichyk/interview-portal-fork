@@ -8,7 +8,8 @@ body {
 table {
   color: #000000;
   /* background: linear-gradient(to bottom, #ffffff 0%, #b1eeb4 20%, #18d26e 100%); */
-  background: linear-gradient(rgba(0, 142, 99, 0.1), rgba(0, 0, 0, 0.1));
+  /* background: linear-gradient(rgba(0, 142, 99, 0.1), rgba(0, 0, 0, 0.1)); */
+  background: #ffffff!important;  
 }
   a {
     color: #18d26e;
@@ -71,7 +72,7 @@ table {
 
 input.ng-touched.ng-invalid{
     border-color: rgb(255, 113, 113);
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
 }
 
 .bg-gray {
@@ -185,4 +186,24 @@ input.ng-touched.ng-invalid{
  .table-list {
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+thead, tfoot {
+  background: rgba(49, 46, 46, 0.9)!important;
+  color:#18d26e;
+  letter-spacing: 2px;
+  font-weight: 600;
+  font-size: 18px; 
+}
+
+th {
+  padding: 2px!important;
+  padding-left: 10px!important;
+}
+tbody:hover {
+  background-color: #e3e6e9;
+}
+
+.link {
+  cursor: pointer;
 }
