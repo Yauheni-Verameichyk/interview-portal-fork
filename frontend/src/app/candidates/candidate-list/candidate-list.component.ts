@@ -10,7 +10,6 @@ import { CandidateService } from '../service/candidate.service';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent implements OnInit {
-  
 
   constructor(public candidateService: CandidateService) { }
 

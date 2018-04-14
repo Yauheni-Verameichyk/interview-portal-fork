@@ -15,10 +15,14 @@ export class CandidateComponent{
 
   @Input() candidate: CandidateDTO; 
 
-  constructor(private candidateService: CandidateService) { }
+  constructor(private candidateService: CandidateService, private router: Router) { }
 
   removeCandidate(id: number) {
     this.candidateService.removeCandidate(id);
+  }
+
+  showCandidateInfo() {
+    this.router.navigate([{ outlets: { popup: ['candidate-view', this.candidate.id] } }]);
   }
 
 }

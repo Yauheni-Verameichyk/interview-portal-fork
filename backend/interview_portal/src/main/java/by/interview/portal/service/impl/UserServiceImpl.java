@@ -15,11 +15,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static by.interview.portal.constant.PageConstant.QUANTITY_ELEMENTS_IN_PAGE;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private static final Integer QUANTITY_ELEMENTS_IN_PAGE = 10;
 
     @Autowired
     private UserRepository userRepository;

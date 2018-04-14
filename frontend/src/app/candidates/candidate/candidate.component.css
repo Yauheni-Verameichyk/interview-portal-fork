@@ -5,3 +5,7 @@
 u {
     cursor: pointer;
 }
+
+.td-hover:hover {
+    cursor: pointer;
+}

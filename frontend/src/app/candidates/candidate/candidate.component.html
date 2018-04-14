@@ -1,5 +1,5 @@
-<td>{{candidate.name}}</td>
-<td>{{candidate.surname}}</td>
+<td (click)="showCandidateInfo()" class="td-hover">{{candidate.name}}</td>
+<td (click)="showCandidateInfo()" class="td-hover">{{candidate.surname}}</td>
 <td>
     <span *ngFor="let discipline of candidate.disciplineList" [routerLink]="['', {outlets: { popup: ['discipline', 'view', discipline.id] } }]">
         <u>{{discipline.name}}</u>&nbsp;
