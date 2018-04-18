@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
-import { CandidateService } from '../../service/candidate.service';
 import { CandidateFormService } from '../service/candidate-form.service';
 
 @Component({

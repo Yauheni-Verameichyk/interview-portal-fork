@@ -9,7 +9,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormValidatorService } from '../../shared/validator/validator-form/form-validator.service';
 import { LightFieldService } from '../../shared/validator/service/light-field.service';
 import { CandidateControllerService } from '../../api/services/candidate-controller.service';
-import { CandidateService } from '../service/candidate.service';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { Candidate } from '../../api/models/candidate';
 const formValidatorServiceStub = {
@@ -48,7 +47,6 @@ describe('CandidateFormComponent', () => {
         { provide: FormValidatorService, useValue: formValidatorServiceStub },
         { provide: LightFieldService, useValue: lightFieldServiceStub },
         { provide: CandidateControllerService, useValue: candidateControllerServiceStub },
-        { provide: CandidateService, useValue: candidateServiceStub },
         { provide: PopupService, useValue: popupServiceStub },
       ],
     }
@@ -60,7 +58,6 @@ describe('CandidateFormComponent', () => {
         { provide: FormValidatorService, useValue: formValidatorServiceStub },
         { provide: LightFieldService, useValue: lightFieldServiceStub },
         { provide: CandidateControllerService, useValue: candidateControllerServiceStub },
-        { provide: CandidateService, useValue: candidateServiceStub },
         { provide: PopupService, useValue: popupServiceStub },
       ]
     }

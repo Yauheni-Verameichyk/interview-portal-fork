@@ -1,9 +1,9 @@
-<div class="card mb-3 interview-list" *ngIf="interviewService.isLoaded;else elseBlock">
+<div class="card mb-3 interview-list" *ngIf="isLoaded;else elseBlock">
   <div class="card-header">
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <i class="fa fa-table"></i> Interview list
-        <i class="ion-loop text-info h5 link" (click)="ngOnInit()"></i>
+        <i class="ion-loop text-info h5 link" (click)="updateInterviewList()"></i>
       </div>
       <div class="col-sm-12 col-md-6">
         <div id="dataTable_filter" class="dataTables_filter">
@@ -17,7 +17,7 @@
       <div class="table-responsive">
         <table class="table" id="dataTable" width="80%" cellspacing="0">
           <thead app-table-head></thead>
-          <tbody app-interview *ngFor="let interview of interviewService.interviewList" [interview]="interview">
+          <tbody app-interview *ngFor="let interview of interviewList" [interview]="interview">
           </tbody>
           <tfoot app-table-head></tfoot>
         </table>
