@@ -18,11 +18,12 @@ import by.interview.portal.repository.CandidateWorkRepository;
 import by.interview.portal.repository.DisciplineRepository;
 import by.interview.portal.service.CandidateService;
 
+import static by.interview.portal.constant.PageConstant.QUANTITY_ELEMENTS_IN_PAGE;
+
 @Service
 @Transactional
 public class CandidateServiceImpl implements CandidateService {
 
-    private static final Integer QUANTITY_ELEMENTS_IN_PAGE = 10;
     @Autowired
     private CandidateRepository candidateRepository;
     @Autowired

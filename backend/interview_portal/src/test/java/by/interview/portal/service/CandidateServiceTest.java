@@ -1,5 +1,6 @@
 package by.interview.portal.service;
 
+import static by.interview.portal.constant.PageConstant.QUANTITY_ELEMENTS_IN_PAGE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -66,7 +67,7 @@ public class CandidateServiceTest {
 
     @Test
     public void shouldReturnCandidateList() {
-        when(candidateRepository.findAll(PageRequest.of(0, 10))).thenReturn(page);
+        when(candidateRepository.findAll(PageRequest.of(0, QUANTITY_ELEMENTS_IN_PAGE))).thenReturn(page);
         List<Candidate> newCandidateList = candidateService.findAll(0);
         assertNotNull(newCandidateList);
         assertThat(newCandidateList, equalTo(candidateList));
@@ -75,7 +76,7 @@ public class CandidateServiceTest {
 
     @Test(expected = DataIntegrityViolationException.class)
     public void shouldReturnExceptionFindAllCandidate() {
-        when(candidateRepository.findAll(PageRequest.of(0, 10)))
+        when(candidateRepository.findAll(PageRequest.of(0, QUANTITY_ELEMENTS_IN_PAGE)))
                 .thenThrow(new DataIntegrityViolationException("error"));
         candidateService.findAll(0);
     }

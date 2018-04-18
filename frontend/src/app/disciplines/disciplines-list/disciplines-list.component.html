@@ -1,6 +1,7 @@
 
 <div class="discipline-list" *ngIf="isLoaded;else elseBlock">
-  <app-discipline-search (emitDisciplines)="receiveDisciplinesFromSearch($event)"></app-discipline-search>
+  <app-discipline-search (emitDisciplines)="receiveDisciplinesFromSearch($event)"></app-discipline-search>&nbsp;&nbsp;
+  <i class="ion-loop text-info h2 link" (click)="ngOnInit()"></i>
   <div class="row" *requiredAuthority="'DISCIPLINES_FILTER_READ'">
     <div class="col-sm-7 align-middle">
       <div class="btn-group align-middle myAllFilter pull-right">
@@ -13,7 +14,7 @@
   </div><br>
 
   <table class="user-table table table-hover disciplineTableHead">
-    <thead class="thead-light">
+    <thead>
       <tr>
         <th scope="col" class="unwrap-indicator big-icon"> </th>
         <th scope="col" class="disciplineNameHead">Name</th>

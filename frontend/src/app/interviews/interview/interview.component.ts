@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { InterviewDTO } from '../../api/models/interview-dto';
+import { InterviewService } from '../service/interview.service';
 
 @Component({
-  selector: 'app-interview',
+  selector: '[app-interview]',
   templateUrl: './interview.component.html',
   styleUrls: ['./interview.component.css']
 })
-export class InterviewComponent implements OnInit {
+export class InterviewComponent {
 
-  constructor() { }
+  @Input() interview: InterviewDTO;
 
-  ngOnInit() {
+  constructor(private interviewService: InterviewService) { }
+
+  removeInterview(id: number) {
+    this.interviewService.removeInterview(id);
   }
 
 }

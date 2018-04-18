@@ -39,6 +39,7 @@ export class CandidateService {
     }
 
     updateCandidateList() {
+        this.isLoaded = false;
         this.fetchCandidateList(0);
         this.showButtonLoad = true;
     }

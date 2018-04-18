@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { OnDestroy, OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 import { DisciplineDTO } from '../../api/models';
@@ -15,7 +15,7 @@ import { Router, NavigationEnd } from '@angular/router';
   templateUrl: './disciplines-list.component.html',
   styleUrls: ['./disciplines-list.component.css']
 })
-export class DisciplinesListComponent implements OnDestroy {
+export class DisciplinesListComponent implements OnInit, OnDestroy {
 
   public isLoaded = false;
   disciplinesList: Array<DisciplineDTO> = [];
@@ -25,7 +25,10 @@ export class DisciplinesListComponent implements OnDestroy {
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
     private router: Router
-  ) {
+  ) { }
+
+  ngOnInit(): void {
+    this.isLoaded = false;
     this.activeFilter = this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ') ? 'MY' : 'ALL';
     this.findDisciplines(this.activeFilter, this.disciplinesList.length);
     this.router.events

@@ -1,0 +1,24 @@
+.interview-list{
+    margin-top: 80px;
+}
+
+.load-button {
+    text-align: center;
+}
+
+.disable-table {
+    pointer-events: none;
+    opacity: 0.4;
+}
+div.dataTables_filter {
+    text-align: right;
+  }
+div.dataTables_filter label {
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: left;
+  } div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: auto;
+  }

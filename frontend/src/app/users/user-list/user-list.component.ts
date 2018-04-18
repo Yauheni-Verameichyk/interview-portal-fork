@@ -11,11 +11,12 @@ import { Router } from '@angular/router';
 })
 export class UserListComponent implements OnInit {
 
-  public isLoaded: boolean = false;
+  public isLoaded: boolean;
   users: Array<UserInfo> = new Array<UserInfo>();
   constructor(private userController: UserControllerService, private router: Router) { }
 
   ngOnInit() {
+    this.isLoaded = false;
     this.userController
       .getUsers(0).subscribe(userList => {
         this.users = userList;

@@ -22,6 +22,7 @@ import { CandidateControllerService } from './api/services/candidate-controller.
 import { AuthenticationInterceptor } from './interceptor/authentication-interceptor';
 import { WelcomePageComponent } from './component/welcome-page/welcome-page.component';
 import { CustomCalendarModule } from './calendar/calendar.module';
+import { InterviewsModule } from './interviews/interviews.module';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { CustomCalendarModule } from './calendar/calendar.module';
     DisciplinesModule,
     CandidatesModule,
     CustomCalendarModule,
+    InterviewsModule,
     AppRoutingModule,
     SharedModule
   ],

@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InterviewListComponent } from './interview-list/interview-list.component'
 import { InterviewsRoutingModule, interviewsRouterComponent } from './interviews.routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InterviewService } from './service/interview.service'
+import { InterviewControllerService } from '../api/services/interview-controller.service'; 
+import { TableHeadComponent } from './interview-list/table-head/table-head.component';
 
 @NgModule({
   imports: [
@@ -12,7 +14,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   declarations: [
-    interviewsRouterComponent
+    interviewsRouterComponent,
+    TableHeadComponent
+  ],
+  providers: [
+    InterviewService,
+    InterviewControllerService
   ]
 })
 export class InterviewsModule { }

@@ -2,7 +2,7 @@
   <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="readAllEvents(); activeDayIsOpen = false"
     (viewChange)="readAllEvents()">
   </mwl-demo-utils-calendar-header>
-
+  
   <div [ngSwitch]="view">
     <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="calendarEvents" (beforeViewRender)="beforeMonthViewRender($event)"
       (dayClicked)="dayClicked($event.day)" [activeDayIsOpen]="activeDayIsOpen">

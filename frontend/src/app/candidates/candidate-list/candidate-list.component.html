@@ -4,6 +4,7 @@
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <i class="fa fa-table"></i> Candidate list
+          <i class="ion-loop text-info h5 link" (click)="ngOnInit()"></i>
         </div>
         <div class="col-sm-12 col-md-6">
           <div id="dataTable_filter" class="dataTables_filter">
@@ -15,14 +16,14 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="80%" cellspacing="0">
+          <table class="table" id="dataTable" width="80%" cellspacing="0">
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Disciplines</th>
-                <th width="10%" *requiredAuthority="'CANDIDATE_CREATE'">
-                  <button class="btn btn-success mr-2" [routerLink]="['', {outlets: { popup: ['candidate-create'] } }]">Create new Candidate</button>
+                <th class="create-button" *requiredAuthority="'CANDIDATE_CREATE'">
+                  <button class="btn btn-success mr-2" [routerLink]="['', {outlets: { popup: ['candidate-create'] } }]">create candidate</button>
                 </th>
               </tr>
             </thead>
@@ -33,8 +34,8 @@
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Disciplines</th>
-                <th width="10%" *requiredAuthority="'CANDIDATE_CREATE'">
-                  <button class="btn btn-success mr-2" [routerLink]="['', {outlets: { popup: ['candidate-create'] } }]">Create new Candidate</button>
+                <th class="create-button" *requiredAuthority="'CANDIDATE_CREATE'">
+                  <button class="btn btn-success mr-2" [routerLink]="['', {outlets: { popup: ['candidate-create'] } }]">create candidate</button>
                 </th>
               </tr>
             </tfoot>

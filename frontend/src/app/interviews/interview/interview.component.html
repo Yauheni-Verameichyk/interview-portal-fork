@@ -1,3 +1,31 @@
-<p>
-  interview works!
-</p>
+<td>
+    <i *ngIf="interview.status=='wait'" class="fa fa-hourglass-half text-info h3" aria-hidden="true"></i>
+    <i *ngIf="interview.status=='success'" class="fa fa-check-circle text-success h3" aria-hidden="true"></i>
+    <i *ngIf="interview.status=='fail'" class="fa fa-ban text-danger h3" aria-hidden="true"></i>
+</td>
+<td>
+    <u [routerLink]="['', {outlets: { popup: ['candidate-view', interview.candidate.id] } }]">{{interview.candidate.name}}&nbsp;{{interview.candidate.surname}}</u>
+</td>
+<td>{{interview.startTime | date:"dd/MM/yyyy hh:mm"}} - {{interview.endTime | date:"hh:mm a"}}</td>
+<td>
+    <span *ngFor="let interviewer of interview.interviewerSet" [routerLink]="['', {outlets: { popup: ['users',interviewer.id, 'info' ]} }]">
+        <u>{{interviewer.name}} {{interviewer.surname}}</u>&nbsp;
+    </span>
+</td>
+<td>
+    <span *ngFor="let discipline of interview.disciplineSet" [routerLink]="['', {outlets: { popup: ['discipline', 'view', discipline.id] } }]">
+        <u>{{discipline.name}}</u>&nbsp;
+    </span>
+</td>
+<td>{{interview.place}}</td>
+<td class="td-btn">
+    <div class="btn btn-light pull-left">
+        <img class="fas fa-eye align-middle">
+    </div>
+    <div class="btn btn-light pull-left">
+        <img class="fas fa-pencil-alt align-middle">
+    </div>
+    <div class="btn btn-light pull-left" (click)="removeInterview(interview.id)">
+        <img class="far fa-trash-alt align-middle">
+    </div>
+</td>

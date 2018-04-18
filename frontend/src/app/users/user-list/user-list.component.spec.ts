@@ -73,7 +73,7 @@ describe('UserListComponent', () => {
       declarations: [UserListComponent, UserFormComponent, ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        { provide: Router, useValue: routerStub },        
+        { provide: Router, useValue: routerStub },
         { provide: UserControllerService, useValue: userControllerServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
       ],

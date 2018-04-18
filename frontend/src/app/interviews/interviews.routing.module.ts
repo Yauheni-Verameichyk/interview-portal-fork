@@ -12,7 +12,7 @@ const routes: Routes = [
     }
 ];
 
-export let interviewsRouterComponent = [InterviewListComponent, InterviewComponent]
+export let interviewsRouterComponent = [InterviewListComponent, InterviewComponent];
 
 @NgModule({
     imports: [
