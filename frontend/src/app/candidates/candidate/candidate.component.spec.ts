@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CandidateComponent } from './candidate.component';
-import { CandidateService } from '../service/candidate.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -32,9 +31,6 @@ describe('CandidateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CandidateComponent],
-      providers: [
-        { provide: CandidateService, useValue: mockCandidateService }
-      ],
       imports: [RouterTestingModule]
     })
       .compileComponents();
@@ -45,7 +41,6 @@ describe('CandidateComponent', () => {
     component = fixture.componentInstance;
     component.candidate = candidate;
     element = fixture.nativeElement;
-    mockCandidateService = fixture.debugElement.injector.get(CandidateService);
     spy = spyOn(mockCandidateService, 'removeCandidate').and.returnValue(true);
     fixture.detectChanges();
   });

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Candidate } from '../../api/models/candidate';
 import { FormGroup } from '@angular/forms';
-import { CandidateService } from '../service/candidate.service';
 import { Router } from '@angular/router';
 import { CandidateFormService } from './service/candidate-form.service';
 
