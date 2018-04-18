@@ -17,7 +17,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class DisciplinesListComponent implements OnInit, OnDestroy {
 
-  public isLoaded = false;
+  public isLoaded: boolean;
   disciplinesList: Array<DisciplineDTO> = [];
   activeFilter: string;
   private readonly destroy: Subject<void> = new Subject();
