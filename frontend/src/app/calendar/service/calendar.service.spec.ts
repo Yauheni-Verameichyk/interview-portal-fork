@@ -9,6 +9,9 @@ import { Observable } from 'rxjs/Observable';
 import RRule = require('rrule');
 import { CalendarEventAction, CalendarEvent } from 'angular-calendar';
 import { Router } from '@angular/router';
+import { MO } from 'rrule';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CustomValidators } from 'ng4-validators';
 
 describe('CalendarService', () => {
   const actions: CalendarEventAction[] = [
@@ -120,9 +123,100 @@ describe('CalendarService', () => {
     interviews: [],
     specifiedTimeDTOs: [nonrecurringEvent, recurringEvent]
   };
+  const yearlySpecifiedTimeDTO = {
+    endTime: '2018-05-10T20:00:00',
+    startTime: '2018-04-10T20:00:00',
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    repeatInterval: 'P1Y',
+    duration: 1
+  };
+  const monthlySpecifiedTimeDTO = {
+    endTime: '2018-05-10T20:00:00',
+    startTime: '2018-04-10T20:00:00',
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    repeatInterval: 'P1M',
+    duration: 1
+  };
+  const weeklySpecifiedTimeDTO = {
+    endTime: '2018-05-10T20:00:00',
+    startTime: '2018-04-10T20:00:00',
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    repeatInterval: 'P7D',
+    duration: 1
+  };
+  const incorrectSpecifiedTimeDTO = {
+    endTime: '2018-05-10T20:00:00',
+    startTime: '2018-04-10T20:00:00',
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    repeatInterval: '12',
+    duration: 1
+  };
+  const yearlySpecifiedTime = {
+    endTime: new Date('2018-05-10T20:00:00'),
+    startTime: new Date('2018-04-10T20:00:00'),
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    repeatInterval: 'P1Y',
+    duration: 1,
+    isRepeatable: true,
+    repeatPattern: 'yearly',
+    repeatPeriod: 1
+  };
+  const monthlySpecifiedTime = {
+    endTime: new Date('2018-05-10T20:00:00'),
+    startTime: new Date('2018-04-10T20:00:00'),
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    repeatInterval: 'P1M',
+    duration: 1,
+    isRepeatable: true,
+    repeatPattern: 'monthly',
+    repeatPeriod: 1
+  };
+  const weeklySpecifiedTime = {
+    endTime: new Date('2018-05-10T20:00:00'),
+    startTime: new Date('2018-04-10T20:00:00'),
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    repeatInterval: 'P7D',
+    duration: 1,
+    isRepeatable: true,
+    repeatPattern: 'weekly',
+    repeatPeriod: 1
+  };
+  const nonrecurringSpecifiedTimeDTO = {
+    endTime: '2018-04-10T21:00:00',
+    startTime: '2018-04-10T20:00:00',
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    duration: 1
+  };
+  const nonrecurringSpecifiedTime = {
+    endTime: new Date('2018-04-10T21:00:00'),
+    startTime: new Date('2018-04-10T20:00:00'),
+    id: 1,
+    user: { id: 1, name: 'Ananas' },
+    duration: 1,
+    isRepeatable: false,
+    repeatInterval: undefined
+  };
+  const formGroup = new FormGroup({
+    'duration': new FormControl([weeklySpecifiedTime.duration], [Validators.required,
+    CustomValidators.digits, CustomValidators.range([1, 8])]),
+    'startTime': new FormControl([weeklySpecifiedTime.duration], [Validators.required, CustomValidators.date]),
+    'isRepeatable': new FormControl([weeklySpecifiedTime.isRepeatable]),
+    'repeatPattern': new FormControl([weeklySpecifiedTime.repeatPattern]),
+    'repeatPeriod': new FormControl([weeklySpecifiedTime.repeatPeriod]),
+    'endTime': new FormControl([weeklySpecifiedTime.endTime])
+  });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, FormsModule],
       providers: [CalendarService,
         { provide: SpecifiedTimeControllerService, useClass: SpecifiedTimeControllerServiceStub },
         { provide: ExcludedTimeSlotControllerService, useClass: ExcludedTimeSlotControllerServiceStub },
@@ -220,14 +314,196 @@ describe('CalendarService', () => {
   }));
 
   it('should return end of period if end of recurring event is later', inject([CalendarService], (service: CalendarService) => {
-    expect(service.generateEndTime('month', new Date('2018-04-10T17:00:00'), new Date('2018-06-01T00:00:00')))
-      .toEqual(new Date('2018-04-30T23:59:59'));
+    const expectedDate = new Date('2018-04-30T23:59:59');
+    expectedDate.setMilliseconds(999);
+    expect(service.generateEndTime('month', new Date('2018-04-10T17:00:00'), new Date('2018-06-10T23:00:00')))
+      .toEqual(expectedDate);
   }));
 
   it('should return end of recurring event if end of period is later', inject([CalendarService], (service: CalendarService) => {
-    expect(service.generateEndTime('month', new Date('2018-04-10T17:00:00'), new Date('2018-04-13T00:00:00')))
-      .toEqual(new Date('2018-04-13T00:00:00'));
+    const expectedDate = new Date('2018-04-13T00:00:00');
+    expect(service.generateEndTime('month', new Date('2018-04-10T17:00:00'), expectedDate))
+      .toEqual(expectedDate);
   }));
+
+  it('should return yearly repeat rule with corresponding repeat interval', inject([CalendarService], (service: CalendarService) => {
+    const yearlyRrule = { freq: RRule.YEARLY, bymonth: 4, bymonthday: 10, interval: 1 };
+    expect(service.generateRepeatRule(yearlySpecifiedTimeDTO)).toEqual(yearlyRrule);
+  }));
+
+  it('should return monthly repeat rule with corresponding repeat interval', inject([CalendarService], (service: CalendarService) => {
+    const monthlyRrule = { freq: RRule.MONTHLY, bymonthday: 10, interval: 1 };
+    expect(service.generateRepeatRule(monthlySpecifiedTimeDTO)).toEqual(monthlyRrule);
+  }));
+
+  it('should return weekly repeat rule with corresponding repeat interval', inject([CalendarService], (service: CalendarService) => {
+    const weeklyRrule = { freq: RRule.WEEKLY, byweekday: [RRule.TU], interval: 1 };
+    expect(service.generateRepeatRule(weeklySpecifiedTimeDTO)).toEqual(weeklyRrule);
+  }));
+
+  it('should throw error if repeat interval is incorrect', inject([CalendarService], (service: CalendarService) => {
+    expect(function () { service.generateRepeatRule(incorrectSpecifiedTimeDTO); }).toThrowError('Unknown period');
+  }));
+
+  it('should generate params for calendar request', inject([CalendarService], (service: CalendarService) => {
+    expect(service.generateRequestParamsForEventsForUser('month', new Date('2018-04-11T23:59:59')))
+      .toEqual({ rangeStart: '2018-04-01T00:00:00', rangeEnd: '2018-04-30T23:59:59' });
+  }));
+
+  it('should sort calendar events list', inject([CalendarService], (service: CalendarService) => {
+    const array = [nonrecurringCalendarEvent, secondRecurringCalendarEvent,
+      firstRecurringCalendarEvent, secondNonrecurringCalendarEvent];
+    service.sortCalendarEvents(array);
+    expect(array).toEqual([firstRecurringCalendarEvent,
+      secondNonrecurringCalendarEvent, secondRecurringCalendarEvent, nonrecurringCalendarEvent]);
+  }));
+
+  it('should convert yearly SpecifiedTimeDTO to SpecifiedTime', inject([CalendarService], (service: CalendarService) => {
+    expect(service.convertDTOToSpecifiedTime(yearlySpecifiedTimeDTO)).toEqual(yearlySpecifiedTime);
+  }));
+
+  it('should convert monthly SpecifiedTimeDTO to SpecifiedTime', inject([CalendarService], (service: CalendarService) => {
+    expect(service.convertDTOToSpecifiedTime(monthlySpecifiedTimeDTO)).toEqual(monthlySpecifiedTime);
+  }));
+
+  it('should convert weekly SpecifiedTimeDTO to SpecifiedTime', inject([CalendarService], (service: CalendarService) => {
+    expect(service.convertDTOToSpecifiedTime(weeklySpecifiedTimeDTO)).toEqual(weeklySpecifiedTime);
+  }));
+
+  it('should convert nonrecurring SpecifiedTimeDTO to SpecifiedTime', inject([CalendarService], (service: CalendarService) => {
+    expect(service.convertDTOToSpecifiedTime(nonrecurringSpecifiedTimeDTO)).toEqual(nonrecurringSpecifiedTime);
+  }));
+
+  it('should convert yearly SpecifiedTime to SpecifiedTimeDTO', inject([CalendarService], (service: CalendarService) => {
+    const expected = Object.assign(yearlySpecifiedTimeDTO);
+    expected.user = null;
+    expected.endTime = '2018-05-10T21:00:00';
+    expect(service.convertSpecifiedTimeToDTO(yearlySpecifiedTime)).toEqual(yearlySpecifiedTimeDTO);
+  }));
+
+  it('should convert monthly SpecifiedTime to SpecifiedTimeDTO', inject([CalendarService], (service: CalendarService) => {
+    const expected = Object.assign(monthlySpecifiedTimeDTO);
+    expected.user = null;
+    expected.endTime = '2018-05-10T21:00:00';
+    expect(service.convertSpecifiedTimeToDTO(monthlySpecifiedTime)).toEqual(monthlySpecifiedTimeDTO);
+  }));
+
+  it('should convert weekly SpecifiedTime to SpecifiedTimeDTO', inject([CalendarService], (service: CalendarService) => {
+    const expected = Object.assign(weeklySpecifiedTimeDTO);
+    expected.user = null;
+    expected.endTime = '2018-05-10T21:00:00';
+    expect(service.convertSpecifiedTimeToDTO(weeklySpecifiedTime)).toEqual(weeklySpecifiedTimeDTO);
+  }));
+
+  it('should convert nonrecurring SpecifiedTime to SpecifiedTimeDTO', inject([CalendarService], (service: CalendarService) => {
+    const expected = Object.assign(nonrecurringSpecifiedTimeDTO);
+    expected.user = null;
+    expected['repeatInterval'] = null;
+    expect(service.convertSpecifiedTimeToDTO(nonrecurringSpecifiedTime)).toEqual(nonrecurringSpecifiedTimeDTO);
+  }));
+
+  it('should convert nonrecurring SpecifiedTime without endTime to SpecifiedTimeDTO',
+    inject([CalendarService], (service: CalendarService) => {
+      const expected = Object.assign(nonrecurringSpecifiedTimeDTO);
+      expected.user = null;
+      expected['repeatInterval'] = null;
+      nonrecurringSpecifiedTimeDTO.endTime = null;
+      const actual = Object.assign(nonrecurringSpecifiedTime);
+      actual.endTime = null;
+      expect(service.convertSpecifiedTimeToDTO(actual)).toEqual(nonrecurringSpecifiedTimeDTO);
+    }));
+
+  it('should throw error while trying to generate repeat interval for nonrecurring event',
+    inject([CalendarService], (service: CalendarService) => {
+      expect(function () { service.generateRepeatInterval(nonrecurringSpecifiedTime); }).toThrowError('Unknown repeat interval');
+    }));
+
+  it('should get current time without minutes and seconds',
+    inject([CalendarService], (service: CalendarService) => {
+      const expected = new Date();
+      expected.setMinutes(0);
+      expected.setSeconds(0);
+      expect(service.getCurrentDate().getDate()).toEqual(expected.getDate());
+    }));
+
+  it('should create FormGroup for specified time',
+    inject([CalendarService], (service: CalendarService) => {
+      expect(service.initFormGroup(weeklySpecifiedTime).controls.length).toEqual(formGroup.controls.length);
+    }));
+
+  it('should set validators to FormGroup with repeatable SpecifiedTime',
+    inject([CalendarService], (service: CalendarService) => {
+      const actual = Object.assign(formGroup);
+      service.setValidatorsForRepeatable(actual);
+      expect(actual.get('repeatPattern').validator.length).toEqual(1);
+    }));
+
+  it('should set validators to FormGroup with non repeatable SpecifiedTime',
+    inject([CalendarService], (service: CalendarService) => {
+      const actual = Object.assign(formGroup);
+      service.setValidatorsForRepeatable(actual);
+      expect(actual.get('repeatPattern').validator.length).toEqual(1);
+      service.setValidatorsForNonRepeatable(actual);
+      expect(actual.get('repeatPattern').validator).toEqual(null);
+    }));
+
+  it('should not update validator for endTime if value does not changed',
+    inject([CalendarService], (service: CalendarService) => {
+      const actual = Object.assign(formGroup);
+      service.updateEndTimeValidator(actual);
+      expect(actual.get('endTime').validator).toEqual(null);
+    }));
+
+  it('should not update validator for endTime if value is null',
+    inject([CalendarService], (service: CalendarService) => {
+      const actual = Object.assign(formGroup);
+      actual.get('endTime').value = null;
+      service.updateEndTimeValidator(actual);
+      expect(actual.get('endTime').validator).toEqual(null);
+    }));
+
+  it('should update validator for endTime',
+    inject([CalendarService], (service: CalendarService) => {
+      const actual = Object.assign(formGroup);
+      expect(actual.get('endTime').validator).toEqual(null);
+      actual.get('endTime').value = new Date('2020-05-10T20:00:00');
+      service.updateEndTimeValidator(actual);
+      expect(actual.get('endTime').validator.length).toEqual(1);
+    }));
+
+  it('should set error if end time is earlier than start time',
+    inject([CalendarService], (service: CalendarService) => {
+      const actual = Object.assign(formGroup);
+      actual.get('startTime').value = new Date('2016-05-10T20:00:00');
+      actual.get('endTime').value = new Date('2015-05-10T20:00:00');
+      service.updateEndTimeValidator(actual);
+      expect(actual.get('endTime').errors).toEqual({ minDate: 'minDate' });
+    }));
+
+  it('should not add excluded time slot to list if there is no events with the same start time',
+    inject([CalendarService], (service: CalendarService) => {
+      const calendarEvents = [];
+      service.addExcludedTimeSlotsToCalendarEvents([excludedTimeSlot], calendarEvents);
+      expect(calendarEvents).toEqual([]);
+    }));
+
+  it('should display deleted message',
+    inject([CalendarService, Router, PopupService], (service: CalendarService, router: Router, popupService: PopupService) => {
+      spyOn(router, 'navigate').and.callThrough();
+      spyOn(popupService, 'displayMessage').and.callThrough();
+      service.displayDeletedMessage(null);
+      expect(router.navigate).toHaveBeenCalledWith(['calendar']);
+      expect(popupService.displayMessage).toHaveBeenCalledWith('Time slot was deleted', router);
+    }));
+
+    it('should display error message',
+    inject([CalendarService, Router, PopupService], (service: CalendarService, router: Router, popupService: PopupService) => {
+      spyOn(router, 'navigate').and.callThrough();
+      spyOn(popupService, 'displayMessage').and.callThrough();
+      service.displayErrorMessage(null);
+      expect(router.navigate).toHaveBeenCalledWith(['error']);
+      expect(popupService.displayMessage).toHaveBeenCalledWith('Error during time slot deleting', router);
+    }));
 });
 
 class SpecifiedTimeControllerServiceStub { }
