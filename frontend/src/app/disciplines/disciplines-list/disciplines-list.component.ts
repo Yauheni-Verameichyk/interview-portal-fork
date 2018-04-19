@@ -58,6 +58,7 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', ['$event'])
   windowScrollListener() {
+    console.log(1);
     const position = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     if (position === max && this.activeFilter === 'ALL') {
