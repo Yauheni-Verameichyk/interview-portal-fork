@@ -1,0 +1,17 @@
+<span class="bold">Select interviewers:</span>
+<form [formGroup]="interviewForm">
+  <div formArrayName="interviewerSet" *ngIf="interviewerList.length;else elseBlock">
+    <div *ngFor="let inter of interviewForm.controls.interviewerSet.controls; let i = index" [formGroupName]="i">
+      <select class="form-control" formControlName="id">
+        <option value="" hidden disabled selected>Choose...</option>
+        <option *ngFor="let interviewer of interviewerList" value="{{interviewer.id}}" selected>{{interviewer.name}} {{interviewer.surname}}</option>
+      </select>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <span class="red-color">
+      Interviewers not found! <br>
+      Choose a different time or discipline!
+    </span>
+  </ng-template>
+</form>

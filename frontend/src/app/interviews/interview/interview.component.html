@@ -19,10 +19,10 @@
 </td>
 <td>{{interview.place}}</td>
 <td class="td-btn">
-    <div class="btn btn-light pull-left">
+    <div class="btn btn-light pull-left" [routerLink]="['', {outlets: { popup: ['interview-view', interview.id]}}]">
         <img class="fas fa-eye align-middle">
     </div>
-    <div class="btn btn-light pull-left">
+    <div class="btn btn-light pull-left" [routerLink]="['', {outlets: { popup: ['interview-update', interview.id] }}]">
         <img class="fas fa-pencil-alt align-middle">
     </div>
     <div class="btn btn-light pull-left" (click)="removeInterview(interview.id)">
