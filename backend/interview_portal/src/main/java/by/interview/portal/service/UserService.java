@@ -21,4 +21,6 @@ public interface UserService {
     Set<User> findAllByRole(Role role);
 
     void delete(Long userId);
+
+    Set<User> findUserWithParameters(String searchParameters);
 }

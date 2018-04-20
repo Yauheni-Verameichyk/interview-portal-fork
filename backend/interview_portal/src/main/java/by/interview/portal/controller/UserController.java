@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin
 @RestController
@@ -67,6 +68,12 @@ public class UserController {
     public void delete(@PathVariable Long id) {
         LOG.log(Level.getLevel("WORKLEVEL"), "Delete user by id: " + id);
         userFacade.delete(id);
+    }
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "search")
+    public Set<UserBaseInfoDTO> findUsersWithParameters(@RequestParam(value = "parameters") String search) {
+        System.err.println(search);
+        return userFacade.findWithParameters(search);
     }
 
 }

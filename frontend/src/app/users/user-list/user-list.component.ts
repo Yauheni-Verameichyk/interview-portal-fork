@@ -29,18 +29,21 @@ export class UserListComponent implements OnInit {
   addNewUser() {
     this.router.navigate([{ outlets: { popup: ['users', 'new'] } }]);
   }
+  receiveUsersFromSearch(users: UserInfo[]) {
+    this.users = users;
+  }
   @HostListener('window:scroll', ['$event'])
   windowScrollListener() {
     const position = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     if ((position === max)) {
       this.userController
-      .getUsers(this.users.length).subscribe(userList => {
-        this.users.push(...userList);
-      },
-        error => {
-          console.log(`Error in user list component type error: ${error}`);
-        });
+        .getUsers(this.users.length).subscribe(userList => {
+          this.users.push(...userList);
+        },
+          error => {
+            console.log(`Error in user list component type error: ${error}`);
+          });
     }
   }
 

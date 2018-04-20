@@ -16,7 +16,7 @@ const lightFieldServiceStub = {};
 const candidateControllerServiceStub = {};
 const candidateServiceStub = {};
 const popupServiceStub = {};
-xdescribe('CandidateFormService', () => {
+describe('CandidateFormService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [

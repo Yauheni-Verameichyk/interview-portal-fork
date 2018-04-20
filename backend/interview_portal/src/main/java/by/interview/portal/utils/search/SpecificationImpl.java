@@ -1,17 +1,29 @@
 package by.interview.portal.utils.search;
 
+import by.interview.portal.domain.Role;
+import by.interview.portal.domain.User;
+import by.interview.portal.domain.UserRoleDiscipline;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import by.interview.portal.utils.SearchCriteria;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -30,9 +42,17 @@ public class SpecificationImpl<T> implements Specification<T> {
         } else if (criteria.getOperation().equalsIgnoreCase(":")) {
             return builder.like(builder.upper(root.<String>get(criteria.getKey())),
                     ("%" + criteria.getValue() + "%").toUpperCase());
+        } else if (criteria.getOperation().equalsIgnoreCase("#")){
+            query.distinct(true);
+            Expression<Collection<T>> users = root.join("userRoleDisciplines").get("role");
+            List<Role> roles = Arrays.stream(((String)criteria.getValue()).split(",")).map(Role::valueOf).collect(
+                Collectors.toList());
+            return users.in(roles);
         }
         return null;
     }
+
+
 
     private Predicate getEqualPredicate(Root<T> root, CriteriaQuery<?> query,
             CriteriaBuilder builder) {

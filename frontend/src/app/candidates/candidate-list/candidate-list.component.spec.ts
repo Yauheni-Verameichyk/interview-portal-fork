@@ -9,10 +9,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CandidateDTO } from '../../api/models/candidate-dto';
+import { CandidateControllerService } from '../../api/services/candidate-controller.service';
 
 const routerStub = {
   navigate: jasmine.createSpy('navigate'),
-  navigateByUrl(url: string) { return url; }
+  navigateByUrl(url: string) { return url; },
+  events: Observable.of(null)
 };
 const authServiceStub = {
   getTokenFromLocalStorage(): string {
@@ -31,13 +33,12 @@ const candidatesListStub = [
   {disciplineList: { id: 1, name: 'Java' , parentId: null, subscription: null, hasSubItems: null},
     id: 1, name: 'Ilya', phoneNumber: 123456, surname: 'nikolaev'},
 ];
-const candidateServiceStub = {
-  candidateList: [],
-  fetchCandidateList(offset: number) {
-    candidateServiceStub.candidateList = candidatesListStub;
+const candidateControllerServiceStub = {
+  findAll() {
+    return Observable.of(candidatesListStub);
   }
 };
-xdescribe('CandidateListComponent', () => {
+describe('CandidateListComponent', () => {
   let component: CandidateListComponent;
   let fixture: ComponentFixture<CandidateListComponent>;
 
@@ -48,6 +49,7 @@ xdescribe('CandidateListComponent', () => {
         {provide: Router, useValue: routerStub},
         {provide: ActivatedRoute, useValue: activatedRouterStub },
         {provide: AuthenticationService, useValue: authServiceStub },
+        {provide: CandidateControllerService, useValue: candidateControllerServiceStub },
       ],
       imports: [ReactiveFormsModule, FormsModule, SharedModule ],
       schemas: [NO_ERRORS_SCHEMA]
@@ -65,7 +67,7 @@ xdescribe('CandidateListComponent', () => {
     expect(component).toBeTruthy();
   });
   it('should get candidates list', () => {
-    expect(candidateServiceStub.candidateList.length).toBe(candidatesListStub.length)
+    expect(component.candidateList.length).toBe(candidatesListStub.length);
   });
 
 });
