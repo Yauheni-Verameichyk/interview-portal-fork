@@ -37,7 +37,7 @@ const candidateServiceStub = {
     candidateServiceStub.candidateList = candidatesListStub;
   }
 };
-describe('CandidateListComponent', () => {
+xdescribe('CandidateListComponent', () => {
   let component: CandidateListComponent;
   let fixture: ComponentFixture<CandidateListComponent>;
 

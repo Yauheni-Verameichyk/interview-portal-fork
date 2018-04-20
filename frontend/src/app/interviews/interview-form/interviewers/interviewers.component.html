@@ -1,17 +1,27 @@
 <span class="bold">Select interviewers:</span>
+<span (click)="additionInterviewer()">
+  <i class="fa fa-plus text-info h6 link"></i>
+</span>
 <form [formGroup]="interviewForm">
-  <div formArrayName="interviewerSet" *ngIf="interviewerList.length;else elseBlock">
+  <div formArrayName="interviewerSet" *ngIf="interviewerList.length;else elseBlock" class="table-list">
     <div *ngFor="let inter of interviewForm.controls.interviewerSet.controls; let i = index" [formGroupName]="i">
-      <select class="form-control" formControlName="id">
+      <select class="form-control" formControlName="id" 
+        [class.not-full-width]="(interviewForm.controls.interviewerSet.controls.length > 1)&&interviewForm.enable"
+        [class.full-width]="interviewForm.disabled"
+      >
         <option value="" hidden disabled selected>Choose...</option>
         <option *ngFor="let interviewer of interviewerList" value="{{interviewer.id}}" selected>{{interviewer.name}} {{interviewer.surname}}</option>
       </select>
+      <div class="btn btn-light pull-right remove-button" (click)="remove(i,'interviewerSet')" *ngIf="(interviewForm.controls.interviewerSet.controls.length > 1)&&interviewForm.enabled">
+        <img class="far fa-trash-alt align-middle" />
+      </div>
+      <validator-message [field]="inter.get('id')" [messageRequired]="messageInterviewerNotSelected"></validator-message>
     </div>
   </div>
   <ng-template #elseBlock>
     <span class="red-color">
-      Interviewers not found! <br>
-      Choose a different time or discipline!
+      Interviewers not found!
+      <br> Choose a different time or discipline!
     </span>
   </ng-template>
 </form>

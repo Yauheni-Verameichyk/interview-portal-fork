@@ -9,7 +9,7 @@ import { DisciplineDTO } from '../../api/models';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-describe('CandidateComponent', () => {
+xdescribe('CandidateComponent', () => {
   let component: CandidateComponent;
   let fixture: ComponentFixture<CandidateComponent>;
   let element: HTMLElement;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DateTimeInterval } from '../../model/date-time-interval';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { InterviewDTO } from '../../../api/models/interview-dto';
 import { FullInterviewInfoDTO } from '../../../api/models/full-interview-info-dto';
 import { CandidateBaseInfoDTO } from '../../../api/models/candidate-base-info-dto';
@@ -14,6 +14,7 @@ import { SpecifiedTimeDTO } from '../../../api/models/specified-time-dto';
 import { element } from 'protractor';
 import { InterviewControllerService } from '../../../api/services/interview-controller.service';
 import { PopupService } from '../../../shared/pop-up-window/popup-service/popup.service';
+import { LightFieldService } from '../../../shared/validator/service/light-field.service';
 
 @Injectable()
 export class InterviewFormService {
@@ -49,7 +50,8 @@ export class InterviewFormService {
     private formBuilder: FormBuilder,
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
     private interviewControllerService: InterviewControllerService,
-    private popupService: PopupService) { }
+    private popupService: PopupService,
+    private lightFieldService: LightFieldService) { }
 
   get formTitle(): string {
     return this.INTERVIEW_FORM_CONFIG[this.operation].formTitle;
@@ -66,7 +68,7 @@ export class InterviewFormService {
 
   initFormGroup() {
     this.interviewForm = this.formBuilder.group({
-      place: this.interview.place,
+      place: [this.interview.place, Validators.required],
       candidate: this.formBuilder.group({
         id: this.interview.candidate.id || ''
       }),
@@ -84,10 +86,10 @@ export class InterviewFormService {
     return formGroupList;
   }
 
-  initInterviewerForm(interviewer: UserBaseInfoDTO) {
+  initInterviewerForm(interviewer?: UserBaseInfoDTO): FormGroup {
     const id: number = interviewer ? interviewer.id : null;
     return this.formBuilder.group({
-      id: [id || '']
+      id: [id || '', Validators.required]
     });
   }
 
@@ -100,6 +102,12 @@ export class InterviewFormService {
     this.fetchInterviewerList();
   }
 
+  showSaveButton() {
+    if (!this.isSaveButtonDisplay) {
+      this.isSaveButtonDisplay = true;
+    }
+  }
+
   fetchInterviewerList() {
     this.specifiedTimeControllerService
       .findAllInRangeUsingGET({
@@ -110,6 +118,9 @@ export class InterviewFormService {
       .subscribe(specifiedTimeList => {
         this.fetchInterviewerListWithSpecifiedTime(specifiedTimeList);
         this.isInterviewersDisplay = true;
+        if (!this.interviewerList.length) {
+          this.isSaveButtonDisplay = false;
+        }
       })
   }
 
@@ -129,17 +140,22 @@ export class InterviewFormService {
   }
 
   saveInterview() {
-    let interview: FullInterviewInfoDTO = this.createObject();
-    interview.startTime = this.interval.startStringDate;
-    interview.endTime = this.interval.endStringDate;
-    interview.disciplineSet = [interview.discipline];
-    interview.status = "wait";
-    this.interviewControllerService.addUsingPOST_1(interview)
-    .subscribe(body => {
-      this.popupService.displayMessage("Interview was successfully created!!!", this.router);
-    },(error: any) => {
-      this.popupService.displayMessage("Could not create candidate! Try later!", this.router);
-    } );
+    if (this.interviewForm.valid) {
+      let interview: FullInterviewInfoDTO = this.createObject();
+      interview.startTime = this.interval.startStringDate;
+      interview.endTime = this.interval.endStringDate;
+      interview.disciplineSet = [interview.discipline];
+      interview.status = "wait";
+      this.interviewControllerService.addUsingPOST_1(interview)
+        .subscribe(body => {
+          this.popupService.displayMessage("Interview was successfully created!!!", this.router);
+        }, (error: any) => {
+          this.popupService.displayMessage("Could not create candidate! Try later!", this.router);
+        });
+    } else {
+      this.lightFieldService.lightField(this.interviewForm.controls);
+      this.lightFieldService.lightArray('interviewerSet', this.interviewForm);
+    }
   }
 
   createObject(): FullInterviewInfoDTO {
@@ -156,6 +172,11 @@ export class InterviewFormService {
     if (this.isInterviewersDisplay) {
       this.fetchInterviewerList();
     }
+  }
+
+  removeRow(index: number, title: string, interviewForm: FormGroup) {
+    const control = <FormArray>interviewForm.controls[title];
+    control.removeAt(index);
   }
 
 }
