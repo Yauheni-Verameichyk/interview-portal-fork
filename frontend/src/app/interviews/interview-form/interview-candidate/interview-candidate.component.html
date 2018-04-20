@@ -1,0 +1,9 @@
+<span class="bold">Select a candidate:</span>
+<div [formGroup]="interviewForm">
+  <div formGroupName="candidate">
+    <select class="form-control" formControlName="id" (change)="candidadeChange()">
+      <option value="" hidden disabled selected>Choose...</option>
+      <option *ngFor="let candidate of candidateList" value="{{candidate.id}}" selected>{{candidate.name}} {{candidate.surname}}</option>
+    </select>
+  </div>
+</div>

@@ -14,13 +14,13 @@
   </th>
   <th>
     <i class="ion-social-buffer h4"></i>
-    Disciplines
+    Discipline
   </th>
   <th>
     <i class="ion-location"></i>
     Place
   </th>
   <th class="create-button">
-    <button class="btn btn-success mr-2">create interview</button>
+    <button class="btn btn-success mr-2" [routerLink]="['', {outlets: { popup: ['interview-create'] }}]">create interview</button>
   </th>
 </tr>
