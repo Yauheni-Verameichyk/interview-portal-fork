@@ -2,14 +2,18 @@
   <div class='border popup-form'>
     <form [formGroup]="interviewForm">
       <h4>{{formTitle}}</h4>
-      <app-interview-candidate [interviewForm]="interviewForm" (change)="interviewFormService.showDiscipline()" (disciplines)="fetchDisciplines($event)" (click)="interviewFormService.refreshData()"></app-interview-candidate>
+      <app-interview-candidate [interviewForm]="interviewForm" (change)="interviewFormService.showDiscipline()" (disciplines)="fetchDisciplines($event)"
+        (click)="interviewFormService.refreshData()"></app-interview-candidate>
       <span class="bold">Place: </span>
       <input class="form-control" type="text" placeholder="B215 Room" formControlName="place">
+      <validator-message [field]="interviewForm.get('place')"></validator-message>
       <app-time-interval [(ngModel)]="interval" (ngModelChange)="refresh.next()" [ngModelOptions]="{standalone: true}" (click)="interviewFormService.refreshData()"></app-time-interval>
-      <app-interview-discipline *ngIf="isDisciplineDisplay" [interviewForm]="interviewForm" [disciplines]="disciplines" (change)="interviewFormService.showInterviewers()" (click)="interviewFormService.refreshData()"></app-interview-discipline>
-      <app-interviewers *ngIf="isInterviewersDisplay" [interviewForm]="interviewForm" [interviewerList]="interviewerList"></app-interviewers>
+      <app-interview-discipline *ngIf="isDisciplineDisplay" [interviewForm]="interviewForm" [disciplines]="disciplines" (change)="interviewFormService.showInterviewers()"
+        (click)="interviewFormService.refreshData()"></app-interview-discipline>
+      <app-interviewers *ngIf="isInterviewersDisplay" [interviewForm]="interviewForm" [interviewerList]="interviewerList" (change)="interviewFormService.showSaveButton()"
+        (click)="interviewFormService.showSaveButton()"></app-interviewers>
       <br>
-      <a class="btn btn-success" (click)="interviewFormService.saveInterview()">Save</a>
+      <a class="btn btn-success" *ngIf="isSaveButtonDisplay" (click)="interviewFormService.saveInterview()">Save</a>
     </form>
     <span class="window-close" [routerLink]="['', {outlets: { popup: null }}]"></span>
   </div>

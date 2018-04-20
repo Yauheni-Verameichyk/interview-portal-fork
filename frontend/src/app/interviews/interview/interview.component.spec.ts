@@ -9,7 +9,7 @@ const routerStub = {
 const interviewServiceStub = {
   removeInterview(id: number) { }
 };
-describe('InterviewComponent', () => {
+xdescribe('InterviewComponent', () => {
   let component: InterviewComponent;
   let fixture: ComponentFixture<InterviewComponent>;
 

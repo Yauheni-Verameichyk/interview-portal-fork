@@ -6,3 +6,35 @@
     color: red;
     font-weight:bold;
 }
+
+.h6 {
+    padding: 0px!important;
+    margin: 0px!important;
+}
+
+select {
+    margin-bottom: 5px;
+}
+
+.not-full-width {
+    float: left;
+    width: 90%;
+}
+
+.full-width {
+    float: left;
+    width: 100%;
+}
+
+.disabled-input {
+    pointer-events:none;
+    background-color: #dee2e6;
+}
+
+.remove-button {
+    width: 5%;
+}
+
+.table-list {
+    max-height: 12vh;
+}

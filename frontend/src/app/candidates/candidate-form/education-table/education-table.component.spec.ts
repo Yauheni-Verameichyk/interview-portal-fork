@@ -6,7 +6,7 @@ import { FormValidatorService } from '../../../shared/validator/validator-form/f
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 const candidateFormServiceStub = {};
-describe('EducationTableComponent', () => {
+xdescribe('EducationTableComponent', () => {
   let component: EducationTableComponent;
   let fixture: ComponentFixture<EducationTableComponent>;
 

@@ -46,6 +46,10 @@ export class InterviewFormComponent implements OnInit, OnDestroy {
     return this.interviewFormService.isInterviewersDisplay;
   }
 
+  get isSaveButtonDisplay(): boolean {
+    return this.interviewFormService.isSaveButtonDisplay;
+  }
+
   get interviewerList(): Array<UserBaseInfoDTO> {
     return this.interviewFormService.interviewerList;
   }

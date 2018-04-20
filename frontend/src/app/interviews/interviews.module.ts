@@ -9,6 +9,7 @@ import { TimeIntervalComponent } from './time-interval/time-interval.component';
 import { InterviewCandidateComponent } from './interview-form/interview-candidate/interview-candidate.component';
 import { InterviewDisciplineComponent } from './interview-form/interview-discipline/interview-discipline.component';
 import { InterviewersComponent } from './interview-form/interviewers/interviewers.component'
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { InterviewersComponent } from './interview-form/interviewers/interviewer
     InterviewsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   declarations: [
     interviewsRouterComponent,
