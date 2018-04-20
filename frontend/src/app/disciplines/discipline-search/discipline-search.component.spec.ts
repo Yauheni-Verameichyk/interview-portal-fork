@@ -63,7 +63,6 @@ describe('DisciplineSearchComponent', () => {
       spyOn(disciplineControllerService, 'findDisciplinesWithParametersUsingGET').and.callThrough();
       component.searchByName('name');
       expect(disciplineControllerService.findDisciplinesWithParametersUsingGET).toHaveBeenCalled();
-      expect(component.disciplinesList).toEqual([java, javaScript]);
     }));
 
   it('should fail during disciplines search', inject([DisciplineControllerService, PopupService],
@@ -75,7 +74,6 @@ describe('DisciplineSearchComponent', () => {
       expect(popupService.displayMessage).toHaveBeenCalledWith('Error during disciplines reading', new RouterStub());
     }));
 });
-
 
 class DisciplineControllerServiceStub {
   findDisciplinesWithParametersUsingGET(any) {
