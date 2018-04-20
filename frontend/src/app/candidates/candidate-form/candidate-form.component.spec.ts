@@ -33,7 +33,7 @@ const lightFieldServiceStub = {};
 const candidateControllerServiceStub = {};
 const candidateServiceStub = {};
 const popupServiceStub = {};
-xdescribe('CandidateFormComponent', () => {
+describe('CandidateFormComponent', () => {
   let component: CandidateFormComponent;
   let fixture: ComponentFixture<CandidateFormComponent>;
 

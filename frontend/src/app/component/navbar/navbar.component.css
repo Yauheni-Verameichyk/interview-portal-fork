@@ -64,13 +64,13 @@
     margin: 0;
   }
   
-  @media (min-width: 1024px) {
+  @media (min-width: 1155px) {
     #nav-menu-container {
       padding-right: 60px;
     }
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 1155px) {
     #nav-menu-container {
       display: none;
     }
