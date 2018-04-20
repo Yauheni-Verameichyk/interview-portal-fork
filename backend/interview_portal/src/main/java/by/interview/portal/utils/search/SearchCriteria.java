@@ -1,4 +1,4 @@
-package by.interview.portal.utils;
+package by.interview.portal.utils.search;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

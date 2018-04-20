@@ -17,7 +17,6 @@ export class DisciplineSearchComponent implements OnDestroy {
   isSearchShown = false;
   searchSubItems = false;
   searchDisciplines = true;
-  disciplinesList: Array<DisciplineDTO> = [];
   @Output() private emitDisciplines = new EventEmitter<DisciplineDTO[]>();
   private readonly destroy: Subject<void> = new Subject();
   constructor(
@@ -32,8 +31,8 @@ export class DisciplineSearchComponent implements OnDestroy {
       const searchString = `name:${disciplineName}${this.disciplineService.selectSearchPattern(this.searchDisciplines,
         this.searchSubItems)}`;
       this.disciplineControllerService.findDisciplinesWithParametersUsingGET(searchString)
+        .takeUntil(this.destroy)
         .subscribe(disciplines => {
-          this.disciplinesList = disciplines;
           this.emitDisciplines.emit(disciplines);
         }, error => {
           this.popupService.displayMessage('Error during disciplines reading', this.router);

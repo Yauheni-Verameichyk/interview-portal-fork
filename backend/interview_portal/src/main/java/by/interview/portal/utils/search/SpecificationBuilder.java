@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import by.interview.portal.utils.SearchCriteria;
-
 public class SpecificationBuilder<T> {
     private final List<SearchCriteria> params;
 

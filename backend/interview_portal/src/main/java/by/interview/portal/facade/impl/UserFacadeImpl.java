@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,6 +71,12 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public void delete(Long userId) {
         userService.delete(userId);
+    }
+
+    @Override public Set<UserBaseInfoDTO> findWithParameters(String searchParameters) {
+        return userService.findUserWithParameters(searchParameters).stream().filter(Objects::nonNull)
+            .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
+            .collect(Collectors.toSet());
     }
 
     private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {
