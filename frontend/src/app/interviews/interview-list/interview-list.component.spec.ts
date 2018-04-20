@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InterviewListComponent } from './interview-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { InterviewService } from '../service/interview.service';
 
 const interviewServiceStub = {
   fetchInterviewList(){}
@@ -14,10 +13,7 @@ describe('InterviewListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ InterviewListComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
-        { provide: InterviewService, useValue: interviewServiceStub }
-      ]})
+      schemas: [NO_ERRORS_SCHEMA]})
     .compileComponents();
   }));
 

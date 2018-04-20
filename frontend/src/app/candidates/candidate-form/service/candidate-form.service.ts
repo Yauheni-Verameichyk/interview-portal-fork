@@ -9,7 +9,6 @@ import { FormValidatorService } from '../../../shared/validator/validator-form/f
 import { LightFieldService } from '../../../shared/validator/service/light-field.service';
 import { CandidateControllerService } from '../../../api/services/candidate-controller.service';
 import { Subject } from 'rxjs';
-import { CandidateService } from '../../service/candidate.service';
 import { PopupService } from '../../../shared/pop-up-window/popup-service/popup.service';
 
 @Injectable()
@@ -54,7 +53,6 @@ export class CandidateFormService {
     private formValidator: FormValidatorService,
     private lightFieldService: LightFieldService,
     private candidateControllerService: CandidateControllerService,
-    private candidateService: CandidateService,
     private popupService: PopupService) { }
 
   get formTitle(): string {
@@ -152,7 +150,6 @@ export class CandidateFormService {
 
   displayMessage(message: string) {
     this.popupService.displayMessage(message, this.router);
-    this.candidateService.updateCandidateList();
   }
 
   removeRow(index: number, title: string, candidateForm: FormGroup) {

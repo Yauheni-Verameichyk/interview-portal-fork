@@ -1,10 +1,10 @@
 <div *requiredAuthority="'CANDIDATE_LIST_READ'">
-  <div class="card mb-3 candidate-list" *ngIf="candidateService.isLoaded;else elseBlock">
+  <div class="card mb-3 candidate-list" *ngIf="isLoaded;else elseBlock">
     <div class="card-header">
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <i class="fa fa-table"></i> Candidate list
-          <i class="ion-loop text-info h5 link" (click)="ngOnInit()"></i>
+          <i class="ion-loop text-info h5 link" (click)="updateCandidateList()"></i>
         </div>
         <div class="col-sm-12 col-md-6">
           <div id="dataTable_filter" class="dataTables_filter">
@@ -27,7 +27,7 @@
                 </th>
               </tr>
             </thead>
-            <tbody app-candidate *ngFor="let candidate of candidateService.candidateList" [candidate]="candidate" class='tbody-hover'>
+            <tbody app-candidate *ngFor="let candidate of candidateList" [candidate]="candidate" class='tbody-hover'>
             </tbody>
             <tfoot>
               <tr>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <!-- <div class="load-button">
-    <button *ngIf="showButtonLoad" (click)="windowScrollListener()" class="btn btn-outline-info">
+    <button *ngIf="isNecessaryLoadding" (click)="windowScrollListener()" class="btn btn-outline-info">
       Load more
     </button>
   </div> -->

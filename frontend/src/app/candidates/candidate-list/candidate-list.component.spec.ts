@@ -8,7 +8,6 @@ import { Observable } from 'rxjs/Observable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { CandidateService } from '../service/candidate.service';
 import { CandidateDTO } from '../../api/models/candidate-dto';
 
 const routerStub = {
@@ -49,7 +48,6 @@ describe('CandidateListComponent', () => {
         {provide: Router, useValue: routerStub},
         {provide: ActivatedRoute, useValue: activatedRouterStub },
         {provide: AuthenticationService, useValue: authServiceStub },
-        {provide: CandidateService, useValue: candidateServiceStub}
       ],
       imports: [ReactiveFormsModule, FormsModule, SharedModule ],
       schemas: [NO_ERRORS_SCHEMA]

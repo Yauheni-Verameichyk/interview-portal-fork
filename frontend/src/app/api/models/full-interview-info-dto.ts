@@ -4,13 +4,15 @@ import { DisciplineBaseInfoDTO } from './discipline-base-info-dto';
 import { UserBaseInfoDTO } from './user-base-info-dto';
 import { DisciplineMark } from './discipline-mark';
 
-export interface FullInterviewInfoDTO {
+export class FullInterviewInfoDTO {
 
   id?: number;
 
   candidate?: CandidateBaseInfoDTO;
 
   disciplineSet?: DisciplineBaseInfoDTO[];
+
+  discipline?: DisciplineBaseInfoDTO;
 
   endTime?: string;
 

@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-export interface DisciplineBaseInfoDTO {
+export class DisciplineBaseInfoDTO {
 
   id?: number;
 

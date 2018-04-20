@@ -48,7 +48,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     }
   };
   private redirectToSignIn(error) {
-    this.router.navigate(['/users']);
+    this.router.navigate(['/login']);
     return Observable.throw(error);
   };
 

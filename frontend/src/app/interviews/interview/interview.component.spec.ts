@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InterviewComponent } from './interview.component';
 import { Router, NavigationExtras, RouterModule, ActivatedRoute } from '@angular/router';
-import { InterviewService } from '../service/interview.service';
 const routerStub = {
   navigate(commands: any[], extras?: NavigationExtras) { },
   navigateByUrl(url: string) { return url; }
@@ -19,7 +18,6 @@ describe('InterviewComponent', () => {
       declarations: [InterviewComponent],
       providers: [
         { provide: Router, useValue: routerStub },
-        { provide: InterviewService, useValue: interviewServiceStub },
         { provide: ActivatedRoute, useValue: interviewServiceStub },
       ],
       imports: [ RouterModule ]

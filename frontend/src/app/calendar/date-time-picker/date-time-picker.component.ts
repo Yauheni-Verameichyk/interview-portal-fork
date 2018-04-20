@@ -26,7 +26,6 @@ export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'mwl-demo-utils-date-time-picker',
   templateUrl: './date-time-picker.component.html',
   styleUrls: ['./date-time-picker.component.css'],
-  encapsulation: ViewEncapsulation.None,
   providers: [DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR]
 })
 

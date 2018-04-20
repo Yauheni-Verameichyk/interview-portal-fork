@@ -1,0 +1,21 @@
+ngb-datepicker {
+    float:left;
+}
+
+.date-time-interval {
+    text-align: left;
+    padding: 10px;
+}
+
+.tab { 
+    display:inline-block; 
+    margin-left: 200px; 
+}
+
+ngb-datepicker {
+    margin-right: 10px;
+}
+
+.bold {
+    font-weight:bold;
+}

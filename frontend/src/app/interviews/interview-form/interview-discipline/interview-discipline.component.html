@@ -1,0 +1,10 @@
+<br>
+<span class="bold">Select a discipline:</span>
+<div [formGroup]="interviewForm">
+  <div formGroupName="discipline">
+    <select class="form-control" formControlName="id">
+      <option value="" hidden disabled selected>Choose...</option>
+      <option *ngFor="let dis of disciplines" value="{{dis.id}}" selected>{{dis.name}}</option>
+    </select>
+  </div>
+</div>
