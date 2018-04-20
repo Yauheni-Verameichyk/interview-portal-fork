@@ -51,10 +51,10 @@ export class DisciplineService {
       return '';
     }
     if (searchDisciplines && !searchSubItems) {
-      return ',parentId=null';
+      return ';parentId=null';
     }
     if (!searchDisciplines && searchSubItems) {
-      return ',parentId<>null';
+      return ';parentId<>null';
     }
     throw new Error();
   }

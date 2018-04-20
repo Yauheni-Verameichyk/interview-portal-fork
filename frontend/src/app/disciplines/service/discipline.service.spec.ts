@@ -64,11 +64,11 @@ describe('DisciplineService', () => {
   }));
 
   it('should generate search pattern for disciplines', inject([DisciplineService], (service: DisciplineService) => {
-    expect(service.selectSearchPattern(true, false)).toEqual(',parentId=null');
+    expect(service.selectSearchPattern(true, false)).toEqual(';parentId=null');
   }));
 
   it('should generate search pattern for sub items', inject([DisciplineService], (service: DisciplineService) => {
-    expect(service.selectSearchPattern(false, true)).toEqual(',parentId<>null');
+    expect(service.selectSearchPattern(false, true)).toEqual(';parentId<>null');
   }));
 
   it('should throw error if search pattern can not be defined', inject([DisciplineService], (service: DisciplineService) => {
