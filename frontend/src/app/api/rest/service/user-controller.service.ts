@@ -1,24 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { UserInfo } from '../../../domain/UserInfo';
 import { User } from '../../../domain/User';
 import { environment } from '../../../../environments/environment';
-
+import {URLSearchParams} from '@angular/http';
 
 @Injectable()
 export class UserControllerService {
-  private baseUrl: string = environment.backendUrl+'/users';
+  private baseUrl: string = environment.backendUrl + '/users';
 
   constructor(private http: HttpClient) { }
 
   public getUsers(quantity?: number): Observable<UserInfo[]> {
-    const data = {quantity: quantity.toString()};
-    return this.http.get(this.baseUrl, {params: data})
+    const data = { quantity: quantity.toString() };
+    return this.http.get(this.baseUrl, { params: data })
       .pipe(map(this.handlerData),
-      catchError(this.handlerError)
+        catchError(this.handlerError)
       );
+  }
+  getUsersByParameters(parameters: any): Observable<UserInfo[]> {
+    const searchURL = this.baseUrl + '/search';
+    return this.http.get(searchURL,  { params: {parameters: parameters.toString() }}).pipe(
+      map(this.handlerData),
+      catchError(this.handlerError)
+    );
   }
   public getUserById(id: number) {
     return this.http.get(this.baseUrl + `/${id}`)
@@ -44,10 +51,11 @@ export class UserControllerService {
   }
   deleteUser(userId: number): Observable<HttpResponse<void>> {
     return this.http.delete(this.baseUrl + `/${userId}`)
-    .pipe(map(this.handlerData),
-    catchError(this.handlerError)
-    );
+      .pipe(map(this.handlerData),
+        catchError(this.handlerError)
+      );
   }
+
   handlerData(response: HttpResponse<UserInfo>) {
     const body = response;
     return body || {};

@@ -4,6 +4,7 @@ import { CandidateControllerService } from '../../api/services/candidate-control
 import { Subject } from 'rxjs/Subject';
 import { Router, NavigationEnd } from '@angular/router';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-candidate-list',

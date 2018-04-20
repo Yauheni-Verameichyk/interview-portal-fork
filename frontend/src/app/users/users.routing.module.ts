@@ -6,6 +6,7 @@ import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserResolvedGuard } from '../guard/user-resolved.guard';
 import { CreateUserResolvedGuard } from '../guard/create-user-resolved.guard';
+import { UserSearchComponent } from './user-search/user-search.component';
 const routes: Routes = [
   {
     path: 'users',
@@ -36,7 +37,7 @@ const routes: Routes = [
     }
   }
 ];
-export let usersRouterComponents = [UserListComponent, UserComponent, UserFormComponent];
+export let usersRouterComponents = [UserListComponent, UserComponent, UserFormComponent, UserSearchComponent];
 @NgModule({
   imports: [
     CommonModule,

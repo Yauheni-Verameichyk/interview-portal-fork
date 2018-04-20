@@ -11,7 +11,7 @@ const disciplineControllerServiceStub = {
   findAllUsingGET() { return Observable.of(null); }
 };
 const candidateFormServiceStub = {};
-xdescribe('DisciplineListComponent', () => {
+describe('DisciplineListComponent', () => {
   let component: DisciplineListComponent;
   let fixture: ComponentFixture<DisciplineListComponent>;
 
