@@ -46,7 +46,7 @@ describe('DisciplineService', () => {
       service.chooseRequest('MY');
       expect(disciplineControllerService.findDisciplinesForUserUsingGET).toHaveBeenCalled();
     }));
-    
+
   it('should return observable of all disciplines', inject([DisciplineService, DisciplineControllerService],
     (service: DisciplineService, disciplineControllerService: DisciplineControllerService) => {
       spyOn(disciplineControllerService, 'findAllUsingGET').and.callThrough();
@@ -57,6 +57,22 @@ describe('DisciplineService', () => {
   it('should throw error with unspecified operation', inject([DisciplineService], (service: DisciplineService) => {
     expect(function () {  service.chooseRequest('123'); }
   ).toThrowError('Perhaps you do not know what you want');
+  }));
+
+  it('should generate search pattern for disciplines and sub items', inject([DisciplineService], (service: DisciplineService) => {
+    expect(service.selectSearchPattern(true, true)).toEqual('');
+  }));
+
+  it('should generate search pattern for disciplines', inject([DisciplineService], (service: DisciplineService) => {
+    expect(service.selectSearchPattern(true, false)).toEqual(',parentId=null');
+  }));
+
+  it('should generate search pattern for sub items', inject([DisciplineService], (service: DisciplineService) => {
+    expect(service.selectSearchPattern(false, true)).toEqual(',parentId<>null');
+  }));
+
+  it('should throw error if search pattern can not be defined', inject([DisciplineService], (service: DisciplineService) => {
+    expect(function () { service.selectSearchPattern(false, false); }).toThrowError();
   }));
 });
 

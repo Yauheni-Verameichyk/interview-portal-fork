@@ -42,7 +42,7 @@ export class DisciplineService {
       case this.searchOptions.ALL:
         return this.disciplinesControlerService.findAllUsingGET(disciplinesNumber);
       default:
-      throw new Error('Perhaps you do not know what you want');
+        throw new Error('Perhaps you do not know what you want');
     }
   }
 
@@ -56,8 +56,6 @@ export class DisciplineService {
     if (!searchDisciplines && searchSubItems) {
       return ',parentId<>null';
     }
-    if (!searchDisciplines && !searchSubItems) {
-      throw new Error();
-    }
+    throw new Error();
   }
 }

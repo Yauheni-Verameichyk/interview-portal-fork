@@ -109,14 +109,6 @@ describe('CalendarComponent', () => {
     expect(component.calendarEvents).toEqual([firstRecurringCalendarEvent, secondRecurringCalendarEvent]);
   }));
 
-  it('should read recurring events', inject([CalendarService], (calendarService: CalendarService) => {
-    spyOn(calendarService, 'generateCalendarEvents').and.returnValue([firstRecurringCalendarEvent, secondRecurringCalendarEvent]);
-    fixture = TestBed.createComponent(CalendarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    expect(component.calendarEvents).toEqual([firstRecurringCalendarEvent, secondRecurringCalendarEvent]);
-  }));
-
   it('should fail to read calendar events',
     inject([CalendarControllerService, PopupService],
       (calendarControllerService: CalendarControllerService, popupService: PopupService) => {
