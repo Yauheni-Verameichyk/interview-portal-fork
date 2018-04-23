@@ -1,5 +1,11 @@
 package by.interview.portal.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.List;
 import java.util.Set;
 
@@ -8,17 +14,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -27,6 +29,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "candidates")
+@NamedEntityGraph(name = "Candidate.disciplineList",
+        attributeNodes = {@NamedAttributeNode("disciplineList")})
 public class Candidate extends Person {
 
     @ManyToMany
