@@ -11,7 +11,7 @@ import by.interview.portal.dto.UserDTO;
 
 public interface UserFacade {
 
-    List<UserDTO> findAll(int quantity);
+//    List<UserDTO> findAll(int quantity);
 
     void save(UserDTO user);
 
@@ -19,9 +19,8 @@ public interface UserFacade {
 
     List<UserBaseInfoDTO> findAllByRole(Role role);
 
-    List<UserBaseInfoDTO> findAllUserBaseInfo(int page);
+    Set<UserBaseInfoDTO> findAllUserBaseInfo(Integer page, String searchParameters);
 
     void delete(Long userId);
 
-    Set<UserBaseInfoDTO> findWithParameters(String search);
 }

@@ -43,10 +43,11 @@ public class UserController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping
-    public List<UserBaseInfoDTO> findAll(
-            @RequestParam(name = "quantity", defaultValue = "0") int quantity) {
-        LOG.log(Level.getLevel("WORKLEVEL"), "Find users, with limit: " + quantity);
-        return userFacade.findAllUserBaseInfo(quantity);
+    public Set<UserBaseInfoDTO> findAll(
+        @RequestParam(name = "quantity", defaultValue = "0") Integer quantity,
+        @RequestParam(name = "parameters", defaultValue = "c") String parameters ) {
+            LOG.log(Level.getLevel("WORKLEVEL"), "Find users, with limit: " + quantity);
+            return  userFacade.findAllUserBaseInfo(quantity, parameters);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
@@ -68,12 +69,6 @@ public class UserController {
     public void delete(@PathVariable Long id) {
         LOG.log(Level.getLevel("WORKLEVEL"), "Delete user by id: " + id);
         userFacade.delete(id);
-    }
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "search")
-    public Set<UserBaseInfoDTO> findUsersWithParameters(@RequestParam(value = "parameters") String search) {
-        System.err.println(search);
-        return userFacade.findWithParameters(search);
     }
 
 }
