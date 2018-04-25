@@ -14,6 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 
 @Data
@@ -23,6 +26,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users_roles_disciplines")
+@NamedEntityGraph(name = "UserRoleDisciplines.user",
+        attributeNodes = {
+                @NamedAttributeNode(value = "user", subgraph = "User.userRoleDiscipline")},
+        subgraphs = {@NamedSubgraph(name = "User.userRoleDiscipline",
+                attributeNodes = @NamedAttributeNode("userRoleDisciplines"))})
 public class UserRoleDiscipline {
 
     @Id
