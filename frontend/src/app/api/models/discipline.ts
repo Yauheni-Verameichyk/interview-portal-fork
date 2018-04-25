@@ -10,5 +10,5 @@ export class DisciplineDTO {
 
   subscription?: string;
 
-  hasSubItems?: boolean;
+  hasChildren?: boolean;
 }

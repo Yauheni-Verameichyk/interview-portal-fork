@@ -14,7 +14,8 @@ import { DisciplineService } from '../service/discipline.service';
   styleUrls: ['./discipline-search.component.css']
 })
 export class DisciplineSearchComponent implements OnDestroy {
-  isSearchShown = false;
+  showFilter = false;
+
   searchSubItems = false;
   searchDisciplines = true;
   @Output() private emitDisciplines = new EventEmitter<DisciplineDTO[]>();

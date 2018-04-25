@@ -3,10 +3,10 @@
     <tr>
       <td scope="col" class="unwrap-indicator big-icon" (click)="showSubItems();">
         <div *requiredAuthority="'SUB_ITEM_READ_' + parentDisciplineName">
-          <div *ngIf="discipline.hasSubItems && !subItemsShown" class="unwrap-indicator btn btn-xl">
+          <div *ngIf="discipline.hasChildren && !subItemsShown" class="unwrap-indicator btn btn-xl">
             <i class="fas fa-caret-right"></i>
           </div>
-          <div *ngIf="discipline.hasSubItems && subItemsShown" class="unwrap-indicator btn btn-xl">
+          <div *ngIf="discipline.hasChildren && subItemsShown" class="unwrap-indicator btn btn-xl">
             <i class="fas fa-caret-down"></i>
           </div>
         </div>

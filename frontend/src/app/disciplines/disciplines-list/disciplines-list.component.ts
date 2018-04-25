@@ -9,23 +9,42 @@ import { DisciplineService } from '../service/discipline.service';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { ITreeOptions, IActionMapping, TREE_ACTIONS } from 'angular-tree-component';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-disciplines-list',
   templateUrl: './disciplines-list.component.html',
-  styleUrls: ['./disciplines-list.component.css']
+  styleUrls: ['./disciplines-list.component.css'],
 })
 export class DisciplinesListComponent implements OnInit, OnDestroy {
 
   public isLoaded: boolean;
   disciplinesList: Array<DisciplineDTO> = [];
   activeFilter: string;
+  activeDiscipline: DisciplineDTO;
   private readonly destroy: Subject<void> = new Subject();
-  constructor(private disciplineService: DisciplineService,
+
+  options: ITreeOptions = {
+    getChildren: this.findSubItems.bind(this),
+    actionMapping: {
+      mouse: {
+        click: this.setActiveDiscipline.bind(this),
+      },
+    },
+  };
+
+  constructor(
+    private disciplineService: DisciplineService,
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
-    private router: Router
+    private router: Router,
+    private disciplinesControllerService: DisciplineControllerService,
   ) { }
+
+  setActiveDiscipline(tree: any, node, event): void {
+    this.readDiscipline(node.id);
+  }
 
   ngOnInit(): void {
     this.isLoaded = false;
@@ -45,10 +64,27 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
       .takeUntil(this.destroy)
       .subscribe((disciplines) => {
         this.isLoaded = true;
-        (this.activeFilter === 'ALL') ? this.disciplinesList.push(...disciplines) : this.disciplinesList = disciplines;
+        (this.activeFilter === 'ALL') ? this.disciplinesList = this.disciplinesList.concat(...disciplines) :
+          this.disciplinesList = disciplines;
       }, (error) => {
         this.popupService.displayMessage('Error during disciplines reading', this.router);
       });
+  }
+
+  readDiscipline(disciplineId: number): void {
+    this.disciplinesControllerService.findByIdUsingGET(disciplineId)
+      .takeUntil(this.destroy)
+      .subscribe(
+        (discipline) => {
+          this.activeDiscipline = discipline;
+        }, (error) => {
+          this.popupService.displayMessage('Error during discipline reading', this.router);
+        },
+      );
+  }
+
+  findSubItems(node: any): Promise<DisciplineDTO[]> {
+    return this.disciplinesControllerService.findSubItemsUsingGET(node.id).toPromise();
   }
 
   receiveDisciplinesFromSearch(disciplines: DisciplineDTO[]): void {
@@ -58,7 +94,6 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', ['$event'])
   windowScrollListener() {
-    console.log(1);
     const position = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     if (position === max && this.activeFilter === 'ALL') {

@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserControllerService } from '../api/rest/service/user-controller.service';
 import { DisciplineFormComponent } from './discipline-form/discipline-form.component';
 import { DisciplineSearchComponent } from './discipline-search/discipline-search.component';
+import { TreeModule } from 'angular-tree-component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { DisciplineSearchComponent } from './discipline-search/discipline-search
     ApiModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TreeModule,
   ],
   declarations: [
     disciplineRouterComponents,

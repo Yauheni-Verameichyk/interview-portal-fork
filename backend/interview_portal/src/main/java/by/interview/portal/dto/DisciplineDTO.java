@@ -17,5 +17,5 @@ public class DisciplineDTO {
 
     private Long parentId;
 
-    private boolean hasSubItems;
+    private boolean hasChildren;
 }

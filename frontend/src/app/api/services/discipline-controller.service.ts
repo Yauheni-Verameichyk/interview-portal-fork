@@ -266,15 +266,6 @@ export class DisciplineControllerService extends BaseService {
         params: __params,
         responseType: 'json'
       });
-      console.log(req = new HttpRequest<any>(
-        "GET",
-        this.rootUrl + `/discipline/search`,
-        __body,
-        {
-          headers: __headers,
-          params: __params,
-          responseType: 'json'
-        }));
 
     return this.http.request<any>(req).pipe(
       filter(_r => _r instanceof HttpResponse),
