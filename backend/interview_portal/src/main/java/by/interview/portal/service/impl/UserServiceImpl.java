@@ -72,4 +72,10 @@ public class UserServiceImpl implements UserService {
         userRoleDisciplineRepository.deleteByUserId(userId);
         userRepository.deleteById(userId);
     }
+
+    @Override public Set<User> findUserWithParameters(String searchParameters) {
+        return userRepository.findAll(SearchUtils.getSearchSpecifications(searchParameters))
+            .stream()
+            .collect(Collectors.toSet());
+    }
 }

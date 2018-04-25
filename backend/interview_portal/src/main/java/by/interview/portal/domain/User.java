@@ -7,9 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +24,11 @@ import javax.persistence.Table;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "users")
+@NamedEntityGraph(name = "User.userRoleDisciplines",
+        attributeNodes = {@NamedAttributeNode(value = "userRoleDisciplines",
+                subgraph = "UserRoleDiscipline.discipline")},
+        subgraphs = {@NamedSubgraph(name = "UserRoleDiscipline.discipline",
+                attributeNodes = @NamedAttributeNode("discipline"))})
 public class User extends Person {
 
     @Column(name = "login", unique = true, nullable = false, length = 50)

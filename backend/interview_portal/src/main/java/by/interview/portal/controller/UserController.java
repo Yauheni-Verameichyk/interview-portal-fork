@@ -70,6 +70,12 @@ public class UserController {
         LOG.log(Level.getLevel("WORKLEVEL"), "Delete user by id: " + id);
         userFacade.delete(id);
     }
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "search")
+    public Set<UserBaseInfoDTO> findUsersWithParameters(@RequestParam(value = "parameters") String search) {
+        System.err.println(search);
+        return userFacade.findWithParameters(search);
+    }
 
 }
 

@@ -11,8 +11,6 @@ import by.interview.portal.dto.UserDTO;
 
 public interface UserFacade {
 
-//    List<UserDTO> findAll(int quantity);
-
     void save(UserDTO user);
 
     Optional<FullUserInfoDTO> findById(long userId);
