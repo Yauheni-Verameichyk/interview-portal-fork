@@ -67,12 +67,6 @@ public class UserFacadeImpl implements UserFacade {
         userService.delete(userId);
     }
 
-    @Override public Set<UserBaseInfoDTO> findWithParameters(String searchParameters) {
-        return userService.findUserWithParameters(searchParameters).stream().filter(Objects::nonNull)
-            .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
-            .collect(Collectors.toSet());
-    }
-
     private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {
         UserBaseInfoDTO userBaseInfoDTO = modelMapper.map(userDTO, UserBaseInfoDTO.class);
         userBaseInfoDTO.setRoles(userDTO.getRoleDisciplines().keySet());
