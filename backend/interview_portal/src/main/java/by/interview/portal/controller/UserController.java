@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping
     public Set<UserBaseInfoDTO> findAll(
         @RequestParam(name = "quantity", defaultValue = "0") Integer quantity,
-        @RequestParam(name = "parameters", defaultValue = "c") String parameters ) {
+        @RequestParam(name = "parameters", defaultValue = "") String parameters ) {
             LOG.log(Level.getLevel("WORKLEVEL"), "Find users, with limit: " + quantity);
             return  userFacade.findAllUserBaseInfo(quantity, parameters);
     }

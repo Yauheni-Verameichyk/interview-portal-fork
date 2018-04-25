@@ -15,7 +15,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   users: Array<UserInfo> = new Array<UserInfo>();
   private searchParameters = 'userRoleDisciplines#COORDINATOR,DISCIPLINE_HEAD,INTERVIEWER,HUMAN_RESOURCE';
   constructor(private userController: UserControllerService, private router: Router) { }
-
+  
   ngOnInit() {
     this.isLoaded = false;
     this.getUsersWithParams();
