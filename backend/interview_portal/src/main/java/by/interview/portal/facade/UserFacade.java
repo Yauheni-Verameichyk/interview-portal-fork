@@ -11,17 +11,14 @@ import by.interview.portal.dto.UserDTO;
 
 public interface UserFacade {
 
-    List<UserDTO> findAll(int quantity);
-
     void save(UserDTO user);
 
     Optional<FullUserInfoDTO> findById(long userId);
 
     List<UserBaseInfoDTO> findAllByRole(Role role);
 
-    List<UserBaseInfoDTO> findAllUserBaseInfo(int page);
+    Set<UserBaseInfoDTO> findAllUserBaseInfo(Integer page, String searchParameters);
 
     void delete(Long userId);
 
-    Set<UserBaseInfoDTO> findWithParameters(String search);
 }

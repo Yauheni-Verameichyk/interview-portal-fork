@@ -10,7 +10,7 @@ import java.util.Set;
 
 public interface UserService {
 
-    List<User> findAll(int quantity);
+    Set<User> findAll(Integer quantity, String searchParameters);
 
     void save(User user);
 

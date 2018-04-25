@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12 col-md-2">
     <i class="fa fa-table"></i> Users list
-    <i class="ion-loop text-info h5 link" (click)="ngOnInit()"></i>
+    <i class="ion-loop text-info h5 link" (click)="resetParameters()"></i>
   </div>
   <div class="col-sm-12 col-md-6">
     <div id="dataTable_filter" class="dataTables_filter">
@@ -9,7 +9,7 @@
           <input type="checkbox" class="checkbox"
           id="isCoordinator" [checked]="isCoordinator"
           (change)="isCoordinator = !isCoordinator; 
-          searchByParameters(userName.value)">
+          searchByParameters()">
          <span class="checkbox-custom"></span>
          <span class="label">Coordinator</span>
       </label>
@@ -17,7 +17,7 @@
         <input type="checkbox" class="checkbox"
           id="DH" [checked]="isDisciplineHead"
           (change)="isDisciplineHead = !isDisciplineHead; 
-          searchByParameters(userName.value)">
+          searchByParameters()">
           <span class="checkbox-custom"></span>
           <span class="label">Discipline Head</span>
         </label>
@@ -25,7 +25,7 @@
             <input type="checkbox" class="checkbox"
             id="interviewer" [checked]="isInterviewer"
             (change)="isInterviewer = !isInterviewer; 
-            searchByParameters(userName.value)">
+            searchByParameters()">
             <span class="checkbox-custom"></span>
             <span class="label">Interviewer</span>
         </label>
@@ -33,7 +33,7 @@
             <input type="checkbox" class="checkbox"
             id="humanR" [checked]="isHumanResource"
             (change)="isHumanResource = !isHumanResource; 
-            searchByParameters(userName.value)">
+            searchByParameters()">
             <span class="checkbox-custom"></span>
             <span class="label">Human Resource</span>
         </label>
@@ -45,9 +45,9 @@
           <label>Search by Name:</label>
       </div>  
       <div class="col-sm-12 col-md-8">
-          <input type="search" class="form-control form-control-sm" 
+          <input type="search" id="textParam" class="form-control form-control-sm" 
           placeholder="" aria-controls="dataTable"
-          #userName (keyup)="searchByParameters(userName.value)">
+          [(ngModel)] = "userName" (keyup)="searchByParameters()">
       </div>
     </div>  
   </div>

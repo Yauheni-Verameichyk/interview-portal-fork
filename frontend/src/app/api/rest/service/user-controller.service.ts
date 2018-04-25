@@ -5,7 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { UserInfo } from '../../../domain/UserInfo';
 import { User } from '../../../domain/User';
 import { environment } from '../../../../environments/environment';
-import {URLSearchParams} from '@angular/http';
+import { URLSearchParams } from '@angular/http';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class UserControllerService {
@@ -13,16 +14,21 @@ export class UserControllerService {
 
   constructor(private http: HttpClient) { }
 
-  public getUsers(quantity?: number): Observable<UserInfo[]> {
-    const data = { quantity: quantity.toString() };
-    return this.http.get(this.baseUrl, { params: data })
+  public getUsers(_quantity?: number, _parameters?: string): Observable<UserInfo[]> {
+    return this.http.get(this.baseUrl, {
+      params:
+        {
+          quantity: _quantity !== undefined ? _quantity.toString() : '0',
+          parameters: _parameters !== undefined ? _parameters.toString() : ''
+        }
+    })
       .pipe(map(this.handlerData),
         catchError(this.handlerError)
       );
   }
   getUsersByParameters(parameters: any): Observable<UserInfo[]> {
     const searchURL = this.baseUrl + '/search';
-    return this.http.get(searchURL,  { params: {parameters: parameters.toString() }}).pipe(
+    return this.http.get(searchURL, { params: { parameters: parameters.toString() } }).pipe(
       map(this.handlerData),
       catchError(this.handlerError)
     );

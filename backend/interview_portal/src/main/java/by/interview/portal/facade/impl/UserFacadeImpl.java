@@ -33,12 +33,6 @@ public class UserFacadeImpl implements UserFacade {
     private ModelMapper modelMapper;
 
     @Override
-    public List<UserDTO> findAll(int quantity) {
-        return userService.findAll(quantity).stream().filter(Objects::nonNull)
-                .map(userDTOConverter::convertToDTO).collect(Collectors.toList());
-    }
-
-    @Override
     public void save(UserDTO userDTO) {
         userService.save(userDTOConverter.convertToEntity(userDTO));
     }
@@ -62,21 +56,15 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public List<UserBaseInfoDTO> findAllUserBaseInfo(int page) {
-        return userService.findAll(page).stream().filter(Objects::nonNull)
+    public Set<UserBaseInfoDTO> findAllUserBaseInfo(Integer page, String searchParameters) {
+        return userService.findAll(page, searchParameters).stream().filter(Objects::nonNull)
                 .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     @Override
     public void delete(Long userId) {
         userService.delete(userId);
-    }
-
-    @Override public Set<UserBaseInfoDTO> findWithParameters(String searchParameters) {
-        return userService.findUserWithParameters(searchParameters).stream().filter(Objects::nonNull)
-            .map(userDTOConverter::convertToDTO).map(userDTO -> getUserBaseInfo(userDTO))
-            .collect(Collectors.toSet());
     }
 
     private UserBaseInfoDTO getUserBaseInfo(UserDTO userDTO) {

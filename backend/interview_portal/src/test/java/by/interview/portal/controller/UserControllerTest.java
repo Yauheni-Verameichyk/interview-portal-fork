@@ -66,7 +66,8 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnAllUsersList() throws Exception {
-        given(userFacade.findAllUserBaseInfo(0)).willReturn(Arrays.asList(userBaseInfoDTO));
+        given(userFacade.findAllUserBaseInfo(0, "")).willReturn(Arrays.asList(userBaseInfoDTO).stream().collect(
+            Collectors.toSet()));
         mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(userBaseInfoDTO.getName())))
