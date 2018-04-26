@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +38,8 @@ public class CandidateServiceImpl implements CandidateService {
     public List<Candidate> findAll(Integer quantity) {
         Integer page =
                 (int) Math.ceil(quantity.doubleValue() / QUANTITY_ELEMENTS_IN_PAGE.doubleValue());
-        return candidateRepository.findAll(PageRequest.of(page, QUANTITY_ELEMENTS_IN_PAGE))
-                .getContent();
+        return candidateRepository
+                .findAll(PageRequest.of(page, QUANTITY_ELEMENTS_IN_PAGE, orderBy())).getContent();
     }
 
     @Override
@@ -70,4 +71,9 @@ public class CandidateServiceImpl implements CandidateService {
                 .map(discipline -> disciplineRepository.findById(discipline.getId()).get())
                 .collect(Collectors.toSet());
     }
+
+    private Sort orderBy() {
+        return new Sort(Sort.Direction.ASC, "name");
+    }
+
 }

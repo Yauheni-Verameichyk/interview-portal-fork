@@ -5,6 +5,7 @@ import by.interview.portal.repository.InterviewRepository;
 import by.interview.portal.service.InterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +24,8 @@ public class InterviewServiceImpl implements InterviewService {
     public List<Interview> findAll(Integer quantity) {
         Integer page =
                 (int) Math.ceil(quantity.doubleValue() / QUANTITY_ELEMENTS_IN_PAGE.doubleValue());
-        return interviewRepository.findAll(PageRequest.of(page, QUANTITY_ELEMENTS_IN_PAGE))
-                .getContent();
+        return interviewRepository
+                .findAll(PageRequest.of(page, QUANTITY_ELEMENTS_IN_PAGE, orderBy())).getContent();
     }
 
     @Override
@@ -45,6 +46,10 @@ public class InterviewServiceImpl implements InterviewService {
     @Override
     public void delete(Long id) {
         interviewRepository.deleteById(id);
+    }
+
+    private Sort orderBy() {
+        return new Sort(Sort.Direction.DESC, "startTime");
     }
 
 }
