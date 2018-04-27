@@ -67,7 +67,7 @@ public class DisciplineControllerTest {
 
     @Test
     public void shouldReturnAllDisciplinesList() throws Exception {
-        given(disciplineFacade.findByParentId(null, 0)).willReturn(Arrays.asList(disciplineDTO));
+        given(disciplineFacade.findByParentId(null)).willReturn(Arrays.asList(disciplineDTO));
         mvc.perform(get("/discipline").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(disciplineDTO.getName())));

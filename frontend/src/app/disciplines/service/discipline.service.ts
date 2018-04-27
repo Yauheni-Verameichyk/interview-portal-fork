@@ -29,16 +29,16 @@ export class DisciplineService {
   }
 
   generateCreateSubItemPermissionForDiscipline(discipline: DisciplineWithDisciplineHeadsDTO): string {
-    return (discipline.parentName) ? `SUB_ITEM_CREATE_${discipline.parentName.toUpperCase()}`
-      : `SUB_ITEM_CREATE_${discipline.name.toUpperCase()}`;
+    return (discipline.parentName) ? `SUB_ITEM_CREATE_${this.convertDisciplineName(discipline.parentName)}`
+      : `SUB_ITEM_CREATE_${this.convertDisciplineName(discipline.name)}`;
   }
 
   generateEditPermissionForDiscipline(parentName: string): string {
-    return (!parentName) ? 'DISCIPLINE_EDIT' : `SUB_ITEM_EDIT_${parentName.toUpperCase()}`;
+    return (!parentName) ? 'DISCIPLINE_EDIT' : `SUB_ITEM_EDIT_${this.convertDisciplineName(parentName)}`;
   }
 
   generateDeletePermissionForDiscipline(parentName: string): string {
-    return (!parentName) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${parentName.toUpperCase()}`;
+    return (!parentName) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${this.convertDisciplineName(parentName)}`;
   }
 
   chooseRequest(searchOption: string, disciplinesNumber?): Observable<DisciplineDTO[]> {

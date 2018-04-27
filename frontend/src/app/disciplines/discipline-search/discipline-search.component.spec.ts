@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
 
 import { DisciplineSearchComponent } from './discipline-search.component';
 import { Router } from '@angular/router';
@@ -17,14 +17,14 @@ describe('DisciplineSearchComponent', () => {
   java.name = 'Java';
   java.subscription = '.';
   java.parentId = null;
-  java.hasSubItems = false;
+  java.hasChildren = false;
 
   const javaScript = new DisciplineDTO();
   javaScript.id = 2;
   javaScript.name = 'Java Script';
   javaScript.subscription = '23123';
   javaScript.parentId = null;
-  javaScript.hasSubItems = false;
+  javaScript.hasChildren = false;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -60,18 +60,24 @@ describe('DisciplineSearchComponent', () => {
 
   it('should search disciplines by name', inject([DisciplineControllerService],
     (disciplineControllerService: DisciplineControllerService) => {
-      spyOn(disciplineControllerService, 'findDisciplinesWithParametersUsingGET').and.callThrough();
-      component.searchByName('name');
-      expect(disciplineControllerService.findDisciplinesWithParametersUsingGET).toHaveBeenCalled();
+      fakeAsync(() => {
+        spyOn(disciplineControllerService, 'findDisciplinesWithParametersUsingGET').and.callThrough();
+        component.searchByName('name');
+        tick(500);
+        expect(disciplineControllerService.findDisciplinesWithParametersUsingGET).toHaveBeenCalled();
+      });
     }));
 
   it('should fail during disciplines search', inject([DisciplineControllerService, PopupService],
     (disciplineControllerService: DisciplineControllerService, popupService: PopupService) => {
-      spyOn(disciplineControllerService, 'findDisciplinesWithParametersUsingGET')
-        .and.callFake((parameterName) => Observable.throw(new Error()));
-      spyOn(popupService, 'displayMessage').and.callThrough();
-      component.searchByName('name');
-      expect(popupService.displayMessage).toHaveBeenCalledWith('Error during disciplines reading', new RouterStub());
+      fakeAsync(() => {
+        spyOn(disciplineControllerService, 'findDisciplinesWithParametersUsingGET')
+          .and.callFake((parameterName) => Observable.throw(new Error()));
+        spyOn(popupService, 'displayMessage').and.callThrough();
+        component.searchByName('name');
+        tick(500);
+        expect(popupService.displayMessage).toHaveBeenCalledWith('Error during disciplines reading', new RouterStub());
+      });
     }));
 });
 
@@ -82,14 +88,14 @@ class DisciplineControllerServiceStub {
     java.name = 'Java';
     java.subscription = '.';
     java.parentId = null;
-    java.hasSubItems = false;
+    java.hasChildren = false;
 
     const javaScript = new DisciplineDTO();
     javaScript.id = 2;
     javaScript.name = 'Java Script';
     javaScript.subscription = '23123';
     javaScript.parentId = null;
-    javaScript.hasSubItems = false;
+    javaScript.hasChildren = false;
     return Observable.of([java, javaScript]);
   }
 }

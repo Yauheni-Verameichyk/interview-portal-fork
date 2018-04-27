@@ -25,19 +25,19 @@ describe('DisciplineService', () => {
   }));
 
   it('should generate edit permission for the discipline', inject([DisciplineService], (service: DisciplineService) => {
-    expect(service.generateEditPermissionForDiscipline('Visual basic', 0)).toEqual('DISCIPLINE_EDIT');
+    expect(service.generateEditPermissionForDiscipline(null)).toEqual('DISCIPLINE_EDIT');
   }));
 
   it('should generate edit permission for the sub item', inject([DisciplineService], (service: DisciplineService) => {
-    expect(service.generateEditPermissionForDiscipline('VISUAL_BASIC', 1)).toEqual('SUB_ITEM_EDIT_VISUAL_BASIC');
+    expect(service.generateEditPermissionForDiscipline('Visual basic')).toEqual('SUB_ITEM_EDIT_VISUAL_BASIC');
   }));
 
   it('should generate delete permission for the discipline', inject([DisciplineService], (service: DisciplineService) => {
-    expect(service.generateDeletePermissionForDiscipline('Visual basic', 0)).toEqual('DISCIPLINE_DELETE');
+    expect(service.generateDeletePermissionForDiscipline(null)).toEqual('DISCIPLINE_DELETE');
   }));
 
   it('should generate delete permission for the sub item', inject([DisciplineService], (service: DisciplineService) => {
-    expect(service.generateDeletePermissionForDiscipline('VISUAL_BASIC', 1)).toEqual('SUB_ITEM_DELETE_VISUAL_BASIC');
+    expect(service.generateDeletePermissionForDiscipline('VISUAL_BASIC')).toEqual('SUB_ITEM_DELETE_VISUAL_BASIC');
   }));
 
   it('should return observable of users disciplines', inject([DisciplineService, DisciplineControllerService],
