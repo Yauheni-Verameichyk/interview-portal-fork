@@ -1,37 +1,39 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
-import { UserInfo } from '../../domain/UserInfo';
-import { UserControllerService } from '../../api/rest/service/user-controller.service';
-
-
-
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { EventTargetLike } from 'rxjs/observable/FromEventObservable';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
 @Component({
   selector: 'app-user-search',
   templateUrl: './user-search.component.html',
   styleUrls: ['./user-search.component.css']
 })
-export class UserSearchComponent implements OnInit, OnDestroy {
-  @Output() private emitUsers = new EventEmitter<UserInfo[]>();
-  private readonly destroy: Subject<void> = new Subject();
+export class UserSearchComponent implements OnInit {
+  @Output() private parameters = new EventEmitter<string>();
+  private expectationTime = new Subject();
   isCoordinator = true;
   isDisciplineHead = true;
   isInterviewer = true;
   isHumanResource = true;
+  userName = '';
+  private keyUp = new Subject<string>();
 
-  constructor(private userController: UserControllerService) { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    // you listen to values here which are debounced
+    // on every value, you call the outer component
+    this.expectationTime.debounceTime(350).subscribe((value => this.parameters.emit(value.toString())));
   }
-
-  searchByParameters(userName: string): void {
-    if (userName.length > 0) {
+  
+  searchByParameters(): void {
+    if (this.userName.length > 0) {
       const separator = this.isChosen() ? ';' : '';
-      const searchString = `name:${userName}${separator}${this.concatParameters()}`;
-      this.findUsersByParameters(searchString);
+      const searchString = `OR##name:${this.userName};OR##surname:${this.userName}${separator}${this.concatParameters()}`;
+      // send every value from the inner to the subject
+      this.expectationTime.next(searchString);
     } else {
       const searchString = `${this.concatParameters()}`;
-      this.findUsersByParameters(searchString);
-      console.log(searchString);
+      // send every value from the inner to the subject
+      this.expectationTime.next(searchString)
     }
 
   }
@@ -61,18 +63,12 @@ export class UserSearchComponent implements OnInit, OnDestroy {
       || this.isHumanResource
       || this.isInterviewer) ? true : false;
   }
-  findUsersByParameters(parameters: string) {
-    this.userController.getUsersByParameters(parameters)
-      .takeUntil(this.destroy)
-      .subscribe(users => {
-        this.emitUsers.emit(users);
-      }, error => {
-       console.log('Users not found');
-      }
-      );
-  }
-  ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+  resetParameters(): void {
+    this.isCoordinator = true;
+    this.isDisciplineHead = true;
+    this.isInterviewer = true;
+    this.isHumanResource = true;
+    this.userName = '';
+    this.searchByParameters();
   }
 }

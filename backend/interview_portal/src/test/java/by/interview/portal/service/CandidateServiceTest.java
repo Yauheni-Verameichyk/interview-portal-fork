@@ -34,6 +34,7 @@ import by.interview.portal.repository.CandidateRepository;
 import by.interview.portal.repository.CandidateWorkRepository;
 import by.interview.portal.repository.DisciplineRepository;
 import by.interview.portal.service.impl.CandidateServiceImpl;
+import org.springframework.data.domain.Sort;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CandidateServiceTest {
@@ -67,7 +68,7 @@ public class CandidateServiceTest {
 
     @Test
     public void shouldReturnCandidateList() {
-        when(candidateRepository.findAll(PageRequest.of(0, QUANTITY_ELEMENTS_IN_PAGE))).thenReturn(page);
+        when(candidateRepository.findAll(PageRequest.of(0, QUANTITY_ELEMENTS_IN_PAGE, orderBy()))).thenReturn(page);
         List<Candidate> newCandidateList = candidateService.findAll(0);
         assertNotNull(newCandidateList);
         assertThat(newCandidateList, equalTo(candidateList));
@@ -76,7 +77,7 @@ public class CandidateServiceTest {
 
     @Test(expected = DataIntegrityViolationException.class)
     public void shouldReturnExceptionFindAllCandidate() {
-        when(candidateRepository.findAll(PageRequest.of(0, QUANTITY_ELEMENTS_IN_PAGE)))
+        when(candidateRepository.findAll(PageRequest.of(0, QUANTITY_ELEMENTS_IN_PAGE, orderBy())))
                 .thenThrow(new DataIntegrityViolationException("error"));
         candidateService.findAll(0);
     }
@@ -150,6 +151,10 @@ public class CandidateServiceTest {
         doNothing().when(candidateEducationRepository).removeEducation();
         when(disciplineRepository.findById(1L)).thenReturn(Optional.of(discipline));
 
+    }
+
+    private Sort orderBy() {
+        return new Sort(Sort.Direction.ASC, "name");
     }
 
 }

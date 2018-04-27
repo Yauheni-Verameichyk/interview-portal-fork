@@ -28,3 +28,6 @@ label {
 	background: #413548;
 	border-radius: 2px;
 }
+.search-label {
+	text-align: right;
+}
