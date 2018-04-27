@@ -4,6 +4,7 @@ import { DisciplineDTO } from '../../api/models/discipline';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { Router } from '@angular/router';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 import { DisciplineService } from '../service/discipline.service';
@@ -15,30 +16,39 @@ import { DisciplineService } from '../service/discipline.service';
 })
 export class DisciplineSearchComponent implements OnDestroy {
   showFilter = false;
-
   searchSubItems = false;
   searchDisciplines = true;
+  private debounceTime: Subject<string> = new Subject();
   @Output() private emitDisciplines = new EventEmitter<DisciplineDTO[]>();
   private readonly destroy: Subject<void> = new Subject();
+ 
   constructor(
     private disciplineControllerService: DisciplineControllerService,
     private disciplineService: DisciplineService,
     private popupService: PopupService,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {
+    this.debounceTime.debounceTime(350)
+      .takeUntil(this.destroy)
+      .subscribe(((searchString) => this.readDisciplines(searchString)));
+  }
 
   searchByName(disciplineName: string): void {
     if (disciplineName.length > 0 && (this.searchDisciplines || this.searchSubItems)) {
       const searchString = `name:${disciplineName}${this.disciplineService.selectSearchPattern(this.searchDisciplines,
         this.searchSubItems)}`;
-      this.disciplineControllerService.findDisciplinesWithParametersUsingGET(searchString)
-        .takeUntil(this.destroy)
-        .subscribe(disciplines => {
-          this.emitDisciplines.emit(disciplines);
-        }, error => {
-          this.popupService.displayMessage('Error during disciplines reading', this.router);
-        });
+      this.debounceTime.next(searchString);
     }
+  }
+
+  readDisciplines(searchString: string): void {
+    this.disciplineControllerService.findDisciplinesWithParametersUsingGET(searchString)
+      .takeUntil(this.destroy)
+      .subscribe((disciplines) => {
+        this.emitDisciplines.emit(disciplines);
+      }, (error) => {
+        this.popupService.displayMessage('Error during disciplines reading', this.router);
+      });
   }
 
   ngOnDestroy(): void {
