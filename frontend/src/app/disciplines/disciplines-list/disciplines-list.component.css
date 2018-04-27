@@ -1,6 +1,7 @@
 .discipline-list{
     margin: 90px 10px 10px 10px;
-    /* background-color: #383838 !important; */
+    min-height: 89vh;
+    background-color: rgba(0,0,0,.03);
 }
 .active {
     background-color: rgb(100, 98, 98) !important;
@@ -8,7 +9,6 @@
 
 table {
     margin: 0px!important;
-    
 }
 
 th {
@@ -110,26 +110,30 @@ div.tree>tree-node>div>.node-wrapper>tree-node-expander>.toggle-children-wrapper
     left: 22px
 }
 
-div.view-discipline {
-    width: 50%;
-    float: left;
-    margin: 0 10%;
+.table-header {
+    background: rgba(49, 46, 46, 0.9)!important;
+    width: 100%;
+    min-height: 66px;
 }
 
 .tree-view{
-    border: solid 2px;
+    margin: 0 2%;
     width: 350px;
     float: left;
+    min-height:60vh; 
+    max-height: 80vh;
+    background-color: #fff;
 }
 
-.table-list {
-    max-height: 40vh;
+.tree-list {
+    max-height: 70vh;
+    overflow: auto;
 }
 
 .table-header {
     background: rgba(49, 46, 46, 0.9)!important;
     width: 100%;
-    text-align: center;
+    min-height: 66px;
 }
 
 .header-text {
@@ -137,6 +141,7 @@ div.view-discipline {
     letter-spacing: 2px;
     font-weight: 600;
     font-size: 18px; 
+    margin-left: 10%;
 }
 
 .my-all-filter {

@@ -20,7 +20,7 @@ import 'rxjs/add/operator/toPromise';
 export class DisciplinesListComponent implements OnInit, OnDestroy {
 
   public isLoaded: boolean;
-  disciplinesList: Array<DisciplineDTO> = [];
+  disciplinesList: DisciplineDTO[] = [];
   activeFilter: string;
   activeDiscipline: DisciplineDTO;
   private readonly destroy: Subject<void> = new Subject();
@@ -42,10 +42,6 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
     private disciplinesControllerService: DisciplineControllerService,
   ) { }
 
-  setActiveDiscipline(tree: any, node, event): void {
-    this.readDiscipline(node.id);
-  }
-
   ngOnInit(): void {
     this.isLoaded = false;
     this.activeFilter = this.authenticationService.isPermissionPresent('DISCIPLINES_FILTER_READ') ? 'MY' : 'ALL';
@@ -64,8 +60,10 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
       .takeUntil(this.destroy)
       .subscribe((disciplines) => {
         this.isLoaded = true;
-        (this.activeFilter === 'ALL') ? this.disciplinesList = this.disciplinesList.concat(...disciplines) :
-          this.disciplinesList = disciplines;
+        this.disciplinesList = disciplines;
+        if (this.activeDiscipline) {
+          this.readDiscipline(this.activeDiscipline.id);
+        }
       }, (error) => {
         this.popupService.displayMessage('Error during disciplines reading', this.router);
       });
@@ -80,25 +78,20 @@ export class DisciplinesListComponent implements OnInit, OnDestroy {
         }, (error) => {
           this.popupService.displayMessage('Error during discipline reading', this.router);
         },
-      );
+    );
   }
 
   findSubItems(node: any): Promise<DisciplineDTO[]> {
     return this.disciplinesControllerService.findSubItemsUsingGET(node.id).toPromise();
   }
 
+  setActiveDiscipline(tree: any, node, event): void {
+    this.readDiscipline(node.id);
+  }
+
   receiveDisciplinesFromSearch(disciplines: DisciplineDTO[]): void {
     this.activeFilter = null;
     this.disciplinesList = disciplines;
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  windowScrollListener() {
-    const position = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-    const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    if (position === max && this.activeFilter === 'ALL') {
-      this.findDisciplines(this.activeFilter, this.disciplinesList.length);
-    }
   }
 
   ngOnDestroy(): void {

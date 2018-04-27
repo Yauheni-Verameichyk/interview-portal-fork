@@ -70,9 +70,7 @@ public class DisciplineServiceImpl implements DisciplineService {
         DisciplineWithHeadsDTO disciplineDTO =
                 disciplineWithHeadsConverter.convertToDTO(discipline);
         if (disciplineDTO.getParentId() != null) {
-            Discipline parentDiscipline =
-                    disciplineRepository.findById(disciplineDTO.getParentId()).get();
-            disciplineDTO.setParentName(parentDiscipline.getName());
+            disciplineDTO.setParentName(getRootParentName(disciplineDTO.getParentId()));
         } else {
             disciplineDTO.setDisciplineHeadsList(userRepository
                     .findAllByRoleAndDiscipline(Role.DISCIPLINE_HEAD, discipline).stream()
@@ -80,6 +78,15 @@ public class DisciplineServiceImpl implements DisciplineService {
                     .collect(Collectors.toSet()));
         }
         return disciplineDTO;
+    }
+
+    private String getRootParentName(Long disciplineId) {
+        Discipline parentDiscipline = disciplineRepository.findById(disciplineId).get();
+        if (parentDiscipline.getParentId() == null) {
+            return parentDiscipline.getName();
+        } else {
+            return getRootParentName(parentDiscipline.getParentId());
+        }
     }
 
     @Override

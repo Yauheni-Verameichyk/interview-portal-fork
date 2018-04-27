@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
 import { DisciplineDTO } from '../../api/models';
+import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
 
 
 @Injectable()
@@ -27,12 +28,17 @@ export class DisciplineService {
     return disciplineName.trim().toUpperCase().replace(/ /g, '_');
   }
 
-  generateEditPermissionForDiscipline(disciplineName: string, childLevel: number): string {
-    return (childLevel === 0) ? 'DISCIPLINE_EDIT' : `SUB_ITEM_EDIT_${disciplineName}`;
+  generateCreateSubItemPermissionForDiscipline(discipline: DisciplineWithDisciplineHeadsDTO): string {
+    return (discipline.parentName) ? `SUB_ITEM_CREATE_${discipline.parentName.toUpperCase()}`
+      : `SUB_ITEM_CREATE_${discipline.name.toUpperCase()}`;
   }
 
-  generateDeletePermissionForDiscipline(disciplineName: string, childLevel: number): string {
-    return (childLevel === 0) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${disciplineName}`;
+  generateEditPermissionForDiscipline(parentName: string): string {
+    return (!parentName) ? 'DISCIPLINE_EDIT' : `SUB_ITEM_EDIT_${parentName.toUpperCase()}`;
+  }
+
+  generateDeletePermissionForDiscipline(parentName: string): string {
+    return (!parentName) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${parentName.toUpperCase()}`;
   }
 
   chooseRequest(searchOption: string, disciplinesNumber?): Observable<DisciplineDTO[]> {
