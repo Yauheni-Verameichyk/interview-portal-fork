@@ -80,15 +80,6 @@ public class DisciplineServiceImpl implements DisciplineService {
         return disciplineDTO;
     }
 
-    private String getRootParentName(Long disciplineId) {
-        Discipline parentDiscipline = disciplineRepository.findById(disciplineId).get();
-        if (parentDiscipline.getParentId() == null) {
-            return parentDiscipline.getName();
-        } else {
-            return getRootParentName(parentDiscipline.getParentId());
-        }
-    }
-
     @Override
     public List<DisciplineDTO> findByParentId(Long id) {
         List<DisciplineDTO> disciplineDTOsList = disciplineRepository.findAllByParentId(id).stream()
@@ -201,5 +192,14 @@ public class DisciplineServiceImpl implements DisciplineService {
                 ? disciplineDTO.getDisciplineHeadsList().stream().filter(Objects::nonNull)
                         .map(userBaseInfoDTOConverter::convertToEntity).collect(Collectors.toSet())
                 : Collections.emptySet();
+    }
+
+    private String getRootParentName(Long disciplineId) {
+        Discipline parentDiscipline = disciplineRepository.findById(disciplineId).get();
+        if (parentDiscipline.getParentId() == null) {
+            return parentDiscipline.getName();
+        } else {
+            return getRootParentName(parentDiscipline.getParentId());
+        }
     }
 }

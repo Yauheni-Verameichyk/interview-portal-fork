@@ -1,16 +1,17 @@
-import { Component, HostListener } from '@angular/core';
-import { OnDestroy, OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/toPromise';
+
+import { Component } from '@angular/core';
+import { OnDestroy, OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { NavigationEnd, Router } from '@angular/router';
+import { ITreeOptions } from 'angular-tree-component';
 import { Subject } from 'rxjs/Subject';
+
 import { DisciplineDTO } from '../../api/models';
 import { DisciplineControllerService } from '../../api/services';
-import { Observable } from 'rxjs/Observable';
-import { DisciplineService } from '../service/discipline.service';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { ITreeOptions, IActionMapping, TREE_ACTIONS } from 'angular-tree-component';
-import 'rxjs/add/operator/toPromise';
+import { DisciplineService } from '../service/discipline.service';
 
 @Component({
   selector: 'app-disciplines-list',

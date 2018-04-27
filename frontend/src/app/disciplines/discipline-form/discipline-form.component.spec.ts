@@ -1,21 +1,21 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { DisciplineFormComponent } from './discipline-form.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { DisciplineControllerService } from '../../api/services';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserControllerService } from '../../api/services/user-controller.service';
-import { DisciplineService } from '../service/discipline.service';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import { Injectable } from '@angular/core';
-import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
-import { LightFieldService } from '../../shared/validator/service/light-field.service';
-import { SharedModule } from '../../shared/shared.module';
-import { UserInfo } from '../../domain/UserInfo';
+
+import { Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DisciplineControllerService } from '../../api/services';
+import { UserControllerService } from '../../api/services/user-controller.service';
+import { UserInfo } from '../../domain/UserInfo';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { SharedModule } from '../../shared/shared.module';
+import { LightFieldService } from '../../shared/validator/service/light-field.service';
+import { DisciplineService } from '../service/discipline.service';
+import { DisciplineFormComponent } from './discipline-form.component';
 
 describe('DisciplineFormComponent', () => {
   let component: DisciplineFormComponent;

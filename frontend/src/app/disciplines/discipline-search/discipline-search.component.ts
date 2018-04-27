@@ -1,12 +1,14 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { DisciplineControllerService } from '../../api/services/discipline-controller.service';
-import { DisciplineDTO } from '../../api/models/discipline';
-import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
-import { Router } from '@angular/router';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/takeUntil';
+
+import { Component, EventEmitter, Output } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
+
+import { DisciplineDTO } from '../../api/models/discipline';
+import { DisciplineControllerService } from '../../api/services/discipline-controller.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { DisciplineService } from '../service/discipline.service';
 
 @Component({

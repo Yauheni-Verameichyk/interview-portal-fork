@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
-import { Subject } from 'rxjs';
-import { DisciplineDTO } from '../../api/models';
-import { DisciplineService } from '../service/discipline.service';
-import { DisciplineControllerService } from '../../api/services';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+
+import { Component, Input } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
+
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
+import { DisciplineControllerService } from '../../api/services';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { DisciplineService } from '../service/discipline.service';
 
 @Component({
   selector: 'app-discipline',

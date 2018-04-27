@@ -1,12 +1,12 @@
-import { async, ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
-
-import { DisciplineSearchComponent } from './discipline-search.component';
+import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { DisciplineControllerService } from '../../api/services/discipline-controller.service';
-import { DisciplineService } from '../service/discipline.service';
-import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { Observable } from 'rxjs/Observable';
+
 import { DisciplineDTO } from '../../api/models/discipline';
+import { DisciplineControllerService } from '../../api/services/discipline-controller.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { DisciplineService } from '../service/discipline.service';
+import { DisciplineSearchComponent } from './discipline-search.component';
 
 describe('DisciplineSearchComponent', () => {
   let component: DisciplineSearchComponent;

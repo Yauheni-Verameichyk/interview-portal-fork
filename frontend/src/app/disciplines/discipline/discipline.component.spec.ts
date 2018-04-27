@@ -1,19 +1,20 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-
-import { DisciplineComponent } from './discipline.component';
-import { NO_ERRORS_SCHEMA, Injectable } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { SharedModule } from '../../shared/shared.module';
-import { DisciplineControllerService } from '../../api/services';
-import { DisciplineService } from '../service/discipline.service';
-import { Router, ActivatedRoute, NavigationExtras, RouterModule } from '@angular/router';
-import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
-import { AuthenticationService } from '../../service/authentication/authentication.service';
-import { DisciplineDTO } from '../../api/models';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
+
+import { Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs/Observable';
+
+import { DisciplineDTO } from '../../api/models';
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
+import { DisciplineControllerService } from '../../api/services';
+import { AuthenticationService } from '../../service/authentication/authentication.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { SharedModule } from '../../shared/shared.module';
+import { DisciplineService } from '../service/discipline.service';
+import { DisciplineComponent } from './discipline.component';
 
 describe('DisciplineComponent', () => {
   let component: DisciplineComponent;

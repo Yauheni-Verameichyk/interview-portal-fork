@@ -39,7 +39,6 @@ public class DisciplineController {
     @GetMapping
     public List<DisciplineDTO> findAll(
             @RequestParam(name = "quantity", defaultValue = "0") Integer quantity) {
-        // return disciplineFacade.findByParentId(null, quantity);
         return disciplineFacade.findByParentId(null);
     }
 

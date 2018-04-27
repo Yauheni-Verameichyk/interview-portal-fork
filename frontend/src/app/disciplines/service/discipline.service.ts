@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DisciplineControllerService } from '../../api/services';
 import { Observable } from 'rxjs/Observable';
+
 import { DisciplineDTO } from '../../api/models';
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
+import { DisciplineControllerService } from '../../api/services';
 
 
 @Injectable()

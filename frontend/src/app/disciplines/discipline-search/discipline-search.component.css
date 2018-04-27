@@ -1,6 +1,5 @@
 div.dataTables_filter {
     text-align: right;
-    /* float: right; */
     display: inline-block;
   }
 div.dataTables_filter label {

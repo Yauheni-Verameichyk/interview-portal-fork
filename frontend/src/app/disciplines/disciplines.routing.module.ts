@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { DisciplinesListComponent } from './disciplines-list/disciplines-list.component';
-import { DisciplineComponent } from './discipline/discipline.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
 import { DisciplineFormComponent } from './discipline-form/discipline-form.component';
+import { DisciplineComponent } from './discipline/discipline.component';
+import { DisciplinesListComponent } from './disciplines-list/disciplines-list.component';
 
 const routes: Routes = [
   { path: 'discipline', component: DisciplinesListComponent, runGuardsAndResolvers: 'always'},
