@@ -12,8 +12,8 @@ public class SpecificationBuilder<T> {
         params = new ArrayList<SearchCriteria>();
     }
 
-    public SpecificationBuilder<T> with(String key, String operation, Object value) {
-        params.add(new SearchCriteria(key, operation, value));
+    public SpecificationBuilder<T> with(String logicalOperand, String key, String operation, Object value) {
+        params.add(new SearchCriteria(logicalOperand, key, operation, value));
         return this;
     }
 
@@ -29,7 +29,13 @@ public class SpecificationBuilder<T> {
 
         Specification<T> result = specs.get(0);
         for (int i = 1; i < specs.size(); i++) {
-            result = Specification.where(result).and(specs.get(i));
+            SpecificationImpl<T> as = (SpecificationImpl<T>) specs.get(i);
+            if(as.getCriteria().getLogicalOperand()
+                != null && as.getCriteria().getLogicalOperand().equals("OR##")){
+                result = Specification.where(result).or(specs.get(i));
+            }else{
+                result = Specification.where(result).and(specs.get(i));
+            }
         }
         return result;
     }

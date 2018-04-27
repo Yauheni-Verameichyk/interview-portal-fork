@@ -17,7 +17,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(private userController: UserControllerService, private router: Router) { }
   
   ngOnInit() {
-    this.isLoaded = false;
     this.getUsersWithParams();
   }
   addNewUser() {

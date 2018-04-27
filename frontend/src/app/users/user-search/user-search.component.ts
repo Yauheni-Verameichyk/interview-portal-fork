@@ -23,11 +23,11 @@ export class UserSearchComponent implements OnInit {
     // on every value, you call the outer component
     this.expectationTime.debounceTime(350).subscribe((value => this.parameters.emit(value.toString())));
   }
-
+  
   searchByParameters(): void {
     if (this.userName.length > 0) {
       const separator = this.isChosen() ? ';' : '';
-      const searchString = `name:${this.userName}${separator}${this.concatParameters()}`;
+      const searchString = `OR##name:${this.userName};OR##surname:${this.userName}${separator}${this.concatParameters()}`;
       // send every value from the inner to the subject
       this.expectationTime.next(searchString);
     } else {
