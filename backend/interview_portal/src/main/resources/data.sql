@@ -34,7 +34,7 @@ where users_roles_disciplines.discipline_id = for_discipline_id AND not (specifi
      SELECT * INTO interview
         FROM interviews join interviews_users on interviews.id = interviews_users.interview_id
         join users on interviews_users.user_id = users.id
-        WHERE users.id = event.user_id AND interviews.start_time = next_time;
+        WHERE users.id = event.user_id AND next_time BETWEEN interviews.start_time AND interviews.end_time;
      SELECT * INTO excluded_time_slot
         FROM excluded_time_slots WHERE excluded_time_slots.user_id = event.user_id AND excluded_time_slots.start_time = next_time;
     	IF (next_time >= range_start AND next_time <= range_end AND interview is null AND excluded_time_slot is null)

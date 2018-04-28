@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 import by.interview.portal.domain.ExcludedTimeSlot;
-import by.interview.portal.domain.Interview;
 
 @Data
 @NoArgsConstructor
@@ -18,5 +18,5 @@ public class CalendarDTO {
 
     private List<ExcludedTimeSlot> excludedTimeSlots;
 
-    private List<Interview> interviews;
+    private Set<InterviewDTO> interviews;
 }

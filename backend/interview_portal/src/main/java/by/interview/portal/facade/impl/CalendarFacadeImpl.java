@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import by.interview.portal.dto.CalendarDTO;
 import by.interview.portal.facade.CalendarFacade;
+import by.interview.portal.facade.InterviewFacade;
 import by.interview.portal.facade.SpecifiedTimeFacade;
 import by.interview.portal.service.ExcludedTimeSlotService;
 
@@ -19,6 +20,9 @@ public class CalendarFacadeImpl implements CalendarFacade {
     @Autowired
     private SpecifiedTimeFacade specifiedTimeFacade;
 
+    @Autowired
+    private InterviewFacade interviewFacade;
+
     @Override
     public CalendarDTO findAllForUserInRange(LocalDateTime rangeStart, LocalDateTime rangeEnd) {
         CalendarDTO calendarDTO = new CalendarDTO();
@@ -26,6 +30,7 @@ public class CalendarFacadeImpl implements CalendarFacade {
                 specifiedTimeFacade.findAllForUserInRange(rangeStart, rangeEnd));
         calendarDTO.setExcludedTimeSlots(
                 excludedTimeSlotService.findByStartTimeBetween(rangeStart, rangeEnd));
+        calendarDTO.setInterviews(interviewFacade.findByStartTimeBetween(rangeStart, rangeEnd));
         return calendarDTO;
     }
 }
