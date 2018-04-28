@@ -39,7 +39,7 @@ public class DisciplineController {
     @GetMapping
     public List<DisciplineDTO> findAll(
             @RequestParam(name = "quantity", defaultValue = "0") Integer quantity) {
-        return disciplineFacade.findByParentId(null, quantity);
+        return disciplineFacade.findByParentId(null);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
@@ -68,7 +68,8 @@ public class DisciplineController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "search")
-    public Set<DisciplineDTO> findDisciplinesWithParameters(@RequestParam(value = "search") String search) {
+    public Set<DisciplineDTO> findDisciplinesWithParameters(
+            @RequestParam(value = "search") String search) {
         return disciplineFacade.findWithParameters(search);
     }
 }

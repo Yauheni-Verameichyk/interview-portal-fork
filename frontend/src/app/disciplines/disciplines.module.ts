@@ -1,16 +1,18 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DisciplineRoutingModule, disciplineRouterComponents } from './disciplines.routing.module';
-import { DisciplineComponent } from './discipline/discipline.component';
-import { DisciplinesListComponent } from './disciplines-list/disciplines-list.component';
-import { DisciplineService } from './service/discipline.service';
-import { DisciplineControllerService } from '../api/services';
-import { ApiModule } from '../api/api.module';
-import { SharedModule } from '../shared/shared.module';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TreeModule } from 'angular-tree-component';
+
+import { ApiModule } from '../api/api.module';
 import { UserControllerService } from '../api/rest/service/user-controller.service';
+import { DisciplineControllerService } from '../api/services';
+import { SharedModule } from '../shared/shared.module';
 import { DisciplineFormComponent } from './discipline-form/discipline-form.component';
 import { DisciplineSearchComponent } from './discipline-search/discipline-search.component';
+import { DisciplineComponent } from './discipline/discipline.component';
+import { DisciplinesListComponent } from './disciplines-list/disciplines-list.component';
+import { disciplineRouterComponents, DisciplineRoutingModule } from './disciplines.routing.module';
+import { DisciplineService } from './service/discipline.service';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import { DisciplineSearchComponent } from './discipline-search/discipline-search
     ApiModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TreeModule,
   ],
   declarations: [
     disciplineRouterComponents,

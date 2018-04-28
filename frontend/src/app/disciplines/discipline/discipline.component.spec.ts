@@ -1,18 +1,20 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-
-import { DisciplineComponent } from './discipline.component';
-import { NO_ERRORS_SCHEMA, Injectable } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { SharedModule } from '../../shared/shared.module';
-import { DisciplineControllerService } from '../../api/services';
-import { DisciplineService } from '../service/discipline.service';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
-import { AuthenticationService } from '../../service/authentication/authentication.service';
-import { DisciplineDTO } from '../../api/models';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
+
+import { Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs/Observable';
+
+import { DisciplineDTO } from '../../api/models';
+import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
+import { DisciplineControllerService } from '../../api/services';
+import { AuthenticationService } from '../../service/authentication/authentication.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { SharedModule } from '../../shared/shared.module';
+import { DisciplineService } from '../service/discipline.service';
+import { DisciplineComponent } from './discipline.component';
 
 describe('DisciplineComponent', () => {
   let component: DisciplineComponent;
@@ -22,13 +24,13 @@ describe('DisciplineComponent', () => {
   java.name = 'Java';
   java.subscription = '.';
   java.parentId = null;
-  java.hasSubItems = false;
+  java.hasChildren = false;
 
   const javaSubItem = new DisciplineDTO();
   javaSubItem.name = 'Java core';
   javaSubItem.subscription = 'Some description';
   javaSubItem.parentId = 1;
-  javaSubItem.hasSubItems = false;
+  javaSubItem.hasChildren = false;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -58,32 +60,6 @@ describe('DisciplineComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should find and show sub items for the discipline', () => {
-    expect(component.subDisciplinesList).toEqual([]);
-    component.showSubItems();
-    expect(component.subDisciplinesList).toEqual([javaSubItem]);
-  });
-
-  it('should fail to find and show sub items for the discipline',
-    inject([PopupService, DisciplineControllerService],
-      (popupService: PopupService, disciplineControllerService: DisciplineControllerService) => {
-        spyOn(popupService, 'displayMessage').and.callThrough();
-        spyOn(disciplineControllerService, 'findSubItemsUsingGET')
-          .and.callFake((parameterName) => Observable.throw(new Error()));
-        expect(component.subDisciplinesList).toEqual([]);
-        component.showSubItems();
-        expect(disciplineControllerService.findSubItemsUsingGET).toHaveBeenCalled();
-        expect(popupService.displayMessage).toHaveBeenCalledWith('Error during sub items reading', new RouterStub());
-      })
-  );
-
-  it('should hide sub items for the discipline', () => {
-    component.subDisciplinesList = [javaSubItem];
-    component.subItemsShown = true;
-    component.showSubItems();
-    expect(component.subDisciplinesList).toEqual([]);
-  });
-
   it('should delete the discipline',
     inject([PopupService, DisciplineControllerService],
       (popupService: PopupService, disciplineControllerService: DisciplineControllerService) => {
@@ -92,7 +68,7 @@ describe('DisciplineComponent', () => {
         component.deleteDiscipline(component.discipline.id);
         expect(disciplineControllerService.deleteDisciplineUsingDELETE).toHaveBeenCalled();
         expect(popupService.displayMessage).toHaveBeenCalledWith('Discipline was deleted', new RouterStub());
-      })
+      }),
   );
 
   it('should fail to delete the discipline',
@@ -104,7 +80,7 @@ describe('DisciplineComponent', () => {
         component.deleteDiscipline(component.discipline.id);
         expect(disciplineControllerService.deleteDisciplineUsingDELETE).toHaveBeenCalled();
         expect(popupService.displayMessage).toHaveBeenCalledWith('Error during discipline deleting', new RouterStub());
-      })
+      }),
   );
 });
 
@@ -114,7 +90,7 @@ class DisciplineControllerServiceStub {
     javaSubItem.name = 'Java core';
     javaSubItem.subscription = 'Some description';
     javaSubItem.parentId = 1;
-    javaSubItem.hasSubItems = false;
+    javaSubItem.hasChildren = false;
     return Observable.of([javaSubItem]);
   }
 
@@ -131,13 +107,19 @@ class DisciplineServiceStub {
     return 'JAVA';
   }
 
-  generateEditPermissionForDiscipline(disciplineName: string, childLevel: number): string {
-    return (childLevel === 0) ? 'DISCIPLINE_EDIT' : `SUB_ITEM_EDIT_${disciplineName}`;
+  generateCreateSubItemPermissionForDiscipline(discipline: DisciplineWithDisciplineHeadsDTO): string {
+    return (discipline.parentName) ? `SUB_ITEM_CREATE_${discipline.parentName.toUpperCase()}`
+      : `SUB_ITEM_CREATE_${discipline.name.toUpperCase()}`;
   }
 
-  generateDeletePermissionForDiscipline(disciplineName: string, childLevel: number): string {
-    return (childLevel === 0) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${disciplineName}`;
+  generateEditPermissionForDiscipline(parentName: string): string {
+    return (!parentName) ? 'DISCIPLINE_EDIT' : `SUB_ITEM_EDIT_${parentName.toUpperCase()}`;
   }
+
+  generateDeletePermissionForDiscipline(parentName: string): string {
+    return (!parentName) ? 'DISCIPLINE_DELETE' : `SUB_ITEM_DELETE_${parentName.toUpperCase()}`;
+  }
+
 }
 
 class PopupServiceServiceStub {
@@ -147,6 +129,7 @@ class PopupServiceServiceStub {
 }
 
 class RouterStub {
+  events = Observable.of(null);
   navigate(commands: any[], extras?: NavigationExtras) { }
 }
 

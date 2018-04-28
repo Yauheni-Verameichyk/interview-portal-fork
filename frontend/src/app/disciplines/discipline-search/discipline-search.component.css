@@ -1,7 +1,6 @@
 div.dataTables_filter {
     text-align: right;
-    float: left;
-    width: 370px;
+    display: inline-block;
   }
 div.dataTables_filter label {
     font-weight: normal;
@@ -17,17 +16,21 @@ div.dataTables_filter label {
   float: right;
 }
 
-.error-message {
-  margin-top: 35px;
+.error {
+  color: red;
   text-align: center;
 }
 
 .card-header {
   margin-bottom: 20px;
+  z-index: 50;
+  position: relative;
 }
 
 .filter-button {
-  float: left;
+  display: inline-block;
+  width: 10px !important;
+  height: 10px !important;
 }
 .checkbox {
 	display: none;
@@ -58,4 +61,19 @@ div.dataTables_filter label {
 }
 label {
   margin-right: 10px;
+}
+
+.filter{
+  z-index: 1000;
+  position: absolute;
+  margin-top: -7px;
+  margin-left: 265px;
+  background-color:white;
+  border: solid 1px;
+  padding: 10px;
+  width: 135px;
+}
+
+input[type="text"] {
+  font-family: FontAwesome;
 }

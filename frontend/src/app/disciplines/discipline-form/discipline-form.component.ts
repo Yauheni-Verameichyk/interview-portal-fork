@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
-import { DisciplineControllerService } from '../../api/services';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import 'rxjs/add/operator/takeUntil';
-import { Subject } from 'rxjs/Subject';
-import { UserInfo } from '../../domain/UserInfo';
-import { Observable } from 'rxjs/Observable';
+
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DisciplineService } from '../service/discipline.service';
-import { UserControllerService } from '../../api/services/user-controller.service';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
 import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
+import { DisciplineControllerService } from '../../api/services';
+import { UserControllerService } from '../../api/services/user-controller.service';
+import { UserInfo } from '../../domain/UserInfo';
 import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
 import { LightFieldService } from '../../shared/validator/service/light-field.service';
+import { DisciplineService } from '../service/discipline.service';
 
 @Component({
   selector: 'app-discipline-form',

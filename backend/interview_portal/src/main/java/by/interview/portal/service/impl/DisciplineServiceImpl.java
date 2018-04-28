@@ -1,5 +1,6 @@
 package by.interview.portal.service.impl;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -69,9 +70,7 @@ public class DisciplineServiceImpl implements DisciplineService {
         DisciplineWithHeadsDTO disciplineDTO =
                 disciplineWithHeadsConverter.convertToDTO(discipline);
         if (disciplineDTO.getParentId() != null) {
-            Discipline parentDiscipline =
-                    disciplineRepository.findById(disciplineDTO.getParentId()).get();
-            disciplineDTO.setParentName(parentDiscipline.getName());
+            disciplineDTO.setParentName(getRootParentName(disciplineDTO.getParentId()));
         } else {
             disciplineDTO.setDisciplineHeadsList(userRepository
                     .findAllByRoleAndDiscipline(Role.DISCIPLINE_HEAD, discipline).stream()
@@ -85,10 +84,7 @@ public class DisciplineServiceImpl implements DisciplineService {
     public List<DisciplineDTO> findByParentId(Long id) {
         List<DisciplineDTO> disciplineDTOsList = disciplineRepository.findAllByParentId(id).stream()
                 .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toList());
-        for (DisciplineDTO discipline : disciplineDTOsList) {
-            discipline.setHasSubItems(
-                    disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);
-        }
+        defineChildrenPresence(disciplineDTOsList);
         return disciplineDTOsList;
     }
 
@@ -99,10 +95,7 @@ public class DisciplineServiceImpl implements DisciplineService {
         List<DisciplineDTO> disciplineDTOsList = disciplineRepository
                 .findAllByParentId(null, PageRequest.of(page, QUANTITY_ELEMENTS_IN_PAGE)).stream()
                 .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toList());
-        for (DisciplineDTO discipline : disciplineDTOsList) {
-            discipline.setHasSubItems(
-                    disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);
-        }
+        defineChildrenPresence(disciplineDTOsList);
         return disciplineDTOsList;
     }
 
@@ -117,10 +110,7 @@ public class DisciplineServiceImpl implements DisciplineService {
     public List<DisciplineDTO> findDisciplinesByUser(String login) {
         List<DisciplineDTO> disciplineDTOsList = disciplineRepository.findDisciplinesByUser(login)
                 .stream().map(disciplineDTOConverter::convertToDTO).collect(Collectors.toList());
-        for (DisciplineDTO discipline : disciplineDTOsList) {
-            discipline.setHasSubItems(
-                    disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);
-        }
+        defineChildrenPresence(disciplineDTOsList);
         return disciplineDTOsList;
     };
 
@@ -138,11 +128,15 @@ public class DisciplineServiceImpl implements DisciplineService {
         Set<DisciplineDTO> disciplineDTOs =
                 disciplineRepository.findAll(SearchUtils.getSearchSpecifications(search)).stream()
                         .map(disciplineDTOConverter::convertToDTO).collect(Collectors.toSet());
+        defineChildrenPresence(disciplineDTOs);
+        return disciplineDTOs;
+    }
+
+    private void defineChildrenPresence(Collection<DisciplineDTO> disciplineDTOs) {
         for (DisciplineDTO discipline : disciplineDTOs) {
-            discipline.setHasSubItems(
+            discipline.setHasChildren(
                     disciplineRepository.findAllByParentId(discipline.getId()).size() > 0);
         }
-        return disciplineDTOs;
     }
 
     private void deleteChilds(Discipline discipline) {
@@ -198,5 +192,14 @@ public class DisciplineServiceImpl implements DisciplineService {
                 ? disciplineDTO.getDisciplineHeadsList().stream().filter(Objects::nonNull)
                         .map(userBaseInfoDTOConverter::convertToEntity).collect(Collectors.toSet())
                 : Collections.emptySet();
+    }
+
+    private String getRootParentName(Long disciplineId) {
+        Discipline parentDiscipline = disciplineRepository.findById(disciplineId).get();
+        if (parentDiscipline.getParentId() == null) {
+            return parentDiscipline.getName();
+        } else {
+            return getRootParentName(parentDiscipline.getParentId());
+        }
     }
 }

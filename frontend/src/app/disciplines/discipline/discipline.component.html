@@ -1,40 +1,50 @@
-<table class="discipline-table table table-hover disciplinesList">
-  <tbody>
-    <tr>
-      <td scope="col" class="unwrap-indicator big-icon" (click)="showSubItems();">
-        <div *requiredAuthority="'SUB_ITEM_READ_' + parentDisciplineName">
-          <div *ngIf="discipline.hasSubItems && !subItemsShown" class="unwrap-indicator btn btn-xl">
-            <i class="fas fa-caret-right"></i>
-          </div>
-          <div *ngIf="discipline.hasSubItems && subItemsShown" class="unwrap-indicator btn btn-xl">
-            <i class="fas fa-caret-down"></i>
+<div class="view-discipline-form">
+  <div class="table-header">
+    <span class="header-text">Selected
+      <span *ngIf="!discipline?.parentName">discipline</span>
+      <span *ngIf="discipline?.parentName">sub-item</span>:
+      <span class="discipline-name">{{ discipline?.name}}</span>
+      <br>
+    </span>
+    <br>
+    <button *requiredAuthority="'DISCIPLINE_CREATE'" class="btn btn-success mr-2 pull-right create-button" [routerLink]="['', {outlets: { popup: ['discipline', 'create'] } }]"
+      routerLinkActive="active">Create new discipline</button>
+  </div>
+  <div *ngIf="discipline" class="view-discipline">
+    <div *ngIf="discipline" scope="col" class="pull-right unwrap-indicator edit-buttons">
+      <div class="pull-right">
+        <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(discipline.parentName)" (click)="deleteDiscipline(discipline.id)"
+          class="btn btn-light pull-right">
+          <img class="far fa-trash-alt align-middle" />
+        </div>
+        <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(discipline.parentName)" [routerLink]="['', {outlets: { popup: ['discipline', 'edit', discipline.id] } }]"
+          class="btn btn-light pull-right">
+          <img class="fas fa-pencil-alt align-middle" />
+        </div>
+        <div *requiredAuthority="disciplineService.generateCreateSubItemPermissionForDiscipline(discipline)" class="btn btn-light pull-right"
+          [routerLink]="['', {outlets: { popup: ['discipline', 'create', discipline.id] } }]">
+          <img class="fas fa-plus-circle align-middle" />
+        </div>
+      </div>
+    </div>
+    <div class="discipline-description">
+      <div class="form-group">
+        <b>Description:</b>
+        <textarea class="form-control" [(ngModel)]="discipline.subscription" readonly></textarea>
+      </div>
+
+      <div *ngIf="discipline.disciplineHeadsList && discipline.disciplineHeadsList?.length !== 0">
+        <b>Discipline heads:</b>
+        <div class="table-list">
+          <div *ngFor="let user of discipline?.disciplineHeadsList">
+            <input type="text" class="form-control" value="{{user?.name}} {{user?.surname}}" disabled>
           </div>
         </div>
-      </td>
-      <td scope="col" class="discipline-name unwrap-indicator">
-        {{discipline.name}}</td>
-      <td scope="col" class="unwrap-indicator">{{discipline.subscription}}</td>
-      <td scope="col" class="pull-right unwrap-indicator">
-        <div class="pull-right edit-buttons">
-          <div *requiredAuthority="disciplineService.generateEditPermissionForDiscipline(parentDisciplineName, childLevel)" (click)="deleteDiscipline(discipline.id)"
-            class="btn btn-light pull-right">
-            <img class="far fa-trash-alt align-middle" />
-          </div>
-          <div *requiredAuthority="disciplineService.generateDeletePermissionForDiscipline(parentDisciplineName, childLevel)" [routerLink]="['', {outlets: { popup: ['discipline', 'edit', discipline.id] } }]"
-            class="btn btn-light pull-right">
-            <img class="fas fa-pencil-alt align-middle" />
-          </div>
-          <div *requiredAuthority="'SUB_ITEM_CREATE_' + parentDisciplineName" class="btn btn-light pull-right" [routerLink]="['', {outlets: { popup: ['discipline', 'create', discipline.id] } }]">
-            <img class="fas fa-plus-circle align-middle" />
-          </div>
-          <div class="btn btn-light pull-right" [routerLink]="['', {outlets: { popup: ['discipline', 'view', discipline.id] } }]">
-            <img class="fas fa-eye align-middle">
-          </div>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<div class="subItem inner-sub-item" *requiredAuthority="'SUB_ITEM_READ_' + parentDisciplineName">
-  <app-discipline *ngFor="let discipline of subDisciplinesList" [discipline]="discipline" [childLevel]="childLevel + 1" [parentDisciplineName]="parentDisciplineName"></app-discipline>
+      </div>
+      <br>
+    </div>
+  </div>
+  <div *ngIf="!discipline" class="discipline-not-chosen">
+    You didn't choose any discipline yet
+  </div>
 </div>

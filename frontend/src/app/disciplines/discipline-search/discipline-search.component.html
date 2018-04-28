@@ -1,36 +1,25 @@
-<div *ngIf="isSearchShown" class="card-header">
-  <div class="row">
-    <div class="col-sm-12 col-md-4">
-      <i class="fa fa-table"></i> Disciplines list
-    </div>
-    <div class="col-sm-11 col-md-6">
-      <div id="dataTable_filter" class="dataTables_filter">
-        <label>Search by name:
-          <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" #disciplineName (keyup)="searchByName(disciplineName.value)">
-        </label>
-      </div>
-      <label>
-          <input type="checkbox" class="checkbox" 
-            id="customCheck2" [checked]="searchSubItems" 
-            (change)="searchSubItems = !searchSubItems;
-            searchByName(disciplineName.value)">
-            <span class="checkbox-custom"></span>
-            <span class="label">Sub items</span>
-      </label>
-      <label>
-          <input type="checkbox" class="checkbox" 
-          id="customCheck1" [checked]="searchDisciplines" 
-          (change)="searchDisciplines = !searchDisciplines; 
-          searchByName(disciplineName.value)">
-          <span class="checkbox-custom"></span>
-          <span class="label">Disciplines</span>
-      </label>
-      <div *ngIf="!searchDisciplines && !searchSubItems" class="error-message"> You didn't choose search area</div>
-    </div>
-  </div>
+<div id="dataTable_filter" class="dataTables_filter">
+  <label>
+    <input type="text" class="form-control form-control-sm" placeholder="&#xf002;" #disciplineName (keyup)="searchByName(disciplineName.value)">
+  </label>
 </div>
-<div class="filter-button">
-  <button class="btn" (click)="isSearchShown = !isSearchShown">
+  <button class="btn btn-sm" (click)="showFilter = !showFilter">
     <i class="fas fa-filter"></i>
   </button>
+
+<div *ngIf="showFilter" class="filter">
+  <label>
+    <input type="checkbox" class="checkbox" id="customCheck2" [checked]="searchSubItems" (change)="searchSubItems = !searchSubItems;
+            searchByName(disciplineName.value)">
+    <span class="checkbox-custom"></span>
+    <span class="label">Sub items</span>
+  </label>
+  <br>
+  <label>
+    <input type="checkbox" class="checkbox" id="customCheck1" [checked]="searchDisciplines" (change)="searchDisciplines = !searchDisciplines; 
+          searchByName(disciplineName.value)">
+    <span class="checkbox-custom"></span>
+    <span class="label">Disciplines</span>
+  </label>
 </div>
+<div *ngIf="!searchDisciplines && !searchSubItems" class="error"> You didn't choose search area</div>

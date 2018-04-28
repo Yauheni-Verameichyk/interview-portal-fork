@@ -3,21 +3,31 @@ import {
   Input,
   OnInit,
   TemplateRef,
-  ViewContainerRef
+  ViewContainerRef,
+  OnChanges,
+  HostListener,
+  OnDestroy
 } from '@angular/core';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 
 @Directive({
   selector: '[requiredAuthority]'
 })
-export class ShowAuthedDirective implements OnInit {
+export class ShowAuthedDirective implements OnChanges {
 
-  constructor(private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef, private authenticationService: AuthenticationService) { }
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private authenticationService: AuthenticationService) { }
 
   @Input('requiredAuthority') requiredAuthority: string;
 
-  ngOnInit() {
+  @HostListener('change') ngOnChanges() {
+    this.updateView();
+  }
+
+  updateView() {
+    this.viewContainer.clear();
     if (this.authenticationService.isPermissionPresent(this.requiredAuthority)) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {

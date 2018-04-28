@@ -1,20 +1,21 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-
-import { DisciplinesListComponent } from './disciplines-list.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { SharedModule } from '../../shared/shared.module';
-import { NO_ERRORS_SCHEMA, Injectable } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { AuthenticationService } from '../../service/authentication/authentication.service';
-import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
-import { DisciplineService } from '../service/discipline.service';
-import { DisciplineDTO } from '../../api/models';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/takeUntil';
+
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { NavigationEnd, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { DisciplineControllerService } from '../../api/services/discipline-controller.service';
 import { Subject } from 'rxjs/Subject';
+
+import { DisciplineDTO } from '../../api/models';
+import { DisciplineWithDisciplineHeadsDTO } from '../../api/models/disciplineWithDisciplineHeadsDTO';
+import { DisciplineControllerService } from '../../api/services/discipline-controller.service';
+import { AuthenticationService } from '../../service/authentication/authentication.service';
+import { PopupService } from '../../shared/pop-up-window/popup-service/popup.service';
+import { SharedModule } from '../../shared/shared.module';
+import { DisciplineService } from '../service/discipline.service';
+import { DisciplinesListComponent } from './disciplines-list.component';
 
 describe('DisciplinesListComponent', () => {
   let component: DisciplinesListComponent;
@@ -25,24 +26,14 @@ describe('DisciplinesListComponent', () => {
   java.name = 'Java';
   java.subscription = '.';
   java.parentId = null;
-  java.hasSubItems = false;
+  java.hasChildren = false;
 
   const javaScript = new DisciplineDTO();
   javaScript.id = 2;
   javaScript.name = 'Java Script';
   javaScript.subscription = '23123';
   javaScript.parentId = null;
-  javaScript.hasSubItems = false;
-
-  // const routerStub = {
-  //   subject: new Subject<any>(),
-  //   events: subject.asObservable(),
-  //   navigate(commands: any[]) { },
-  //   sendEvent(any) {
-  //     this.subject.next(any);
-  //   }
-
-  // };
+  javaScript.hasChildren = false;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -54,7 +45,8 @@ describe('DisciplinesListComponent', () => {
         { provide: PopupService, useClass: PopupServiceServiceStub },
         { provide: AuthenticationService, useClass: AuthenticationServiceStub },
         { provide: Router, useClass: RouterStub },
-      ]
+        { provide: DisciplineControllerService, useClass: DisciplineControllerServiceStub },
+      ],
     })
       .compileComponents();
     fixture = TestBed.createComponent(DisciplinesListComponent);
@@ -79,7 +71,7 @@ describe('DisciplinesListComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         expect(component.disciplinesList).toEqual([java, javaScript]);
-      })
+      }),
   );
 
   it('should fail to find disciplines',
@@ -94,7 +86,7 @@ describe('DisciplinesListComponent', () => {
         fixture.detectChanges();
         expect(disciplineService.chooseRequest).toHaveBeenCalled();
         expect(popupService.displayMessage).toHaveBeenCalled();
-      })
+      }),
   );
 
   it('should update disciplines list if navigation end event occurred',
@@ -102,7 +94,7 @@ describe('DisciplinesListComponent', () => {
       const spy = spyOn(component, 'findDisciplines').and.callThrough();
       router.initialNavigation();
       expect(spy).toHaveBeenCalled();
-    })
+    }),
   );
 
   it('should not update disciplines list if navigation end event not occurred',
@@ -110,29 +102,13 @@ describe('DisciplinesListComponent', () => {
       const spy = spyOn(component, 'findDisciplines').and.callThrough();
       router.navigate([]);
       expect(spy).not.toHaveBeenCalled();
-    })
+    }),
   );
 
   it('should receive disciplines from search form', () => {
     expect(component.disciplinesList).toEqual([java]);
     component.receiveDisciplinesFromSearch([java, javaScript]);
     expect(component.disciplinesList).toEqual([java, javaScript]);
-  });
-
-  it('should not load additional disciplines', () => {
-    const spy = spyOn(component, 'findDisciplines').and.callThrough();
-    component.windowScrollListener();
-    expect(spy).not.toHaveBeenCalled();
-  });
-
-  it('should not load additional disciplines', () => {
-    const spy = spyOn(component, 'findDisciplines').and.callThrough();
-    spyOnProperty(document.documentElement, 'scrollTop').and.returnValue(100);
-    spyOnProperty(document.documentElement, 'scrollHeight').and.returnValue(100);
-    spyOnProperty(document.documentElement, 'clientHeight').and.returnValue(0);
-    component.activeFilter = 'ALL';
-    component.windowScrollListener();
-    expect(spy).toHaveBeenCalled();
   });
 });
 
@@ -153,8 +129,20 @@ class DisciplineServiceStub {
     java.name = 'Java';
     java.subscription = '.';
     java.parentId = null;
-    java.hasSubItems = false;
+    java.hasChildren = false;
     return Observable.of([java]);
+  }
+}
+
+class DisciplineControllerServiceStub {
+  findByIdUsingGET(searchOption): Observable<DisciplineWithDisciplineHeadsDTO> {
+    const java = new DisciplineDTO();
+    java.id = 1;
+    java.name = 'Java';
+    java.subscription = '.';
+    java.parentId = null;
+    java.hasChildren = false;
+    return Observable.of(java);
   }
 }
 
