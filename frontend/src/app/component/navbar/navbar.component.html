@@ -1,12 +1,18 @@
-<header *ngIf='isShowNavbar' id="header" class="header-scrolled">
+<header *ngIf='isShowNavbar' [ngClass]="{'toggle-header-scrolled': isActive}" class="header header-scrolled">
   <div class="container-fluid">
-    <div id="logo" class="pull-left">
+    <div id="logo" class="pull-left logo">
       <h1>
         <a routerLink="welcome-page" class="scrollto">Interview Portal</a>
       </h1>
     </div>
+    <div id="burger" (click)="isActive = !isActive;">
+      <span></span>
+      <span></span> 
+      <span></span> 
+      <span></span> 
+    </div>
     <nav id="nav-menu-container">
-      <ul class="nav-menu">
+      <ul class="nav-menu" [ngClass]="{'toggle': isActive}">
         <li>
           <a class="menu" routerLink="users" routerLinkActive="menu-active">Users</a>
         </li>

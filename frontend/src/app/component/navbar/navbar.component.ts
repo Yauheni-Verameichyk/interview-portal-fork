@@ -9,7 +9,7 @@ import { AuthenticationService } from '../../service/authentication/authenticati
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
+  toggle=false;
   isShowNavbar = false;
 
   constructor(
