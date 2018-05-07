@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { UserInfo } from '../../domain/UserInfo';
+import { Subject } from 'rxjs/Subject';
 import { UserControllerService } from '../../api/rest/service/user-controller.service';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-user-list',
@@ -15,7 +15,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   users: Array<UserInfo> = new Array<UserInfo>();
   private searchParameters = 'userRoleDisciplines#COORDINATOR,DISCIPLINE_HEAD,INTERVIEWER,HUMAN_RESOURCE';
   constructor(private userController: UserControllerService, private router: Router) { }
-  
+
   ngOnInit() {
     this.getUsersWithParams();
   }

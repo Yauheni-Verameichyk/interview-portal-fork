@@ -70,7 +70,7 @@ describe('UserComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
-    component.userObj = <UserInfo> user;
+    component.user =  user;
     fixture.detectChanges();
   });
 
