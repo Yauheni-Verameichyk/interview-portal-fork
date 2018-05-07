@@ -33,10 +33,6 @@ public class SpecifiedTimeController {
                     pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime rangeStart,
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime rangeEnd,
             @PathVariable Long disciplineId) {
-        System.err.println(rangeStart);
-        System.err.println(rangeEnd);
-        System.err.println(disciplineId);
-        System.err.println(specifiedTimeFacade.findAllInRange(rangeStart, rangeEnd, disciplineId));
         return specifiedTimeFacade.findAllInRange(rangeStart, rangeEnd, disciplineId);
     }
 
