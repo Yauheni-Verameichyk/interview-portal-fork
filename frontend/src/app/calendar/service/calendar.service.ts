@@ -119,12 +119,14 @@ export class CalendarService {
 
   generateInterviewCalendarEvent(interview: InterviewDTO): CalendarEvent {
     const startTime = new Date(interview.startTime);
+    const endTime = new Date(interview.endTime);
     return {
       id: interview.id,
-      title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
-        + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
+      title: `Interview in room <b>${interview.place}</b> from ${startTime.getHours().toString() + ':' +
+        startTime.getMinutes().toString() + 0} to ${endTime.getHours().toString() + ':' +
+        endTime.getMinutes().toString() + 0}`,
       start: startTime,
-      end: new Date(interview.endTime),
+      end: endTime,
       color: this.colors.blue,
       actions: this.actions,
       meta: { incrementsBadgeTotal: true },
