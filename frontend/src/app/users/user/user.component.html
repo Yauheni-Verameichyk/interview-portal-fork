@@ -2,8 +2,8 @@
     <td (click)="showUserInfo()">
         {{user.name}}</td>
     <td (click)="showUserInfo()">{{user.surname}}</td>
-    <td (click)="showUserInfo()">
-        <span *ngFor="let role of user.roles" [appHighLightRole]="role" class="common-for-role">
+    <td>
+        <span *ngFor="let role of user.roles" [appHighLightRole]="role" class="common-for-role" (click)="selectRole(role)">
         </span>
     </td>
     <td *requiredAuthority="'USER_EDIT'">

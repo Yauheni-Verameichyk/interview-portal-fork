@@ -1,6 +1,6 @@
 <div class="card mb-3 user-list" *ngIf="isLoaded;else elseBlock">
   <div class="card-header">
-    <app-user-search (parameters)="receiveUsersFromSearch($event)"></app-user-search>
+    <app-user-search (parameters)="receiveUsersFromSearch($event)" [singleRole]="searchParameters"></app-user-search>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table" id="dataTable" width="80%" cellspacing="0">
@@ -14,7 +14,7 @@
               </th>
             </tr>
           </thead>
-          <tbody app-user *ngFor="let user of users" [user]="user" class='tbody-hover'>
+          <tbody app-user *ngFor="let user of users" [user]="user" class='tbody-hover' (searchParameter)="findByRole($event)">
           </tbody>
           <tfoot>
             <tr>

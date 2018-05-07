@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { EventTargetLike } from 'rxjs/observable/FromEventObservable';
 import { Subject } from 'rxjs/Subject';
@@ -9,6 +9,12 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./user-search.component.css']
 })
 export class UserSearchComponent implements OnInit {
+  @Input() set singleRole(role: string) {
+    this.isCoordinator = role.includes('COORDINATOR');
+    this.isDisciplineHead = role.includes('DISCIPLINE_HEAD');
+    this.isInterviewer = role.includes('INTERVIEWER');
+    this.isHumanResource = role.includes('HUMAN_RESOURCE');
+  }
   @Output() private parameters = new EventEmitter<string>();
   private expectationTime = new Subject();
   isCoordinator = true;
@@ -23,7 +29,7 @@ export class UserSearchComponent implements OnInit {
     // on every value, you call the outer component
     this.expectationTime.debounceTime(350).subscribe((value => this.parameters.emit(value.toString())));
   }
-  
+
   searchByParameters(): void {
     if (this.userName.length > 0) {
       const separator = this.isChosen() ? ';' : '';
@@ -33,7 +39,7 @@ export class UserSearchComponent implements OnInit {
     } else {
       const searchString = `${this.concatParameters()}`;
       // send every value from the inner to the subject
-      this.expectationTime.next(searchString)
+      this.expectationTime.next(searchString);
     }
 
   }
