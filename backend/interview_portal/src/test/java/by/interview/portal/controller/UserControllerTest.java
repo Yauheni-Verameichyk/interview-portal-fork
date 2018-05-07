@@ -67,8 +67,10 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnAllUsersList() throws Exception {
-        given(userFacade.findAllUserBaseInfo(0, "")).willReturn(Arrays.asList(userBaseInfoDTO).stream().collect(
-            Collectors.toSet()));
+        given(userFacade.findAllUserBaseInfo(0, ""))
+            .willReturn(Arrays.asList(userBaseInfoDTO)
+                .stream()
+                .collect(Collectors.toSet()));
         mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(userBaseInfoDTO.getName())))
@@ -79,10 +81,26 @@ public class UserControllerTest {
     public void shouldReturnAllUsersListByDiscipline() throws Exception {
         given(userFacade.findAllByRole(Role.DISCIPLINE_HEAD))
                 .willReturn(Arrays.asList(userBaseInfoDTO));
-        mvc.perform(get("/users/role/DISCIPLINE_HEAD").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/users/role/DISCIPLINE_HEAD").contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(userBaseInfoDTO.getName())))
                 .andExpect(jsonPath("$[0].surname", is(userBaseInfoDTO.getSurname())));
+    }
+    @Test
+    public void shouldReturnUsersBySearchParameters() throws Exception {
+        given(userFacade.findAllUserBaseInfo(0, "userRoleDisciplines%23DISCIPLINE_HEAD"))
+            .willReturn(Arrays.asList(userBaseInfoDTO)
+                .stream()
+                .collect(Collectors.toSet()));
+        mvc.perform(get("/users")
+            .param("quantity", "0")
+            .param("parameters", "userRoleDisciplines%23DISCIPLINE_HEAD" )
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect((jsonPath("$", hasSize(1))))
+            .andExpect(jsonPath("$[0].name", is(userBaseInfoDTO.getName())))
+            .andExpect(jsonPath("$[0].surname", is(userBaseInfoDTO.getSurname())))
+            .andExpect(jsonPath("$[0].roles[0]", is("DISCIPLINE_HEAD")));
     }
 
     private void createFullUserInfoDTO() {

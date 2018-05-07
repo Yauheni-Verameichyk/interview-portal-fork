@@ -11,17 +11,13 @@ import { UserControllerService } from '../../api/rest/service/user-controller.se
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit, OnDestroy {
+export class UserComponent implements OnDestroy {
   private readonly destroy: Subject<void> = new Subject();
-  @Input() userObj: UserInfo;
-  user: UserInfo;
+  @Input() user: UserInfo;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private userController: UserControllerService) { }
-  ngOnInit() {
-    this.user = new UserInfo(this.userObj.id, this.userObj.name, this.userObj.surname, this.userObj.roles);
-  }
   showUserInfo() {
     this.router.navigate([{ outlets: { popup: ['users', this.user.id, 'info'] } }]);
   }

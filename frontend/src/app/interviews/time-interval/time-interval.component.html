@@ -1,14 +1,25 @@
 <div class="date-time-interval">
   <span class="bold">Time of the interview:</span>
-  <i class="ion-loop text-info h6 link" (click)="selectToday()"></i>
-  <div>
-    <span>Date:</span><span class="tab">Start time:</span>
-    <br>
-    <ngb-datepicker #dp [(ngModel)]="dateModel" [startDate]="dateModel" [minDate]="minDate" (navigate)="date = $event.next" [ngModelOptions]="{standalone: true}" (ngModelChange)="refreshDate()"></ngb-datepicker>
-  </div>
-  <div class="time">
-    <ngb-timepicker [(ngModel)]="startTimeModel" [ngModelOptions]="{standalone: true}" (ngModelChange)="refreshStartTime()" readonlyInputs="true" size="medium"></ngb-timepicker>
-    <span>End time:</span>
-    <ngb-timepicker [(ngModel)]="endTimeModel" [ngModelOptions]="{standalone: true}" (ngModelChange)="refreshEndTime()" readonlyInputs="true" size="medium"></ngb-timepicker>
+  <i class="ion-loop text-info h6 link" (click)="selectToday()" *ngIf="isFormEnable"></i>
+  <div *ngIf="isFormEnable;else elseBlock">
+    <div>
+      <span>Date:</span>
+      <span class="tab">Start time:</span>
+      <br>
+      <ngb-datepicker #dp [(ngModel)]="dateModel" [startDate]="dateModel" [minDate]="minDate" (navigate)="date = $event.next" [ngModelOptions]="{standalone: true}" (ngModelChange)="refreshDate()"></ngb-datepicker>
+      <!-- <ngb-datepicker #dp [(ngModel)]="dateModel" [startDate]="dateModel" (navigate)="date = $event.next" [ngModelOptions]="{standalone: true}" (ngModelChange)="refreshDate()"></ngb-datepicker> -->
+     
+      
+    </div>
+    <div class="time">
+      <ngb-timepicker [(ngModel)]="startTimeModel" [ngModelOptions]="{standalone: true}" (ngModelChange)="refreshStartTime()" readonlyInputs="true"
+        size="medium" [meridian]="true"></ngb-timepicker>
+      <span>End time:</span>
+      <ngb-timepicker [(ngModel)]="endTimeModel" [ngModelOptions]="{standalone: true}" (ngModelChange)="refreshEndTime()" readonlyInputs="true"
+        size="medium" [meridian]="true"></ngb-timepicker>
+    </div>
   </div>
 </div>
+<ng-template #elseBlock>
+  {{interval.startDate | date:"dd/MM/yyyy"}} {{interval.startDate | date:"hh:mma" | lowercase}} - {{interval.endDate | date:"hh:mma"  | lowercase}}
+</ng-template>

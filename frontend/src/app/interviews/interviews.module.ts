@@ -10,6 +10,7 @@ import { InterviewCandidateComponent } from './interview-form/interview-candidat
 import { InterviewDisciplineComponent } from './interview-form/interview-discipline/interview-discipline.component';
 import { InterviewersComponent } from './interview-form/interviewers/interviewers.component'
 import { SharedModule } from '../shared/shared.module';
+import { InterviewResolvedGuard } from '../guard/interview-resolved.guard';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { SharedModule } from '../shared/shared.module';
     InterviewersComponent
   ],
   providers: [
-    InterviewControllerService
+    InterviewControllerService,
+    InterviewResolvedGuard
   ]
 })
 export class InterviewsModule { }

@@ -13,6 +13,7 @@ import { ValidatorMessageComponent } from './validator/validator-message/validat
 import { RouterModule } from '@angular/router';
 import { AssignDisciplineComponent } from './assign-discipline/assign-discipline.component';
 import { PopupService } from './pop-up-window/popup-service/popup.service';
+import { HighLightRoleDirective } from './high-light-role/high-light-role.directive';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { PopupService } from './pop-up-window/popup-service/popup.service';
     ValidatorMessageComponent,
     SelectRoleComponent,
     MessageWindowComponent,
-    AssignDisciplineComponent
+    AssignDisciplineComponent,
+    HighLightRoleDirective
   ],
   providers: [
     UserFormMangerService,
@@ -38,6 +40,7 @@ import { PopupService } from './pop-up-window/popup-service/popup.service';
   exports: [
     ShowAuthedDirective,
     SelectUserComponent,
+    HighLightRoleDirective,
     ValidatorMessageComponent,
     SelectRoleComponent,
     MessageWindowComponent,

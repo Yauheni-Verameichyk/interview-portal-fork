@@ -1,0 +1,19 @@
+.common-for-role{
+    display: inline-block;
+    padding: 05px;
+    border-radius: 8px;
+    margin-left: 10px;
+    color: #fff;
+}
+.coordinator{
+    background-color: #28a745;
+}
+.discipline-head{
+    background-color: rgba(49, 46, 46, 0.9);
+}
+.human-resource{
+    background-color: #17a2b8;
+}
+.interviewer{
+    background-color: #18d26e;
+}

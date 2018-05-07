@@ -22,7 +22,7 @@ public class FullInterviewInfoDTO {
 
     private LocalDateTime endTime;
 
-    private CandidateBaseInfoDTO candidate;
+    private CandidateDTO candidate;
 
     private String place;
 

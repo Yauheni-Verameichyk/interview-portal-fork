@@ -25,6 +25,8 @@ export class TimeIntervalComponent implements ControlValueAccessor {
     endDate: new Date()
   };
 
+  @Input() isFormEnable: boolean;
+
   dateModel: NgbDateStruct;
   startTimeModel: NgbTimeStruct;
   endTimeModel: NgbTimeStruct;
@@ -32,6 +34,10 @@ export class TimeIntervalComponent implements ControlValueAccessor {
   minDate: NgbDateStruct;
 
   onTouched = () => { };
+
+  private onChangeCallback: (interval: DateTimeInterval) => void = () => { };
+
+  constructor(private cdr: ChangeDetectorRef) { }
 
   selectToday() {
     this.dateModel = {
@@ -56,12 +62,32 @@ export class TimeIntervalComponent implements ControlValueAccessor {
     };
   }
 
-  private onChangeCallback: (interval: DateTimeInterval) => void = () => { };
-
-  constructor(private cdr: ChangeDetectorRef) { }
+  initTimeAndDate(interval: DateTimeInterval) {
+    this.dateModel = {
+      day: +interval.startDate.getDate(),
+      month: +interval.startDate.getMonth() + 1,
+      year: +interval.startDate.getFullYear()
+    };
+    this.startTimeModel = {
+      second: 0,
+      hour: +interval.startDate.getHours(),
+      minute: +interval.startDate.getMinutes()
+    };
+    this.endTimeModel = {
+      second: 0,
+      hour: +interval.endDate.getHours(),
+      minute: +interval.endDate.getMinutes()
+    };
+    this.minDate = {
+      day: +interval.startDate.getDate(),
+      month: +interval.startDate.getMonth() + 1,
+      year: +interval.startDate.getFullYear()
+    };
+  }
 
   writeValue(interval: DateTimeInterval): void {
     if (interval) {
+      this.initTimeAndDate(interval);
       this.interval = interval;
     } else {
       this.selectToday();
