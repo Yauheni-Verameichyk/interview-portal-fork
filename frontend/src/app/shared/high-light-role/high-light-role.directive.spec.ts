@@ -1,7 +1,7 @@
 import { HighLightRoleDirective } from './high-light-role.directive';
 import { ElementRef, Renderer } from '@angular/core';
 const elementRefStub: ElementRef = {
-    nativeElement,
+  nativeElement() { }
 };
 const rendererStub: any = {
 };
