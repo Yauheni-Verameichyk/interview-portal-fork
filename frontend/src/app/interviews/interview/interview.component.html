@@ -6,7 +6,7 @@
 <td>
     <u [routerLink]="['', {outlets: { popup: ['candidate-view', interview.candidate.id] } }]">{{interview.candidate.name}}&nbsp;{{interview.candidate.surname}}</u>
 </td>
-<td>{{interview.startTime | date:"dd/MM/yyyy hh:mm"}} - {{interview.endTime | date:"hh:mm a"}}</td>
+<td>{{interview.startTime | date:"dd/MM/yyyy hh:mma" | lowercase}} - {{interview.endTime | date:"hh:mma" | lowercase}}</td>
 <td>
     <span *ngFor="let interviewer of interview.interviewerSet" [routerLink]="['', {outlets: { popup: ['users',interviewer.id, 'info' ]} }]">
         <u>{{interviewer.name}} {{interviewer.surname}}</u>&nbsp;

@@ -2,16 +2,22 @@
   <div class='border popup-form'>
     <form [formGroup]="interviewForm">
       <h4>{{formTitle}}</h4>
-      <app-interview-candidate [interviewForm]="interviewForm" (change)="interviewFormService.showDiscipline()" (disciplines)="fetchDisciplines($event)"
-        (click)="interviewFormService.refreshData()"></app-interview-candidate>
+      <app-interview-candidate [interviewForm]="interviewForm" (change)="interviewFormService.showDiscipline()" (disciplines)="interviewFormService.fetchDisciplines($event)"
+        (click)="interviewFormService.refreshDataClick()"></app-interview-candidate>
       <span class="bold">Place: </span>
       <input class="form-control" type="text" placeholder="B215 Room" formControlName="place">
       <validator-message [field]="interviewForm.get('place')"></validator-message>
-      <app-time-interval [(ngModel)]="interval" (ngModelChange)="refresh.next()" [ngModelOptions]="{standalone: true}" (click)="interviewFormService.refreshData()"></app-time-interval>
-      <app-interview-discipline *ngIf="isDisciplineDisplay" [interviewForm]="interviewForm" [disciplines]="disciplines" (change)="interviewFormService.showInterviewers()"
-        (click)="interviewFormService.refreshData()"></app-interview-discipline>
+      <div *ngIf="isStatusDisplay" >
+        <span class="bold">Status: </span>
+        <span *ngIf="interviewForm.controls.status.value == 'wait'">The interview did not start or in the process.</span>
+        <span *ngIf="interviewForm.controls.status.value == 'success'">The interview passed successfully.</span>
+        <span *ngIf="interviewForm.controls.status.value == 'fail'">The interview is littered with.</span>
+      </div>
+      <app-time-interval [(ngModel)]="interval" (ngModelChange)="refresh.next()" [ngModelOptions]="{standalone: true}" (click)="interviewFormService.refreshDataClick()"
+        [isFormEnable]="interviewForm.enabled"></app-time-interval>
+      <app-interview-discipline *ngIf="isDisciplineDisplay" [interviewForm]="interviewForm" [disciplines]="disciplines" (change)="interviewFormService.showInterviewers()"></app-interview-discipline>
       <app-interviewers *ngIf="isInterviewersDisplay" [interviewForm]="interviewForm" [interviewerList]="interviewerList" (change)="interviewFormService.showSaveButton()"
-        (click)="interviewFormService.showSaveButton()"></app-interviewers>
+        (click)="interviewFormService.interviewersClick()" [isInterviewerView]="isInterviewerView" ></app-interviewers>
       <br>
       <a class="btn btn-success" *ngIf="isSaveButtonDisplay" (click)="interviewFormService.saveInterview()">Save</a>
     </form>

@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { InterviewListComponent } from './interview-list/interview-list.component';
 import { InterviewComponent } from './interview/interview.component';
 import { InterviewFormComponent } from './interview-form/interview-form.component';
-
+import { InterviewResolvedGuard } from '../guard/interview-resolved.guard';
 
 const routes: Routes = [
     {
@@ -19,12 +19,18 @@ const routes: Routes = [
     {
         path: 'interview-view/:id',
         component: InterviewFormComponent,
-        outlet: 'popup'
+        outlet: 'popup',
+        resolve: {
+            interview: InterviewResolvedGuard
+        }
     },
     {
         path: 'interview-update/:id',
         component: InterviewFormComponent,
-        outlet: 'popup'
+        outlet: 'popup',
+        resolve: {
+            interview: InterviewResolvedGuard
+        }
     }
 ];
 

@@ -1,14 +1,14 @@
 /* tslint:disable */
-import { CandidateBaseInfoDTO } from './candidate-base-info-dto';
 import { DisciplineBaseInfoDTO } from './discipline-base-info-dto';
 import { UserBaseInfoDTO } from './user-base-info-dto';
 import { DisciplineMark } from './discipline-mark';
+import { CandidateDTO } from './candidate-dto';
 
 export class FullInterviewInfoDTO {
 
   id?: number;
 
-  candidate?: CandidateBaseInfoDTO;
+  candidate?: CandidateDTO;
 
   disciplineSet?: DisciplineBaseInfoDTO[];
 

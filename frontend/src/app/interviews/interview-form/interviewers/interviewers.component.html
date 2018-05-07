@@ -1,5 +1,5 @@
-<span class="bold">Select interviewers:</span>
-<span (click)="additionInterviewer()">
+<span class="bold">Interviewers:</span>
+<span *ngIf="isPlusButtonShow" (click)="additionInterviewer()">
   <i class="fa fa-plus text-info h6 link"></i>
 </span>
 <form [formGroup]="interviewForm">
@@ -10,7 +10,7 @@
         [class.full-width]="interviewForm.disabled"
       >
         <option value="" hidden disabled selected>Choose...</option>
-        <option *ngFor="let interviewer of interviewerList" value="{{interviewer.id}}" selected>{{interviewer.name}} {{interviewer.surname}}</option>
+        <option *ngFor="let interviewer of fetchInterviewerList(i)[i]" value="{{interviewer.id}}" selected>{{interviewer.name}} {{interviewer.surname}}</option>
       </select>
       <div class="btn btn-light pull-right remove-button" (click)="remove(i,'interviewerSet')" *ngIf="(interviewForm.controls.interviewerSet.controls.length > 1)&&interviewForm.enabled">
         <img class="far fa-trash-alt align-middle" />
