@@ -34,7 +34,7 @@ export class CalendarComponent implements OnDestroy {
     private calendarService: CalendarService,
     private calendarControllerService: CalendarControllerService,
     private popupService: PopupService,
-    private router: Router
+    private router: Router,
   ) {
     this.router.events
       .takeUntil(this.destroy)
@@ -64,20 +64,21 @@ export class CalendarComponent implements OnDestroy {
       this.calendarService.generateRequestParamsForEventsForUser(this.view, this.viewDate))
       .takeUntil(this.destroy)
       .subscribe(
-        calendarDTO => {
+        (calendarDTO) => {
+          console.log(calendarDTO);
           this.calendarEvents = this.calendarService.generateCalendarEvents(calendarDTO, this.view, this.viewDate);
           this.isLoaded = true;
         },
-        error => {
+        (error) => {
           this.router.navigate(['error']);
           this.popupService.displayMessage('Error during time slots getting', this.router);
         });
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
-    body.forEach(day => {
+    body.forEach((day) => {
       day.badgeTotal = day.events.filter(
-        event => event.meta.incrementsBadgeTotal
+        (event) => event.meta.incrementsBadgeTotal,
       ).length;
     });
   }

@@ -22,6 +22,7 @@ import { ExcludedTimeSlot } from '../../api/models/excluded-time-slot';
 import { ExcludedTimeSlotControllerService } from '../../api/services/excluded-time-slot-controller.service';
 import { RecurringEvent } from '../../api/models/recurring-event';
 import { CalendarDTO } from '../../api/models/calendar-dto';
+import { InterviewDTO } from '../../api/models/interview-dto';
 
 @Injectable()
 export class CalendarService {
@@ -96,7 +97,8 @@ export class CalendarService {
 
   weekDays = [RRule.SU, RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA];
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private specifiedTimeControllerService: SpecifiedTimeControllerService,
     private excludedTimeSotControllerService: ExcludedTimeSlotControllerService,
     private popupService: PopupService) { }
@@ -104,8 +106,31 @@ export class CalendarService {
   generateCalendarEvents(calendarDTO: CalendarDTO, view: string, viewDate: Date): CalendarEvent[] {
     const calendarEvents = this.generateAvailableTimeSlots(calendarDTO, view, viewDate);
     this.addExcludedTimeSlotsToCalendarEvents(calendarDTO.excludedTimeSlots, calendarEvents);
+    this.addInterviewsToCalendarEvents(calendarDTO.interviews, calendarEvents);
     this.sortCalendarEvents(calendarEvents);
     return calendarEvents;
+  }
+
+  addInterviewsToCalendarEvents(interviews: InterviewDTO[], calendarEvents: CalendarEvent[]) {
+    for (const interview of interviews) {
+      calendarEvents.push(this.generateInterviewCalendarEvent(interview));
+    }
+  }
+
+  generateInterviewCalendarEvent(interview: InterviewDTO): CalendarEvent {
+    const startTime = new Date(interview.startTime);
+    const endTime = new Date(interview.endTime);
+    return {
+      id: interview.id,
+      title: `Interview in room <b>${interview.place}</b> from ${startTime.getHours().toString() + ':' +
+        startTime.getMinutes().toString() + 0} to ${endTime.getHours().toString() + ':' +
+        endTime.getMinutes().toString() + 0}`,
+      start: startTime,
+      end: endTime,
+      color: this.colors.blue,
+      actions: this.actions,
+      meta: { incrementsBadgeTotal: true },
+    };
   }
 
   generateAvailableTimeSlots(calendarDTO: CalendarDTO, view: string, viewDate: Date): CalendarEvent[] {
