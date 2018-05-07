@@ -46,6 +46,11 @@ export class UserListComponent implements OnInit, OnDestroy {
         console.log(`Error in user list component type error: ${error}`);
       });
   }
+  findByRole(searchParameters: string) {
+    this.users = [];
+    this.searchParameters = `userRoleDisciplines#${searchParameters}`;
+    this.getUsersWithParams();
+  }
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
