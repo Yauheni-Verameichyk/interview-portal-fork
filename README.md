@@ -1,4 +1,3 @@
-Software engineering company 	“EPAM Systems”
 
 
 
