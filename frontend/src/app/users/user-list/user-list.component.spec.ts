@@ -65,7 +65,7 @@ const users = [{
   }
 }];
 
-fdescribe('UserListComponent', () => {
+describe('UserListComponent', () => {
   let component: UserListComponent;
   let fixture: ComponentFixture<UserListComponent>;
   beforeEach(async(() => {

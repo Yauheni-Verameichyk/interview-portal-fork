@@ -113,6 +113,12 @@ export class CalendarService {
 
   addInterviewsToCalendarEvents(interviews: InterviewDTO[], calendarEvents: CalendarEvent[]) {
     for (const interview of interviews) {
+      const correspondingTimeSlots = calendarEvents.filter(calendarEvent => {
+        return !((new Date(interview.startTime) >= calendarEvent.end) || (new Date(interview.endTime) <= calendarEvent.start));
+      });
+      for (const index in correspondingTimeSlots) {
+        calendarEvents.splice(calendarEvents.indexOf(correspondingTimeSlots[index]), 1);
+      }
       calendarEvents.push(this.generateInterviewCalendarEvent(interview));
     }
   }
@@ -152,7 +158,7 @@ export class CalendarService {
     recurringEvents.forEach(event => {
       const rule: RRule = this.createRRule(view, viewDate, event);
       rule.all().forEach(date => {
-        const calendarEvent = Object.assign({}, event, { start: new Date(date) },
+        const calendarEvent = Object.assign({}, event, { start: new Date(date), end: this.generateEndTimeForEvent(date) },
           { actions: this.actions },
           { meta: { incrementsBadgeTotal: false, repeatable: true, groupId: event.meta.groupId } });
         this.addCalendarEventToArray(calendarEvents, calendarEvent);
@@ -177,7 +183,7 @@ export class CalendarService {
       - (this.endOfPeriod[view](viewDate).getTimezoneOffset() * 60000)).toISOString().slice(0, -5);
   }
 
-  generateStartTime(view: string, viewDate: Date, startTime: Date): Date {
+  generateStartTimeForRange(view: string, viewDate: Date, startTime: Date): Date {
     let date: Date;
     if (this.startOfPeriod[view](viewDate) > startTime) {
       date = this.startOfPeriod[view](viewDate);
@@ -189,7 +195,7 @@ export class CalendarService {
     return date;
   }
 
-  generateEndTime(view: string, viewDate: Date, endTime: Date): Date {
+  generateEndTimeForRange(view: string, viewDate: Date, endTime: Date): Date {
     return this.endOfPeriod[view](viewDate) > endTime
       ? endTime : this.endOfPeriod[view](viewDate);
   }
@@ -216,6 +222,7 @@ export class CalendarService {
       title: startTime.getHours().toString() + ':' + startTime.getMinutes().toString() + 0 + ' - '
         + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0,
       start: startTime,
+      end: this.generateEndTimeForEvent(new Date(startTime)),
       color: this.colors.green,
       actions: this.actions,
       meta: { incrementsBadgeTotal: false, repeatable: false, groupId: specifiedTime.groupId }
@@ -230,6 +237,7 @@ export class CalendarService {
         + (startTime.getHours() + 1).toString() + ':' + startTime.getMinutes().toString() + 0 +
         ' ( you have excluded this time slot from recurring event )',
       start: startTime,
+      end: this.generateEndTimeForEvent(new Date(startTime)),
       color: this.colors.red,
       actions: this.excludedActions,
       meta: { incrementsBadgeTotal: false }
@@ -285,8 +293,8 @@ export class CalendarService {
   createRRule(view: string, viewDate: Date, event: RecurringEvent) {
     return new RRule(
       Object.assign({}, event.rrule, {
-        dtstart: this.generateStartTime(view, viewDate, event.startTime),
-        until: this.generateEndTime(view, viewDate, event.endTime)
+        dtstart: this.generateStartTimeForRange(view, viewDate, event.startTime),
+        until: this.generateEndTimeForRange(view, viewDate, event.endTime)
       })
     );
   }
@@ -430,5 +438,10 @@ export class CalendarService {
         calendarEvents.push(this.generateExcludedTimeSlot(excludedTimeSlot));
       }
     }
+  }
+
+  generateEndTimeForEvent(date: Date): Date {
+    date.setHours(date.getHours() + 1);
+    return date;
   }
 }

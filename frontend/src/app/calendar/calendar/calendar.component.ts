@@ -65,7 +65,6 @@ export class CalendarComponent implements OnDestroy {
       .takeUntil(this.destroy)
       .subscribe(
         (calendarDTO) => {
-          console.log(calendarDTO);
           this.calendarEvents = this.calendarService.generateCalendarEvents(calendarDTO, this.view, this.viewDate);
           this.isLoaded = true;
         },

@@ -1,5 +1,7 @@
 package by.interview.portal.repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.domain.Page;
@@ -39,4 +41,10 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Query(" SELECT user FROM User user left join user.userRoleDisciplines urd where urd.role = :role and urd.discipline = :discipline")
     Set<User> findAllByRoleAndDiscipline(@Param("role") Role role,
             @Param("discipline") Discipline discipline);
+
+    @Query(nativeQuery = true,
+            value = "SELECT DISTINCT * FROM select_available_time_by_discipline( :rangeStart, :rangeEnd, :disciplineId) as st join users on st.user_id = users.id")
+    List<User> findAvailableInterviewers(@Param("rangeStart") LocalDateTime rangeStart,
+            @Param("rangeEnd") LocalDateTime rangeEnd, @Param("disciplineId") Long disciplineId);
+
 }

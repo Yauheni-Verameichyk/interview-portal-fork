@@ -56,6 +56,7 @@ describe('CalendarService', () => {
     meta: { incrementsBadgeTotal: false, repeatable: false, groupId: undefined },
     start: new Date('2018-04-10T20:00:00'),
     title: '20:00 - 21:00',
+    end: new Date('2018-04-10T21:00:00'),
     actions: actions
   };
   const secondNonrecurringCalendarEvent = {
@@ -80,6 +81,7 @@ describe('CalendarService', () => {
     startTime: new Date('2018-03-10T20:00:00'),
     title: '20:00 - 21:00',
     endTime: new Date('2018-03-24T21:00:00'),
+    end: new Date('2018-03-10T21:00:00'),
     actions: actions,
   };
   const secondRecurringCalendarEvent = {
@@ -95,6 +97,7 @@ describe('CalendarService', () => {
     startTime: new Date('2018-03-10T20:00:00'),
     title: '20:00 - 21:00',
     endTime: new Date('2018-03-24T21:00:00'),
+    end: new Date('2018-03-17T21:00:00'),
     actions: actions
   };
   const recurringEvent = {
@@ -116,6 +119,7 @@ describe('CalendarService', () => {
     id: 12,
     meta: { incrementsBadgeTotal: false },
     start: new Date('2018-03-24T20:00:00'),
+    end: new Date('2018-03-24T21:00:00'),
     title: '20:00 - 21:00 ( you have excluded this time slot from recurring event )'
   };
   const calendarDTO = {
@@ -304,25 +308,25 @@ describe('CalendarService', () => {
   }));
 
   it('should return start of period if start of recurring event is earlier', inject([CalendarService], (service: CalendarService) => {
-    expect(service.generateStartTime('month', new Date('2018-04-10T17:00:00'), new Date('2018-03-01T00:00:00')))
+    expect(service.generateStartTimeForRange('month', new Date('2018-04-10T17:00:00'), new Date('2018-03-01T00:00:00')))
       .toEqual(new Date('2018-03-25T00:00:00'));
   }));
 
   it('should return start of recurring event if start of period is earlier', inject([CalendarService], (service: CalendarService) => {
-    expect(service.generateStartTime('month', new Date('2018-04-10T17:00:00'), new Date('2018-04-13T00:00:00')))
+    expect(service.generateStartTimeForRange('month', new Date('2018-04-10T17:00:00'), new Date('2018-04-13T00:00:00')))
       .toEqual(new Date('2018-04-13T00:00:00'));
   }));
 
   it('should return end of period if end of recurring event is later', inject([CalendarService], (service: CalendarService) => {
     const expectedDate = new Date('2018-04-30T23:59:59');
     expectedDate.setMilliseconds(999);
-    expect(service.generateEndTime('month', new Date('2018-04-10T17:00:00'), new Date('2018-06-10T23:00:00')))
+    expect(service.generateEndTimeForRange('month', new Date('2018-04-10T17:00:00'), new Date('2018-06-10T23:00:00')))
       .toEqual(expectedDate);
   }));
 
   it('should return end of recurring event if end of period is later', inject([CalendarService], (service: CalendarService) => {
     const expectedDate = new Date('2018-04-13T00:00:00');
-    expect(service.generateEndTime('month', new Date('2018-04-10T17:00:00'), expectedDate))
+    expect(service.generateEndTimeForRange('month', new Date('2018-04-10T17:00:00'), expectedDate))
       .toEqual(expectedDate);
   }));
 
