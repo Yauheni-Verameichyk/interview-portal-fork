@@ -13,13 +13,13 @@
           <tr>
             <td>
               <div class="stub-div"> </div>
-              <button class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration + 1">
+              <button *ngIf="!specifiedTime.groupId" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration + 1">
                 <span class="chevron"></span>
               </button>
 
               <input aria-label="Hours" class="form-control" maxlength="2" placeholder="HH" size="2" type="text" [(ngModel)]="specifiedTime.duration"
                 formControlName="duration">
-              <button class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration - 1">
+              <button *ngIf="!specifiedTime.groupId" class="btn btn-link ng-star-inserted" type="button" (click)="specifiedTime.duration = specifiedTime.duration - 1">
                 <span class="chevron bottom"></span>
               </button>
               <validator-message [field]="specifiedTimeForm.controls.duration"></validator-message>

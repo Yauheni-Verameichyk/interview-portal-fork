@@ -62,7 +62,7 @@ public class SpecifiedTimeFacadeImpl implements SpecifiedTimeFacade {
         for (int i = 0; i < specifiedTimeDTO.getDuration(); i++) {
             SpecifiedTimeDTO timeSlot = copyObject(specifiedTimeDTO);
             timeSlot.setStartTime(currentStartTime.plusHours(i));
-            setEndTime(timeSlot, currentStartTime.plusHours(i + 1));
+            setEndTime(timeSlot, currentStartTime.plusHours(i + 1L));
             SpecifiedTime specifiedTime = specifiedTimeConverter.convertToEntity(timeSlot);
             specifiedTime.setUser(user);
             specifiedTimeService.save(specifiedTime);

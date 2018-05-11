@@ -318,7 +318,8 @@ export class CalendarService {
       startTime: new Date(specifiedTimeDTO.startTime),
       user: specifiedTimeDTO.user,
       duration: 1,
-      isRepeatable: !!specifiedTimeDTO.repeatInterval
+      isRepeatable: !!specifiedTimeDTO.repeatInterval,
+      groupId: specifiedTimeDTO.groupId,
     };
     if (specifiedTimeDTO.repeatInterval) {
       this.setRepeatPattern(specifiedTimeDTO.repeatInterval, specifiedTime);

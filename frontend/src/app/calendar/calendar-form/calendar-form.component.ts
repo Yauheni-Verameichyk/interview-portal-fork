@@ -48,6 +48,7 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
         .subscribe(specifiedTimeDTO => {
           this.specifiedTimeDTO = specifiedTimeDTO;
           this.specifiedTime = this.calendarService.convertDTOToSpecifiedTime(specifiedTimeDTO);
+          this.specifiedTimeForm.get('duration').disable();
         }, error => {
           this.popupService.displayMessage('Error during specified time getting', this.router);
         });
